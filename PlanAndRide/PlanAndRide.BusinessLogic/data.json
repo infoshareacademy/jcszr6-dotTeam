@@ -1,0 +1,34 @@
+[
+  {
+    "RideMembers": [
+      {
+        "Login": "Test",
+        "Password": "dupa1234",
+        "Email": "test@mail.com"
+      }
+    ],
+    "Name": "Test-Ride",
+    "Date": "0001-01-01T00:00:00",
+    "Route": {
+      "Name": "Test Route",
+      "StartingPosition": 25.0,
+      "DestinationPosition": 10.0,
+      "Description": "Test Route",
+      "ShareRoute": true,
+      "IsPrivate": false,
+      "Reviews": [
+        {
+          "Score": 100,
+          "Description": "Test desc"
+        },
+        {
+          "Score": 34,
+          "Description": "Test desc2"
+        }
+      ]
+    },
+    "Description": "A test ride",
+    "ShareRide": false,
+    "IsPrivate": false
+  }
+]

@@ -19,18 +19,70 @@
 //Console.WriteLine("");
 
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Threading.Channels;
+using Newtonsoft.Json;
+using PlanAndRide.BusinessLogic;
+
 
 Console.WriteLine("Witaj w Plan&Ride App");
-Console.WriteLine("-------------------------");
-Console.WriteLine("1. Stwórz konto");
-Console.WriteLine("2. Zaloguj się");
-Console.WriteLine("-------------------------");
-Console.WriteLine("Wybierz opcję:");
+var rides = RideRepository.GetAllRides();
+RideRepository.AddRide(new Ride());
 
-ConsoleKeyInfo keyInfo=Console.ReadKey();
-switch (keyInfo.Key)
-{
-    case ConsoleKey.D1: Console.WriteLine("Tworzymy konto...");break;
-    case ConsoleKey.D2: Console.WriteLine("Witaj zalogowany użytkowniku...");break;
-}
+//Console.WriteLine("-------------------------");
+//Console.WriteLine("1. Stwórz konto");
+//Console.WriteLine("2. Zaloguj się");
+//Console.WriteLine("-------------------------");
+//Console.WriteLine("Wybierz opcję:");
+
+//ConsoleKeyInfo keyInfo=Console.ReadKey();
+//switch (keyInfo.Key)
+//{
+//    case ConsoleKey.D1: Console.WriteLine("Tworzymy konto...");break;
+//    case ConsoleKey.D2: Console.WriteLine("Witaj zalogowany użytkowniku...");break;
+//}
+
+
+//var rides = new List<Ride>()
+//{
+//    new Ride()
+//    {
+//        Description = "A test ride",
+//        IsPrivate = false,
+//        Name = "Test-Ride",
+//        RideMembers = new List<User>()
+//        {
+//            new User()
+//            {
+//                Login = "Test",
+//                Email = "test@mail.com",
+//                Password = "dupa1234"
+//            }
+//        },
+//        Route = new Route
+//        {
+//            Description = "Test Route",
+//            DestinationPosition = 10,
+//            IsPrivate = false,
+//            Name = "Test Route",
+//            Reviews = new List<Review>
+//            {
+//                new Review()
+//                {
+//                    Description = "Test desc",
+//                    Score = 100
+//                }
+//            },
+//            ShareRoute = true,
+//            StartingPosition = 25
+//        }
+//    }
+//};
+
+//var jsonString = JsonConvert.SerializeObject(rides);
+
+//var json = File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "data.json"));
+
+//var loadedRides = JsonConvert.DeserializeObject<List<Ride>>(json);
+
