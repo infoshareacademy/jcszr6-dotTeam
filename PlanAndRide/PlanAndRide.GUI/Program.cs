@@ -25,10 +25,11 @@ using System.Threading.Channels;
 using Newtonsoft.Json;
 using PlanAndRide.BusinessLogic;
 
-
+Console.Clear();
 Console.WriteLine("Witaj w Plan&Ride App");
 var rides = RideRepository.GetAllRides();
-RideRepository.AddRide(new Ride());
+//RideRepository.AddRide(new Ride());
+RideRepository.EditRide("Test-Ride");
 
 //Console.WriteLine("-------------------------");
 //Console.WriteLine("1. Stwórz konto");

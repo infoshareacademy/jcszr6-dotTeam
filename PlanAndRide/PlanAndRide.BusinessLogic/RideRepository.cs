@@ -13,9 +13,9 @@ namespace PlanAndRide.BusinessLogic
         private static List<Ride> rides = new List<Ride>();
 
         static RideRepository()
-        { 
-           var json = File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "data.json"));
-           rides = JsonConvert.DeserializeObject<List<Ride>>(json);
+        {
+            var json = File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "data.json"));
+            rides = JsonConvert.DeserializeObject<List<Ride>>(json);
         }
 
         public static List<Ride> GetAllRides()
@@ -35,14 +35,35 @@ namespace PlanAndRide.BusinessLogic
             {
                 Console.WriteLine($"No ride with name {rideName} has been found.");
             }
-
-            Console.WriteLine($"Current name is: {myRide.Name}");
-            Console.WriteLine($"Enter new name: ");
-            var newName = Console.ReadLine();
-            if (!string.IsNullOrWhiteSpace(newName))
+            //Name edit
             {
-                myRide.Name = newName;
+                Console.WriteLine($"Current name is: {myRide.Name}");
+                Console.WriteLine("Do you want to change it [y/n]?:");
+                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+                while (keyInfo.Key != ConsoleKey.Y && keyInfo.Key != ConsoleKey.N)
+                {
+                    Console.WriteLine("Press key 'y' or 'n' to continue...");
+                    keyInfo = Console.ReadKey(true);
+                }
+
+                if (keyInfo.Key == ConsoleKey.Y)
+                {
+                    Console.WriteLine($"Enter new name: ");
+                    var newName = Console.ReadLine();
+                    if (!string.IsNullOrWhiteSpace(newName))
+                    {
+                        myRide.Name = newName;
+                        Console.WriteLine($"Name has been changed. Current name is: {myRide.Name}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("There is no correct name. Name hasn't been changed...");
+                    }
+                }
             }
+            
+
+
         }
     }
 }
