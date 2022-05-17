@@ -114,7 +114,59 @@ namespace PlanAndRide.BusinessLogic
                     }
                 }
             }
-            
+            //ShareRide edit
+            {
+                Console.WriteLine($"Current sharing setting is: {myRide.ShareRide}");
+                Console.WriteLine("Do you want to change it [y/n]?:");
+                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+                while (keyInfo.Key != ConsoleKey.Y && keyInfo.Key != ConsoleKey.N)
+                {
+                    Console.WriteLine("Press key 'y' or 'n' to continue...");
+                    keyInfo = Console.ReadKey(true);
+                }
+
+                if (keyInfo.Key == ConsoleKey.Y)
+                {
+                    Console.WriteLine($"Enter new sharing setting (true/false): ");
+                    var parseSuccess = Boolean.TryParse(Console.ReadLine(), out var newShareRide);
+                    if (parseSuccess)
+                    {
+                        myRide.ShareRide = newShareRide;
+                        Console.WriteLine($"Sharing setting has been changed. Current setting is: {myRide.ShareRide}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("There is no correct setting. It hasn't been changed...");
+                    }
+                }
+            }
+            //IsPrivate edit
+            {
+                Console.WriteLine($"Current privacy setting is: {myRide.IsPrivate}");
+                Console.WriteLine("Do you want to change it [y/n]?:");
+                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+                while (keyInfo.Key != ConsoleKey.Y && keyInfo.Key != ConsoleKey.N)
+                {
+                    Console.WriteLine("Press key 'y' or 'n' to continue...");
+                    keyInfo = Console.ReadKey(true);
+                }
+
+                if (keyInfo.Key == ConsoleKey.Y)
+                {
+                    Console.WriteLine($"Enter new privacy setting (true/false): ");
+                    var parseSuccess = Boolean.TryParse(Console.ReadLine(), out var newIsPrivate);
+                    if (parseSuccess)
+                    {
+                        myRide.IsPrivate = newIsPrivate;
+                        Console.WriteLine($"Privacy setting has been changed. Current setting is: {myRide.IsPrivate}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("There is no correct setting. It hasn't been changed...");
+                    }
+                }
+            }
+
         }
     }
 }
