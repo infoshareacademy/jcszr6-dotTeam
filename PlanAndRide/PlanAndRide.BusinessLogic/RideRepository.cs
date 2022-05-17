@@ -61,6 +61,32 @@ namespace PlanAndRide.BusinessLogic
                     }
                 }
             }
+            //Date edit
+            {
+                Console.WriteLine($"Current date is: {myRide.Date}");
+                Console.WriteLine("Do you want to change it [y/n]?:");
+                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+                while (keyInfo.Key != ConsoleKey.Y && keyInfo.Key != ConsoleKey.N)
+                {
+                    Console.WriteLine("Press key 'y' or 'n' to continue...");
+                    keyInfo = Console.ReadKey(true);
+                }
+
+                if (keyInfo.Key == ConsoleKey.Y)
+                {
+                    Console.WriteLine($"Enter new date (dd.mm.yyyy gg:mm): ");
+                    var parseSuccess = DateTime.TryParse(Console.ReadLine(), out var newDate);
+                    if (parseSuccess)
+                    {
+                        myRide.Date = newDate;
+                        Console.WriteLine($"Date has been changed. Current date is: {myRide.Date}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("There is no correct date. It hasn't been changed...");
+                    }
+                }
+            }
             
 
 

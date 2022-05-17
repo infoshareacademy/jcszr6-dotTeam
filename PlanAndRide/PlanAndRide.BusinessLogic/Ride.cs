@@ -10,7 +10,7 @@ namespace PlanAndRide.BusinessLogic
     {
         public string Name { get; set; }
 
-        public DateTime Date { get; private set; }
+        public DateTime Date { get;  set; }
 
         // do not change in edit
         public List<User> RideMembers;
