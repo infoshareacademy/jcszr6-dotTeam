@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -87,9 +88,33 @@ namespace PlanAndRide.BusinessLogic
                     }
                 }
             }
+            //Description edit
+            {
+                Console.WriteLine($"Current description is: {myRide.Description}");
+                Console.WriteLine("Do you want to change it [y/n]?:");
+                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+                while (keyInfo.Key != ConsoleKey.Y && keyInfo.Key != ConsoleKey.N)
+                {
+                    Console.WriteLine("Press key 'y' or 'n' to continue...");
+                    keyInfo = Console.ReadKey(true);
+                }
+
+                if (keyInfo.Key == ConsoleKey.Y)
+                {
+                    Console.WriteLine($"Enter new description: ");
+                    var newDesc = Console.ReadLine();
+                    if (!string.IsNullOrWhiteSpace(newDesc))
+                    {
+                        myRide.Description = newDesc;
+                        Console.WriteLine($"Description has been changed. Current description is: {myRide.Description}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("There is no correct description. Description hasn't been changed...");
+                    }
+                }
+            }
             
-
-
         }
     }
 }
