@@ -20,7 +20,7 @@
 
 using System;
 using System.Threading.Channels;
-
+/*
 Console.WriteLine("Witaj w Plan&Ride App");
 Console.WriteLine("-------------------------");
 Console.WriteLine("1. Stwórz konto");
@@ -34,3 +34,8 @@ switch (keyInfo.Key)
     case ConsoleKey.D1: Console.WriteLine("Tworzymy konto...");break;
     case ConsoleKey.D2: Console.WriteLine("Witaj zalogowany użytkowniku...");break;
 }
+*/
+PlanAndRide.BusinessLogic.Route route = new PlanAndRide.BusinessLogic.Route();
+PlanAndRide.BusinessLogic.Ride ride = new PlanAndRide.BusinessLogic.Ride();
+//ride.NewRide();
+route.NewRoute();
