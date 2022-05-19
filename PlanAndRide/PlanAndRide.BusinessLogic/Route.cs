@@ -22,7 +22,6 @@ namespace PlanAndRide.BusinessLogic
         {
             //nazwa trasy + sprawdzenie jej wprowadzenia
 
-            Console.WriteLine("route new route");
             Console.WriteLine("Stwórzmy trasę!\n");
             Console.WriteLine("Nazwa nowej trasy:");
             Name = Console.ReadLine().Trim();

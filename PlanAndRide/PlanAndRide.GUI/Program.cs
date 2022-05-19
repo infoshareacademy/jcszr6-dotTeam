@@ -37,5 +37,9 @@ switch (keyInfo.Key)
 */
 PlanAndRide.BusinessLogic.Route route = new PlanAndRide.BusinessLogic.Route();
 PlanAndRide.BusinessLogic.Ride ride = new PlanAndRide.BusinessLogic.Ride();
+PlanAndRide.BusinessLogic.User user = new PlanAndRide.BusinessLogic.User();
+PlanAndRide.BusinessLogic.Review review = new PlanAndRide.BusinessLogic.Review();
 //ride.NewRide();
-route.NewRoute();
+//route.NewRoute();
+//user.NewUser();
+review.NewReview();
