@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Environment = System.Environment;
 
+
 namespace PlanAndRide.BusinessLogic
 {
     public static class RideRepository
@@ -16,6 +17,7 @@ namespace PlanAndRide.BusinessLogic
         { 
            var json = File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "data.json"));
            rides = JsonConvert.DeserializeObject<List<Ride>>(json);
+            
         }
 
         public static List<Ride> GetAllRides()
@@ -28,21 +30,44 @@ namespace PlanAndRide.BusinessLogic
             rides.Add(ride);
         }
 
-        public static void EditRide(string rideName)
+        public static void PrintUpdate()
         {
-            var myRide = rides.FirstOrDefault(r => r.Name == rideName);
-            if (myRide == null)
-            {
-                Console.WriteLine($"No ride with name {rideName} has been found.");
-            }
+            var json = File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "data.json"));
 
-            Console.WriteLine($"Current name is: {myRide.Name}");
-            Console.WriteLine($"Enter new name: ");
-            var newName = Console.ReadLine();
-            if (!string.IsNullOrWhiteSpace(newName))
+            var loadedRides = JsonConvert.DeserializeObject<List<Ride>>(json);
+            Console.WriteLine("Czy chcesz wyświetlić wszystkie dostępne trasy?");
+            Console.WriteLine($"Jeśli tak wciśnij 'y'");
+            var button= Console.ReadKey();
+            
+            foreach(var ride in loadedRides)
             {
-                myRide.Name = newName;
+                Console.WriteLine($"Nazwa przejazdu: {ride.Name}");
+                Console.WriteLine($"Data rozpoczęcia przejazdu: {ride.Date}");
+                if (ride.IsPrivate == false)
+                {
+                    Console.WriteLine("Przejazd jest publiczny. Każdy może dołączyć.");
+                }
+                else
+                {
+                    Console.WriteLine("Przejazd jest prywatny. Tylko osoby zaproszone mogą dołączyć.");
+                }
+                Console.WriteLine($"Nazwa trasy: {ride.Route.Name} ");
+                Console.WriteLine($"Opis trasy: {ride.Route.Description}");
+                
+                Console.WriteLine();
+                Console.WriteLine("Poniżej zostaną przedstawione opinie dotyczące trasy: ");
+                foreach(var rides in ride.Route.Reviews)
+                {
+                    Console.WriteLine($"Ocena trasy: {rides.Score}");
+                    Console.WriteLine($"Opinia: {rides.Description}\n");
+                    
+                }
+                
+                Console.WriteLine("-------------------------------------------------");
             }
         }
+
+           
+        
     }
 }
