@@ -37,317 +37,281 @@ namespace PlanAndRide.BusinessLogic
                 Console.WriteLine($"No ride with name {rideName} has been found.");
                 return;
             }
-            //Name edit
-            {
-                Console.WriteLine($"Current name is: {myRide.Name}");
-                Console.WriteLine("Do you want to change it [y/n]?:");
-                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-                while (keyInfo.Key != ConsoleKey.Y && keyInfo.Key != ConsoleKey.N)
-                {
-                    Console.WriteLine("Press key 'y' or 'n' to continue...");
-                    keyInfo = Console.ReadKey(true);
-                }
 
-                if (keyInfo.Key == ConsoleKey.Y)
-                {
-                    Console.WriteLine($"Enter new name: ");
-                    var newName = Console.ReadLine();
-                    if (!string.IsNullOrWhiteSpace(newName))
-                    {
-                        myRide.Name = newName;
-                        Console.WriteLine($"Name has been changed. Current name is: {myRide.Name}");
-                    }
-                    else
-                    {
-                        Console.WriteLine("There is no correct name. Name hasn't been changed...");
-                    }
-                }
-            }
-            //Date edit
-            {
-                Console.WriteLine($"Current date is: {myRide.Date}");
-                Console.WriteLine("Do you want to change it [y/n]?:");
-                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-                while (keyInfo.Key != ConsoleKey.Y && keyInfo.Key != ConsoleKey.N)
-                {
-                    Console.WriteLine("Press key 'y' or 'n' to continue...");
-                    keyInfo = Console.ReadKey(true);
-                }
-
-                if (keyInfo.Key == ConsoleKey.Y)
-                {
-                    Console.WriteLine($"Enter new date (dd.mm.yyyy gg:mm): ");
-                    var parseSuccess = DateTime.TryParse(Console.ReadLine(), out var newDate);
-                    if (parseSuccess)
-                    {
-                        myRide.Date = newDate;
-                        Console.WriteLine($"Date has been changed. Current date is: {myRide.Date}");
-                    }
-                    else
-                    {
-                        Console.WriteLine("There is no correct date. It hasn't been changed...");
-                    }
-                }
-            }
-            //Description edit
-            {
-                Console.WriteLine($"Current description is: {myRide.Description}");
-                Console.WriteLine("Do you want to change it [y/n]?:");
-                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-                while (keyInfo.Key != ConsoleKey.Y && keyInfo.Key != ConsoleKey.N)
-                {
-                    Console.WriteLine("Press key 'y' or 'n' to continue...");
-                    keyInfo = Console.ReadKey(true);
-                }
-
-                if (keyInfo.Key == ConsoleKey.Y)
-                {
-                    Console.WriteLine($"Enter new description: ");
-                    var newDesc = Console.ReadLine();
-                    if (!string.IsNullOrWhiteSpace(newDesc))
-                    {
-                        myRide.Description = newDesc;
-                        Console.WriteLine($"Description has been changed. Current description is: {myRide.Description}");
-                    }
-                    else
-                    {
-                        Console.WriteLine("There is no correct description. Description hasn't been changed...");
-                    }
-                }
-            }
-            //ShareRide edit
-            {
-                Console.WriteLine($"Current sharing setting is: {myRide.ShareRide}");
-                Console.WriteLine("Do you want to change it [y/n]?:");
-                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-                while (keyInfo.Key != ConsoleKey.Y && keyInfo.Key != ConsoleKey.N)
-                {
-                    Console.WriteLine("Press key 'y' or 'n' to continue...");
-                    keyInfo = Console.ReadKey(true);
-                }
-
-                if (keyInfo.Key == ConsoleKey.Y)
-                {
-                    Console.WriteLine($"Enter new sharing setting (true/false): ");
-                    var parseSuccess = Boolean.TryParse(Console.ReadLine(), out var newShareRide);
-                    if (parseSuccess)
-                    {
-                        myRide.ShareRide = newShareRide;
-                        Console.WriteLine($"Sharing setting has been changed. Current setting is: {myRide.ShareRide}");
-                    }
-                    else
-                    {
-                        Console.WriteLine("There is no correct setting. It hasn't been changed...");
-                    }
-                }
-            }
-            //IsPrivate edit
-            {
-                Console.WriteLine($"Current privacy setting is: {myRide.IsPrivate}");
-                Console.WriteLine("Do you want to change it [y/n]?:");
-                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-                while (keyInfo.Key != ConsoleKey.Y && keyInfo.Key != ConsoleKey.N)
-                {
-                    Console.WriteLine("Press key 'y' or 'n' to continue...");
-                    keyInfo = Console.ReadKey(true);
-                }
-
-                if (keyInfo.Key == ConsoleKey.Y)
-                {
-                    Console.WriteLine($"Enter new privacy setting (true/false): ");
-                    var parseSuccess = Boolean.TryParse(Console.ReadLine(), out var newIsPrivate);
-                    if (parseSuccess)
-                    {
-                        myRide.IsPrivate = newIsPrivate;
-                        Console.WriteLine($"Privacy setting has been changed. Current setting is: {myRide.IsPrivate}");
-                    }
-                    else
-                    {
-                        Console.WriteLine("There is no correct setting. It hasn't been changed...");
-                    }
-                }
-            }
-            //Route edit
-            {
-                Console.WriteLine($"This ride has assigned route {myRide.Route.Name}");
-                Console.WriteLine("Do you want to edit this route [y/n]?:");
-                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-                while (keyInfo.Key != ConsoleKey.Y && keyInfo.Key != ConsoleKey.N)
-                {
-                    Console.WriteLine("Press key 'y' or 'n' to continue...");
-                    keyInfo = Console.ReadKey(true);
-                }
-                if (keyInfo.Key == ConsoleKey.Y)
-                {
-                    EditRoute(myRide);
-                }
-                
-
-            }
+            EditRideName(myRide);
+            EditRideDate(myRide);
+            EditRideDescription(myRide);
+            EditShareRide(myRide);
+            EditRideIsPrivate(myRide);
+            EditRideRoute(myRide);
             Console.WriteLine("Ride editing is complete");
         }
 
-        public static void EditRoute(Ride ride)
+        private static void EditRideRoute(Ride ride)
         {
-            //Name edit
+            Console.WriteLine($"This ride has assigned route {ride.Route.Name}");
+            var isChange = GetNewYesNoValue("Do you want to change it [y/n]?: ");
+            if (isChange)
             {
-                Console.WriteLine($"Current route name is: {ride.Route.Name}");
-                Console.WriteLine("Do you want to change it [y/n]?:");
-                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-                while (keyInfo.Key != ConsoleKey.Y && keyInfo.Key != ConsoleKey.N)
-                {
-                    Console.WriteLine("Press key 'y' or 'n' to continue...");
-                    keyInfo = Console.ReadKey(true);
-                }
-
-                if (keyInfo.Key == ConsoleKey.Y)
-                {
-                    Console.WriteLine($"Enter new name: ");
-                    var newName = Console.ReadLine();
-                    if (!string.IsNullOrWhiteSpace(newName))
-                    {
-                        ride.Route.Name = newName;
-                        Console.WriteLine($"Name has been changed. Current name is: {ride.Route.Name}");
-                    }
-                    else
-                    {
-                        Console.WriteLine("There is no correct name. Name hasn't been changed...");
-                    }
-                }
+                EditRoute(ride.Route);
             }
-            //Description edit
+        }
+
+        private static void EditRideIsPrivate(Ride ride)
+        {
+            Console.WriteLine($"Current privacy setting is: {ride.IsPrivate}");
+            var isChange = GetNewYesNoValue("Do you want to change it [y/n]?: ");
+            if (!isChange)
+                return;
+
+            var newIsPrivate = GetNewYesNoValue("Enter new privacy setting [y/n]: ");
+            if (ride.IsPrivate != newIsPrivate)
             {
-                Console.WriteLine($"Current route description is: {ride.Route.Description}");
-                Console.WriteLine("Do you want to change it [y/n]?:");
-                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-                while (keyInfo.Key != ConsoleKey.Y && keyInfo.Key != ConsoleKey.N)
-                {
-                    Console.WriteLine("Press key 'y' or 'n' to continue...");
-                    keyInfo = Console.ReadKey(true);
-                }
-
-                if (keyInfo.Key == ConsoleKey.Y)
-                {
-                    Console.WriteLine($"Enter new description: ");
-                    var newDesc = Console.ReadLine();
-                    if (!string.IsNullOrWhiteSpace(newDesc))
-                    {
-                        ride.Route.Description = newDesc;
-                        Console.WriteLine($"Description has been changed. Current route description is: {ride.Route.Description}");
-                    }
-                    else
-                    {
-                        Console.WriteLine("There is no correct description. Description hasn't been changed...");
-                    }
-                }
+                ride.IsPrivate = newIsPrivate;
+                Console.WriteLine($"Privacy setting has been changed. Current setting is: {ride.IsPrivate}");
             }
-            //ShareRoute edit
+            else
             {
-                Console.WriteLine($"Current route sharing setting is: {ride.Route.ShareRoute}");
-                Console.WriteLine("Do you want to change it [y/n]?:");
-                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-                while (keyInfo.Key != ConsoleKey.Y && keyInfo.Key != ConsoleKey.N)
-                {
-                    Console.WriteLine("Press key 'y' or 'n' to continue...");
-                    keyInfo = Console.ReadKey(true);
-                }
-
-                if (keyInfo.Key == ConsoleKey.Y)
-                {
-                    Console.WriteLine($"Enter new sharing setting (true/false): ");
-                    var parseSuccess = Boolean.TryParse(Console.ReadLine(), out var newShareRoute);
-                    if (parseSuccess)
-                    {
-                        ride.Route.ShareRoute= newShareRoute;
-                        Console.WriteLine($"Route sharing setting has been changed. Current setting is: {ride.Route.ShareRoute}");
-                    }
-                    else
-                    {
-                        Console.WriteLine("There is no correct setting. It hasn't been changed...");
-                    }
-                }
+                Console.WriteLine("New and old value are the same. There is no change..");
             }
-            //IsPrivate edit
+
+        }
+
+        private static void EditShareRide(Ride ride)
+        {
+            Console.WriteLine($"Current sharing setting is: {ride.ShareRide}");
+            var isChange = GetNewYesNoValue("Do you want to change it [y/n]?: ");
+            if (!isChange)
+                return;
+
+            var newShareRide = GetNewYesNoValue("Enter new sharing setting [y/n]: ");
+            if (ride.ShareRide != newShareRide)
             {
-                Console.WriteLine($"Current route privacy setting is: {ride.Route.IsPrivate}");
-                Console.WriteLine("Do you want to change it [y/n]?:");
-                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-                while (keyInfo.Key != ConsoleKey.Y && keyInfo.Key != ConsoleKey.N)
-                {
-                    Console.WriteLine("Press key 'y' or 'n' to continue...");
-                    keyInfo = Console.ReadKey(true);
-                }
-
-                if (keyInfo.Key == ConsoleKey.Y)
-                {
-                    Console.WriteLine($"Enter new route privacy setting (true/false): ");
-                    var parseSuccess = Boolean.TryParse(Console.ReadLine(), out var newIsPrivate);
-                    if (parseSuccess)
-                    {
-                        ride.Route.IsPrivate = newIsPrivate;
-                        Console.WriteLine($"Route privacy setting has been changed. Current setting is: {ride.Route.IsPrivate}");
-                    }
-                    else
-                    {
-                        Console.WriteLine("There is no correct setting. It hasn't been changed...");
-                    }
-                }
+                ride.ShareRide = newShareRide;
+                Console.WriteLine($"Sharing setting has been changed. Current setting is: {ride.ShareRide}");
             }
-            //StartingPosition edit
+            else
             {
-                Console.WriteLine($"Current route starting position is: {ride.Route.StartingPosition}");
-                Console.WriteLine("Do you want to change it [y/n]?:");
-                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-                while (keyInfo.Key != ConsoleKey.Y && keyInfo.Key != ConsoleKey.N)
-                {
-                    Console.WriteLine("Press key 'y' or 'n' to continue...");
-                    keyInfo = Console.ReadKey(true);
-                }
-
-                if (keyInfo.Key == ConsoleKey.Y)
-                {
-                    Console.WriteLine($"Enter new starting position: ");
-                    var parseSuccess = double.TryParse(Console.ReadLine(), out var newStartingPosition);
-                    if (parseSuccess)
-                    {
-                        ride.Route.StartingPosition = newStartingPosition;
-                        Console.WriteLine($"Route starting position has been changed. Current value is: {ride.Route.StartingPosition}");
-                    }
-                    else
-                    {
-                        Console.WriteLine("There is no correct value. It hasn't been changed...");
-                    }
-                }
+                Console.WriteLine("New and old value are the same. There is no change..");
             }
-            //DestinationPosition edit
+        }
+
+        private static void EditRideDescription(Ride ride)
+        {
+            Console.WriteLine($"Current description is: {ride.Description}");
+            var isChange = GetNewYesNoValue("Do you want to change it [y/n]?: ");
+            if (!isChange)
+                return;
+
+            var newDesc = GetNewTextValue("Enter new description: ");
+            if (newDesc != String.Empty)
             {
-                Console.WriteLine($"Current route destination position is: {ride.Route.DestinationPosition}");
-                Console.WriteLine("Do you want to change it [y/n]?:");
-                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-                while (keyInfo.Key != ConsoleKey.Y && keyInfo.Key != ConsoleKey.N)
-                {
-                    Console.WriteLine("Press key 'y' or 'n' to continue...");
-                    keyInfo = Console.ReadKey(true);
-                }
-
-                if (keyInfo.Key == ConsoleKey.Y)
-                {
-                    Console.WriteLine($"Enter new destination position: ");
-                    var parseSuccess = double.TryParse(Console.ReadLine(), out var newDestinationPosition);
-                    if (parseSuccess)
-                    {
-                        ride.Route.DestinationPosition = newDestinationPosition;
-                        Console.WriteLine($"Route destination position has been changed. Current value is: {ride.Route.DestinationPosition}");
-                    }
-                    else
-                    {
-                        Console.WriteLine("There is no correct value. It hasn't been changed...");
-                    }
-                }
+                ride.Description = newDesc;
+                Console.WriteLine($"Description has been changed. Current description is: {ride.Description}");
             }
+            else
+            {
+                Console.WriteLine("There is no correct description. Description hasn't been changed...");
+            }
+        }
+
+        private static void EditRideDate(Ride ride)
+        {
+            Console.WriteLine($"Current date is: {ride.Date}");
+            var isChange = GetNewYesNoValue("Do you want to change it [y/n]?: ");
+            if (!isChange)
+                return;
+
+            var newDate = GetNewDateTime("Enter new date (dd.mm.yyyy gg:mm): ");
+            if (newDate != null)
+            {
+                ride.Date = newDate;
+                Console.WriteLine($"Date has been changed. Current date is: {ride.Date}");
+            }
+            else
+            {
+                Console.WriteLine("There is no correct date. It hasn't been changed...");
+            }
+        }
+
+        private static void EditRideName(Ride ride)
+        {
+            Console.WriteLine($"Current name is: {ride.Name}");
+            var isChange = GetNewYesNoValue("Do you want to change it [y/n]?: ");
+            if (!isChange)
+                return;
+
+            var newName = GetNewTextValue("Enter new name: ");
+            if (newName != String.Empty)
+            {
+                ride.Name = newName;
+                Console.WriteLine($"Name has been changed. Current name is: {ride.Name}");
+            }
+            else
+            {
+                Console.WriteLine("There is no correct name. Name hasn't been changed...");
+            }
+        }
+
+        public static void EditRoute(Route route)
+        {
+            EditRouteName(route);
+            EditRouteDescription(route);
+            EditShareRoute(route);
+            EditRouteIsPrivate(route);
+            EditRouteStartingPosition(route);
+            EditRouteDestinationPosition(route);
+
             Console.WriteLine("Route editing is complete");
         }
 
+        private static void EditRouteDestinationPosition(Route route)
+        {
+            Console.WriteLine($"Current route destination position is: {route.DestinationPosition}");
+            var isChange = GetNewYesNoValue("Do you want to change it [y/n]?: ");
+            if (!isChange)
+                return;
 
+            Console.WriteLine($"Enter new destination position: ");
+            var parseSuccess = double.TryParse(Console.ReadLine(), out var newDestinationPosition);
+            if (parseSuccess)
+            {
+                route.DestinationPosition = newDestinationPosition;
+                Console.WriteLine(
+                    $"Route destination position has been changed. Current value is: {route.DestinationPosition}");
+            }
+            else
+            {
+                Console.WriteLine("There is no correct value. It hasn't been changed...");
+            }
+
+        }
+
+        private static void EditRouteStartingPosition(Route route)
+        {
+            Console.WriteLine($"Current route starting position is: {route.StartingPosition}");
+            var isChange = GetNewYesNoValue("Do you want to change it [y/n]?: ");
+
+            if (!isChange)
+                return;
+
+            Console.WriteLine($"Enter new starting position: ");
+            var parseSuccess = double.TryParse(Console.ReadLine(), out var newStartingPosition);
+            if (parseSuccess)
+            {
+                route.StartingPosition = newStartingPosition;
+                Console.WriteLine(
+                    $"Route starting position has been changed. Current value is: {route.StartingPosition}");
+            }
+            else
+            {
+                Console.WriteLine("There is no correct value. It hasn't been changed...");
+            }
+        }
+
+        private static void EditRouteIsPrivate(Route route)
+        {
+            Console.WriteLine($"Current route privacy setting is: {route.IsPrivate}");
+            var isChange = GetNewYesNoValue("Do you want to change it [y/n]?: ");
+            if (!isChange)
+                return;
+
+            var newIsPrivate = GetNewYesNoValue("Enter new route privacy setting [y/n]: ");
+            if (route.IsPrivate != newIsPrivate)
+            {
+                route.IsPrivate = newIsPrivate;
+                Console.WriteLine($"Route privacy setting has been changed. Current setting is: {route.IsPrivate}");
+            }
+            else
+            {
+                Console.WriteLine("New and old value are the same. There is no change..");
+            }
+        }
+
+        private static void EditShareRoute(Route route)
+        {
+            Console.WriteLine($"Current route sharing setting is: {route.ShareRoute}");
+            var isChange = GetNewYesNoValue("Do you want to change it [y/n]?: ");
+            if (!isChange)
+                return;
+
+            var newShareRoute = GetNewYesNoValue("Enter new sharing setting [y/n]: ");
+            if (route.ShareRoute != newShareRoute)
+            {
+                route.ShareRoute = newShareRoute;
+                Console.WriteLine($"Route sharing setting has been changed. Current setting is: {route.ShareRoute}");
+            }
+            else
+            {
+                Console.WriteLine("New and old value are the same. There is no change..");
+            }
+        }
+
+        private static void EditRouteDescription(Route route)
+        {
+            Console.WriteLine($"Current route description is: {route.Description}");
+            var isChange = GetNewYesNoValue("Do you want to change it [y/n]?: ");
+            if (!isChange)
+                return;
+
+            var newDesc = GetNewTextValue("Enter new description: ");
+            if (newDesc != String.Empty)
+            {
+                route.Description = newDesc;
+                Console.WriteLine($"Description has been changed. Current route description is: {route.Description}");
+            }
+            else
+            {
+                Console.WriteLine("There is no correct description. Description hasn't been changed...");
+            }
+        }
+
+        private static void EditRouteName(Route route)
+        {
+            Console.WriteLine($"Current route name is: {route.Name}");
+            var isChange = GetNewYesNoValue("Do you want to change it [y/n]?: ");
+            if (!isChange)
+                return;
+
+            var newName = GetNewTextValue("Enter new name: ");
+            if (newName != String.Empty)
+            {
+                route.Name = newName;
+                Console.WriteLine($"Name has been changed. Current name is: {route.Name}");
+            }
+            else
+            {
+                Console.WriteLine("There is no correct name. Name hasn't been changed...");
+            }
+        }
+
+
+        private static string GetNewTextValue(string message)
+        {
+            Console.WriteLine(message);
+            var newValue = Console.ReadLine();
+            return !string.IsNullOrWhiteSpace(newValue) ? newValue : String.Empty;
+
+        }
+
+        private static DateTime? GetNewDateTime(string message)
+        {
+            Console.WriteLine(message);
+            var parseSuccess = DateTime.TryParse(Console.ReadLine(), out var newDate);
+            return parseSuccess ? newDate : null;
+        }
+
+        private static bool GetNewYesNoValue(string message)
+        {
+            Console.WriteLine(message);
+            ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+            while (keyInfo.Key != ConsoleKey.Y && keyInfo.Key != ConsoleKey.N)
+            {
+                Console.WriteLine("Press key 'y' or 'n' to continue...");
+                keyInfo = Console.ReadKey(true);
+            }
+
+            return keyInfo.Key == ConsoleKey.Y ? true : false;
+        }
     }
 }
