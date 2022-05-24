@@ -24,13 +24,13 @@ namespace PlanAndRide.GUI
             UpdateShareRide(ride);
             UpdateRideIsPrivate(ride);
             UpdateRideRoute(ride);
-            Console.WriteLine("Ride updating is complete");
+            Console.WriteLine("Edycja wydarzenia została zakończona");
         }
 
         private void UpdateRideRoute(Ride ride)
         {
-            Console.WriteLine($"This ride has assigned route {ride.Route.Name}");
-            var isChange = GetNewYesNoValue("Do you want to change it [y/n]?: ");
+            Console.WriteLine($"Aktualnie przypisana trasa to: {ride.Route.Name}");
+            var isChange = GetNewYesNoValue("Czy chcesz ją zmienić [t/n]?: ");
             if (isChange)
             {
                 UpdateRoute(ride.Route);
@@ -39,106 +39,89 @@ namespace PlanAndRide.GUI
 
         private void UpdateRideIsPrivate(Ride ride)
         {
-            Console.WriteLine($"Current privacy setting is: {ride.IsPrivate}");
-            var isChange = GetNewYesNoValue("Do you want to change it [y/n]?: ");
+            Console.WriteLine($"Wydarzenie{(ride.IsPrivate ? " " : " nie ")}jest prywatne");
+            var isChange = GetNewYesNoValue("Czy chcesz to zmienić [t/n]?: ");
             if (!isChange)
                 return;
 
-            var newIsPrivate = GetNewYesNoValue("Enter new privacy setting [y/n]: ");
-            if (ride.IsPrivate != newIsPrivate)
-            {
-                ride.IsPrivate = newIsPrivate;
-                Console.WriteLine($"Privacy setting has been changed. Current setting is: {ride.IsPrivate}");
-                Console.WriteLine();
-            }
-            else
-            {
-                Console.WriteLine("New and old value are the same. There is no change..");
-                Console.WriteLine();
-            }
-
+            ride.IsPrivate = ride.IsPrivate ? false : true;
+            Console.WriteLine($"Ustawienia prywatności zostały zmienione");
+            Console.WriteLine($"Wydarzenie{(ride.IsPrivate ? " " : " nie ")}jest prywatne");
+            Console.WriteLine();
         }
 
         private void UpdateShareRide(Ride ride)
         {
-            Console.WriteLine($"Current sharing setting is: {ride.ShareRide}");
-            var isChange = GetNewYesNoValue("Do you want to change it [y/n]?: ");
+            Console.WriteLine($"Wydarzenie{(ride.ShareRide ? " " : " nie ")}jest udostępniane");
+            var isChange = GetNewYesNoValue("Czy chcesz to zmienić [t/n]?: ");
             if (!isChange)
                 return;
 
-            var newShareRide = GetNewYesNoValue("Enter new sharing setting [y/n]: ");
-            if (ride.ShareRide != newShareRide)
-            {
-                ride.ShareRide = newShareRide;
-                Console.WriteLine($"Sharing setting has been changed. Current setting is: {ride.ShareRide}");
-                Console.WriteLine();
-            }
-            else
-            {
-                Console.WriteLine("New and old value are the same. There is no change..");
-                Console.WriteLine();
-            }
+            ride.ShareRide = ride.ShareRide ? false : true;
+            Console.WriteLine($"Ustawienia udostępniania zostały zmienione");
+            Console.WriteLine($"Wydarzenie{(ride.ShareRide ? " " : " nie ")}jest udostępniane");
+            Console.WriteLine();
         }
 
         private void UpdateRideDescription(Ride ride)
         {
-            Console.WriteLine($"Current description is: {ride.Description}");
-            var isChange = GetNewYesNoValue("Do you want to change it [y/n]?: ");
+            Console.WriteLine($"Aktualny opis to: {ride.Description}");
+            var isChange = GetNewYesNoValue("Czy chcesz go zmienić [t/n]?: ");
             if (!isChange)
                 return;
 
-            var newDesc = GetNewTextValue("Enter new description: ");
+            var newDesc = GetNewTextValue("Wprowadź nowy opis: ");
             if (newDesc != String.Empty)
             {
                 ride.Description = newDesc;
-                Console.WriteLine($"Description has been changed. Current description is: {ride.Description}");
+                Console.WriteLine($"Opis wydarzenia został zmieniony\nAktualny opis to: {ride.Description}");
                 Console.WriteLine();
             }
             else
             {
-                Console.WriteLine("There is no correct description. Description hasn't been changed...");
+                Console.WriteLine("Nie wprowadziłeś poprawnej wartości. Opis pozostaje bez zmian...");
                 Console.WriteLine();
             }
         }
 
         private void UpdateRideDate(Ride ride)
         {
-            Console.WriteLine($"Current date is: {ride.Date}");
-            var isChange = GetNewYesNoValue("Do you want to change it [y/n]?: ");
+            Console.WriteLine($"Aktualna data wydarzenia to: {ride.Date}");
+            var isChange = GetNewYesNoValue("Czy chcesz ją zmienić [t/n]?: ");
             if (!isChange)
                 return;
 
-            var newDate = GetNewDateTime("Enter new date (dd.mm.yyyy gg:mm): ");
+            var newDate = GetNewDateTime("Wprowadź nową datę (dd.mm.yyyy gg:mm): ");
             if (newDate != null)
             {
                 ride.Date = newDate;
-                Console.WriteLine($"Date has been changed. Current date is: {ride.Date}");
+                Console.WriteLine($"Data została zmieniona\nAktualna data to: {ride.Date}");
                 Console.WriteLine();
             }
             else
             {
-                Console.WriteLine("There is no correct date. It hasn't been changed...");
+                Console.WriteLine("Nie wprowadziłeś poprawnej wartości. Data pozostaje bez zmian...");
                 Console.WriteLine();
             }
         }
 
         private void UpdateRideName(Ride ride)
         {
-            Console.WriteLine($"Current name is: {ride.Name}");
-            var isChange = GetNewYesNoValue("Do you want to change it [y/n]?: ");
+            Console.WriteLine($"Aktualna nazwa wydarzenia to: {ride.Name}");
+            var isChange = GetNewYesNoValue("Czy chcesz ją zmienić [t/n]?: ");
             if (!isChange)
                 return;
 
-            var newName = GetNewTextValue("Enter new name: ");
+            var newName = GetNewTextValue("Wprowadź nową nazwę: ");
             if (newName != String.Empty)
             {
                 ride.Name = newName;
-                Console.WriteLine($"Name has been changed. Current name is: {ride.Name}");
+                Console.WriteLine($"Nazwa została zmieniona\nAktualna nazwa to: {ride.Name}");
                 Console.WriteLine();
             }
             else
             {
-                Console.WriteLine("There is no correct name. Name hasn't been changed...");
+                Console.WriteLine("Nie wprowadziłeś poprawnej wartości. Nazwa pozostaje bez zmian...");
                 Console.WriteLine();
             }
         }
@@ -152,28 +135,28 @@ namespace PlanAndRide.GUI
             UpdateRouteStartingPosition(route);
             UpdateRouteDestinationPosition(route);
 
-            Console.WriteLine("Route updating is complete");
+            Console.WriteLine("Edycja trasy została zakończona");
         }
 
         private void UpdateRouteDestinationPosition(Route route)
         {
-            Console.WriteLine($"Current route destination position is: {route.DestinationPosition}");
-            var isChange = GetNewYesNoValue("Do you want to change it [y/n]?: ");
+            Console.WriteLine($"Aktualna pozycji docelowa to: {route.DestinationPosition}");
+            var isChange = GetNewYesNoValue("Czy chcesz ją zmienić [t/n]?: ");
             if (!isChange)
                 return;
 
-            Console.WriteLine($"Enter new destination position: ");
+            Console.WriteLine($"Wprowadź nową wartość: ");
             var parseSuccess = double.TryParse(Console.ReadLine(), out var newDestinationPosition);
             if (parseSuccess)
             {
                 route.DestinationPosition = newDestinationPosition;
                 Console.WriteLine(
-                    $"Route destination position has been changed. Current value is: {route.DestinationPosition}");
+                    $"Pozycja docelowa trasy została zmieniona. Aktualna wartość to: {route.DestinationPosition}");
                 Console.WriteLine();
             }
             else
             {
-                Console.WriteLine("There is no correct value. It hasn't been changed...");
+                Console.WriteLine("Nie wprowadziłeś poprawnej wartości. Pozycja docelowa pozostaje bez zmian...");
                 Console.WriteLine();
             }
 
@@ -181,108 +164,92 @@ namespace PlanAndRide.GUI
 
         private void UpdateRouteStartingPosition(Route route)
         {
-            Console.WriteLine($"Current route starting position is: {route.StartingPosition}");
-            var isChange = GetNewYesNoValue("Do you want to change it [y/n]?: ");
+            Console.WriteLine($"Aktualna pozycja startowa to: {route.StartingPosition}");
+            var isChange = GetNewYesNoValue("Czy chcesz ją zmienić [t/n]?: ");
 
             if (!isChange)
                 return;
 
-            Console.WriteLine($"Enter new starting position: ");
+            Console.WriteLine($"Wprowadź nową wartość: ");
             var parseSuccess = double.TryParse(Console.ReadLine(), out var newStartingPosition);
             if (parseSuccess)
             {
                 route.StartingPosition = newStartingPosition;
                 Console.WriteLine(
-                    $"Route starting position has been changed. Current value is: {route.StartingPosition}");
+                    $"Pozycja startowa trasy została zmieniona. Aktualna wartość to: {route.StartingPosition}");
                 Console.WriteLine();
             }
             else
             {
-                Console.WriteLine("There is no correct value. It hasn't been changed...");
+                Console.WriteLine("Nie wprowadziłeś poprawnej wartości. Pozycja startowa pozostaje bez zmian...");
                 Console.WriteLine();
             }
         }
 
         private void UpdateRouteIsPrivate(Route route)
         {
-            Console.WriteLine($"Current route privacy setting is: {route.IsPrivate}");
-            var isChange = GetNewYesNoValue("Do you want to change it [y/n]?: ");
+            Console.WriteLine($"Trasa{(route.IsPrivate ? " " : " nie ")}jest prywatna");
+            var isChange = GetNewYesNoValue("Czy chcesz to zmienić [t/n]?: ");
             if (!isChange)
                 return;
 
-            var newIsPrivate = GetNewYesNoValue("Enter new route privacy setting [y/n]: ");
-            if (route.IsPrivate != newIsPrivate)
-            {
-                route.IsPrivate = newIsPrivate;
-                Console.WriteLine($"Route privacy setting has been changed. Current setting is: {route.IsPrivate}");
-                Console.WriteLine();
-            }
-            else
-            {
-                Console.WriteLine("New and old value are the same. There is no change..");
-                Console.WriteLine();
-            }
+            route.IsPrivate = route.IsPrivate ? false : true;
+            Console.WriteLine($"Ustawienia prywatności zostały zmienione");
+            Console.WriteLine($"Trasa{(route.IsPrivate ? " " : " nie ")}jest prywatna");
+            Console.WriteLine();
         }
 
         private void UpdateShareRoute(Route route)
         {
-            Console.WriteLine($"Current route sharing setting is: {route.ShareRoute}");
-            var isChange = GetNewYesNoValue("Do you want to change it [y/n]?: ");
+            Console.WriteLine($"Trasa{(route.ShareRoute ? " " : " nie ")}jest udostępniana");
+            var isChange = GetNewYesNoValue("Czy chcesz to zmienić [t/n]?: ");
             if (!isChange)
                 return;
 
-            var newShareRoute = GetNewYesNoValue("Enter new sharing setting [y/n]: ");
-            if (route.ShareRoute != newShareRoute)
-            {
-                route.ShareRoute = newShareRoute;
-                Console.WriteLine($"Route sharing setting has been changed. Current setting is: {route.ShareRoute}");
-                Console.WriteLine();
-            }
-            else
-            {
-                Console.WriteLine("New and old value are the same. There is no change..");
-                Console.WriteLine();
-            }
+            route.ShareRoute = route.ShareRoute ? false : true;
+            Console.WriteLine($"Ustawienia udostępniania zostały zmienione");
+            Console.WriteLine($"Trasa{(route.ShareRoute ? " " : " nie ")}jest udostępniana");
+            Console.WriteLine();
         }
 
         private void UpdateRouteDescription(Route route)
         {
-            Console.WriteLine($"Current route description is: {route.Description}");
-            var isChange = GetNewYesNoValue("Do you want to change it [y/n]?: ");
+            Console.WriteLine($"Aktualny opis trasy to: {route.Description}");
+            var isChange = GetNewYesNoValue("Czy chcesz go zmienić [t/n]?: ");
             if (!isChange)
                 return;
 
-            var newDesc = GetNewTextValue("Enter new description: ");
+            var newDesc = GetNewTextValue("Wprowadź nowy opis: ");
             if (newDesc != String.Empty)
             {
                 route.Description = newDesc;
-                Console.WriteLine($"Description has been changed. Current route description is: {route.Description}");
+                Console.WriteLine($"Opis trasy został zmieniony.\nAktualny opis to: {route.Description}");
                 Console.WriteLine();
             }
             else
             {
-                Console.WriteLine("There is no correct description. Description hasn't been changed...");
+                Console.WriteLine("Nie wprowadziłeś poprawnej wartości. Opis pozostaje bez zmian...");
                 Console.WriteLine();
             }
         }
 
         private void UpdateRouteName(Route route)
         {
-            Console.WriteLine($"Current route name is: {route.Name}");
-            var isChange = GetNewYesNoValue("Do you want to change it [y/n]?: ");
+            Console.WriteLine($"Aktualna nazwa trasy to: {route.Name}");
+            var isChange = GetNewYesNoValue("Czy chcesz ją zmienić [t/n]?: ");
             if (!isChange)
                 return;
 
-            var newName = GetNewTextValue("Enter new name: ");
+            var newName = GetNewTextValue("Wprowadż nową nazwę: ");
             if (newName != String.Empty)
             {
                 route.Name = newName;
-                Console.WriteLine($"Name has been changed. Current name is: {route.Name}");
+                Console.WriteLine($"Nazwa trasy została zmieniona.\nAktualna nazwa to: {route.Name}");
                 Console.WriteLine();
             }
             else
             {
-                Console.WriteLine("There is no correct name. Name hasn't been changed...");
+                Console.WriteLine("Nie wprowadziłeś poprawnej wartości. Nazwa pozostaje bez zmian...");
                 Console.WriteLine();
             }
         }
@@ -307,13 +274,13 @@ namespace PlanAndRide.GUI
         {
             Console.WriteLine(message);
             ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-            while (keyInfo.Key != ConsoleKey.Y && keyInfo.Key != ConsoleKey.N)
+            while (keyInfo.Key != ConsoleKey.T && keyInfo.Key != ConsoleKey.N)
             {
-                Console.WriteLine("Press key 'y' or 'n' to continue...");
+                Console.WriteLine("Naciśnij 'T' lub 'N' aby przejść dalej...");
                 keyInfo = Console.ReadKey(true);
             }
 
-            return keyInfo.Key == ConsoleKey.Y ? true : false;
+            return keyInfo.Key == ConsoleKey.T ? true : false;
         }
     }
 }
