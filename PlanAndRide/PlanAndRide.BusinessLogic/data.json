@@ -10,6 +10,7 @@
     "Name": "Test-Ride",
     "Date": "0001-01-01T00:00:00",
     "Route": {
+      "Score": 100,
       "Name": "Test Route",
       "StartingPosition": 25.0,
       "DestinationPosition": 10.0,
@@ -18,12 +19,14 @@
       "IsPrivate": false,
       "Reviews": [
         {
+          "Date": "0001-01-01T00:00:00",
           "Score": 100,
           "Description": "Test desc"
         },
         {
-          "Score": 34,
-          "Description": "Test desc2"
+          "Date": "0002-01-01T00:00:00",
+          "Description": "Test desc2",
+          "Score": 34
         }
       ]
     },

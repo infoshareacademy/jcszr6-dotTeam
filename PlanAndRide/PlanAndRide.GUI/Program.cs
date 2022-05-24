@@ -27,8 +27,12 @@ using PlanAndRide.BusinessLogic;
 
 
 Console.WriteLine("Witaj w Plan&Ride App");
-var rides = RideRepository.GetAllRides();
-RideRepository.AddRide(new Ride());
+//RideRepository.AverageGradeRoute();
+//RideRepository.SearchByGradeRoute();
+RideRepository.PrintUpdate();
+//RideRepository.SearchByReviewDates();
+//var rides = RideRepository.GetAllRides();
+//RideRepository.AddRide(new Ride());
 
 //Console.WriteLine("-------------------------");
 //Console.WriteLine("1. Stwórz konto");
@@ -44,7 +48,7 @@ RideRepository.AddRide(new Ride());
 //}
 
 
-//var rides = new List<Ride>()
+//var rides2 = new List<Ride>()
 //{
 //    new Ride()
 //    {
@@ -86,3 +90,4 @@ RideRepository.AddRide(new Ride());
 
 //var loadedRides = JsonConvert.DeserializeObject<List<Ride>>(json);
 
+//Console.WriteLine();

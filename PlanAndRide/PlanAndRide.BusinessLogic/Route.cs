@@ -13,6 +13,7 @@ namespace PlanAndRide.BusinessLogic
         public string Name { get; set; }
         public double StartingPosition { get; set; } 
         public double DestinationPosition { get; set; } 
+        public double Score { get; set; }
         public string Description { get; set; }
         public bool ShareRoute { get; set; }
         public bool IsPrivate { get; set; }
