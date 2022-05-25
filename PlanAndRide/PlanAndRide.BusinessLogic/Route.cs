@@ -8,7 +8,7 @@ using Microsoft.Win32;
 
 namespace PlanAndRide.BusinessLogic
 {
-    class Route
+    public class Route
     {
         public string Name { get; set; }
         public double StartingPosition { get; set; } 
@@ -16,7 +16,7 @@ namespace PlanAndRide.BusinessLogic
         public string Description { get; set; }
         public bool ShareRoute { get; set; }
         public bool IsPrivate { get; set; }
-        public Review Review { get; set; }
+        public List<Review> Reviews { get; set; }
 
     }
 }
