@@ -51,29 +51,15 @@ namespace PlanAndRide.GUI
 
         private void NewReviewDescription(Review review)
         {
-            Console.WriteLine("Czy chcesz dodać opis recenzji (wprowadź 't' lub 'n'): ");
-            var descriptionYesNo = Console.ReadLine().ToLower().Trim();
-
-            do
+            var checkValue = GetYesNoValue("Czy chcesz dodać opis recenzji (wprowadź 't' lub 'n'): ");
+            if (!checkValue)
             {
-                if (descriptionYesNo == "n")
-                {
-                    Console.WriteLine($"Ocena bez opisu\n");
-                    break;
-                }
-                else if (descriptionYesNo == "t")
-                {
-                    Console.WriteLine("Wprowadź opis:\n");
-                    review.Description = Console.ReadLine();
-                    Console.WriteLine("\nDodano opis recenzji.\n");
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine("\nWprowadź 't' lub 'n': ");
-                    descriptionYesNo = Console.ReadLine().ToLower().Trim();
-                }
-            } while (descriptionYesNo != null);
+                Console.WriteLine("\nBez opisu");
+                return;
+            }
+            Console.WriteLine("Wprowadź opis:\n");
+            review.Description = Console.ReadLine();
+            Console.WriteLine("\nDodano opis recenzji.\n");
         }
 
         private void NewReviewMark(Review review)
@@ -98,83 +84,41 @@ namespace PlanAndRide.GUI
 
         private void NewRideIsPrivate(Ride ride)
         {
-            Console.WriteLine("Czy chcesz żeby przejazd był prywatny (tak lub nie): ");
-            var isPrivateYesNo = Console.ReadLine().ToLower().Trim();
-
-            do
+            var checkValue = GetYesNoValue("Czy chcesz żeby przejazd był prywatny (tak lub nie): ");
+            if (!checkValue)
             {
-                if (isPrivateYesNo == "n" || isPrivateYesNo == "nie")
-                {
-                    ride.IsPrivate = false;
-                    Console.WriteLine($"Przejazd będzie publiczny\n");
-                    break;
-                }
-                else if (isPrivateYesNo == "t" || isPrivateYesNo == "tak")
-                {
-                    ride.IsPrivate = true;
-                    Console.WriteLine("Przejazd będzie prywatny\n");
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine("\nCzy chcesz żeby przejazd był prywatny (tak lub nie): ");
-                    isPrivateYesNo = Console.ReadLine().ToLower().Trim();
-                }
-            } while (isPrivateYesNo != null);
+                Console.WriteLine("Przejazd będzie publiczny\n");
+                ride.IsPrivate = false;
+                return;
+            }
+            Console.WriteLine("Przejazd będzie prywatny\n");
+            ride.IsPrivate = true;
         }
 
         private void NewRideShareRide(Ride ride)
         {
-            Console.WriteLine("Czy chcesz współdzielić przejazd z innymi użytkownikami (tak lub nie): ");
-            var shareRideYesNo = Console.ReadLine().ToLower().Trim();
-
-            do
+            var checkValue = GetYesNoValue("Czy chcesz współdzielić przejazd z innymi użytkownikami (tak lub nie): ");
+            if (!checkValue)
             {
-                if (shareRideYesNo == "n" || shareRideYesNo == "nie")
-                {
-                    ride.ShareRide = false;
-                    Console.WriteLine($"Przejazd nie będzie współdzielony z innymi użytkownikami\n");
-                    break;
-                }
-                else if (shareRideYesNo == "t" || shareRideYesNo == "tak")
-                {
-                    ride.ShareRide = true;
-                    Console.WriteLine("Przejazd będzie współdzielony z innymi użytkownikami\n");
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine("\nCzy chcesz współdzielić przejazd z innymi użytkownikami (tak lub nie): ");
-                    shareRideYesNo = Console.ReadLine().ToLower().Trim();
-                }
-            } while (shareRideYesNo != null);
+                Console.WriteLine("Przejazd nie będzie współdzielony z innymi użytkownikami\n");
+                ride.ShareRide = false;
+                return;
+            }
+            Console.WriteLine("Przejazd będzie współdzielony z innymi użytkownikami\n");
+            ride.ShareRide = true;
         }
 
         private void NewRideDescription(Ride ride)
         {
-            Console.WriteLine("Czy chcesz dodać opis do przejazdu (wprowadź 't' lub 'n': ");
-            var descriptionYesNo = Console.ReadLine().ToLower().Trim();
-
-            do
+            var checkValue = GetYesNoValue("Czy chcesz dodać opis do przejazdu(wprowadź 't' lub 'n': ");
+            if (!checkValue)
             {
-                if (descriptionYesNo == "n" || descriptionYesNo == "nie")
-                {
-                    Console.WriteLine($"Przejazd bez opisu\n");
-                    break;
-                }
-                else if (descriptionYesNo == "t" || descriptionYesNo == "tak")
-                {
-                    Console.WriteLine("Wprowadź opis przejazdu:\n");
-                    ride.Description = Console.ReadLine();
-                    Console.WriteLine("\nDodano opis przejazdu.\n");
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine("\nWprowadź 't' lub 'n': ");
-                    descriptionYesNo = Console.ReadLine().ToLower().Trim();
-                }
-            } while (descriptionYesNo != null);
+                Console.WriteLine("\nBez opisu");
+                return;
+            }
+            Console.WriteLine("Wprowadź opis:\n");
+            ride.Description = Console.ReadLine();
+            Console.WriteLine("\nDodano opis przejazdu.\n");
         }
 
         //private void NewRideAddRoute(Ride ride)
@@ -257,83 +201,41 @@ namespace PlanAndRide.GUI
 
         private void NewRouteIsPrivate(Route route)
         {
-            Console.WriteLine("Czy chcesz żeby trasa był prywatna (tak lub nie): ");
-            var isPrivateYesNo = Console.ReadLine().ToLower().Trim();
-
-            do
+            var checkValue = GetYesNoValue("Czy chcesz żeby przejazd był prywatny (tak lub nie): ");
+            if (!checkValue)
             {
-                if (isPrivateYesNo == "n" || isPrivateYesNo == "nie")
-                {
-                    route.IsPrivate = false;
-                    Console.WriteLine($"Trasa będzie publiczna\n");
-                    break;
-                }
-                else if (isPrivateYesNo == "t" || isPrivateYesNo == "tak")
-                {
-                    route.IsPrivate = true;
-                    Console.WriteLine("Trasa będzie prywatna\n");
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine("\nCzy chcesz żeby trasa był prywatna (tak lub nie): ");
-                    isPrivateYesNo = Console.ReadLine().ToLower().Trim();
-                }
-            } while (isPrivateYesNo != null);
+                Console.WriteLine("Trasa będzie publiczna\n");
+                route.IsPrivate = false;
+                return;
+            }
+            Console.WriteLine("Trasa będzie prywatna\n");
+            route.IsPrivate = true;
         }
 
         private void NewRouteShare(Route route)
         {
-            Console.WriteLine("Czy chcesz współdzielić przejazd z innymi użytkownikami (tak lub nie): ");
-            var shareRouteYesNo = Console.ReadLine().ToLower().Trim();
-
-            do
+            var checkValue = GetYesNoValue("Czy chcesz współdzielić przejazd z innymi użytkownikami (tak lub nie): ");
+            if (!checkValue)
             {
-                if (shareRouteYesNo == "n" || shareRouteYesNo == "nie")
-                {
-                    route.ShareRoute = false;
-                    Console.WriteLine($"Przejazd nie będzie współdzielony z innymi użytkownikami\n");
-                    break;
-                }
-                else if (shareRouteYesNo == "t" || shareRouteYesNo == "tak")
-                {
-                    route.ShareRoute = true;
-                    Console.WriteLine("Przejazd będzie współdzielony z innymi użytkownikami\n");
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine("\nCzy chcesz współdzielić przejazd z innymi użytkownikami (tak lub nie): ");
-                    shareRouteYesNo = Console.ReadLine().ToLower().Trim();
-                }
-            } while (shareRouteYesNo != null);
+                Console.WriteLine("Przejazd nie będzie współdzielony z innymi użytkownikami\n");
+                route.ShareRoute = false;
+                return;
+            }
+            Console.WriteLine("Przejazd będzie współdzielony z innymi użytkownikami\n");
+            route.ShareRoute = true;
         }
 
         private void NewRouteDescription(Route route)
         {
-            Console.WriteLine("Czy chcesz dodać opis trasy (wprowadź 't' lub 'n': ");
-            var descriptionYesNo = Console.ReadLine().ToLower().Trim();
-
-            do
+            var checkValue = GetYesNoValue("Czy chcesz dodać opis do przejazdu(wprowadź 't' lub 'n': ");
+            if (!checkValue)
             {
-                if (descriptionYesNo == "n" || descriptionYesNo == "nie")
-                {
-                    Console.WriteLine($"Trasa bez opisu\n");
-                    break;
-                }
-                else if (descriptionYesNo == "t" || descriptionYesNo == "tak")
-                {
-                    Console.WriteLine("Wprowadź opis trasy:\n");
-                    route.Description = Console.ReadLine().Trim();
-                    Console.WriteLine("\nDodano opis trasy.\n");
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine("\nWprowadź 't' lub 'n': ");
-                    descriptionYesNo = Console.ReadLine().ToLower().Trim();
-                }
-            } while (descriptionYesNo != null);
+                Console.WriteLine("Trasa bez opisu\n");
+                return;
+            }
+            Console.WriteLine("Wprowadź opis:\n");
+            route.Description = Console.ReadLine().Trim();
+            Console.WriteLine("\nDodano opis trasy.\n");
         }
 
         private void NewRouteName(Route route)
@@ -392,11 +294,25 @@ namespace PlanAndRide.GUI
 
             Console.WriteLine($"\nEmail nowego konta to: {user.Email}\n");
         }
-        public static bool ValidateEmail(string Email)
+        private bool ValidateEmail(string Email)
         {
             var regex = @"[a-z A-Z 0-9_\-]+[@]+[a-z 0-9]+[\.]+[a-z]{2,4}$";
             bool result = Regex.IsMatch(Email, regex, RegexOptions.IgnoreCase);
             return result;
         }
+
+        private bool GetYesNoValue(string message)
+        {
+            Console.WriteLine(message);
+            ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+            while (keyInfo.Key != ConsoleKey.T && keyInfo.Key != ConsoleKey.N)
+            {
+                Console.WriteLine("Naciśnij 'T' lub 'N' aby przejść dalej...");
+                keyInfo = Console.ReadKey(true);
+            }
+
+            return keyInfo.Key == ConsoleKey.T ? true : false;
+        }
+
     }
 }
