@@ -41,5 +41,5 @@ PlanAndRide.BusinessLogic.User user = new PlanAndRide.BusinessLogic.User();
 PlanAndRide.BusinessLogic.Review review = new PlanAndRide.BusinessLogic.Review();
 //ride.NewRide();
 //route.NewRoute();
-//user.NewUser();
-review.NewReview();
+user.NewUser();
+//review.NewReview();

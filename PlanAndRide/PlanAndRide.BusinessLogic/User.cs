@@ -1,4 +1,6 @@
-﻿namespace PlanAndRide.BusinessLogic
+﻿using System.Text.RegularExpressions;
+
+namespace PlanAndRide.BusinessLogic
 {
     public class User
     {
@@ -33,19 +35,27 @@
                 Password = Console.ReadLine();
             }
 
-            Console.WriteLine($"\nHasło wprowadzone pomyślnie!\n");
+            Console.WriteLine($"\nZapisano hasło!\n");
 
             //email *** dodać walidację adresu email! **
             Console.WriteLine("Wprowadź adres email:");
             Email = Console.ReadLine().Trim();
 
-            while (Email == "")
+            while (Email == null || ValidateEmail(Email) == false)
             {
                 Console.WriteLine("Wprowadź email:");
                 Email = Console.ReadLine();
             }
 
             Console.WriteLine($"\nEmail nowego konta to: {Email}\n");
+        }
+
+        // walidacja regex email
+        public static bool ValidateEmail(string Email)
+        {
+            var regex = @"[a-z A-Z 0-9_\-]+[@]+[a-z 0-9]+[\.]+[a-z]{2,4}$";
+            bool result = Regex.IsMatch(Email, regex, RegexOptions.IgnoreCase);
+            return result;
         }
     }
 }
