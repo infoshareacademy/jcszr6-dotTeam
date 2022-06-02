@@ -15,7 +15,7 @@ namespace PlanAndRide.GUI
             //newData.NewRide();
             //newData.NewReview();
 
-
+            //FindUserRides.UserRides();
             Menu.WelcomeMenu();
         }
 
