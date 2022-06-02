@@ -17,6 +17,7 @@ namespace PlanAndRide.GUI
             NewUserLogin(user);
             NewUserPassword(user);
             NewUserMail(user);
+            GenerateUserId(user);
         }
 
         public void NewRoute()
@@ -299,6 +300,12 @@ namespace PlanAndRide.GUI
             var regex = @"[a-z A-Z 0-9_\-]+[@]+[a-z 0-9]+[\.]+[a-z]{2,4}$";
             bool result = Regex.IsMatch(Email, regex, RegexOptions.IgnoreCase);
             return result;
+        }
+        public string GenerateUserId(User user)
+        {
+            user.ID = string.Format("{0}_{1:N}", user.Login, Guid.NewGuid());
+            Console.WriteLine($"Wygenerowany user ID to: {user.ID}");
+            return user.ID;
         }
 
         private bool GetYesNoValue(string message)

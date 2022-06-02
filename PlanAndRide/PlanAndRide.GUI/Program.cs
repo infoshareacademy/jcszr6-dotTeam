@@ -18,5 +18,7 @@ namespace PlanAndRide.GUI
 
             Menu.WelcomeMenu();
         }
+
+        
     }
 }

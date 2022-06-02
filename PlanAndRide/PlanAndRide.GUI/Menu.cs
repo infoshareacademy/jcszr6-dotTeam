@@ -1,4 +1,5 @@
 ﻿using System;
+using PlanAndRide.BusinessLogic;
 
 namespace PlanAndRide.GUI
 {
@@ -23,6 +24,8 @@ namespace PlanAndRide.GUI
                     {
                         case 1:
                             Console.WriteLine("\nTworzymy konto...");
+                            NewData newData = new NewData();
+                            newData.NewUser();
                             break;
 
                         case 2:
@@ -70,6 +73,8 @@ namespace PlanAndRide.GUI
                     {
                         case 1:
                             Console.WriteLine("Tworzymy konto...");
+                            NewData newData = new NewData();
+                            newData.NewUser();
                             break;
 
                         case 2:
@@ -101,6 +106,9 @@ namespace PlanAndRide.GUI
 
         public static void LoggedUserMenu()
         {
+            NewData newData = new NewData();
+            RideService rideService = new RideService();
+
             Console.Clear(); 
             Console.WriteLine("Zostałeś zalogowany jako {nickname}");
             Console.WriteLine("-------------------------");
@@ -148,7 +156,8 @@ namespace PlanAndRide.GUI
 
                     case 5:
                         Console.WriteLine("Edytujemy trasę...");
-                        break;
+                        //rideService.UpdateRoute();
+                            break;
 
                     case 6:
                         Console.WriteLine("Usuwamy trasę...");
@@ -160,6 +169,7 @@ namespace PlanAndRide.GUI
 
                     case 8:
                         Console.WriteLine("Oceniamy trasę...");
+                        newData.NewReview();
                         break;
 
                     case 9:
@@ -168,6 +178,7 @@ namespace PlanAndRide.GUI
 
                     case 10:
                         Console.WriteLine("Tworzymy event...");
+                        newData.NewRide();
                         break;
 
                     case 11:
@@ -176,6 +187,7 @@ namespace PlanAndRide.GUI
 
                     case 12:
                         Console.WriteLine("Edytujemy event...");
+                        //rideService.UpdateRide();
                         break;
 
                     case 13:
