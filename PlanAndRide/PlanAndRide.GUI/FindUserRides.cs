@@ -11,14 +11,21 @@ namespace PlanAndRide.GUI
     {
         public void UserRides(Ride ride)
         {
-
-            Console.WriteLine("Wprowadź login szukanego użytkownika\n");
-            var input = Console.ReadLine();
-            var findUserRides = ride.RideMembers.First(r => r.Login == input);
-            if (findUserRides == null)
+            do
             {
-                Console.WriteLine("Nie znaleziono podanego użytkownika\n");
+                Console.WriteLine("Wprowadź login szukanego użytkownika\n");
+                var input = Console.ReadLine();
+                var findUserRides = ride.RideMembers.First(r => r.Login == input);
+                if (findUserRides != null || !string.IsNullOrWhiteSpace(input))
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Nie znaleziono podanego użytkownika\n");
+                }
             }
+            while (true) ;
         }
         
     }
