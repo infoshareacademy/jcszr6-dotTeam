@@ -24,13 +24,13 @@ using System.IO;
 using System.Threading.Channels;
 using Newtonsoft.Json;
 using PlanAndRide.BusinessLogic;
-
+using PlanAndRide.GUI;
 
 Console.WriteLine("Witaj w Plan&Ride App");
-//RideRepository.AverageGradeRoute();
-//RideRepository.SearchByGradeRoute();
-RideRepository.PrintUpdate();
-//RideRepository.SearchByReviewDates();
+//Search.AverageGradeRoute();
+//Search.SearchByGradeRoute();
+//Update.PrintUpdate();
+Search.SearchByReviewDates();
 //var rides = RideRepository.GetAllRides();
 //RideRepository.AddRide(new Ride());
 
