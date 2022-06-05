@@ -15,7 +15,7 @@ namespace PlanAndRide.GUI
             {
                 Console.WriteLine("Wprowadź login szukanego użytkownika\n");
                 var input = Console.ReadLine();
-                var findUserRides = ride.RideMembers.First(r => r.Login == input);
+                var findUserRides = ride.Name.SelectMany(r => ride.RideMembers.Where(r => r.Login == input)).ToList();
                 if (findUserRides != null || !string.IsNullOrWhiteSpace(input))
                 {
                     break;
