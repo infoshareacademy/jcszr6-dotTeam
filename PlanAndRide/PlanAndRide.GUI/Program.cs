@@ -30,7 +30,7 @@ Console.WriteLine("Witaj w Plan&Ride App");
 //Search.AverageGradeRoute();
 //Search.SearchByGradeRoute();
 //Update.PrintUpdate();
-Search.SearchByReviewDates();
+//Search.SearchByReviewDates();
 //var rides = RideRepository.GetAllRides();
 //RideRepository.AddRide(new Ride());
 

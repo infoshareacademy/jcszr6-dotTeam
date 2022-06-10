@@ -9,21 +9,7 @@ namespace PlanAndRide.GUI
 {
     public class Search
     {
-        public static void AverageGradeRoute()
-        {
-
-
-            //obliczanie średniej oceny dla wszystkich ocen z recenzji danej trasy
-
-            foreach (var ride in RideRepository.GetAllRides())
-            {
-                List<int> listToSum = new List<int>();
-                ride.Route.Reviews.ForEach(r => listToSum.Add(r.Score));
-                int sum = listToSum.Sum();
-                var averageGrade = sum / listToSum.Count;
-                ride.Route.Score = averageGrade;
-            }
-        }
+      
         public static DateTime WriteDate()
         {
             //wprowadzanie przez użytwkownika daty 
