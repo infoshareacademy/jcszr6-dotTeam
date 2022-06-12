@@ -26,23 +26,20 @@ namespace PlanAndRide.BusinessLogic
         public bool ShareRoute { get; set; }
         public bool IsPrivate { get; set; }
         public List<Review> Reviews { get; set; }
-        public double AverageGradeRoute()
+        public int AverageGradeRoute()
         {
 
             //obliczanie średniej oceny dla wszystkich ocen z recenzji danej trasy
-            List<int> score= new List<int>();
+            
                 foreach (var ride in RideRepository.GetAllRides())
                 {
                     List<int> listToSum = new List<int>();
                     ride.Route.Reviews.ForEach(r => listToSum.Add(r.Score));
                     int sum = listToSum.Sum();
-
                     var averageGrade = sum / listToSum.Count;
-                score.Add(averageGrade);
-                
+                return averageGrade;
                 }
-            return score.FirstOrDefault();
-
+            return 0;
         }
     }
     
