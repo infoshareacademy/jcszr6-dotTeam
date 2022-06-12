@@ -1,4 +1,7 @@
-﻿namespace PlanAndRide.BusinessLogic
+﻿
+
+
+namespace PlanAndRide.BusinessLogic
 {
     public class User
     {
