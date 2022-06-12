@@ -26,6 +26,7 @@ namespace PlanAndRide.BusinessLogic
         public bool ShareRoute { get; set; }
         public bool IsPrivate { get; set; }
         public List<Review> Reviews { get; set; }
+
         public double AverageGradeRoute()
         {
 
@@ -41,6 +42,7 @@ namespace PlanAndRide.BusinessLogic
                 }
             return 0d;
         }
+
     }
     
 }
