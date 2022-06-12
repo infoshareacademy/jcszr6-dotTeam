@@ -19,14 +19,14 @@ namespace PlanAndRide.BusinessLogic
         {
             get
             {
-                return Convert.ToDouble(AverageGradeRoute());
+                return AverageGradeRoute();
             }
         }
         public string Description { get; set; }
         public bool ShareRoute { get; set; }
         public bool IsPrivate { get; set; }
         public List<Review> Reviews { get; set; }
-        public int AverageGradeRoute()
+        public double AverageGradeRoute()
         {
 
             //obliczanie średniej oceny dla wszystkich ocen z recenzji danej trasy
@@ -39,7 +39,7 @@ namespace PlanAndRide.BusinessLogic
                     var averageGrade = sum / listToSum.Count;
                 return averageGrade;
                 }
-            return 0;
+            return 0d;
         }
     }
     
