@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Environment = System.Environment;
 
+
 namespace PlanAndRide.BusinessLogic
 {
     public static class RideRepository
@@ -17,6 +18,7 @@ namespace PlanAndRide.BusinessLogic
         {
             var json = File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "data.json"));
             rides = JsonConvert.DeserializeObject<List<Ride>>(json);
+
         }
 
         public static List<Ride> GetAllRides()
@@ -28,6 +30,7 @@ namespace PlanAndRide.BusinessLogic
         {
             rides.Add(ride);
         }
+
 
     }
 }

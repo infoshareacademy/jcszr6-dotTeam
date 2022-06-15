@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlanAndRide.BusinessLogic",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlanAndRide.GUI", "PlanAndRide.GUI\PlanAndRide.GUI.csproj", "{D5C8A3D8-3D15-43F6-9AAC-8E4093DAB508}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlanAndRide.Web", "PlanAndRide.Web\PlanAndRide.Web.csproj", "{B19EB418-BC55-44AB-9E7B-F34354A2E914}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{D5C8A3D8-3D15-43F6-9AAC-8E4093DAB508}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5C8A3D8-3D15-43F6-9AAC-8E4093DAB508}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5C8A3D8-3D15-43F6-9AAC-8E4093DAB508}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B19EB418-BC55-44AB-9E7B-F34354A2E914}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B19EB418-BC55-44AB-9E7B-F34354A2E914}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B19EB418-BC55-44AB-9E7B-F34354A2E914}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B19EB418-BC55-44AB-9E7B-F34354A2E914}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
