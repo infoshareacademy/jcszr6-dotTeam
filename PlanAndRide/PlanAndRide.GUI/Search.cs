@@ -95,5 +95,33 @@ namespace PlanAndRide.GUI
                 Console.WriteLine("Brak wyników.");
             }
         }
+
+        public void SearchByName()
+        {
+            Console.WriteLine("Wprowadź nazwę:");
+            var searchName = Console.ReadLine();
+
+            while (searchName == String.Empty)
+            {
+                Console.WriteLine("Nic nie zostało wpisane. Wprowadź nazwę:");
+                searchName = Console.ReadLine();
+            }
+
+            var loadedRides = RideRepository.GetAllRides();
+            var filtredLoadRides = loadedRides.FindAll(r => r.Name == searchName);
+            if (filtredLoadRides.Count != 0)
+            {
+                foreach (var ride in filtredLoadRides)
+                {
+                    Console.WriteLine($"Nazwa trasy: {ride.Route.Name} ");
+                    Console.WriteLine($"Opis trasy: {ride.Route.Description}");
+                    Console.WriteLine($"Średnia ocena trasy: {ride.Route.Score}\n");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Brak wyników.");
+            }
+        }
     }
 }
