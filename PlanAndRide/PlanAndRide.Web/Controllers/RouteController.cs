@@ -1,14 +1,22 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PlanAndRide.BusinessLogic;
 
 namespace PlanAndRide.Web.Controllers
 {
     public class RouteController : Controller
     {
+        private readonly RouteRepository _routeRepository;
+
+        public RouteController(RouteRepository routeRepository)
+        {
+            _routeRepository = routeRepository;
+        }
         // GET: RouteController
         public ActionResult Index()
         {
-            return View();
+            
+            return View(_routeRepository.GetAllRoutes());
         }
 
         // GET: RouteController/Details/5
