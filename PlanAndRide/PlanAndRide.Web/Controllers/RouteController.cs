@@ -15,7 +15,7 @@ namespace PlanAndRide.Web.Controllers
         // GET: RouteController
         public ActionResult Index()
         {
-            
+
             return View(_routeRepository.GetAllRoutes());
         }
 
@@ -34,16 +34,19 @@ namespace PlanAndRide.Web.Controllers
         // POST: RouteController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(BusinessLogic.Route route)
         {
-            try
+            ModelState.Remove("Reviews");
+            if (!ModelState.IsValid)
             {
+                return View(route);
+            }
+            if (_routeRepository.FindByName(route.Name) == null)
+            {
+                _routeRepository.AddRoute(route);
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View(route);
         }
 
         // GET: RouteController/Edit/5
