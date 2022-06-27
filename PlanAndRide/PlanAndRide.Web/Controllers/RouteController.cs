@@ -22,7 +22,12 @@ namespace PlanAndRide.Web.Controllers
         // GET: RouteController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var route=_routeRepository.Get(id);
+            if(route != null)
+            {
+                return View(route);
+            }
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: RouteController/Create
