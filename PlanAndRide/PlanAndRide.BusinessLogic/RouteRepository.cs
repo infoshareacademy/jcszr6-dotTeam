@@ -15,7 +15,14 @@ namespace PlanAndRide.BusinessLogic
         }
         public Route? Get(int id)
         {
-            return _routes.SingleOrDefault(r => r.Id == id);
+            try
+            {
+                return _routes.SingleOrDefault(r => r.Id == id);
+            }
+            catch
+            {
+                throw new InvalidOperationException($"Unique key violaton: Route ID:{id}");
+            }
         }
         public IEnumerable<Route> GetAll()
         {
@@ -38,7 +45,7 @@ namespace PlanAndRide.BusinessLogic
             var existingRoute = Get(id);
             if (existingRoute == null)
             {
-                throw new InvalidOperationException("Not Found");
+                throw new RecordNotFoundException($"Route ID:{id} not found in repository");
             }
             existingRoute.Name = route.Name;
             existingRoute.StartingPosition = route.StartingPosition;

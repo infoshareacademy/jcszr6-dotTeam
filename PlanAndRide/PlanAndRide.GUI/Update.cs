@@ -34,7 +34,7 @@ namespace PlanAndRide.GUI
                 }
                 Console.WriteLine($"Nazwa trasy: {ride.Route.Name} ");
                 Console.WriteLine($"Opis trasy: {ride.Route.Description}");
-                Console.WriteLine($"Średnia ocena trasy: {ride.Route.Score}");
+                Console.WriteLine($"Średnia ocena trasy: {ride.Route.AverageScore}");
 
                 Console.WriteLine();
                 Console.WriteLine("Poniżej zostaną przedstawione opinie dotyczące trasy: ");

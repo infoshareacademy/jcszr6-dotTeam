@@ -16,7 +16,7 @@ namespace PlanAndRide.Web.Controllers
         public ActionResult Index()
         {
 
-            return View(_routeRepository.GetAllRoutes());
+            return View(_routeRepository.GetAll());
         }
 
         // GET: RouteController/Details/5
@@ -43,7 +43,7 @@ namespace PlanAndRide.Web.Controllers
             }
             if (_routeRepository.FindByName(route.Name) == null)
             {
-                _routeRepository.AddRoute(route);
+                _routeRepository.Add(route);
                 return RedirectToAction(nameof(Index));
             }
             return View(route);
