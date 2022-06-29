@@ -60,9 +60,9 @@ namespace PlanAndRide.BusinessLogic
         {
            _ = _routes.Remove(Get(id));
         }
-        public Route? FindByName(string name)
+        public IEnumerable<Route> FindByName(string name)
         {
-            return _routes.FirstOrDefault(r => r.Name == name.Trim());
+            return _routes.Where(r => r.Name.ToLower() == name.Trim().ToLower());
         }
 
 

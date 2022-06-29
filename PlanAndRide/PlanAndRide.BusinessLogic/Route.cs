@@ -29,7 +29,7 @@ namespace PlanAndRide.BusinessLogic
                 //return AverageGradeRoute();
             }
         }
-        public string Description { get; set; }
+        public string? Description { get; set; }
         public bool ShareRoute { get; set; }
         public bool IsPrivate { get; set; }
         public List<Review> Reviews { get; set; }
