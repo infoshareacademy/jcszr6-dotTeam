@@ -37,35 +37,36 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @item.Name
-            </td>
-            <td>
-                @item.StartingPosition
-            </td>
-            <td>
-                @item.DestinationPosition
-            </td>
-            <td>
-                @item.AverageScore
-            </td>
-            <td>
-                @item.Description
-            </td>
-            <td>
-                @item.ShareRoute
-            </td>
-            <td>
-                @item.IsPrivate
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /*id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.StartingPosition
+                </td>
+                <td>
+                    @item.DestinationPosition
+                </td>
+                <td>
+                    @item.AverageScore
+                </td>
+                <td>
+                    @item.Description
+                </td>
+                <td>
+                    @item.ShareRoute
+                </td>
+                <td>
+                    @item.IsPrivate
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

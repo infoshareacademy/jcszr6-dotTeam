@@ -22,8 +22,8 @@ namespace PlanAndRide.Web.Controllers
         // GET: RouteController/Details/5
         public ActionResult Details(int id)
         {
-            var route=_routeRepository.Get(id);
-            if(route != null)
+            var route = _routeRepository.Get(id);
+            if (route != null)
             {
                 return View(route);
             }
@@ -46,27 +46,34 @@ namespace PlanAndRide.Web.Controllers
             {
                 return View(route);
             }
-            if (_routeRepository.FindByName(route.Name) == null)
-            {
-                _routeRepository.Add(route);
-                return RedirectToAction(nameof(Index));
-            }
-            return View(route);
+            _routeRepository.Add(route);
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: RouteController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var route = _routeRepository.Get(id);
+            if (route != null)
+            {
+                return View(route);
+            }
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: RouteController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, BusinessLogic.Route route)
         {
+            ModelState.Remove("Reviews");
+            if (!ModelState.IsValid)
+            {
+                return View(route);
+            }
             try
             {
+                _routeRepository.Update(id, route);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -78,22 +85,21 @@ namespace PlanAndRide.Web.Controllers
         // GET: RouteController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var route= _routeRepository.Get(id);
+            if (route != null)
+            {
+                return View(route);
+            }
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: RouteController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, BusinessLogic.Route route)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            _routeRepository.Delete(id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }
