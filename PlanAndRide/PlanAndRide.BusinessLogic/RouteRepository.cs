@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GeoCoordinatePortable;
 
 namespace PlanAndRide.BusinessLogic
 {
@@ -11,7 +12,34 @@ namespace PlanAndRide.BusinessLogic
         private List<Route> _routes;
         public RouteRepository()
         {
-            _routes = new List<Route>();
+            _routes = new List<Route>
+            {
+                new Route
+                {
+                    Id=1,
+                    Name="Route 1",
+                    StartingPosition=new GeoCoordinate(25.251,36.325),
+                    DestinationPosition=new GeoCoordinate(36.855,69.654),
+                    Reviews=new List<Review>()
+                },                
+                new Route
+                {
+                    Id=2,
+                    Name="Route 2",
+                    StartingPosition=new GeoCoordinate(54.213,37.325),
+                    DestinationPosition=new GeoCoordinate(36.855,97.554),
+                    Reviews=new List<Review>()
+                },
+                new Route
+                {
+                    Id=3,
+                    Name="Route 3",
+                    StartingPosition=new GeoCoordinate(54.213,37.325),
+                    DestinationPosition=new GeoCoordinate(36.855,97.554),
+                    Reviews=new List<Review>()
+                }
+
+            };
         }
         public Route? Get(int id)
         {

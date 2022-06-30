@@ -85,7 +85,7 @@ namespace PlanAndRide.Web.Controllers
         // GET: RouteController/Delete/5
         public ActionResult Delete(int id)
         {
-            var route= _routeRepository.Get(id);
+            var route = _routeRepository.Get(id);
             if (route != null)
             {
                 return View(route);
@@ -100,6 +100,18 @@ namespace PlanAndRide.Web.Controllers
         {
             _routeRepository.Delete(id);
             return RedirectToAction(nameof(Index));
+        }
+
+        // GET: RouteController/Search/name
+        public ActionResult Search(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            var routes = _routeRepository.FindByName(name);
+            return View(nameof(Index), routes);
+
         }
     }
 }
