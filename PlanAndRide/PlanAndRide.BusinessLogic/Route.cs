@@ -4,8 +4,10 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GeoCoordinatePortable;
 using Microsoft.Win32;
 using PlanAndRide.BusinessLogic;
+
 
 namespace PlanAndRide.BusinessLogic
 {
@@ -15,8 +17,8 @@ namespace PlanAndRide.BusinessLogic
 
         [Required]
         public string Name { get; set; }
-        public double StartingPosition { get; set; }
-        public double DestinationPosition { get; set; }
+        public GeoCoordinate StartingPosition { get; set; }
+        public GeoCoordinate DestinationPosition { get; set; }
         public double AverageScore
         {
             get
@@ -33,6 +35,7 @@ namespace PlanAndRide.BusinessLogic
         public bool ShareRoute { get; set; }
         public bool IsPrivate { get; set; }
         public List<Review> Reviews { get; set; }
+
 
         //public double AverageGradeRoute()
         //{

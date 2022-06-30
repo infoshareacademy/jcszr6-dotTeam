@@ -145,11 +145,18 @@ namespace PlanAndRide.GUI
             if (!isChange)
                 return;
 
-            Console.WriteLine($"Wprowadź nową wartość: ");
-            var parseSuccess = double.TryParse(Console.ReadLine(), out var newDestinationPosition);
+            Console.WriteLine($"Wprowadź nową wartość [lat lng]: ");
+            var enteredValues = Console.ReadLine().Split(' ');
+            double[] newDestinationPosition = new double[2];
+            var parseSuccess = double.TryParse(enteredValues[0], out newDestinationPosition[0]);
             if (parseSuccess)
             {
-                route.DestinationPosition = newDestinationPosition;
+                parseSuccess=double.TryParse(enteredValues[1], out newDestinationPosition[1]);
+            }
+            if (parseSuccess)
+            {
+                route.DestinationPosition.Latitude = newDestinationPosition[0];
+                route.DestinationPosition.Longitude = newDestinationPosition[1];
                 Console.WriteLine(
                     $"Pozycja docelowa trasy została zmieniona. Aktualna wartość to: {route.DestinationPosition}");
                 Console.WriteLine();
@@ -170,11 +177,19 @@ namespace PlanAndRide.GUI
             if (!isChange)
                 return;
 
-            Console.WriteLine($"Wprowadź nową wartość: ");
-            var parseSuccess = double.TryParse(Console.ReadLine(), out var newStartingPosition);
+            Console.WriteLine($"Wprowadź nowe wartości[lat lng]: ");
+            var enteredValues = Console.ReadLine().Split(' ');
+            double[] newStartingPosition = new double[2];
+            var parseSuccess = double.TryParse(enteredValues[0], out newStartingPosition[0]);
             if (parseSuccess)
             {
-                route.StartingPosition = newStartingPosition;
+                parseSuccess = double.TryParse(enteredValues[1], out newStartingPosition[1]);
+            }
+              
+            if (parseSuccess)
+            {
+                route.StartingPosition.Latitude = newStartingPosition[0];
+                route.StartingPosition.Longitude = newStartingPosition[1];
                 Console.WriteLine(
                     $"Pozycja startowa trasy została zmieniona. Aktualna wartość to: {route.StartingPosition}");
                 Console.WriteLine();
