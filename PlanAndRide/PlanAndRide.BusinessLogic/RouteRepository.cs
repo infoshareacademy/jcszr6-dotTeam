@@ -17,7 +17,7 @@ namespace PlanAndRide.BusinessLogic
                 new Route
                 {
                     Id=1,
-                    Name="Route 1",
+                    Name="Route1",
                     StartingPosition=new GeoCoordinate(25.251,36.325),
                     DestinationPosition=new GeoCoordinate(36.855,69.654),
                     Reviews=new List<Review>()
@@ -25,7 +25,7 @@ namespace PlanAndRide.BusinessLogic
                 new Route
                 {
                     Id=2,
-                    Name="Route 2",
+                    Name="Route2",
                     StartingPosition=new GeoCoordinate(54.213,37.325),
                     DestinationPosition=new GeoCoordinate(36.855,97.554),
                     Reviews=new List<Review>()
@@ -33,7 +33,7 @@ namespace PlanAndRide.BusinessLogic
                 new Route
                 {
                     Id=3,
-                    Name="Route 3",
+                    Name="R3",
                     StartingPosition=new GeoCoordinate(54.213,37.325),
                     DestinationPosition=new GeoCoordinate(36.855,97.554),
                     Reviews=new List<Review>()
@@ -90,7 +90,7 @@ namespace PlanAndRide.BusinessLogic
         }
         public IEnumerable<Route> FindByName(string name)
         {
-            return _routes.Where(r => r.Name.ToLower() == name.Trim().ToLower());
+            return _routes.Where(r => r.Name.ToLower().Contains(name.Trim().ToLower()));
         }
 
 
