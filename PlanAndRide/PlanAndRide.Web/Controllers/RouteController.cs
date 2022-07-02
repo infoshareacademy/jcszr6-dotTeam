@@ -102,7 +102,7 @@ namespace PlanAndRide.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: RouteController/Search/name
+        // GET: RouteController/Search
         public ActionResult Search(string name)
         {
             if (string.IsNullOrEmpty(name))

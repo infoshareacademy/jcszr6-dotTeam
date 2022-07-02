@@ -5,6 +5,17 @@
 <p>
     <a asp-action="Create">Create New Route</a>
 </p>
+<form asp-action="Search">
+    <div class="input-group">
+        <div class="form-outline">
+            <input type="search" asp-for="First().Name" placeholder="Name" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-primary">
+            <i class="fas fa-search"></i>
+        </button>
+    </div>
+</form>
+
 <table class="table">
     <thead>
         <tr>
