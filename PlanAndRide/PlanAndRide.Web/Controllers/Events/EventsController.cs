@@ -58,17 +58,17 @@ namespace PlanAndRide.Web.Controllers.Events
         // POST: EventsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, Ride ride)
         {
-            try
+            ModelState.Remove(nameof(ride.Route));
+            if (!ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                return View(ride);
             }
-            catch
-            {
-                return View();
-            }
+            _rideRepository.Update(id,ride);
+            return RedirectToAction(nameof(Index));
         }
+    
 
         // GET: EventsController/Delete/5
         public ActionResult Delete(int id)
@@ -79,16 +79,10 @@ namespace PlanAndRide.Web.Controllers.Events
         // POST: EventsController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id,Ride ride)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            _rideRepository.Delete(id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

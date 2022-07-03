@@ -11,12 +11,8 @@ namespace PlanAndRide.BusinessLogic
 {
     public class RideRepository : IRepository<Ride>
     {
-        private List<Ride> _ride;
-       
-        
-        public RideRepository()
-        {
-            _ride = new List<Ride>
+        private static List<Ride>
+             Rides = new List<Ride>
             {
                 new Ride
                 {
@@ -49,12 +45,17 @@ namespace PlanAndRide.BusinessLogic
                     ShareRide=true,
                 }
             };
+
+
+        public  RideRepository()
+        {
+           
         }
         public Ride? Get(int id)
         {
             try
             {
-                return _ride.FirstOrDefault(r => r.Id == id);
+                return Rides.FirstOrDefault(r => r.Id == id);
             }
             catch
             {
@@ -63,24 +64,24 @@ namespace PlanAndRide.BusinessLogic
         }
         public IEnumerable<Ride> GetAll()
         {
-            return _ride;
+            return Rides;
         }        
         public void Add(Ride ride)
         {
-            if(_ride.Count > 0)
+            if(Rides.Count > 0)
             {
-                ride.Id = _ride.Max(r=>r.Id)+1;
+                ride.Id = Rides.Max(r=>r.Id)+1;
             }
             else
             {
                 ride.Id = 1;
             }
-            _ride.Add(ride);
+            Rides.Add(ride);
         }
         public void Update(int id, Ride ride)
         {
             var existingRide= Get(id);
-            if(existingRide != null)
+            if(existingRide == null)
             {
                 throw new RecordNotFoundException($"Ride Id:{id} not found in repository");
             }
@@ -91,7 +92,7 @@ namespace PlanAndRide.BusinessLogic
         }
         public void Delete(int id)
         {
-            _=_ride.Remove(Get(id));
+            _=Rides.Remove(Get(id));
         }
         
         //private static List<Ride> rides = new List<Ride>();
