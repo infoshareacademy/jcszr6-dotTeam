@@ -40,7 +40,7 @@ namespace PlanAndRide.Web.Controllers.Events
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(BusinessLogic.Ride ride)
-        {
+        {   ModelState.Remove(nameof(ride.Route));
             if(!ModelState.IsValid)
             {
                 return View(ride);
