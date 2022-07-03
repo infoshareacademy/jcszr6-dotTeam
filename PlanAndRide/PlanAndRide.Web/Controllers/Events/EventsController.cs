@@ -22,8 +22,8 @@ namespace PlanAndRide.Web.Controllers.Events
         // GET: EventsController/Details/5
         public ActionResult Details(int id)
         {
-            var ride = _rideRepository.GetHashCode(id);
-            if(ride!= ride)
+            var ride = _rideRepository.Get(id);
+            if(ride!= null)
             {
                 return View(ride);
             }
