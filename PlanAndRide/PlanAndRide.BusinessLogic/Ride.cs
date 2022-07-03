@@ -18,7 +18,7 @@ namespace PlanAndRide.BusinessLogic
         // do not change in edit
         public List<User> RideMembers;
 
-        public List<Route> Route { get; set; }
+        public string Route { get; set; }
 
         public string Description { get; set; }
 

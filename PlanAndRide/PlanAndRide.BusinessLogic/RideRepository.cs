@@ -12,11 +12,43 @@ namespace PlanAndRide.BusinessLogic
     public class RideRepository : IRepository<Ride>
     {
         private List<Ride> _ride;
-        
+       
         
         public RideRepository()
         {
-            _ride = new List<Ride>();
+            _ride = new List<Ride>
+            {
+                new Ride
+                {
+                    Id = 1,
+                    Name ="Ride1",
+                    Date=DateTime.Now,
+                    Route="Route1",
+                    Description="Ala ma kota",
+                    IsPrivate=true,
+                    ShareRide=true,
+                },
+                new Ride
+                {
+                    Id = 2,
+                    Name ="Ride2",
+                    Date=DateTime.Now,
+                    Route="Route1",
+                    Description="Kot ma Ale",
+                    IsPrivate=false,
+                    ShareRide=true,
+                },
+                new Ride
+                {
+                    Id = 3,
+                    Name ="Ride3",
+                    Date=DateTime.Now,
+                    Route="Route2",
+                    Description="Ale kod to kot",
+                    IsPrivate=true,
+                    ShareRide=true,
+                }
+            };
         }
         public Ride? Get(int id)
         {
