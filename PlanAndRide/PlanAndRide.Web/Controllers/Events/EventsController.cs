@@ -45,7 +45,7 @@ namespace PlanAndRide.Web.Controllers.Events
             {
                 return View(ride);
             }
-            _rideRepository.Add(ride)
+            _rideRepository.Add(ride);
             return RedirectToAction(nameof(Index));
         }
 

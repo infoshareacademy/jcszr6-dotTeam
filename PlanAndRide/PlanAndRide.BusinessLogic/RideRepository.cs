@@ -59,10 +59,10 @@ namespace PlanAndRide.BusinessLogic
         {
             _=_ride.Remove(Get(id));
         }
-        public IEnumerable<Ride> FindByName(string name)
-        {
-            return _ride.Where(r=>r.Name.ToLower()==name.Trim().ToLower));
-        }
+        //public IEnumerable<Ride> FindByName(string name)
+        //{
+          //  return _ride.Where(r=>r.Name.ToLower()==name.Trim().ToLower));
+        //}
         //private static List<Ride> rides = new List<Ride>();
 
         //static RideRepository()
