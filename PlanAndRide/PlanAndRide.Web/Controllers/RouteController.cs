@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PlanAndRide.BusinessLogic;
+using PlanAndRide.Web.Models;
 
 namespace PlanAndRide.Web.Controllers
 {
@@ -15,8 +16,8 @@ namespace PlanAndRide.Web.Controllers
         // GET: RouteController
         public ActionResult Index()
         {
-
-            return View(_routeRepository.GetAll());
+            var routeViews = _routeRepository.GetAll().Select(x => new RouteViewModel(x));
+            return View(routeViews);
         }
 
         // GET: RouteController/Details/5
@@ -25,7 +26,7 @@ namespace PlanAndRide.Web.Controllers
             var route = _routeRepository.Get(id);
             if (route != null)
             {
-                return View(route);
+                return View(new RouteViewModel(route));
             }
             return RedirectToAction(nameof(Index));
         }
@@ -39,14 +40,13 @@ namespace PlanAndRide.Web.Controllers
         // POST: RouteController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(BusinessLogic.Route route)
+        public ActionResult Create(RouteViewModel routeView)
         {
-            ModelState.Remove("Reviews");
             if (!ModelState.IsValid)
             {
-                return View(route);
+                return View(routeView);
             }
-            _routeRepository.Add(route);
+            _routeRepository.Add(routeView.GetRoute());
             return RedirectToAction(nameof(Index));
         }
 
@@ -56,7 +56,7 @@ namespace PlanAndRide.Web.Controllers
             var route = _routeRepository.Get(id);
             if (route != null)
             {
-                return View(route);
+                return View(new RouteViewModel(route));
             }
             return RedirectToAction(nameof(Index));
         }
@@ -64,16 +64,15 @@ namespace PlanAndRide.Web.Controllers
         // POST: RouteController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, BusinessLogic.Route route)
+        public ActionResult Edit(int id, RouteViewModel routeView)
         {
-            ModelState.Remove("Reviews");
             if (!ModelState.IsValid)
             {
-                return View(route);
+                return View(routeView);
             }
             try
             {
-                _routeRepository.Update(id, route);
+                _routeRepository.Update(id, routeView.GetRoute());
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -88,7 +87,7 @@ namespace PlanAndRide.Web.Controllers
             var route = _routeRepository.Get(id);
             if (route != null)
             {
-                return View(route);
+                return View(new RouteViewModel(route));
             }
             return RedirectToAction(nameof(Index));
         }
@@ -96,7 +95,7 @@ namespace PlanAndRide.Web.Controllers
         // POST: RouteController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, BusinessLogic.Route route)
+        public ActionResult Delete(int id, RouteViewModel route)
         {
             _routeRepository.Delete(id);
             return RedirectToAction(nameof(Index));
@@ -105,12 +104,14 @@ namespace PlanAndRide.Web.Controllers
         // GET: RouteController/Search
         public ActionResult Search(string name)
         {
-            if (string.IsNullOrEmpty(name))
+            if (!string.IsNullOrEmpty(name))
             {
-                return RedirectToAction(nameof(Index));
+                var routes = _routeRepository.FindByName(name);
+                var routeViews = routes.Select(r => new RouteViewModel(r));
+                return View(nameof(Index), routeViews);
             }
-            var routes = _routeRepository.FindByName(name);
-            return View(nameof(Index), routes);
+
+            return RedirectToAction(nameof(Index));
 
         }
     }
