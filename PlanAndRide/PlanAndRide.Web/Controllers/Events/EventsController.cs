@@ -7,16 +7,27 @@ namespace PlanAndRide.Web.Controllers.Events
 {
     public class EventsController : Controller
     {
+        private readonly RideRepository _rideRepository;
+
+        public EventsController(RideRepository rideRepository)
+        {
+            _rideRepository = rideRepository;
+        }
         // GET: EventsController
         public ActionResult Index()
         {
-            return View();
+            return View(_rideRepository.GetAll());
         }
 
         // GET: EventsController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var ride = _rideRepository.GetHashCode(id);
+            if(ride!= ride)
+            {
+                return View(ride);
+            }
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: EventsController/Create
@@ -28,16 +39,14 @@ namespace PlanAndRide.Web.Controllers.Events
         // POST: EventsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(BusinessLogic.Ride ride)
         {
-            try
+            if(!ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                return View(ride);
             }
-            catch
-            {
-                return View();
-            }
+            _rideRepository.Add(ride)
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: EventsController/Edit/5

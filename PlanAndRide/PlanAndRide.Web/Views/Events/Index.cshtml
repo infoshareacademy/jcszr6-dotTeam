@@ -1,4 +1,49 @@
 ﻿@model IEnumerable<PlanAndRide.BusinessLogic.Ride>
 
 @{
+    ViewData["Title"]= "Index";
 }
+
+<h1>Events</h1>
+<p>
+    <a asp-action= "Create">Create New Event</a>
+    
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <label asp-for="@Model.First().Name"></label>
+            </th>
+            <th>
+                <label asp-for="@Model.First().Date"></label>
+            </th>
+            <th>
+                <label asp-for="@Model.First().Route"></label>
+            </th><th>
+                <label asp-for="@Model.First().IsPrivate"></label>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td><td>
+                    @item.Date
+                </td><td>
+                    @item.Route
+                </td><td>
+                    @item.IsPrivate
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-event-id="@item.Id">"Edit"</a>
+                    <a asp-action="Details" asp-event-id="@item.Id">"Details"</a>
+                    <a asp-action="Delete" asp-event-id="@item.Id">"Delete"</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

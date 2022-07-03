@@ -9,7 +9,7 @@ using Environment = System.Environment;
 
 namespace PlanAndRide.BusinessLogic
 {
-    public static class RideRepository
+    public static class RideRepository: IRepository<Ride>
     {
         private static List<Ride> rides = new List<Ride>();
 
