@@ -5,7 +5,6 @@ namespace PlanAndRide.Web.Models
     public class RouteViewModel
     {
         private BusinessLogic.Route _route;
-        //public BusinessLogic.Route Route { get;}
         public int Id
         {
             get { return _route.Id; }

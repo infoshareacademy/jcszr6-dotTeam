@@ -1,4 +1,5 @@
 using PlanAndRide.BusinessLogic;
+using PlanAndRide.Web.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 

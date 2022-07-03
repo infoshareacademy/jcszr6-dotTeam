@@ -1,14 +1,14 @@
-﻿@model IEnumerable<RouteViewModel>
+﻿@model RouteViewsModel
 
 <h1>Routes</h1>
 
 <p>
     <a asp-action="Create">Create New Route</a>
 </p>
-<form asp-action="Search">
+<form asp-action="Search" method="get">
     <div class="input-group">
         <div class="form-outline">
-            <input type="search" asp-for="First().Name" placeholder="Name" class="form-control" />
+            <input type="search" asp-for="@Model.RouteName" placeholder="Name" class="form-control" />
         </div>
         <button type="submit" class="btn btn-primary">
             <i class="fas fa-search"></i>
@@ -20,31 +20,31 @@
     <thead>
         <tr>
             <th>
-                <label asp-for="@Model.First().Name"></label>
+                <label asp-for="@Model.Routes.First().Name"></label>
             </th>
             <th>
-                <label asp-for="@Model.First().StartingPosition"></label>
+                <label asp-for="@Model.Routes.First().StartingPosition"></label>
             </th>
             <th>
-                <label asp-for="@Model.First().DestinationPosition"></label>
+                <label asp-for="@Model.Routes.First().DestinationPosition"></label>
             </th>
             <th>
-                <label asp-for="@Model.First().AverageScore"></label>
+                <label asp-for="@Model.Routes.First().AverageScore"></label>
             </th>
             <th>
-                <label asp-for="@Model.First().Description"></label>
+                <label asp-for="@Model.Routes.First().Description"></label>
             </th>
             <th>
-                <label asp-for="@Model.First().ShareRoute"></label>
+                <label asp-for="@Model.Routes.First().ShareRoute"></label>
             </th>
             <th>
-                <label asp-for="@Model.First().IsPrivate"></label>
+                <label asp-for="@Model.Routes.First().IsPrivate"></label>
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.Routes)
         {
             <tr>
                 <td>
