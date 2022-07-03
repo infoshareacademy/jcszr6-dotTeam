@@ -9,9 +9,11 @@ using Environment = System.Environment;
 
 namespace PlanAndRide.BusinessLogic
 {
-    public  class RideRepository: IRepository<Ride>
+    public class RideRepository : IRepository<Ride>
     {
         private List<Ride> _ride;
+        
+        
         public RideRepository()
         {
             _ride = new List<Ride>();
@@ -59,10 +61,7 @@ namespace PlanAndRide.BusinessLogic
         {
             _=_ride.Remove(Get(id));
         }
-        //public IEnumerable<Ride> FindByName(string name)
-        //{
-          //  return _ride.Where(r=>r.Name.ToLower()==name.Trim().ToLower));
-        //}
+        
         //private static List<Ride> rides = new List<Ride>();
 
         //static RideRepository()

@@ -23,19 +23,19 @@ namespace PlanAndRide.GUI
             UpdateRideDescription(ride);
             UpdateShareRide(ride);
             UpdateRideIsPrivate(ride);
-            UpdateRideRoute(ride);
+            //UpdateRideRoute(ride);
             Console.WriteLine("Edycja wydarzenia została zakończona");
         }
 
-        private void UpdateRideRoute(Ride ride)
-        {
-            Console.WriteLine($"Aktualnie przypisana trasa to: {ride.Route.Name}");
-            var isChange = GetNewYesNoValue("Czy chcesz ją zmienić [t/n]?: ");
-            if (isChange)
-            {
-                UpdateRoute(ride.Route);
-            }
-        }
+        //private void UpdateRideRoute(Ride ride)
+        //{
+        //    Console.WriteLine($"Aktualnie przypisana trasa to: {ride.Route.Name}");
+        //    var isChange = GetNewYesNoValue("Czy chcesz ją zmienić [t/n]?: ");
+        //    if (isChange)
+        //    {
+        //        UpdateRoute(ride.Route);
+        //    }
+        //}
 
         private void UpdateRideIsPrivate(Ride ride)
         {
