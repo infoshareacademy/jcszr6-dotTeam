@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using PlanAndRide.BusinessLogic;
 using PlanAndRide.Web.Models;
 
+
+
 namespace PlanAndRide.Web.Controllers
 {
     public class RouteController : Controller
@@ -13,10 +15,15 @@ namespace PlanAndRide.Web.Controllers
             _routeRepository = routeRepository;
         }
         // GET: RouteController
+
         public ActionResult Index()
         {
-            var model = new RouteViewsModel(); 
-            model.Routes= _routeRepository.GetAll().Select(r => new RouteViewModel(r));
+            return View();
+        }
+
+        public ActionResult Routes(RouteViewsModel model)
+        {
+            model.Routes = _routeRepository.GetAll().Select(r => new RouteViewModel(r));
             return View(model);
         }
 
@@ -110,10 +117,10 @@ namespace PlanAndRide.Web.Controllers
                 var model = new RouteViewsModel();
                 model.Routes = routes.Select(r => new RouteViewModel(r));
                 model.RouteName = routeName;
-                return View(nameof(Index), model);
+                return View(nameof(Routes), model);
             }
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Routes));
 
         }
     }

@@ -1,0 +1,17 @@
+﻿@model RouteViewsModel
+
+@{
+    ViewData["Title"] = "Routes";
+}
+
+<h1>Routes</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<partial name="_Partials/_SearchForm" model="@Model" />
+
+
+<partial name="_Partials/_RoutesListing" model="@Model" />
+

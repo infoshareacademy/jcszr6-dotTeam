@@ -2,7 +2,7 @@
 {
     public class RouteViewsModel
     {
-        public string? RouteName { get; set; }
-        public IEnumerable<RouteViewModel>? Routes { get; set; }
+        public string RouteName { get; set; }
+        public IEnumerable<RouteViewModel> Routes { get; set; }
     }
 }
