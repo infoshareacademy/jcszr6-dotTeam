@@ -10,9 +10,11 @@ namespace PlanAndRide.Web.Controllers
     public class RouteController : Controller
     {
         private readonly RouteRepository _routeRepository;
-        public RouteController(RouteRepository routeRepository)
+        private readonly IConfiguration _config;
+        public RouteController(RouteRepository routeRepository, IConfiguration config)
         {
             _routeRepository = routeRepository;
+            _config = config;
         }
         // GET: RouteController
         public ActionResult Index()
@@ -28,6 +30,7 @@ namespace PlanAndRide.Web.Controllers
             var route = _routeRepository.Get(id);
             if (route != null)
             {
+                ViewBag.apiKey = _config["Maps:ApiKey"];
                 return View(new RouteViewModel(route));
             }
             return RedirectToAction(nameof(Index));
