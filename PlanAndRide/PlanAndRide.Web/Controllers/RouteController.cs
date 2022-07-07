@@ -15,14 +15,16 @@ namespace PlanAndRide.Web.Controllers
             _routeRepository = routeRepository;
         }
         // GET: RouteController
-
         public ActionResult Index()
         {
-            return View();
+            var model = new RouteViewsModel();
+            model.Routes = _routeRepository.GetAll().Select(r => new RouteViewModel(r));
+            return View(model);
         }
-
-        public ActionResult Routes(RouteViewsModel model)
+        
+        private ActionResult Routes()
         {
+            var model=new RouteViewsModel();
             model.Routes = _routeRepository.GetAll().Select(r => new RouteViewModel(r));
             return View(model);
         }
@@ -80,7 +82,7 @@ namespace PlanAndRide.Web.Controllers
             try
             {
                 _routeRepository.Update(id, model.GetRoute());
-                return RedirectToAction(nameof(Index));
+                return View(nameof(Details), model);
             }
             catch
             {
@@ -113,14 +115,13 @@ namespace PlanAndRide.Web.Controllers
         {
             if (!string.IsNullOrEmpty(routeName))
             {
-                var routes=_routeRepository.FindByName(routeName);
+                var routes = _routeRepository.FindByName(routeName);
                 var model = new RouteViewsModel();
                 model.Routes = routes.Select(r => new RouteViewModel(r));
                 model.RouteName = routeName;
-                return View(nameof(Routes), model);
+                return View(nameof(Index), model);
             }
-
-            return RedirectToAction(nameof(Routes));
+            return RedirectToAction(nameof(Index));
 
         }
     }
