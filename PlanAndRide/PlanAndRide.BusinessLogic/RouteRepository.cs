@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GeoCoordinatePortable;
+﻿using GeoCoordinatePortable;
 
 namespace PlanAndRide.BusinessLogic
 {
@@ -17,28 +12,55 @@ namespace PlanAndRide.BusinessLogic
                 new Route
                 {
                     Id=1,
-                    Name="Route1",
-                    StartingPosition=new GeoCoordinate(25.251,36.325),
-                    DestinationPosition=new GeoCoordinate(36.855,69.654),
+                    Name="Droga stu zakrętów",
+                    StartingPosition=new GeoCoordinate(50.441556,16.242764),
+                    DestinationPosition=new GeoCoordinate(50.504702,16.397086),
+                    Description="Kudowa-Zdrój - Radków | 22 km",
                     Reviews=new List<Review>()
-                },                
+                },
                 new Route
                 {
                     Id=2,
-                    Name="Route2",
-                    StartingPosition=new GeoCoordinate(54.213,37.325),
-                    DestinationPosition=new GeoCoordinate(36.855,97.554),
+                    Name="Przełęcz Przysłup",
+                    StartingPosition=new GeoCoordinate(49.531141,22.300324),
+                    DestinationPosition=new GeoCoordinate(49.577351,22.369551),
+                    Description="Załuż - Tyrawa Wołoska | 12 km",
                     Reviews=new List<Review>()
                 },
                 new Route
                 {
                     Id=3,
-                    Name="R3",
-                    StartingPosition=new GeoCoordinate(54.213,37.325),
-                    DestinationPosition=new GeoCoordinate(36.855,97.554),
+                    Name="Droga Oswalda Balzera",
+                    StartingPosition=new GeoCoordinate(49.299042,19.949059),
+                    DestinationPosition=new GeoCoordinate(49.264127,20.115313),
+                    Description="Z Zakopanego do Morskiego Oka",
+                    Reviews=new List<Review>()
+                },
+                new Route
+                {
+                    Id=4,
+                    Name="Na Wielkiej Pętli Bieszczadzkej",
+                    StartingPosition=new GeoCoordinate(49.473736,22.325125),
+                    DestinationPosition=new GeoCoordinate(49.106629,22.650325),
+                    Reviews=new List<Review>()
+                },
+                new Route
+                {
+                    Id=5,
+                    Name="Autostrada Sudecka",
+                    StartingPosition=new GeoCoordinate(50.397840,16.34907),
+                    DestinationPosition=new GeoCoordinate(50.147772,16.666961),
+                    Reviews=new List<Review>()
+                },
+                new Route
+                {
+                    Id=6,
+                    Name="Szlak Orlich Gniazd",
+                    StartingPosition=new GeoCoordinate(50.749408,19.271176),
+                    DestinationPosition=new GeoCoordinate(50.453674,19.551179),
+                    Description="Olsztyn k.Częstochowy - Ogrodzieniec",
                     Reviews=new List<Review>()
                 }
-
             };
         }
         public Route? Get(int id)
@@ -86,7 +108,7 @@ namespace PlanAndRide.BusinessLogic
 
         public void Delete(int id)
         {
-           _ = _routes.Remove(Get(id));
+            _ = _routes.Remove(Get(id));
         }
         public IEnumerable<Route> FindByName(string name)
         {
