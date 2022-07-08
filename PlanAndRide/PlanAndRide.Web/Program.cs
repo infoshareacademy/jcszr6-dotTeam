@@ -1,5 +1,5 @@
 using PlanAndRide.BusinessLogic;
-using PlanAndRide.Web.Models;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +29,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.UseRequestLocalization("pl-PL");
+app.UseRequestLocalization(CultureInfo.CurrentUICulture.ToString());
 
 app.Run();
