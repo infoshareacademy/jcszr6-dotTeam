@@ -1,5 +1,6 @@
 ﻿using GeoCoordinatePortable;
 using PlanAndRide.BusinessLogic;
+using System.ComponentModel.DataAnnotations;
 
 namespace PlanAndRide.Web.Models
 {
@@ -10,6 +11,7 @@ namespace PlanAndRide.Web.Models
         {
             get { return Route.Id; }
         }
+        [Required,MaxLength(32)]
         public string Name
         {
             get {return Route.Name;}
@@ -29,6 +31,7 @@ namespace PlanAndRide.Web.Models
         {
             get {return Route.AverageScore;}
         }
+        [MaxLength(100)]
         public string? Description
         {
             get { return Route.Description; }
@@ -55,7 +58,7 @@ namespace PlanAndRide.Web.Models
                 Description = route.Description,
                 ShareRoute = route.ShareRoute,
                 IsPrivate = route.IsPrivate,
-                Reviews = new List<Review>()
+                Reviews = route.Reviews
             };
         }
         public RouteViewModel()
