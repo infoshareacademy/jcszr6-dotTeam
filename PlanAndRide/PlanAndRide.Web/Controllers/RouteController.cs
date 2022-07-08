@@ -8,8 +8,8 @@ namespace PlanAndRide.Web.Controllers
 {
     public class RouteController : Controller
     {
-        private readonly RouteRepository _routeRepository;
-        public RouteController(RouteRepository routeRepository)
+        private readonly IRepository<BusinessLogic.Route> _routeRepository;
+        public RouteController(IRepository<BusinessLogic.Route> routeRepository)
         {
             _routeRepository = routeRepository;
         }
