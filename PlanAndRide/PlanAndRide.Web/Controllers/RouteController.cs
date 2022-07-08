@@ -48,7 +48,7 @@ namespace PlanAndRide.Web.Controllers
             {
                 return View(model);
             }
-            _routeRepository.Add(model.GetRoute());
+            _routeRepository.Add(model.Route);
             return RedirectToAction(nameof(Search), new {routeName=model.Name});
         }
 
@@ -74,7 +74,7 @@ namespace PlanAndRide.Web.Controllers
             }
             try
             {
-                _routeRepository.Update(id, model.GetRoute());
+                _routeRepository.Update(id, model.Route);
                 return RedirectToAction(nameof(Details), new { Id=id });
             }
             catch
