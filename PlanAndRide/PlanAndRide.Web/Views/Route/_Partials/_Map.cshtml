@@ -1,5 +1,8 @@
-﻿@{
-    var apiKey = ViewBag.apiKey;
+﻿@model RouteViewModel
+@{
+    var apiKey = ViewData["ApiKey"];
+    var originLatLng = $"{Model.StartingPosition.Latitude},{Model.StartingPosition.Longitude}";
+    var destinationLatLng = $"{Model.DestinationPosition.Latitude},{Model.DestinationPosition.Longitude}";
 }
 <div>
     <iframe width="600"
@@ -8,6 +11,6 @@
             loading="lazy"
             allowfullscreen
             referrerpolicy="no-referrer-when-downgrade"
-            src="https://www.google.com/maps/embed/v1/directions?key=@apiKey&origin=Krakow+Polska&destination=Warszawa+Polska">
+            src="https://www.google.com/maps/embed/v1/directions?key=@apiKey&origin=@originLatLng&destination=@destinationLatLng">
     </iframe>
 </div>

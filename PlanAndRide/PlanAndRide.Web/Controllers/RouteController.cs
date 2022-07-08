@@ -29,7 +29,7 @@ namespace PlanAndRide.Web.Controllers
             var route = _routeRepository.Get(id);
             if (route != null)
             {
-                ViewBag.apiKey = _config["Maps:ApiKey"];
+                ViewData["ApiKey"] = _config["Maps:ApiKey"];
                 return View(new RouteViewModel(route));
             }
             return RedirectToAction(nameof(Index));
