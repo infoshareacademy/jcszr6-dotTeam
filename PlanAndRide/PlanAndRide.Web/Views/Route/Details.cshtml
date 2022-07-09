@@ -1,0 +1,60 @@
+﻿@model RouteViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Route</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            <label asp-for="Name"></label>
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.Name
+        </dd>
+        <dt class = "col-sm-2">
+            <label asp-for="StartingPosition"></label>
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.StartingPosition
+        </dd>
+        <dt class = "col-sm-2">
+            <label asp-for="DestinationPosition"></label>
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.DestinationPosition
+        </dd>
+        <dt class = "col-sm-2">
+            <label asp-for="AverageScore"></label>
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.AverageScore
+        </dd>
+        <dt class = "col-sm-2">
+            <label asp-for="Description"></label>
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.Description
+        </dd>
+        <dt class = "col-sm-2">
+            <label asp-for="ShareRoute"></label>
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.ShareRoute
+        </dd>
+        <dt class = "col-sm-2">
+            <label asp-for="IsPrivate"></label>
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.IsPrivate
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id=@Model.Id>Edit</a> |
+    <a asp-action="Index">Back to Routes</a>
+</div>
