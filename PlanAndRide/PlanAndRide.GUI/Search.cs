@@ -80,14 +80,14 @@ namespace PlanAndRide.GUI
             //Szukanie po ocenach i wyświetlanie wyników
 
             var loadedRides = RideRepository.GetAllRides();
-            var filtredLoadRides = loadedRides.Where(r => r.Route.AverageScore >= minValueScore && r.Route.AverageScore <= maxValueScore).ToList();
+            var filtredLoadRides = loadedRides.Where(r => r.Route.Score >= minValueScore && r.Route.Score <= maxValueScore).ToList();
             if (filtredLoadRides.Count != 0)
             {
                 foreach (var ride in filtredLoadRides)
                 {
                     Console.WriteLine($"Nazwa trasy: {ride.Route.Name} ");
                     Console.WriteLine($"Opis trasy: {ride.Route.Description}");
-                    Console.WriteLine($"Średnia ocena trasy: {ride.Route.AverageScore}\n");
+                    Console.WriteLine($"Średnia ocena trasy: {ride.Route.Score}\n");
                 }
             }
             else
@@ -115,7 +115,7 @@ namespace PlanAndRide.GUI
                 {
                     Console.WriteLine($"Nazwa trasy: {ride.Route.Name} ");
                     Console.WriteLine($"Opis trasy: {ride.Route.Description}");
-                    Console.WriteLine($"Średnia ocena trasy: {ride.Route.AverageScore}\n");
+                    Console.WriteLine($"Średnia ocena trasy: {ride.Route.Score}\n");
                 }
             }
             else

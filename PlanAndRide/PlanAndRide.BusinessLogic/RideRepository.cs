@@ -16,8 +16,8 @@ namespace PlanAndRide.BusinessLogic
 
         static RideRepository()
         {
-            //var json = File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "data.json"));
-           // rides = JsonConvert.DeserializeObject<List<Ride>>(json);
+            var json = File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "data.json"));
+            rides = JsonConvert.DeserializeObject<List<Ride>>(json);
 
         }
 
