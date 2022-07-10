@@ -1,4 +1,12 @@
+<<<<<<< HEAD
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+=======
 ﻿using GeoCoordinatePortable;
+>>>>>>> main
 
 namespace PlanAndRide.BusinessLogic
 {
@@ -7,6 +15,9 @@ namespace PlanAndRide.BusinessLogic
         private List<Route> _routes;
         public RouteRepository()
         {
+<<<<<<< HEAD
+            _routes = new List<Route>();
+=======
             _routes = new List<Route>
             {
                 new Route
@@ -62,6 +73,7 @@ namespace PlanAndRide.BusinessLogic
                     Reviews=new List<Review>()
                 }
             };
+>>>>>>> main
         }
         public Route? Get(int id)
         {
@@ -108,11 +120,21 @@ namespace PlanAndRide.BusinessLogic
 
         public void Delete(int id)
         {
+<<<<<<< HEAD
+           _ = _routes.Remove(Get(id));
+        }
+        public IEnumerable<Route> FindByName(string name)
+        {
+            return _routes.Where(r => r.Name.ToLower() == name.Trim().ToLower());
+=======
             _ = _routes.Remove(Get(id));
         }
         public IEnumerable<Route> FindByName(string name)
         {
             return _routes.Where(r => r.Name.ToLower().Contains(name.Trim().ToLower()));
+>>>>>>> main
         }
-}
+
+
+    }
 }

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+﻿@model PlanAndRide.BusinessLogic.Route
+=======
 ﻿@model RouteViewModel
+>>>>>>> main
 
 @{
     ViewData["Title"] = "Edit";
@@ -9,7 +13,11 @@
 <h4>Route</h4>
 <hr />
 <div class="row">
+<<<<<<< HEAD
+    <div class="col-md-4">
+=======
     <div class="col-lg-8">
+>>>>>>> main
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -72,7 +80,11 @@
 </div>
 
 <div>
+<<<<<<< HEAD
+    <a asp-action="Index">Back to List</a>
+=======
     <a asp-action="Index">Back to Routes</a>
+>>>>>>> main
 </div>
 
 @section Scripts {

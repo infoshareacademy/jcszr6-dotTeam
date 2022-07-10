@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+﻿@model PlanAndRide.BusinessLogic.Route
+=======
 ﻿@model RouteViewModel
+>>>>>>> main
 
 @{
     ViewData["Title"] = "Create";
@@ -9,7 +13,11 @@
 <h4>Route</h4>
 <hr />
 <div class="row">
+<<<<<<< HEAD
+    <div class="col-md-4">
+=======
     <div class="col-lg-8">
+>>>>>>> main
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -22,7 +30,11 @@
                 <div class="col-md-3" style="display: inline-block">
                     <label asp-for="StartingPosition.Latitude" class="control-label">Lat</label>
                     <input asp-for="StartingPosition.Latitude" class="form-control" />
+<<<<<<< HEAD
+                    <span asp-validation-for="StartingPosition.Longitude" class="text-danger"></span>
+=======
                     <span asp-validation-for="StartingPosition.Latitude" class="text-danger"></span>
+>>>>>>> main
                 </div>
                 <div class="col-md-3" style="display: inline-block">
                     <label asp-for="StartingPosition.Longitude" class="control-label">Lng</label>

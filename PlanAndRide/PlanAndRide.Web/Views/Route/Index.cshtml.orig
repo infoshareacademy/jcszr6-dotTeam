@@ -1,0 +1,85 @@
+<<<<<<< HEAD
+﻿@model IEnumerable<PlanAndRide.BusinessLogic.Route>
+=======
+﻿@model RouteViewsModel
+>>>>>>> main
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Routes</h1>
+
+<p>
+    <a asp-action="Create">Create New Route</a>
+</p>
+<<<<<<< HEAD
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <label asp-for="@Model.First().Name"></label>
+            </th>
+            <th>
+                <label asp-for="@Model.First().StartingPosition"></label>
+            </th>
+            <th>
+                <label asp-for="@Model.First().DestinationPosition"></label>
+            </th>
+            <th>
+                <label asp-for="@Model.First().AverageScore"></label>
+            </th>
+            <th>
+                <label asp-for="@Model.First().Description"></label>
+            </th>
+            <th>
+                <label asp-for="@Model.First().ShareRoute"></label>
+            </th>
+            <th>
+                <label asp-for="@Model.First().IsPrivate"></label>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.StartingPosition
+                </td>
+                <td>
+                    @item.DestinationPosition
+                </td>
+                <td>
+                    @item.AverageScore
+                </td>
+                <td>
+                    @item.Description
+                </td>
+                <td>
+                    @item.ShareRoute
+                </td>
+                <td>
+                    @item.IsPrivate
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+=======
+
+<partial name="_Partials/_SearchForm" model="@Model" />
+<partial name="_Partials/_RoutesList" model="@Model" />
+
+
+
+>>>>>>> main

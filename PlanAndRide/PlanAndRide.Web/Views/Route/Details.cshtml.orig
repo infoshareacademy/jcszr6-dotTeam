@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+﻿@model PlanAndRide.BusinessLogic.Route
+=======
 ﻿@model RouteViewModel
+>>>>>>> main
 
 @{
     ViewData["Title"] = "Details";
@@ -56,5 +60,9 @@
 </div>
 <div>
     <a asp-action="Edit" asp-route-id=@Model.Id>Edit</a> |
+<<<<<<< HEAD
+    <a asp-action="Index">Back to List</a>
+=======
     <a asp-action="Index">Back to Routes</a>
+>>>>>>> main
 </div>
