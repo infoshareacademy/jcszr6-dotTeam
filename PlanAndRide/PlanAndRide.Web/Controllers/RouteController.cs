@@ -101,5 +101,7 @@ namespace PlanAndRide.Web.Controllers
             _routeRepository.Delete(id);
             return RedirectToAction(nameof(Index));
         }
+       
+        }
     }
-}
+
