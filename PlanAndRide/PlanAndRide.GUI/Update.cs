@@ -11,9 +11,12 @@ namespace PlanAndRide.GUI
     public class Update
     {
         private readonly RideService _rideService;
-        public Update(RideService service)
+        private readonly RouteService _routeService;
+
+        public Update(RideService rideService, RouteService routeService)
         {
-            _rideService=service;
+            _rideService=rideService;
+            _routeService = routeService;
         }
         public void PrintUpdate()
         {
@@ -39,7 +42,7 @@ namespace PlanAndRide.GUI
                 }
                 Console.WriteLine($"Nazwa trasy: {ride.Route.Name} ");
                 Console.WriteLine($"Opis trasy: {ride.Route.Description}");
-                Console.WriteLine($"Średnia ocena trasy: {ride.Route.AverageScore}");
+                Console.WriteLine($"Średnia ocena trasy: {_routeService.AverageScore(ride.Route)}");
 
                 Console.WriteLine();
                 Console.WriteLine("Poniżej zostaną przedstawione opinie dotyczące trasy: ");

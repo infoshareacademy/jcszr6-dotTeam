@@ -10,9 +10,11 @@ namespace PlanAndRide.GUI
     public class Search
     {
       private readonly RideService _rideService;
-        public Search(RideService service)
+      private readonly RouteService _routeService;
+        public Search(RideService rideService, RouteService routeService)
         {
-            _rideService=service;
+            _rideService=rideService;
+            _routeService=routeService;
         }
         public DateTime WriteDate()
         {
@@ -84,14 +86,14 @@ namespace PlanAndRide.GUI
             //Szukanie po ocenach i wyświetlanie wyników
 
             var loadedRides = _rideService.GetAll();
-            var filtredLoadRides = loadedRides.Where(r => r.Route.AverageScore >= minValueScore && r.Route.AverageScore <= maxValueScore).ToList();
+            var filtredLoadRides = loadedRides.Where(r=>_routeService.AverageScore(r.Route) >= minValueScore && _routeService.AverageScore(r.Route) <= maxValueScore).ToList();
             if (filtredLoadRides.Count != 0)
             {
                 foreach (var ride in filtredLoadRides)
                 {
                     Console.WriteLine($"Nazwa trasy: {ride.Route.Name} ");
                     Console.WriteLine($"Opis trasy: {ride.Route.Description}");
-                    Console.WriteLine($"Średnia ocena trasy: {ride.Route.AverageScore}\n");
+                    Console.WriteLine($"Średnia ocena trasy: {_routeService.AverageScore(ride.Route)}\n");
                 }
             }
             else
@@ -119,7 +121,7 @@ namespace PlanAndRide.GUI
                 {
                     Console.WriteLine($"Nazwa trasy: {ride.Route.Name} ");
                     Console.WriteLine($"Opis trasy: {ride.Route.Description}");
-                    Console.WriteLine($"Średnia ocena trasy: {ride.Route.AverageScore}\n");
+                    Console.WriteLine($"Średnia ocena trasy: {_routeService.AverageScore(ride.Route)}\n");
                 }
             }
             else

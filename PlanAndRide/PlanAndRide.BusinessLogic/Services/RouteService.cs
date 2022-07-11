@@ -3,7 +3,10 @@
     public class RouteService
     {
         private readonly IRepository<Route> _repository;
+        public RouteService()
+        {
 
+        }
         public RouteService(IRepository<Route> repository)
         {
             _repository = repository;
@@ -12,7 +15,7 @@
         {
             return _repository.GetAll();
         }
-        public Route? Get(int id)
+        public Route Get(int id)
         {
             try
             {
@@ -20,7 +23,7 @@
             }
             catch
             {
-                throw new InvalidOperationException($"Unique key violaton: Route ID:{id}");
+                throw;
             }
         }
         public void Add(Route route)
@@ -45,6 +48,14 @@
         public IEnumerable<Route> FindByName(string name)
         {
             return _repository.GetAll().Where(r => r.Name.ToLower().Contains(name.Trim().ToLower()));
+        }
+        public double AverageScore(Route route)
+        {
+            if (route.Reviews.Count == 0 || route.Reviews==null)
+            {
+                return 0d;
+            }
+            return route.Reviews.Select(r => r.Score).Average();
         }
 
     }

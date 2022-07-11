@@ -65,7 +65,7 @@ namespace PlanAndRide.Database.Repository
             }
         };
         }
-        public Route? Get(int id)
+        public Route Get(int id)
         {
             try
             {
@@ -73,7 +73,7 @@ namespace PlanAndRide.Database.Repository
             }
             catch
             {
-                throw;
+                throw new InvalidOperationException($"Unique key violaton: Route ID:{id}");
             }
         }
         public IEnumerable<Route> GetAll()

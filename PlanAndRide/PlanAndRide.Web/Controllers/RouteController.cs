@@ -18,8 +18,8 @@ namespace PlanAndRide.Web.Controllers
         // GET: RouteController
         public ActionResult Index()
         {
-            var model = new RouteViewsModel();
-            model.Routes = _routeService.GetAll().Select(r => new RouteViewModel(r));
+            var model = new RoutesCollectionViewModel();
+            model.Routes = _routeService.GetAll().Select(r => new RouteViewModel(r,_routeService));
             return View(model);
         }
 
@@ -30,7 +30,7 @@ namespace PlanAndRide.Web.Controllers
             if (route != null)
             {
                 ViewData["ApiKey"] = _config["Maps:ApiKey"];
-                return View(new RouteViewModel(route));
+                return View(new RouteViewModel(route,_routeService));
             }
             return RedirectToAction(nameof(Index));
         }
@@ -60,7 +60,7 @@ namespace PlanAndRide.Web.Controllers
             var route = _routeService.Get(id);
             if (route != null)
             {
-                return View(new RouteViewModel(route));
+                return View(new RouteViewModel(route, _routeService));
             }
             return RedirectToAction(nameof(Index));
         }
@@ -91,7 +91,7 @@ namespace PlanAndRide.Web.Controllers
             var route = _routeService.Get(id);
             if (route != null)
             {
-                return View(new RouteViewModel(route));
+                return View(new RouteViewModel(route, _routeService));
             }
             return RedirectToAction(nameof(Index));
         }
@@ -111,8 +111,8 @@ namespace PlanAndRide.Web.Controllers
             if (!string.IsNullOrEmpty(routeName))
             {
                 var routes = _routeService.FindByName(routeName);
-                var model = new RouteViewsModel();
-                model.Routes = routes.Select(r => new RouteViewModel(r));
+                var model = new RoutesCollectionViewModel();
+                model.Routes = routes.Select(r => new RouteViewModel(r,_routeService));
                 model.RouteName = routeName;
                 return View(nameof(Index), model);
             }

@@ -1,4 +1,6 @@
-﻿using PlanAndRide.BusinessLogic;
+﻿using GeoCoordinatePortable;
+using Newtonsoft.Json;
+using PlanAndRide.BusinessLogic;
 
 namespace PlanAndRide.Database.Repository
 {
@@ -8,7 +10,8 @@ namespace PlanAndRide.Database.Repository
 
         public RideRepository()
         {
-            _rides= new List<Ride>();
+            var json = File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "TempDataFiles", "data.json"));
+            _rides = JsonConvert.DeserializeObject<List<Ride>>(json);
         }
         public Ride Get(int id)
         {
