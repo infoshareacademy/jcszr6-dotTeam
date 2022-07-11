@@ -8,5 +8,9 @@
         {
             _repository = repository;
         }
+        public IEnumerable<Ride> GetAll()
+        {
+            return _repository.GetAll();
+        }
     }
 }

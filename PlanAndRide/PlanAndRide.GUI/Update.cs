@@ -10,7 +10,12 @@ namespace PlanAndRide.GUI
 {
     public class Update
     {
-        public static void PrintUpdate()
+        private readonly RideService _rideService;
+        public Update(RideService service)
+        {
+            _rideService=service;
+        }
+        public void PrintUpdate()
         {
             //Wyświetlenie wszystkich dostępnych tras zapisanych w bazie danych
 
@@ -20,7 +25,7 @@ namespace PlanAndRide.GUI
             Console.WriteLine();
 
 
-            foreach (var ride in RideRepository.GetAllRides())
+            foreach (var ride in _rideService.GetAll())
             {
                 Console.WriteLine($"Nazwa przejazdu: {ride.Name}");
                 Console.WriteLine($"Data rozpoczęcia przejazdu: {ride.Date}");

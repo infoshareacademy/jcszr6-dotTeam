@@ -9,8 +9,12 @@ namespace PlanAndRide.GUI
 {
     public class Search
     {
-      
-        public static DateTime WriteDate()
+      private readonly RideService _rideService;
+        public Search(RideService service)
+        {
+            _rideService=service;
+        }
+        public DateTime WriteDate()
         {
             //wprowadzanie przez użytwkownika daty 
 
@@ -38,7 +42,7 @@ namespace PlanAndRide.GUI
             }
 
         }
-        public static void SearchByReviewDates()
+        public void SearchByReviewDates()
         {
 
             //Wprowadzanie przez użytkonika danych do szukania.
@@ -51,7 +55,7 @@ namespace PlanAndRide.GUI
 
             //Szukanie po datach i wyświetlanie wyników
 
-            var loadedRides = RideRepository.GetAllRides();
+            var loadedRides = _rideService.GetAll();
             var filtredReviews = loadedRides.SelectMany(r => r.Route.Reviews).Where(r => r.Date.Date >= firstDateTimeToSearch.Date && r.Date.Date <= lastDateTimeToSearch.Date).ToList();
             if (filtredReviews.Count != 0)
             {
@@ -68,7 +72,7 @@ namespace PlanAndRide.GUI
             }
 
         }
-        public static void SearchByGradeRoute()
+        public void SearchByGradeRoute()
         {
             //Wprowadzania przez użytkownika zakres szukania tras po ocenach
 
@@ -79,7 +83,7 @@ namespace PlanAndRide.GUI
 
             //Szukanie po ocenach i wyświetlanie wyników
 
-            var loadedRides = RideRepository.GetAllRides();
+            var loadedRides = _rideService.GetAll();
             var filtredLoadRides = loadedRides.Where(r => r.Route.AverageScore >= minValueScore && r.Route.AverageScore <= maxValueScore).ToList();
             if (filtredLoadRides.Count != 0)
             {
@@ -107,9 +111,9 @@ namespace PlanAndRide.GUI
                 searchName = Console.ReadLine();
             }
 
-            var loadedRides = RideRepository.GetAllRides();
-            var filtredLoadRides = loadedRides.FindAll(r => r.Name == searchName);
-            if (filtredLoadRides.Count != 0)
+            var loadedRides = _rideService.GetAll();
+            var filtredLoadRides = loadedRides.Where(r => r.Name == searchName);
+            if (filtredLoadRides.Count() != 0)
             {
                 foreach (var ride in filtredLoadRides)
                 {
