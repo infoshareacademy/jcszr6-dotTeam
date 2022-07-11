@@ -1,9 +1,9 @@
 ﻿using System.Runtime.Serialization;
 
-namespace PlanAndRide.BusinessLogic
+namespace PlanAndRide.BusinessLogic.Exceptions
 {
     [Serializable]
-    internal class RecordNotFoundException : Exception
+    public class RecordNotFoundException : Exception
     {
         public RecordNotFoundException()
         {

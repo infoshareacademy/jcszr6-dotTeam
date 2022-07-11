@@ -1,5 +1,6 @@
 ﻿using GeoCoordinatePortable;
 using PlanAndRide.BusinessLogic;
+using System.ComponentModel.DataAnnotations;
 
 namespace PlanAndRide.Web.Models
 {
@@ -10,6 +11,7 @@ namespace PlanAndRide.Web.Models
         {
             get { return Route.Id; }
         }
+        [Required]
         public string Name
         {
             get {return Route.Name;}

@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PlanAndRide.BusinessLogic
+﻿namespace PlanAndRide.BusinessLogic
 {
     public class Ride
     {
+        public int Id { get; set; }
         public string Name { get; set; }
 
         public DateTime? Date { get;  set; }
 
-        // do not change in edit
         public List<User> RideMembers;
 
         public Route Route { get; set; }

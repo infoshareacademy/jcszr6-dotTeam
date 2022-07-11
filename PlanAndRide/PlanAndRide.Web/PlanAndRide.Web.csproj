@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PlanAndRide.BusinessLogic\PlanAndRide.BusinessLogic.csproj" />
+    <ProjectReference Include="..\PlanAndRide.Database\PlanAndRide.Database.csproj" />
   </ItemGroup>
 
 </Project>
