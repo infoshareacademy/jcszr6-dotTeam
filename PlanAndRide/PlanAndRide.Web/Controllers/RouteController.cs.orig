@@ -9,12 +9,12 @@ namespace PlanAndRide.Web.Controllers
     public class RouteController : Controller
     {
 <<<<<<< HEAD
-        private readonly RouteRepository _routeRepository;
-        private readonly IConfiguration _config;
-        public RouteController(RouteRepository routeRepository, IConfiguration config)
-=======
         private readonly IRepository<BusinessLogic.Route> _routeRepository;
-        public RouteController(IRepository<BusinessLogic.Route> routeRepository)
+        private readonly IConfiguration _config;
+        public RouteController(IRepository<BusinessLogic.Route> routeRepository, IConfiguration config)
+=======
+        private readonly RouteRepository _routeRepository;
+        public RouteController(RouteRepository routeRepository)
 >>>>>>> jcszr6dt-33-widoki-trasy
         {
             _routeRepository = routeRepository;
