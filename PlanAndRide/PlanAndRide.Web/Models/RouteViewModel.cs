@@ -6,7 +6,7 @@ namespace PlanAndRide.Web.Models
 {
     public class RouteViewModel
     {
-        private readonly RouteService _routeService;
+        private readonly IRouteService _routeService;
         public BusinessLogic.Route Route { get; }
         public int Id
         {
@@ -47,7 +47,7 @@ namespace PlanAndRide.Web.Models
             get { return Route.IsPrivate; }
             set { Route.IsPrivate = value; }
         }
-        public RouteViewModel(BusinessLogic.Route route, RouteService routeService)
+        public RouteViewModel(BusinessLogic.Route route, IRouteService routeService)
         {
             _routeService = routeService;
             Route = new BusinessLogic.Route

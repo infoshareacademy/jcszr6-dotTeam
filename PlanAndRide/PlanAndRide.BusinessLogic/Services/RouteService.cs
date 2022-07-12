@@ -1,12 +1,9 @@
 ﻿namespace PlanAndRide.BusinessLogic
 {
-    public class RouteService
+    public class RouteService : IRouteService
     {
         private readonly IRepository<Route> _repository;
-        public RouteService()
-        {
-
-        }
+        public RouteService() { }                     
         public RouteService(IRepository<Route> repository)
         {
             _repository = repository;

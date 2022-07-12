@@ -8,9 +8,9 @@ namespace PlanAndRide.Web.Controllers
 {
     public class RouteController : Controller
     {
-        private readonly RouteService _routeService;
+        private readonly IRouteService _routeService;
         private readonly IConfiguration _config;
-        public RouteController(RouteService routeService, IConfiguration config)
+        public RouteController(IRouteService routeService, IConfiguration config)
         {
             _routeService = routeService;
             _config = config;
