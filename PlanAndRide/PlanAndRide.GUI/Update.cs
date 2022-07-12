@@ -10,10 +10,10 @@ namespace PlanAndRide.GUI
 {
     public class Update
     {
-        private readonly RideService _rideService;
-        private readonly RouteService _routeService;
+        private readonly IRideService _rideService;
+        private readonly IRouteService _routeService;
 
-        public Update(RideService rideService, RouteService routeService)
+        public Update(IRideService rideService, IRouteService routeService)
         {
             _rideService=rideService;
             _routeService = routeService;

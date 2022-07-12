@@ -5,8 +5,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddSingleton<IRepository<PlanAndRide.BusinessLogic.Route>, RouteRepository>();
+builder.Services.AddSingleton<IRepository<Ride>, RideRepository>();
+
 builder.Services.AddScoped<IRouteService,RouteService>();
-builder.Services.AddSingleton<IRepository<PlanAndRide.BusinessLogic.Route>,RouteRepository>();
+builder.Services.AddScoped<IRideService,RideService>();
+
 
 
 var app = builder.Build();

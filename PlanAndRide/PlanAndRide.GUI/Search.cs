@@ -9,9 +9,9 @@ namespace PlanAndRide.GUI
 {
     public class Search
     {
-      private readonly RideService _rideService;
-      private readonly RouteService _routeService;
-        public Search(RideService rideService, RouteService routeService)
+      private readonly IRideService _rideService;
+      private readonly IRouteService _routeService;
+        public Search(IRideService rideService, IRouteService routeService)
         {
             _rideService=rideService;
             _routeService=routeService;
