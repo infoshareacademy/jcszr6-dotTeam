@@ -23,7 +23,7 @@ namespace PlanAndRide.GUI
             foreach (var ride in RideRepository.GetAllRides())
             {
                 Console.WriteLine($"Nazwa przejazdu: {ride.Name}");
-                Console.WriteLine($"Data rozpoczęcia przejazdu: {ride.Date}");
+               // Console.WriteLine($"Data rozpoczęcia przejazdu: {ride.Date}");
                 if (ride.IsPrivate == false)
                 {
                     Console.WriteLine("Przejazd jest publiczny. Każdy może dołączyć.");
@@ -32,13 +32,13 @@ namespace PlanAndRide.GUI
                 {
                     Console.WriteLine("Przejazd jest prywatny. Tylko osoby zaproszone mogą dołączyć.");
                 }
-                Console.WriteLine($"Nazwa trasy: {ride.Route.Name} ");
-                Console.WriteLine($"Opis trasy: {ride.Route.Description}");
-                Console.WriteLine($"Średnia ocena trasy: {ride.Route.AverageScore}");
+                Console.WriteLine($"Nazwa trasy: {ride.Name} ");
+                Console.WriteLine($"Opis trasy: {ride.Description}");
+                Console.WriteLine($"Średnia ocena trasy: {ride.AverageScore}");
 
                 Console.WriteLine();
                 Console.WriteLine("Poniżej zostaną przedstawione opinie dotyczące trasy: ");
-                foreach (var rides in ride.Route.Reviews)
+                foreach (var rides in ride.Reviews)
                 {
                     Console.WriteLine($"Data utworzenia oceny: {rides.Date}");
                     Console.WriteLine($"Ocena trasy: {rides.Score}");

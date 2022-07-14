@@ -8,6 +8,8 @@
 
   <ItemGroup>
     <None Remove="data.json" />
+    <None Remove="IRepository.cs.orig" />
+    <None Remove="RideRepository.cs.orig" />
   </ItemGroup>
 
   <ItemGroup>

@@ -95,23 +95,23 @@ namespace PlanAndRide.BusinessLogic
         {
             _=Rides.Remove(Get(id));
         }
-        
-        //private static List<Ride> rides = new List<Ride>();
 
-        //static RideRepository()
-        //{
-        //    var json = File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "data.json"));
-        //    rides = JsonConvert.DeserializeObject<List<Ride>>(json);
-        //}
+        private static List<Route> rides = new List<Route>();
 
-        //public static List<Ride> GetAllRides()
-        //{
-        //    return rides;
-        //}
+        static RideRepository()
+        {
+            var json = File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "data.json"));
+            rides = JsonConvert.DeserializeObject<List<Route>>(json);
+        }
 
-        //public static void AddRide(Ride ride)
+        public static List<Route> GetAllRides()
+        {
+            return rides;
+        }
+
+        //public static void AddRide(Route route)
         //{
-        //    rides.Add(ride);
+        //    route.Add(route);
         //}
 
 
