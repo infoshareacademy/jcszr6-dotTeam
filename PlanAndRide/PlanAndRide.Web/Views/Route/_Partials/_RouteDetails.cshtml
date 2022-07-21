@@ -1,0 +1,38 @@
+﻿@model PlanAndRide.Web.Models.RouteViewModel
+
+@{
+    var privacyDisplay = "[Private]";
+    if (!Model.IsPrivate)
+    {
+        privacyDisplay = "[Public]";
+    }
+}
+
+<h6>@privacyDisplay</h6>
+<dl class="row">
+    <dt class="col-sm-4">
+        <label asp-for="StartingPosition">From: </label>
+    </dt>
+    <dd class="col-sm-6">
+        @Model.StartingPosition
+    </dd>
+    <dt class="col-sm-4">
+        <label asp-for="DestinationPosition">To: </label>
+    </dt>
+    <dd class="col-sm-6">
+        @Model.DestinationPosition
+    </dd>
+    <dt class="col-sm-4">
+        <label asp-for="Description">Description: </label>
+    </dt>
+    <dd class="col-sm-6">
+        @Model.Description
+    </dd>
+    <dt class="col-sm-4">
+        <label asp-for="AverageScore">Score: </label>
+    </dt>
+    <dd class="col-sm-6">
+        @Model.AverageScore
+    </dd>
+</dl>
+

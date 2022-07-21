@@ -119,5 +119,9 @@ namespace PlanAndRide.Web.Controllers
             return RedirectToAction(nameof(Index));
 
         }
+        public ActionResult Reviews(int id)
+        {
+            return View();
+        }
     }
 }

@@ -1,51 +1,21 @@
-﻿@model RouteViewModel
+﻿@model PlanAndRide.Web.Models.RouteViewModel
 
 @{
     ViewData["Title"] = "Details";
-
-    var privacyDisplay = "";
-    if (Model.IsPrivate)
-        privacyDisplay = "[Private]";
-    else
-        privacyDisplay = "[Public]";
 }
-<h4>@Model.Name @privacyDisplay</h4>
+<h4>@Model.Name</h4>
 
 <div class="col-lg-6 gx-5" style="float:left">
-    @*<h4>Route @privacyDisplay</h4>*@
     <hr />
-    <dl class="row">
-        <dt class="col-sm-4">
-            <label asp-for="StartingPosition"></label>
-        </dt>
-        <dd class="col-sm-6">
-            @Model.StartingPosition
-        </dd>
-        <dt class="col-sm-4">
-            <label asp-for="DestinationPosition"></label>
-        </dt>
-        <dd class="col-sm-6">
-            @Model.DestinationPosition
-        </dd>
-        <dt class="col-sm-4">
-            <label asp-for="Description"></label>
-        </dt>
-        <dd class="col-sm-6">
-            @Model.Description
-        </dd>
-        <dt class="col-sm-4">
-            <label asp-for="AverageScore"></label>
-        </dt>
-        <dd class="col-sm-6">
-            @Model.AverageScore
-        </dd>
-
-    </dl>
+    <partial name="_Partials/_RouteDetails" model="@Model"/>
 </div>
+
 <div class="col-lg-6 gx-5" style="float:left">
     <partial name="_Partials/_Map" model="@Model" />
 </div>
+
 <div style="clear:both">
+    <a asp-action="Reviews" asp-route-id="@Model.Id">Reviews</a> | 
     <a asp-action="Edit" asp-route-id=@Model.Id>Edit</a> |
     <a asp-action="Index">Back to Routes</a>
 </div>
