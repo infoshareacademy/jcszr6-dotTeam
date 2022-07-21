@@ -40,6 +40,10 @@ namespace PlanAndRide.BusinessLogic
         {
             return _repository.GetAll();
         }
+        public IEnumerable<Review> GetByReferenceId(int referenceId, ReviewType type)
+        {
+            return _repository.GetAll().Where(r => r.ReferenceId == referenceId && r.Type == type);
+        }
 
         public void Update(int id, Review entity)
         {

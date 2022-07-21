@@ -12,6 +12,7 @@ builder.Services.AddSingleton<IRepository<Review>, ReviewRepository>();
 
 builder.Services.AddScoped<IRouteService,RouteService>();
 builder.Services.AddScoped<IRideService,RideService>();
+builder.Services.AddScoped<IReviewService,ReviewService>();
 
 
 

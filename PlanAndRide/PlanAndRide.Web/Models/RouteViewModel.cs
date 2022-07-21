@@ -1,6 +1,7 @@
 ﻿using GeoCoordinatePortable;
 using PlanAndRide.BusinessLogic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PlanAndRide.Web.Models
 {
@@ -28,6 +29,7 @@ namespace PlanAndRide.Web.Models
             get {return Route.DestinationPosition;}
             set { Route.DestinationPosition = value; }
         }
+        [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public double AverageScore
         {
             get { return _routeService.AverageScore(Route); }

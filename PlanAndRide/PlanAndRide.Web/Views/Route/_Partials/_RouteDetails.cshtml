@@ -32,7 +32,7 @@
         <label asp-for="AverageScore">Score: </label>
     </dt>
     <dd class="col-sm-6">
-        @Model.AverageScore
+        @Math.Round(Model.AverageScore,1)
     </dd>
 </dl>
 

@@ -10,10 +10,13 @@ namespace PlanAndRide.Web.Controllers
     {
         private readonly IRouteService _routeService;
         private readonly IConfiguration _config;
-        public RouteController(IRouteService routeService, IConfiguration config)
+        private readonly IReviewService _reviewService;
+
+        public RouteController(IRouteService routeService, IConfiguration config,IReviewService reviewService)
         {
             _routeService = routeService;
             _config = config;
+            _reviewService = reviewService;
         }
         // GET: RouteController
         public ActionResult Index()
@@ -119,9 +122,12 @@ namespace PlanAndRide.Web.Controllers
             return RedirectToAction(nameof(Index));
 
         }
-        public ActionResult Reviews(int id)
+        public ActionResult Reviews(int referenceId)
         {
-            return View();
+            //var reviews = _reviewService.GetByReferenceId(referenceId, ReviewType.ROUTE).ToList();
+            var route = _routeService.Get(referenceId);
+            var model = new RouteViewModel(route,_routeService);
+            return View(model);
         }
     }
 }
