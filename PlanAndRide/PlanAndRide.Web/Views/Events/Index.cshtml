@@ -9,19 +9,22 @@
     <a asp-action= "Create">Create New Event</a>
     
 </p>
-<table class="table">
+<table class="table" id="myTable">
     <thead>
         <tr>
             <th>
                 <label asp-for="@Model.First().Name"></label>
             </th>
             <th>
-                <label asp-for="@Model.First().Date"></label>
+                <label>Start event</label>
             </th>
             <th>
                 <label asp-for="@Model.First().Route"></label>
             </th><th>
                 <label asp-for="@Model.First().IsPrivate"></label>
+            </th>
+            <th>
+                <label>Action</label>
             </th>
         </tr>
     </thead>
@@ -47,3 +50,10 @@
         }
     </tbody>
 </table>
+@section scripts {
+    <script> 
+       $(document).ready( function () {
+    $('#myTable').DataTable();
+} );
+   </script>
+}
