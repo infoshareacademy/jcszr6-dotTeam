@@ -46,7 +46,7 @@ namespace PlanAndRide.GUI
 
                 Console.WriteLine();
                 Console.WriteLine("Poniżej zostaną przedstawione opinie dotyczące trasy: ");
-                foreach (var rides in ride.Reviews)
+                foreach (var rides in ride.Route.Reviews)
                 {
                     Console.WriteLine($"Data utworzenia oceny: {rides.Date}");
                     Console.WriteLine($"Ocena trasy: {rides.Score}");

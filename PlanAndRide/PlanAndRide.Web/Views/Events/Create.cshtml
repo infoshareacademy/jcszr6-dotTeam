@@ -36,7 +36,7 @@
                 <input asp-for="Route" class="form-control" />
                 <span asp-validation-for="Route" class="text-danger"></span>
             </div>*@
-            @Html.DropDownListFor(r=>r.Routes, new SelectList(nameof(Route.Name)), "Select Route")
+            @Html.DropDownListFor(r=>r.Route, new SelectList(nameof(Route.Name)), "Select Route")
             <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="ShareRide" /> @Html.DisplayNameFor(model => model.ShareRide)

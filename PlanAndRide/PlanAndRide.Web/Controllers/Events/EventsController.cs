@@ -7,9 +7,9 @@ namespace PlanAndRide.Web.Controllers.Events
 {
     public class EventsController : Controller
     {
-        private readonly RideRepository _rideRepository;
+        private readonly IRepository<Ride> _rideRepository;
 
-        public EventsController(RideRepository rideRepository)
+        public EventsController(IRepository<Ride> rideRepository)
         {
             _rideRepository = rideRepository;
         }
