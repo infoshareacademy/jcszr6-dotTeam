@@ -13,7 +13,7 @@ namespace PlanAndRide.BusinessLogic
         [Required]
         public string Name { get; set; }
 
-        public DateTime? Date { get;  set; }
+        public DateTime? Date { get; set; }
 
         // do not change in edit
         public List<User> RideMembers;
@@ -25,5 +25,7 @@ namespace PlanAndRide.BusinessLogic
         public bool ShareRide { get; set; }
 
         public bool IsPrivate { get; set; }
+
+        public List<RouteRepository> Routes;
     }
 }

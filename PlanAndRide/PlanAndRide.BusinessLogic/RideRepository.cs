@@ -98,11 +98,11 @@ namespace PlanAndRide.BusinessLogic
 
         private static List<Route> rides = new List<Route>();
 
-        static RideRepository()
-        {
-            var json = File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "data.json"));
-            rides = JsonConvert.DeserializeObject<List<Route>>(json);
-        }
+        //static RideRepository()
+        //{
+        //    var json = File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "data.json"));
+        //    rides = JsonConvert.DeserializeObject<List<Route>>(json);
+        //}
 
         public static List<Route> GetAllRides()
         {

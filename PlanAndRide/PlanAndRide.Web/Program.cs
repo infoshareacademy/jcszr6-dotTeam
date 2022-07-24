@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddSingleton<RouteRepository>();
-
+builder.Services.AddSingleton<RideRepository>();
 var app = builder.Build();
 
 
