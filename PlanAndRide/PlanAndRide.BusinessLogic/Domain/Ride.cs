@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PlanAndRide.BusinessLogic
+﻿namespace PlanAndRide.BusinessLogic
 {
     public class Ride
     {
@@ -15,7 +8,6 @@ namespace PlanAndRide.BusinessLogic
 
         public DateTime? Date { get; set; }
 
-        // do not change in edit
         public List<User> RideMembers;
 
         public string Route { get; set; }

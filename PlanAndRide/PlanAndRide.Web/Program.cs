@@ -1,16 +1,23 @@
 using PlanAndRide.BusinessLogic;
-using PlanAndRide.Web.Models;
+using PlanAndRide.Database.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddSingleton<RouteRepository>();
-builder.Services.AddSingleton<RideRepository>();
+
+builder.Services.AddSingleton<IRepository<PlanAndRide.BusinessLogic.Route>, RouteRepository>();
+builder.Services.AddSingleton<IRepository<Ride>, RideRepository>();
+
+builder.Services.AddScoped<IRouteService,RouteService>();
+builder.Services.AddScoped<IRideService,RideService>();
+
+
+
 var app = builder.Build();
 
 
-// Configure the HTTP request pipeline.
+// Configure the HTTP request pipeline.>
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");

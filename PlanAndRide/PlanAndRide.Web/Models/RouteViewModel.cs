@@ -1,15 +1,18 @@
 ﻿using GeoCoordinatePortable;
 using PlanAndRide.BusinessLogic;
+using System.ComponentModel.DataAnnotations;
 
 namespace PlanAndRide.Web.Models
 {
     public class RouteViewModel
     {
+        private readonly IRouteService _routeService;
         public BusinessLogic.Route Route { get; }
         public int Id
         {
             get { return Route.Id; }
         }
+        [Required]
         public string Name
         {
             get {return Route.Name;}
@@ -27,7 +30,7 @@ namespace PlanAndRide.Web.Models
         }
         public double AverageScore
         {
-            get {return Route.AverageScore;}
+            get { return _routeService.AverageScore(Route); }
         }
         public string? Description
         {
@@ -44,8 +47,9 @@ namespace PlanAndRide.Web.Models
             get { return Route.IsPrivate; }
             set { Route.IsPrivate = value; }
         }
-        public RouteViewModel(BusinessLogic.Route route)
+        public RouteViewModel(BusinessLogic.Route route, IRouteService routeService)
         {
+            _routeService = routeService;
             Route = new BusinessLogic.Route
             {
                 Id = route.Id,
@@ -55,13 +59,16 @@ namespace PlanAndRide.Web.Models
                 Description = route.Description,
                 ShareRoute = route.ShareRoute,
                 IsPrivate = route.IsPrivate,
-                Reviews = new List<Review>()
+                Reviews = route.Reviews
             };
         }
         public RouteViewModel()
         {
-            Route = new BusinessLogic.Route();
-            Route.Reviews = new List<Review>();
+            Route = new BusinessLogic.Route()
+            { 
+                Reviews=new List<Review>()
+            };
+            _routeService = new RouteService();
         }
     }
 }

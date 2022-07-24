@@ -1,0 +1,53 @@
+[
+  {
+    "RideMembers": [
+      {
+        "Id": 1,
+        "Login": "UserLogin",
+        "Password": "pass",
+        "Email": "email@mail.com"
+      }
+    ],
+    "Id": 1,
+    "Name": "Test Ride",
+    "Date": "2022-07-12T10:20:26.9468882+02:00",
+    "Route": {
+      "Id": 1,
+      "Name": "Route Name",
+      "StartingPosition": {
+        "Latitude": 25.0,
+        "Longitude": 26.1,
+        "HorizontalAccuracy": "NaN",
+        "VerticalAccuracy": "NaN",
+        "Speed": "NaN",
+        "Course": "NaN",
+        "IsUnknown": false,
+        "Altitude": "NaN"
+      },
+      "DestinationPosition": {
+        "Latitude": 41.0,
+        "Longitude": 42.2,
+        "HorizontalAccuracy": "NaN",
+        "VerticalAccuracy": "NaN",
+        "Speed": "NaN",
+        "Course": "NaN",
+        "IsUnknown": false,
+        "Altitude": "NaN"
+      },
+      "Description": "desc",
+      "ShareRoute": false,
+      "IsPrivate": false,
+      "Reviews": [
+        {
+          "Id": 1,
+          "Score": 100,
+          "Date": "2022-07-12T10:20:26.9610324+02:00",
+          "Description": "review desc"
+        }
+      ]
+    },
+    "Description": null,
+    "ShareRide": false,
+    "IsPrivate": false
+  }
+]
