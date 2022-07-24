@@ -10,7 +10,15 @@ namespace PlanAndRide.GUI
 {
     public class Update
     {
-        public static void PrintUpdate()
+        private readonly IRideService _rideService;
+        private readonly IRouteService _routeService;
+
+        public Update(IRideService rideService, IRouteService routeService)
+        {
+            _rideService=rideService;
+            _routeService = routeService;
+        }
+        public void PrintUpdate()
         {
             //Wyświetlenie wszystkich dostępnych tras zapisanych w bazie danych
 
@@ -20,7 +28,7 @@ namespace PlanAndRide.GUI
             Console.WriteLine();
 
 
-            foreach (var ride in RideRepository.GetAllRides())
+            foreach (var ride in _rideService.GetAll())
             {
                 Console.WriteLine($"Nazwa przejazdu: {ride.Name}");
                 Console.WriteLine($"Data rozpoczęcia przejazdu: {ride.Date}");
@@ -34,7 +42,7 @@ namespace PlanAndRide.GUI
                 }
                 Console.WriteLine($"Nazwa trasy: {ride.Route.Name} ");
                 Console.WriteLine($"Opis trasy: {ride.Route.Description}");
-                Console.WriteLine($"Średnia ocena trasy: {ride.Route.AverageScore}");
+                Console.WriteLine($"Średnia ocena trasy: {_routeService.AverageScore(ride.Route)}");
 
                 Console.WriteLine();
                 Console.WriteLine("Poniżej zostaną przedstawione opinie dotyczące trasy: ");

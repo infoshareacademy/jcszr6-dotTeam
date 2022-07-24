@@ -1,18 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <None Remove="TempDataFiles\data.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="TempDataFiles\data.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\PlanAndRide.BusinessLogic\PlanAndRide.BusinessLogic.csproj" />
-    <ProjectReference Include="..\PlanAndRide.Database\PlanAndRide.Database.csproj" />
   </ItemGroup>
 
 </Project>

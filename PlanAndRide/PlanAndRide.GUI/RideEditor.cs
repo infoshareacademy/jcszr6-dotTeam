@@ -7,17 +7,10 @@ using PlanAndRide.BusinessLogic;
 
 namespace PlanAndRide.GUI
 {
-    internal class RideService
+    public class RideEditor
     {
         public void UpdateRide(Ride ride)
         {
-            //var myRide = rides.FirstOrDefault(r => r.Name == rideName);
-            //if (myRide == null)
-            //{
-            //    Console.WriteLine($"No ride with name {rideName} has been found.");
-            //    return;
-            //}
-
             UpdateRideName(ride);
             UpdateRideDate(ride);
             UpdateRideDescription(ride);

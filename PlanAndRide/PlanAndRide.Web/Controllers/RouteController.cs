@@ -8,26 +8,29 @@ namespace PlanAndRide.Web.Controllers
 {
     public class RouteController : Controller
     {
-        private readonly RouteRepository _routeRepository;
-        public RouteController(RouteRepository routeRepository)
+        private readonly IRouteService _routeService;
+        private readonly IConfiguration _config;
+        public RouteController(IRouteService routeService, IConfiguration config)
         {
-            _routeRepository = routeRepository;
+            _routeService = routeService;
+            _config = config;
         }
         // GET: RouteController
         public ActionResult Index()
         {
-            var model = new RouteViewsModel();
-            model.Routes = _routeRepository.GetAll().Select(r => new RouteViewModel(r));
+            var model = new RoutesCollectionViewModel();
+            model.Routes = _routeService.GetAll().Select(r => new RouteViewModel(r,_routeService));
             return View(model);
         }
 
         // GET: RouteController/Details/5
         public ActionResult Details(int id)
         {
-            var route = _routeRepository.Get(id);
+            var route = _routeService.Get(id);
             if (route != null)
             {
-                return View(new RouteViewModel(route));
+                ViewData["ApiKey"] = _config["Maps:ApiKey"];
+                return View(new RouteViewModel(route,_routeService));
             }
             return RedirectToAction(nameof(Index));
         }
@@ -47,17 +50,17 @@ namespace PlanAndRide.Web.Controllers
             {
                 return View(model);
             }
-            _routeRepository.Add(model.Route);
+            _routeService.Add(model.Route);
             return RedirectToAction(nameof(Search), new {routeName=model.Name});
         }
 
         // GET: RouteController/Edit/5
         public ActionResult Edit(int id)
         {
-            var route = _routeRepository.Get(id);
+            var route = _routeService.Get(id);
             if (route != null)
             {
-                return View(new RouteViewModel(route));
+                return View(new RouteViewModel(route, _routeService));
             }
             return RedirectToAction(nameof(Index));
         }
@@ -73,7 +76,7 @@ namespace PlanAndRide.Web.Controllers
             }
             try
             {
-                _routeRepository.Update(id, model.Route);
+                _routeService.Update(id, model.Route);
                 return RedirectToAction(nameof(Details), new { Id=id });
             }
             catch
@@ -85,10 +88,10 @@ namespace PlanAndRide.Web.Controllers
         // GET: RouteController/Delete/5
         public ActionResult Delete(int id)
         {
-            var route = _routeRepository.Get(id);
+            var route = _routeService.Get(id);
             if (route != null)
             {
-                return View(new RouteViewModel(route));
+                return View(new RouteViewModel(route, _routeService));
             }
             return RedirectToAction(nameof(Index));
         }
@@ -98,7 +101,7 @@ namespace PlanAndRide.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, RouteViewModel model)
         {
-            _routeRepository.Delete(id);
+            _routeService.Delete(id);
             return RedirectToAction(nameof(Index));
         }
 
@@ -107,9 +110,9 @@ namespace PlanAndRide.Web.Controllers
         {
             if (!string.IsNullOrEmpty(routeName))
             {
-                var routes = _routeRepository.FindByName(routeName);
-                var model = new RouteViewsModel();
-                model.Routes = routes.Select(r => new RouteViewModel(r));
+                var routes = _routeService.FindByName(routeName);
+                var model = new RoutesCollectionViewModel();
+                model.Routes = routes.Select(r => new RouteViewModel(r,_routeService));
                 model.RouteName = routeName;
                 return View(nameof(Index), model);
             }
