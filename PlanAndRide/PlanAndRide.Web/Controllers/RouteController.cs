@@ -41,6 +41,7 @@ namespace PlanAndRide.Web.Controllers
         // GET: RouteController/Create
         public ActionResult Create()
         {
+            ViewData["ApiKey"] = _config["Maps:ApiKey"];
             return View();
         }
 
