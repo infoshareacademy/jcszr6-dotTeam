@@ -3,21 +3,48 @@
 
 // Write your JavaScript code.
 
-function PlacesAutocomplete () {
-    const originInput = new google.maps.places.Autocomplete(document.getElementById('StartingLocation'));
-    google.maps.event.addListener(originInput, 'place_changed', function () {
-        const placeDetails = originInput.getPlace();
-        document.getElementById('StartingLocation').value = placeDetails.formatted_address;
-        document.getElementById('StartingLatitude').value = placeDetails.geometry.location.lat();
-        document.getElementById('StartingLongitude').value = placeDetails.geometry.location.lng();
-    });
+function PlacesAutocomplete() {
+    $("document").ready(function () {
+        const originInput = new google.maps.places.Autocomplete(document.getElementById('StartingLocation'));
+        google.maps.event.addListener(originInput, 'place_changed', function () {
+            const placeDetails = originInput.getPlace();
+            document.getElementById('StartingLocation').value = placeDetails.formatted_address;
+            document.getElementById('StartingLatitude').value = placeDetails.geometry.location.lat();
+            document.getElementById('StartingLongitude').value = placeDetails.geometry.location.lng();
+        });
 
-    const destinationInput = new google.maps.places.Autocomplete(document.getElementById('DestinationLocation'));
-    google.maps.event.addListener(destinationInput, 'place_changed', function () {
-        const placeDetails = destinationInput.getPlace();
-        document.getElementById('DestinationLocation').value = placeDetails.formatted_address;
-        document.getElementById('DestinationLatitude').value = placeDetails.geometry.location.lat();
-        document.getElementById('DestinationLongitude').value = placeDetails.geometry.location.lng();
+        const destinationInput = new google.maps.places.Autocomplete(document.getElementById('DestinationLocation'));
+        google.maps.event.addListener(destinationInput, 'place_changed', function () {
+            const placeDetails = destinationInput.getPlace();
+            document.getElementById('DestinationLocation').value = placeDetails.formatted_address;
+            document.getElementById('DestinationLatitude').value = placeDetails.geometry.location.lat();
+            document.getElementById('DestinationLongitude').value = placeDetails.geometry.location.lng();
+        });
     });
 }
+function GeocodeLatLng() {
+    $("document").ready(function () {
+        const geocoder = new google.maps.Geocoder();
+        const StartingLatLng = {
+            lat: parseFloat(document.getElementById("StartingLatitude").value),
+            lng: parseFloat(document.getElementById("StartingLongitude").value)
+        }
+        const DestinationLatLng = {
+            lat: parseFloat(document.getElementById("DestinationLatitude").value),
+            lng: parseFloat(document.getElementById("DestinationLongitude").value)
+        }
+        geocoder.geocode({ location: StartingLatLng }).then
+            ((response) => {
+                if (response.results[0]) {
+                    document.getElementById("StartingLocation").value = response.results[0].formatted_address;
+                }
+            }).catch((e) => console.log("Geocoder failed due to: " + e));
 
+        geocoder.geocode({ location: DestinationLatLng }).then
+            ((response) => {
+                if (response.results[0]) {
+                    document.getElementById("DestinationLocation").value = response.results[0].formatted_address;
+                }
+            }).catch((e) => console.log("Geocoder failed due to: " + e));
+    });
+}
