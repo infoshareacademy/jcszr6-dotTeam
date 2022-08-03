@@ -12,57 +12,7 @@
 <div class="row">
     <div class="col-lg-8">
         <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="StartingPosition" class="control-label"></label><br />
-                <input type="text" id="StartLocation" class="form-control" />
-                <input type="text" id="StartAddress" class="form-control" />
-                <div class="col-md-3" style="display: inline-block">
-                    <label asp-for="StartingPosition.Latitude" class="control-label">Lat</label>
-                    <input id="StartLatitude" asp-for="StartingPosition.Latitude" class="form-control" />
-                    <span asp-validation-for="StartingPosition.Latitude" class="text-danger"></span>
-                </div>
-                <div class="col-md-3" style="display: inline-block">
-                    <label asp-for="StartingPosition.Longitude" class="control-label">Lng</label>
-                    <input id="StartLongitude" asp-for="StartingPosition.Longitude" class="form-control" />
-                    <span asp-validation-for="StartingPosition.Longitude" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="form-group">
-                <label asp-for="DestinationPosition" class="control-label"></label><br />
-                <input type="text" id="DestinationAddress" class="form-control" />
-                <div class=col-md-3 style="display:inline-block">
-                    <label asp-for="DestinationPosition.Latitude" class="control-label">Lat</label>
-                    <input id="DestinationLat" asp-for="DestinationPosition.Latitude" class="form-control" />
-                    <span asp-validation-for="DestinationPosition.Latitude" class="text-danger"></span>
-                </div>                
-                <div class=col-md-3 style="display:inline-block">
-                    <label asp-for="DestinationPosition.Longitude" class="control-label">Lng</label>
-                    <input id="DestionationLng" asp-for="DestinationPosition.Longitude" class="form-control" />
-                    <span asp-validation-for="DestinationPosition.Longitude" class="text-danger"></span>
-                </div>
-                
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="ShareRoute" /> @Html.DisplayNameFor(model => model.ShareRoute)
-                </label>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsPrivate" /> @Html.DisplayNameFor(model => model.IsPrivate)
-                </label>
-            </div>
+            <partial name="_Partials/_CreateEditForm" model="@Model" />
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -74,21 +24,14 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&key=@apiKey"></script>
-    <script type="text/javascript">
-        google.maps.event.addDomListener(window, 'load', function () {
-            var places = new google.maps.places.Autocomplete(document.getElementById('StartLocation'));
-            google.maps.event.addListener(places, 'place_changed', function () {
-                var place = places.getPlace();
-                document.getElementById('StartAddress').value = place.formatted_address;
-                document.getElementById('StartLatitude').value = place.geometry.location.lat();
-                document.getElementById('StartLongitude').value = place.geometry.location.lng();
-            });
-        });
-    </script>
+
 @section Scripts {
     @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    
+
+<script type="text/javascript" src='https://maps.googleapis.com/maps/api/js?libraries=places&key=@apiKey'></script>
+<script type="text/javascript">
+    window.addEventListener('load', AutocomplePlaces);
+</script>
 }
