@@ -9,29 +9,34 @@
 }
 
 <h6>@privacyDisplay</h6>
+
 <dl class="row">
-    <dt class="col-sm-4">
-        <label asp-for="StartingPosition">From: </label>
+    <dt class="col-sm-2">
+        <label>From: </label>
     </dt>
-    <dd class="col-sm-6">
-        @Model.StartingPosition
+    <dd class="col-sm-9">
+        <input id="StartingLocation" readonly style="border:none; width:100%" />
+        <input type="hidden" id="StartingLatitude" value="@Model.StartingPosition.Latitude"/>
+        <input type="hidden" id="StartingLongitude" value="@Model.StartingPosition.Longitude"/>
     </dd>
-    <dt class="col-sm-4">
+    <dt class="col-sm-2">
         <label asp-for="DestinationPosition">To: </label>
     </dt>
-    <dd class="col-sm-6">
-        @Model.DestinationPosition
+    <dd class="col-sm-9">
+        <input id="DestinationLocation" readonly style="border:none; width:100%" />
+        <input type="hidden" id="DestinationLatitude" value="@Model.DestinationPosition.Latitude"/>
+        <input type="hidden" id="DestinationLongitude" value="@Model.DestinationPosition.Longitude"/>
     </dd>
-    <dt class="col-sm-4">
+    <dt class="col-sm-2">
         <label asp-for="Description">Description: </label>
     </dt>
-    <dd class="col-sm-6">
+    <dd class="col-sm-9">
         @Model.Description
     </dd>
-    <dt class="col-sm-4">
+    <dt class="col-sm-2">
         <label asp-for="AverageScore">Score: </label>
     </dt>
-    <dd class="col-sm-6">
+    <dd class="col-sm-9">
         @Math.Round(Model.AverageScore,1)
     </dd>
 </dl>

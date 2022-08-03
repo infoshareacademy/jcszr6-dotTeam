@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Details";
+    var apiKey = ViewData["ApiKey"];
 }
 <h4>@Model.Name</h4>
 
@@ -19,3 +20,10 @@
     <a asp-action="Edit" asp-route-id=@Model.Id>Edit</a> |
     <a asp-action="Index">Back to Routes</a>
 </div>
+
+@section Scripts {
+<script async type="text/javascript" src='https://maps.googleapis.com/maps/api/js?libraries=places&key=@apiKey'></script>
+<script type="text/javascript">
+    window.addEventListener('load', GeocodeLatLng);
+</script>
+}

@@ -28,8 +28,9 @@
     @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
 }
-<script type="text/javascript" src='https://maps.googleapis.com/maps/api/js?libraries=places&key=@apiKey'></script>
+<script async type="text/javascript" src='https://maps.googleapis.com/maps/api/js?libraries=places&key=@apiKey'></script>
 <script type="text/javascript">
     window.addEventListener('load', PlacesAutocomplete);
+    window.addEventListener('load', GeocodeLatLng);
 </script>
 }
