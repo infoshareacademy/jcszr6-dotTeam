@@ -64,6 +64,7 @@ namespace PlanAndRide.Web.Controllers
             var route = _routeService.Get(id);
             if (route != null)
             {
+                ViewData["ApiKey"] = _config["Maps:ApiKey"];
                 return View(new RouteViewModel(route, _routeService));
             }
             return RedirectToAction(nameof(Index));

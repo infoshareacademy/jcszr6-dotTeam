@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Edit";
+    var apiKey = ViewData["ApiKey"];
 }
 
 <h1>Edit</h1>
@@ -11,59 +12,7 @@
 <div class="row">
     <div class="col-lg-8">
         <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="col-md-5" style="display:inline-block">
-                <div class="form-group">
-                    <br />
-                    <label asp-for="StartingPosition" class="control-label"></label><br />
-                    <div class="col-md-5" style="display: inline-block">
-                        <label asp-for="StartingPosition.Latitude">Lat</label>
-                        <input asp-for="StartingPosition.Latitude" class="form-control" />
-                        <span asp-validation-for="StartingPosition.Latitude" class="text-danger"></span>
-                    </div>
-                    <div class="col-md-5" style="display: inline-block">
-                        <label asp-for="StartingPosition.Longitude">Lng</label>
-                        <input asp-for="StartingPosition.Longitude" class="form-control" />
-                        <span asp-validation-for="StartingPosition.Longitude" class="text-danger"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-5" style="display:inline-block">
-                <div class="form-group">
-                    <label asp-for="DestinationPosition" class="control-label"></label><br />
-                    <div class="col-md-5" style="display: inline-block">
-                        <label asp-for="DestinationPosition.Latitude">Lat</label>
-                        <input asp-for="DestinationPosition.Latitude" class="form-control" />
-                        <span asp-validation-for="DestinationPosition.Latitude" class="text-danger"></span>
-                    </div>
-                    <div class="col-md-5" style="display: inline-block">
-                        <label asp-for="DestinationPosition.Longitude">Lng</label>
-                        <input asp-for="DestinationPosition.Longitude" class="form-control" />
-                        <span asp-validation-for="DestinationPosition.Longitude" class="text-danger"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <br />
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="ShareRoute" /> @Html.DisplayNameFor(model => model.ShareRoute)
-                </label>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsPrivate" /> @Html.DisplayNameFor(model => model.IsPrivate)
-                </label>
-            </div>
+            <partial name="_Partials/_CreateEditForm" model="@Model" />
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
@@ -79,4 +28,8 @@
     @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
 }
+<script type="text/javascript" src='https://maps.googleapis.com/maps/api/js?libraries=places&key=@apiKey'></script>
+<script type="text/javascript">
+    window.addEventListener('load', PlacesAutocomplete);
+</script>
 }

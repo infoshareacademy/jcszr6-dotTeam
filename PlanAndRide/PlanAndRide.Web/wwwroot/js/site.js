@@ -3,7 +3,7 @@
 
 // Write your JavaScript code.
 
-function AutocomplePlaces () {
+function PlacesAutocomplete () {
     const originInput = new google.maps.places.Autocomplete(document.getElementById('StartingLocation'));
     google.maps.event.addListener(originInput, 'place_changed', function () {
         const placeDetails = originInput.getPlace();
