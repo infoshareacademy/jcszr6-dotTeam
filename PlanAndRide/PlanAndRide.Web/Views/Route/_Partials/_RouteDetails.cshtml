@@ -15,7 +15,7 @@
         <label>From: </label>
     </dt>
     <dd class="col-sm-9">
-        <textarea  id="StartingLocation" readonly style="border:none; width:100%"></textarea>
+        <textarea  id="StartingLocation" class="locationDescription" readonly></textarea>
         <input type="hidden" id="StartingLatitude" value="@Model.StartingPosition.Latitude"/>
         <input type="hidden" id="StartingLongitude" value="@Model.StartingPosition.Longitude"/>
     </dd>
@@ -23,7 +23,7 @@
         <label asp-for="DestinationPosition">To: </label>
     </dt>
     <dd class="col-sm-9">
-        <textarea id="DestinationLocation" readonly style="border:none; width:100%"></textarea>
+        <textarea id="DestinationLocation" class="locationDescription" readonly></textarea>
         <input type="hidden" id="DestinationLatitude" value="@Model.DestinationPosition.Latitude"/>
         <input type="hidden" id="DestinationLongitude" value="@Model.DestinationPosition.Longitude"/>
     </dd>
