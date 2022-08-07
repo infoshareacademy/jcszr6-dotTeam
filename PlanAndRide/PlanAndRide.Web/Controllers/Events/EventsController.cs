@@ -1,16 +1,18 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PlanAndRide.BusinessLogic;
-
+using PlanAndRide.Web.Models;
 
 namespace PlanAndRide.Web.Controllers.Events
 {
     public class EventsController : Controller
     {
         private readonly IRepository<Ride> _rideRepository;
+        private readonly IRouteService _routeService;
 
-        public EventsController(IRepository<Ride> rideRepository)
+        public EventsController(IRepository<Ride> rideRepository, IRouteService routeService)
         {
+            _routeService = routeService;
             _rideRepository = rideRepository;
         }
         // GET: EventsController
@@ -33,7 +35,9 @@ namespace PlanAndRide.Web.Controllers.Events
         // GET: EventsController/Create
         public ActionResult Create()
         {
-            return View();
+            var routes = _routeService.GetAll();
+            var model = new EventViewModel() { Routes=routes};
+            return View(model);
         }
 
         // POST: EventsController/Create

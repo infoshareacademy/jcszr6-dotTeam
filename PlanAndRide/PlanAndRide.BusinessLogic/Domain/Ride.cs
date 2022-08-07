@@ -5,7 +5,7 @@ namespace PlanAndRide.BusinessLogic
 {
     public class Ride
     {
-        [Required]
+        
         public int Id { get; set; }
         
         public string Name { get; set; }
