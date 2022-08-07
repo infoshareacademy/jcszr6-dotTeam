@@ -43,13 +43,13 @@ namespace PlanAndRide.Web.Controllers.Events
         // POST: EventsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(BusinessLogic.Ride ride)
+        public ActionResult Create(EventViewModel model)
         {   //ModelState.Remove(nameof(ride.Route));
             if(!ModelState.IsValid)
             {
-                return View(ride);
+                return View(model);
             }
-            _rideRepository.Add(ride);
+            _rideRepository.Add(model.Ride);
             return RedirectToAction(nameof(Index));
         }
 
