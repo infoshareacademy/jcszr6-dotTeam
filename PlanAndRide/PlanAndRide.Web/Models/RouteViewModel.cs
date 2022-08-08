@@ -29,6 +29,17 @@ namespace PlanAndRide.Web.Models
             get {return Route.DestinationPosition;}
             set { Route.DestinationPosition = value; }
         }
+        public string StartingCity
+        {
+            get => Route.StartingCity;
+            set { Route.StartingCity = value; }
+        }
+        public string DestinationCity
+        {
+            get => Route.DestinationCity;
+            set { Route.DestinationCity = value; }
+        }
+
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public double AverageScore
         {
@@ -58,6 +69,8 @@ namespace PlanAndRide.Web.Models
                 Name = route.Name,
                 StartingPosition = new GeoCoordinate(route.StartingPosition.Latitude, route.StartingPosition.Longitude),
                 DestinationPosition = new GeoCoordinate(route.DestinationPosition.Latitude, route.DestinationPosition.Longitude),
+                StartingCity = route.StartingCity,
+                DestinationCity = route.DestinationCity,
                 Description = route.Description,
                 ShareRoute = route.ShareRoute,
                 IsPrivate = route.IsPrivate,

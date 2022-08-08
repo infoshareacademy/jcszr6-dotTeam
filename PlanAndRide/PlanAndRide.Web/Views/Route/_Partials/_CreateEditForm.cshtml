@@ -11,12 +11,16 @@
     <input type="text" id="StartingLocation" class="form-control" placeholder="" />
     <input type="hidden" id="StartingLatitude" asp-for="StartingPosition.Latitude" class="form-control" />
     <input type="hidden" id="StartingLongitude" asp-for="StartingPosition.Longitude" class="form-control" />
+    <input type="hidden" id="StartingCity" asp-for="StartingCity" class="form-control" />
+
 </div>
 <div class="form-group">
     <label class="control-label">To:</label><br />
     <input type="text" id="DestinationLocation" class="form-control" placeholder="" />
     <input type="hidden" id="DestinationLatitude" asp-for="DestinationPosition.Latitude" class="form-control" />
     <input type="hidden" id="DestinationLongitude" asp-for="DestinationPosition.Longitude" class="form-control" />
+    <input type="hidden" id="DestinationCity" asp-for="DestinationCity" class="form-control" />
+
 </div>
 <div class="form-group">
     <label asp-for="Description" class="control-label"></label>
