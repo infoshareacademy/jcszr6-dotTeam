@@ -49,7 +49,16 @@ namespace PlanAndRide.Web.Controllers.Events
             {
                 return View(model);
             }
-            _rideRepository.Add(model.Ride);
+            var ride = new Ride
+            {
+                Name = model.Name,
+                Date = model.Date,
+                Route = model.Route,
+                Description = model.Description,
+                ShareRide = model.ShareRide,
+                IsPrivate = model.IsPrivate
+            };
+            _rideRepository.Add(ride);
             return RedirectToAction(nameof(Index));
         }
 
