@@ -127,7 +127,6 @@ namespace PlanAndRide.Web.Controllers
         }
         public ActionResult Reviews(int referenceId)
         {
-            //var reviews = _reviewService.GetByReferenceId(referenceId, ReviewType.ROUTE).ToList();
             var route = _routeService.Get(referenceId);
             var model = new RouteViewModel(route,_routeService);
             return View(model);
