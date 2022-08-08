@@ -73,60 +73,6 @@ function LatLngToFormattedAddress() {
     });
 }
 
-//function GetCityName() {
-//    const Intersect = function (a, b) {
-//        return new Set(a.filter(v => ~b.indexOf(v)));
-//    };
-
-//    const GetTownOrCity = function (addcomp) {
-//        if (typeof (addcomp) == 'object' && addcomp instanceof Array) {
-
-//            //let order=[ 'sublocality_level_1', 'neighborhood', 'locality', 'postal_town' ];
-//            let order = ['locality', 'administrative_area_level_2', 'administrative_area_level_1'];
-
-//            for (let i = 0; i < addcomp.length; i++) {
-//                let obj = addcomp[i];
-//                let types = obj.types;
-//                if (Intersect(order, types).size > 0) return obj;
-//            }
-//        }
-//        return false;
-//    };
-
-//    $("document").ready(function () {
-
-//            const geocoder = new google.maps.Geocoder();
-
-//            const StartingLatLng = {
-//                lat: parseFloat(document.getElementById("StartingLatitude").value),
-//                lng: parseFloat(document.getElementById("StartingLongitude").value)
-//            }
-//            const DestinationLatLng = {
-//                lat: parseFloat(document.getElementById("DestinationLatitude").value),
-//                lng: parseFloat(document.getElementById("DestinationLongitude").value)
-//            }
-//            geocoder.geocode({ location: StartingLatLng }).then
-//                ((response) => {
-//                    if (response.results[0]) {
-//                        let addressComponents = response.results[0].address_components;
-//                        let townOrCity = GetTownOrCity(addressComponents);
-//                        if (townOrCity)
-//                            document.getElementById("StartingCity").value = townOrCity.long_name;
-//                    }
-//                }).catch((e) => console.log("Geocoder failed due to: " + e));
-
-//            geocoder.geocode({ location: DestinationLatLng }).then
-//                ((response) => {
-//                    if (response.results[0]) {
-//                        let addressComponents = response.results[0].address_components;
-//                        let townOrCity = GetTownOrCity(addressComponents);
-//                        if (townOrCity)
-//                            document.getElementById("DestinationCity").value = townOrCity.long_name;
-//                    }
-//                }).catch((e) => console.log("Geocoder failed due to: " + e));
-//    });
-//}
-
 
 
 
