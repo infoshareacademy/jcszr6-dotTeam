@@ -58,7 +58,7 @@ namespace PlanAndRide.BusinessLogic
         {
             try
             {
-                return Rides.FirstOrDefault(r => r.Id == id);
+                return Rides.SingleOrDefault(r => r.Id == id);
             }
             catch
             {
@@ -91,7 +91,10 @@ namespace PlanAndRide.BusinessLogic
             existingRide.Name = ride.Name;
             existingRide.Date = ride.Date;
             existingRide.IsPrivate = ride.IsPrivate;
+            existingRide.ShareRide = ride.ShareRide;
             existingRide.Route = ride.Route;
+            existingRide.Description = ride.Description;
+            existingRide.RideMembers = ride.RideMembers;
         }
         public void Delete(int id)
         {

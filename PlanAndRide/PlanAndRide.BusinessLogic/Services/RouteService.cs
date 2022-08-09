@@ -2,9 +2,9 @@
 {
     public class RouteService : IRouteService
     {
-        private readonly IRideService<Route> _repository;
+        private readonly IRepository<Route> _repository;
         public RouteService() { }                     
-        public RouteService(IRideService<Route> repository)
+        public RouteService(IRepository<Route> repository)
         {
             _repository = repository;
         }

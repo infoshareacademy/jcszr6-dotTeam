@@ -2,9 +2,9 @@
 {
     public class RideService:IRideService
     {
-        private readonly IRideService<Ride> _repository;
+        private readonly IRepository<Ride> _repository;
         public RideService() { }
-        public RideService(IRideService<Ride> repository)
+        public RideService(IRepository<Ride> repository)
         {
             _repository = repository;
         }
