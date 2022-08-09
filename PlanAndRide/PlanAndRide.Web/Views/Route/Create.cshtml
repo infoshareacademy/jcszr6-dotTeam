@@ -14,15 +14,14 @@
         <form asp-action="Create">
             <partial name="_Partials/_CreateEditForm" model="@Model" />
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input style="display:inline" type="submit" value="Create" class="btn btn-primary" />
+                <a class="btn btn-secondary" asp-action="Index">Cancel</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 
 
 @section Scripts {

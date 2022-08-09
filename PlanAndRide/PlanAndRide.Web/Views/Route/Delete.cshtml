@@ -5,14 +5,14 @@
     var apiKey = ViewData["ApiKey"];
 }
 
-<h1>Delete</h1>
 
 <h3>Are you sure you want to delete this route?</h3>
 <div>
-    <h4>@Model.Name</h4>
+    
 
     <div class="col-lg-6 gx-5" style="float:left">
         <hr />
+        <h4>@Model.Name</h4>
         <partial name="_Partials/_RouteDetails" model="@Model" />
     </div>
 
@@ -21,8 +21,8 @@
     </div>
 
     <form asp-action="Delete">
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to Routes</a>
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <a class="btn btn-secondary" asp-action="Index">Cancel</a>
     </form>
 </div>
 @section Scripts {
