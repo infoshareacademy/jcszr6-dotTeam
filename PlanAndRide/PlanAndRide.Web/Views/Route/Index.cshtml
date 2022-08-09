@@ -10,10 +10,16 @@
     <a asp-action="Create">Create New Route</a>
 </p>
 
-<partial name="_Partials/_SearchForm" model="@Model" />
 <partial name="_Partials/_RoutesList" model="@Model" />
 
-
+@section scripts{
+    <script>
+        $(document).ready( function () {
+            $('#indexTable').DataTable();
+        });
+    </script>
+    
+}
 
 
 

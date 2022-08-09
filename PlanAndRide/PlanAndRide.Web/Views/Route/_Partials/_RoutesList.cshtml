@@ -1,7 +1,7 @@
 ﻿@model PlanAndRide.Web.Models.RoutesCollectionViewModel
 
 
-<table class="table">
+<table id="indexTable" class="table">
     <thead>
         <tr>
             <th>
@@ -19,6 +19,7 @@
             <th>
                 <label asp-for="@Model.Routes.First().Description"></label>
             </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -49,3 +50,4 @@
 
     </tbody>
 </table>
+
