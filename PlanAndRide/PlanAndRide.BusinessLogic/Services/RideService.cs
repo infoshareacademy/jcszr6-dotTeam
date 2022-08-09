@@ -2,9 +2,9 @@
 {
     public class RideService:IRideService
     {
-        private readonly IRepository<Ride> _repository;
+        private readonly IRideService<Ride> _repository;
         public RideService() { }
-        public RideService(IRepository<Ride> repository)
+        public RideService(IRideService<Ride> repository)
         {
             _repository = repository;
         }
@@ -16,7 +16,7 @@
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            _repository.Delete(id);
         }
 
         public Ride Get(int id)

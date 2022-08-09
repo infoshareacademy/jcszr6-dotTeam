@@ -7,24 +7,36 @@ namespace PlanAndRide.Web.Controllers.Events
 {
     public class EventsController : Controller
     {
-        private readonly IRepository<Ride> _rideRepository;
+        private readonly IRideService _rideService;
         private readonly IRouteService _routeService;
 
-        public EventsController(IRepository<Ride> rideRepository, IRouteService routeService)
+        public EventsController(IRideService rideService, IRouteService routeService)
         {
             _routeService = routeService;
-            _rideRepository = rideRepository;
+            _rideService = rideService;
         }
         // GET: EventsController
         public ActionResult Index()
         {
-            return View(_rideRepository.GetAll());
+            var model = _rideService.GetAll().Select(r=>new EventViewModel
+            {
+                Id= r.Id,
+                Name=r.Name,
+                Date=r.Date,
+                RouteId=r.Route.Id.ToString(),
+                RouteName=r.Route.Name,
+                Description=r.Description,
+                ShareRide=r.ShareRide,
+                IsPrivate=r.IsPrivate
+
+            });
+            return View(model);
         }
 
         // GET: EventsController/Details/5
         public ActionResult Details(int id)
         {
-            var ride = _rideRepository.Get(id);
+            var ride = _rideService.Get(id);
             if(ride!= null)
             {
                 return View(ride);
@@ -47,18 +59,21 @@ namespace PlanAndRide.Web.Controllers.Events
         {   //ModelState.Remove(nameof(ride.Route));
             if(!ModelState.IsValid)
             {
+                model.Routes= _routeService.GetAll();
                 return View(model);
             }
             var ride = new Ride
             {
                 Name = model.Name,
                 Date = model.Date,
-                Route = model.Route,
                 Description = model.Description,
                 ShareRide = model.ShareRide,
                 IsPrivate = model.IsPrivate
             };
-            _rideRepository.Add(ride);
+            if(int.TryParse(model.RouteId,out int id))
+                ride.Route= _routeService.Get(id);
+                       
+            _rideService.Add(ride);
             return RedirectToAction(nameof(Index));
         }
 
@@ -78,7 +93,7 @@ namespace PlanAndRide.Web.Controllers.Events
             {
                 return View(ride);
             }
-            _rideRepository.Update(id,ride);
+            _rideService.Update(id,ride);
             return RedirectToAction(nameof(Index));
         }
     
@@ -94,7 +109,7 @@ namespace PlanAndRide.Web.Controllers.Events
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id,Ride ride)
         {
-            _rideRepository.Delete(id);
+            _rideService.Delete(id);
             return RedirectToAction(nameof(Index));
         }
     }

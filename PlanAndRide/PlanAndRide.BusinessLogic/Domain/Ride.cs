@@ -12,11 +12,11 @@ namespace PlanAndRide.BusinessLogic
 
         public DateTime? Date { get; set; }
 
-        public List<User> RideMembers;
+        public List<User>? RideMembers;
 
-        public  Route Route{ get; set; }
+        public  Route? Route{ get; set; }
 
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         public bool ShareRide { get; set; }
 
