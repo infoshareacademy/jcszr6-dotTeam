@@ -31,7 +31,7 @@ namespace PlanAndRide.GUI
             foreach (var ride in _rideService.GetAll())
             {
                 Console.WriteLine($"Nazwa przejazdu: {ride.Name}");
-                Console.WriteLine($"Data rozpoczęcia przejazdu: {ride.Date}");
+               // Console.WriteLine($"Data rozpoczęcia przejazdu: {ride.Date}");
                 if (ride.IsPrivate == false)
                 {
                     Console.WriteLine("Przejazd jest publiczny. Każdy może dołączyć.");

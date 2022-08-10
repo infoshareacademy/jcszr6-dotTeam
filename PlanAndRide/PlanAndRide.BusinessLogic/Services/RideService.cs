@@ -3,25 +3,34 @@
     public class RideService:IRideService
     {
         private readonly IRepository<Ride> _repository;
-
+        public RideService() { }
         public RideService(IRepository<Ride> repository)
         {
             _repository = repository;
         }
-
-        public void Add(Ride entity)
+        
+        public void Add(Ride ride)
         {
-            throw new NotImplementedException();
+            _repository.Add(ride);
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            _repository.Delete(id);
         }
 
         public Ride Get(int id)
         {
-            throw new NotImplementedException();
+            {
+                try
+                {
+                    return _repository.Get(id);
+                }
+                catch
+                {
+                    throw;
+                }
+            }
         }
 
         public IEnumerable<Ride> GetAll()
@@ -31,7 +40,18 @@
 
         public void Update(int id, Ride ride)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _repository.Update(id, ride);
+            }
+            catch
+            {
+                throw;
+            };
+        }
+        public IEnumerable<Ride> FindByName(string name)
+        {
+            return _repository.GetAll().Where(r => r.Name.ToLower().Contains(name.Trim().ToLower()));
         }
     }
 }

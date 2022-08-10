@@ -14,6 +14,7 @@ builder.Services.AddScoped<IRouteService,RouteService>();
 builder.Services.AddScoped<IRideService,RideService>();
 builder.Services.AddScoped<IReviewService,ReviewService>();
 
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 
 var app = builder.Build();
