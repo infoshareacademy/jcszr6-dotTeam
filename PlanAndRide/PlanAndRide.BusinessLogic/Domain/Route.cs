@@ -6,6 +6,7 @@ namespace PlanAndRide.BusinessLogic
     public class Route
     {
         public int Id { get; set; }
+        public User User { get; set; }
         public string Name { get; set; }
         public GeoCoordinate StartingPosition { get; set; }
         public GeoCoordinate DestinationPosition { get; set; }

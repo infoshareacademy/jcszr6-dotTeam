@@ -75,7 +75,7 @@ namespace PlanAndRide.Database.Repository
             }
             existingReview.ReferenceId = review.ReferenceId;
             existingReview.Type = review.Type;
-            existingReview.UserId = review.UserId;
+            existingReview.User = review.User;
             existingReview.Date = review.Date;
             existingReview.Description = review.Description;
             existingReview.Score = review.Score;    
