@@ -125,9 +125,9 @@ namespace PlanAndRide.Web.Controllers
             return RedirectToAction(nameof(Index));
 
         }
-        public ActionResult Reviews(int referenceId)
+        public ActionResult Reviews(int routeId)
         {
-            var route = _routeService.Get(referenceId);
+            var route = _routeService.Get(routeId);
             var model = new RouteViewModel(route,_routeService);
             return View(model);
         }

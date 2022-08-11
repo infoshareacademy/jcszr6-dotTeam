@@ -21,7 +21,9 @@ namespace PlanAndRide.Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            
-        }
+
+            modelBuilder.Entity<GeoCoordinate>()
+                .HasKey(e => new { e.Latitude, e.Longitude });
+                }
     }
 }

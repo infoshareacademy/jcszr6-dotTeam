@@ -23,7 +23,7 @@ namespace PlanAndRide.Database.Repository
                 StartingCity="Kudowa-Zdrój",
                 DestinationCity="Radków",
                 Description="najpopularniejsza trasa w Polsce",
-                Reviews=_reviewRepository.GetAll().Where(r=>r.ReferenceId==1 && r.Type==ReviewType.ROUTE).ToList()
+                Reviews=_reviewRepository.GetAll().Where(r=>r.Route.Id==1).ToList()
             },
             new Route
             {
@@ -34,7 +34,7 @@ namespace PlanAndRide.Database.Repository
                 StartingCity="Załuż",
                 DestinationCity="Tyrawa Wołoska",
                 Description="najbardziej kręta",
-                Reviews=_reviewRepository.GetAll().Where(r=>r.ReferenceId==2 && r.Type==ReviewType.ROUTE).ToList()
+                Reviews=_reviewRepository.GetAll().Where(r=>r.Route.Id==2).ToList()
             },
             new Route
             {
@@ -45,7 +45,7 @@ namespace PlanAndRide.Database.Repository
                 StartingCity="Zakopane",
                 DestinationCity="Prešovský kraj",
                 Description="Z Zakopanego do Morskiego Oka",
-                Reviews=_reviewRepository.GetAll().Where(r=>r.ReferenceId==3 && r.Type==ReviewType.ROUTE).ToList()
+                Reviews=_reviewRepository.GetAll().Where(r=>r.Route.Id==3).ToList()
             },
             new Route
             {
@@ -55,7 +55,7 @@ namespace PlanAndRide.Database.Repository
                 DestinationPosition=new GeoCoordinate(49.106629,22.650325),
                 StartingCity="Lesko",
                 DestinationCity="Ustrzyki Górne",
-                Reviews=_reviewRepository.GetAll().Where(r=>r.ReferenceId==4 && r.Type==ReviewType.ROUTE).ToList()
+                Reviews=_reviewRepository.GetAll().Where(r=>r.Route.Id==4).ToList()
             },
             new Route
             {
@@ -65,7 +65,7 @@ namespace PlanAndRide.Database.Repository
                 DestinationPosition=new GeoCoordinate(50.147772,16.666961),
                 StartingCity="Zielone Ludowe",
                 DestinationCity="Międzylesie",
-                Reviews=_reviewRepository.GetAll().Where(r=>r.ReferenceId==5 && r.Type==ReviewType.ROUTE).ToList()
+                Reviews=_reviewRepository.GetAll().Where(r=>r.Route.Id==5).ToList()
             },
             new Route
             {
@@ -75,7 +75,7 @@ namespace PlanAndRide.Database.Repository
                 DestinationPosition=new GeoCoordinate(50.453674,19.551179),
                 StartingCity="Olsztyn",
                 DestinationCity="Ogrodzieniec",
-                Reviews=_reviewRepository.GetAll().Where(r=>r.ReferenceId==6 && r.Type==ReviewType.ROUTE).ToList()
+                Reviews=_reviewRepository.GetAll().Where(r=>r.Route.Id==6).ToList()
             }
         };
             
