@@ -6,13 +6,14 @@ namespace PlanAndRide.BusinessLogic
     public class Ride
     {
         public int Id { get; set; }
+        public int UserId { get; set; }
         public User User { get; set; }
 
         public string Name { get; set; }
 
         public DateTime? Date { get; set; }
 
-        public List<User>? RideMembers;
+        public List<User> RideMembers;
 
         public  Route? Route{ get; set; }
 
@@ -21,6 +22,7 @@ namespace PlanAndRide.BusinessLogic
         public bool ShareRide { get; set; }
 
         public bool IsPrivate { get; set; }
+        public List<UserRide> UserRide { get; set; }
 
         
     }
