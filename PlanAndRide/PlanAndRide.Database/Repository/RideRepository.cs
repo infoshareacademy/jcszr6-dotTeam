@@ -1,89 +1,85 @@
-﻿using PlanAndRide.BusinessLogic.Exceptions;
+﻿using Microsoft.EntityFrameworkCore;
+using PlanAndRide.BusinessLogic;
+using PlanAndRide.BusinessLogic.Exceptions;
 
 
-namespace PlanAndRide.BusinessLogic
+namespace PlanAndRide.Database.Repository
 {
     public class RideRepository : IRepository<Ride>
     {
-        private static List<Ride>
-             Rides = new List<Ride>
-            {
-                new Ride
-                {
-                    Id = 1,
-                    Name ="Ride1",
-                    Date=DateTime.Now,
-                     Route= new Route
-                    {
-                        Name = "Route1"
-                    },
-                    Description="Ala ma kota",
-                    IsPrivate=true,
-                    ShareRide=true,
-                },
-                new Ride
-                {
-                    Id = 2,
-                    Name ="Ride2",
-                    Date=DateTime.Now,
-                    Route= new Route
-                    {
-                        Name = "Route1"
-                    },
-                    Description="Kot ma Ale",
-                    IsPrivate=false,
-                    ShareRide=true,
-                },
-                new Ride
-                {
-                    Id = 3,
-                    Name ="Ride3",
-                    Date=DateTime.Now,
-                    Route= new Route
-                    {
-                        Name = "Route2"
-                    },
-                    Description="Ale kod to kot",
-                    IsPrivate=true,
-                    ShareRide=true,
-                }
-            };
+        private readonly PlanAndRideContext _context;
+        //private static List<Ride>
+        //     Rides = new List<Ride>
+        //    {
+        //        new Ride
+        //        {
+        //            Id = 1,
+        //            Name ="Ride1",
+        //            Date=DateTime.Now,
+        //             Route= new Route
+        //            {
+        //                Name = "Route1"
+        //            },
+        //            Description="Ala ma kota",
+        //            IsPrivate=true,
+        //            ShareRide=true,
+        //        },
+        //        new Ride
+        //        {
+        //            Id = 2,
+        //            Name ="Ride2",
+        //            Date=DateTime.Now,
+        //            Route= new Route
+        //            {
+        //                Name = "Route1"
+        //            },
+        //            Description="Kot ma Ale",
+        //            IsPrivate=false,
+        //            ShareRide=true,
+        //        },
+        //        new Ride
+        //        {
+        //            Id = 3,
+        //            Name ="Ride3",
+        //            Date=DateTime.Now,
+        //            Route= new Route
+        //            {
+        //                Name = "Route2"
+        //            },
+        //            Description="Ale kod to kot",
+        //            IsPrivate=true,
+        //            ShareRide=true,
+        //        }
+        //    };
 
 
-        public RideRepository()
+        public RideRepository(PlanAndRideContext context)
         {
-
+            _context = context;
         }
-        public Ride? Get(int id)
+        public async Task<Ride> Get(int id)
         {
             try
             {
-                return Rides.SingleOrDefault(r => r.Id == id);
+                return await _context.Rides.SingleOrDefaultAsync(r => r.Id == id);   
             }
             catch
             {
                 throw new InvalidOperationException($"Unique key violaton: Ride Id:{id}");
             }
         }
-        public IEnumerable<Ride> GetAll()
+        public async Task<IEnumerable<Ride>> GetAll()
         {
-            return Rides;
+            return await _context.Rides.ToListAsync();
         }
-        public void Add(Ride ride)
+        public async Task Add(Ride ride)
         {
-            if (Rides.Count > 0)
-            {
-                ride.Id = Rides.Max(r => r.Id) + 1;
-            }
-            else
-            {
-                ride.Id = 1;
-            }
-            Rides.Add(ride);
+            await _context.Rides.AddAsync(ride);
+            await _context.SaveChangesAsync();
         }
-        public void Update(int id, Ride ride)
+        public async Task Update(int id, Ride ride)
         {
-            var existingRide = Get(id);
+            var existingRide = await Get(id);
             if (existingRide == null)
             {
                 throw new RecordNotFoundException($"Ride Id:{id} not found in repository");
@@ -95,24 +91,27 @@ namespace PlanAndRide.BusinessLogic
             existingRide.Route = ride.Route;
             existingRide.Description = ride.Description;
             existingRide.RideMembers = ride.RideMembers;
+
+            await _context.SaveChangesAsync();
         }
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            _ = Rides.Remove(Get(id));
+            var ride = await Get(id);
+            _context.Rides.Remove(ride);
+            await _context.SaveChangesAsync();
         }
 
-        private static List<Route> rides = new List<Route>();
-
+               
         //static RideRepository()
         //{
         //    var json = File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "data.json"));
         //    rides = JsonConvert.DeserializeObject<List<Route>>(json);
         //}
 
-        public static List<Route> GetAllRides()
-        {
-            return rides;
-        }
+        //public static List<Route> GetAllRides()
+        //{
+        //    return rides;
+        //}
 
         //public static void AddRide(Route route)
         //{

@@ -44,7 +44,7 @@ namespace PlanAndRide.GUI
             }
 
         }
-        public void SearchByReviewDates()
+        public async Task SearchByReviewDates()
         {
 
             //Wprowadzanie przez użytkonika danych do szukania.
@@ -57,7 +57,7 @@ namespace PlanAndRide.GUI
 
             //Szukanie po datach i wyświetlanie wyników
 
-            var loadedRides = _rideService.GetAll();
+            var loadedRides = await _rideService.GetAll();
             var filtredReviews = loadedRides.SelectMany(r => r.Route.Reviews).Where(r => r.Date.Date >= firstDateTimeToSearch.Date && r.Date.Date <= lastDateTimeToSearch.Date).ToList();
             if (filtredReviews.Count != 0)
             {
@@ -74,7 +74,7 @@ namespace PlanAndRide.GUI
             }
 
         }
-        public void SearchByGradeRoute()
+        public async Task SearchByGradeRoute()
         {
             //Wprowadzania przez użytkownika zakres szukania tras po ocenach
 
@@ -85,7 +85,7 @@ namespace PlanAndRide.GUI
 
             //Szukanie po ocenach i wyświetlanie wyników
 
-            var loadedRides = _rideService.GetAll();
+            var loadedRides = await _rideService.GetAll();
             var filtredLoadRides = loadedRides.Where(r=>_routeService.AverageScore(r.Route) >= minValueScore && _routeService.AverageScore(r.Route) <= maxValueScore).ToList();
             if (filtredLoadRides.Count != 0)
             {
@@ -102,7 +102,7 @@ namespace PlanAndRide.GUI
             }
         }
 
-        public void SearchByName()
+        public async Task SearchByName()
         {
             Console.WriteLine("Wprowadź nazwę:");
             var searchName = Console.ReadLine();
@@ -113,7 +113,7 @@ namespace PlanAndRide.GUI
                 searchName = Console.ReadLine();
             }
 
-            var loadedRides = _rideService.GetAll();
+            var loadedRides = await _rideService.GetAll();
             var filtredLoadRides = loadedRides.Where(r => r.Name == searchName);
             if (filtredLoadRides.Count() != 0)
             {

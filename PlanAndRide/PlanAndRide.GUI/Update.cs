@@ -18,7 +18,7 @@ namespace PlanAndRide.GUI
             _rideService=rideService;
             _routeService = routeService;
         }
-        public void PrintUpdate()
+        public async Task PrintUpdate()
         {
             //Wyświetlenie wszystkich dostępnych tras zapisanych w bazie danych
 
@@ -28,7 +28,7 @@ namespace PlanAndRide.GUI
             Console.WriteLine();
 
 
-            foreach (var ride in _rideService.GetAll())
+            foreach (var ride in await _rideService.GetAll())
             {
                 Console.WriteLine($"Nazwa przejazdu: {ride.Name}");
                // Console.WriteLine($"Data rozpoczęcia przejazdu: {ride.Date}");

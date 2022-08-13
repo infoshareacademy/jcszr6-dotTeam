@@ -9,22 +9,22 @@
             _repository = repository;
         }
         
-        public void Add(Ride ride)
+        public async Task Add(Ride ride)
         {
-            _repository.Add(ride);
+            await _repository.Add(ride);
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            _repository.Delete(id);
+            await _repository.Delete(id);
         }
 
-        public Ride Get(int id)
+        public async Task<Ride> Get(int id)
         {
             {
                 try
                 {
-                    return _repository.Get(id);
+                    return await _repository.Get(id);
                 }
                 catch
                 {
@@ -33,25 +33,26 @@
             }
         }
 
-        public IEnumerable<Ride> GetAll()
+        public async Task<IEnumerable<Ride>> GetAll()
         {
-            return _repository.GetAll();
+            return await _repository.GetAll();
         }
 
-        public void Update(int id, Ride ride)
+        public async Task Update(int id, Ride ride)
         {
             try
             {
-                _repository.Update(id, ride);
+                await _repository.Update(id, ride);
             }
             catch
             {
                 throw;
             };
         }
-        public IEnumerable<Ride> FindByName(string name)
+        public async Task<IEnumerable<Ride>> FindByName(string name)
         {
-            return _repository.GetAll().Where(r => r.Name.ToLower().Contains(name.Trim().ToLower()));
+            var rides = await _repository.GetAll();
+            return rides.Where(r => r.Name.ToLower().Contains(name.Trim().ToLower()));
         }
     }
 }

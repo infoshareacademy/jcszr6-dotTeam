@@ -22,7 +22,7 @@ namespace PlanAndRide.BusinessLogic
         public bool ShareRide { get; set; }
 
         public bool IsPrivate { get; set; }
-        public List<UserRide> UserRide { get; set; }
+        public IList<UserRide> UserRide { get; set; }
 
         
     }

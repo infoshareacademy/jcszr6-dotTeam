@@ -11,6 +11,14 @@ namespace PlanAndRide.Database
         public DbSet<Review> Reviews { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<GeoCoordinate> GeoCoordinates { get; set; }
+        public PlanAndRideContext()
+        {
+
+        }
+        public PlanAndRideContext(DbContextOptions<PlanAndRideContext> options) :base(options)
+        {
+
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

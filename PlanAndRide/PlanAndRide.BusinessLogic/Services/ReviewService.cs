@@ -14,21 +14,21 @@ namespace PlanAndRide.BusinessLogic
         {
             _repository = repository;
         }
-        public void Add(Review entity)
+        public async Task Add(Review entity)
         {
-            _repository.Add(entity);
+            await _repository.Add(entity);
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            _repository.Delete(id);
+            await _repository.Delete(id);
         }
 
-        public Review Get(int id)
+        public async Task<Review> Get(int id)
         {
             try
             {
-                return _repository.Get(id);
+                return await _repository.Get(id);
             }
             catch
             {
@@ -36,20 +36,21 @@ namespace PlanAndRide.BusinessLogic
             }
         }
 
-        public IEnumerable<Review> GetAll()
+        public async Task<IEnumerable<Review>> GetAll()
         {
-            return _repository.GetAll();
+            return await _repository.GetAll();
         }
-        public IEnumerable<Review> GetByRouteId(int id)
+        public async Task<IEnumerable<Review>> GetByRouteId(int id)
         {
-            return _repository.GetAll().Where(r => r.Route.Id==id);
+            var reviews = await _repository.GetAll();
+            return reviews.Where(r => r.Route.Id==id);
         }
 
-        public void Update(int id, Review entity)
+        public async Task Update(int id, Review entity)
         {
             try
             {
-                _repository.Update(id, entity);
+                await _repository.Update(id, entity);
             }
             catch
             {
