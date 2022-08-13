@@ -30,6 +30,18 @@ namespace PlanAndRide.Database
         {
             base.OnModelCreating(modelBuilder);
 
+            //modelBuilder.Entity<GeoCoordinate>()
+            //    .HasKey(g => new { g.Latitude, g.Longitude });
+            //modelBuilder.Entity<GeoCoordinate>()
+            //    .Property(g => g.Altitude).HasDefaultValue(0);
+            //modelBuilder.Entity<GeoCoordinate>()
+            //    .Property(g => g.Course).HasDefaultValue(0);
+            //modelBuilder.Entity<GeoCoordinate>()
+            //    .Property(g => g.HorizontalAccuracy).HasDefaultValue(0);
+            //modelBuilder.Entity<GeoCoordinate>()
+            //    .Property(g => g.Speed).HasDefaultValue(0);
+            //modelBuilder.Entity<GeoCoordinate>()
+            //    .Property(g => g.VerticalAccuracy).HasDefaultValue(0);
             modelBuilder.Entity<GeoCoordinate>(b =>
             {
                 b.HasKey(e => new { e.Latitude, e.Longitude });
@@ -52,7 +64,7 @@ namespace PlanAndRide.Database
                     ur=>ur.HasOne(ur=>ur.User).WithMany(u=>u.UserRide).HasForeignKey(ur=>ur.UserId),
                     ur=>ur.HasOne(ur=>ur.Ride).WithMany(r=>r.UserRide).HasForeignKey(ur=>ur.RideId)
                 );
-
+                
             modelBuilder.Entity<Review>()
                 .HasOne(r=>r.User).WithMany(u=>u.Reviews)
                 .HasForeignKey(r=>r.UserId).IsRequired()
