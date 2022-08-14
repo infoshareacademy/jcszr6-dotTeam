@@ -8,9 +8,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-var connectionString = builder.Configuration.GetConnectionString("Database");
-builder.Services.AddDbContext<PlanAndRideContext>(options=>options.UseSqlServer(connectionString));
-
 builder.Services.AddScoped<IRepository<PlanAndRide.BusinessLogic.Route>, RouteRepository>();
 builder.Services.AddScoped<IRepository<Ride>, RideRepository>();
 builder.Services.AddScoped<IRepository<Review>, ReviewRepository>();
@@ -18,6 +15,14 @@ builder.Services.AddScoped<IRepository<Review>, ReviewRepository>();
 builder.Services.AddScoped<IRouteService,RouteService>();
 builder.Services.AddScoped<IRideService,RideService>();
 builder.Services.AddScoped<IReviewService,ReviewService>();
+
+var connectionString = builder.Configuration.GetConnectionString("Database");
+builder.Services.AddDbContext<PlanAndRideContext>(
+    options =>
+    {
+        options.UseSqlServer(connectionString);
+        options.UseLazyLoadingProxies();
+    });
 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 

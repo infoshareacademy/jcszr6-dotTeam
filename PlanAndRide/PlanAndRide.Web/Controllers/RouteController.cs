@@ -51,13 +51,14 @@ namespace PlanAndRide.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(RouteViewModel model)
         {
-            model.Route.User = new User
-            {
-                Id = 1,
-                Login = "test_user",
-                Email = "test@email.com",
-                Password = "default"
-            };
+            model.Route.User = new User { Id = 1 };
+            //model.Route.User = new User
+            //{
+            //    Id = 1,
+            //    Login = "test_user",
+            //    Email = "test@email.com",
+            //    Password = "default"
+            //};
             ModelState.Remove("Route.User");
             if (!ModelState.IsValid)
             {
