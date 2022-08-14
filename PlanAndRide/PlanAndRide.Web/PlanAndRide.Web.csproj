@@ -20,4 +20,8 @@
     <ProjectReference Include="..\PlanAndRide.Database\PlanAndRide.Database.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Event\EventMemberships\" />
+  </ItemGroup>
+
 </Project>
