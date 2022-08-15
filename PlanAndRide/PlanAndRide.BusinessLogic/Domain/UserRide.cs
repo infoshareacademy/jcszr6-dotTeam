@@ -8,9 +8,9 @@ namespace PlanAndRide.BusinessLogic
 {
     public class UserRide
     {
-        public virtual int UserId { get; set; }
+        public  int UserId { get; set; }
         public virtual User User { get; set; }
-        public virtual int RideId { get; set; }
+        public  int RideId { get; set; }
         public virtual Ride Ride { get; set; }
     }
 }

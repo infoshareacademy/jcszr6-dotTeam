@@ -1,5 +1,4 @@
-﻿using GeoCoordinatePortable;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PlanAndRide.BusinessLogic;
 using PlanAndRide.BusinessLogic.Exceptions;
 
@@ -7,7 +6,6 @@ namespace PlanAndRide.Database.Repository
 {
     public class RouteRepository : IRepository<Route>
     {
-        private List<Route> _routes;
         private readonly IRepository<Review> _reviewRepository;
         private readonly PlanAndRideContext _context;
 
@@ -15,81 +13,16 @@ namespace PlanAndRide.Database.Repository
         {
             _reviewRepository = reviewRepository;
             _context = context;
-        //    _routes = new List<Route>
-        //{
-        //    new Route
-        //    {
-        //        Id=1,
-        //        Name="Droga stu zakrętów",
-        //        StartingPosition=new GeoCoordinate(50.441556,16.242764),
-        //        DestinationPosition=new GeoCoordinate(50.504702,16.397086),
-        //        StartingCity="Kudowa-Zdrój",
-        //        DestinationCity="Radków",
-        //        Description="najpopularniejsza trasa w Polsce",
-        //        Reviews=_reviewRepository.GetAll().Where(r=>r.Route.Id==1).ToList()
-        //    },
-        //    new Route
-        //    {
-        //        Id=2,
-        //        Name="Przełęcz Przysłup",
-        //        StartingPosition=new GeoCoordinate(49.531141,22.300324),
-        //        DestinationPosition=new GeoCoordinate(49.577351,22.369551),
-        //        StartingCity="Załuż",
-        //        DestinationCity="Tyrawa Wołoska",
-        //        Description="najbardziej kręta",
-        //        Reviews=_reviewRepository.GetAll().Where(r=>r.Route.Id==2).ToList()
-        //    },
-        //    new Route
-        //    {
-        //        Id=3,
-        //        Name="Droga Oswalda Balzera",
-        //        StartingPosition=new GeoCoordinate(49.299042,19.949059),
-        //        DestinationPosition=new GeoCoordinate(49.264127,20.115313),
-        //        StartingCity="Zakopane",
-        //        DestinationCity="Prešovský kraj",
-        //        Description="Z Zakopanego do Morskiego Oka",
-        //        Reviews=_reviewRepository.GetAll().Where(r=>r.Route.Id==3).ToList()
-        //    },
-        //    new Route
-        //    {
-        //        Id=4,
-        //        Name="Na Wielkiej Pętli Bieszczadzkej",
-        //        StartingPosition=new GeoCoordinate(49.473736,22.325125),
-        //        DestinationPosition=new GeoCoordinate(49.106629,22.650325),
-        //        StartingCity="Lesko",
-        //        DestinationCity="Ustrzyki Górne",
-        //        Reviews=_reviewRepository.GetAll().Where(r=>r.Route.Id==4).ToList()
-        //    },
-        //    new Route
-        //    {
-        //        Id=5,
-        //        Name="Autostrada Sudecka",
-        //        StartingPosition=new GeoCoordinate(50.397840,16.34907),
-        //        DestinationPosition=new GeoCoordinate(50.147772,16.666961),
-        //        StartingCity="Zielone Ludowe",
-        //        DestinationCity="Międzylesie",
-        //        Reviews=_reviewRepository.GetAll().Where(r=>r.Route.Id==5).ToList()
-        //    },
-        //    new Route
-        //    {
-        //        Id=6,
-        //        Name="Szlak Orlich Gniazd",
-        //        StartingPosition=new GeoCoordinate(50.749408,19.271176),
-        //        DestinationPosition=new GeoCoordinate(50.453674,19.551179),
-        //        StartingCity="Olsztyn",
-        //        DestinationCity="Ogrodzieniec",
-        //        Reviews=_reviewRepository.GetAll().Where(r=>r.Route.Id==6).ToList()
-        //    }
-        //};
-            
         }
         public async Task<Route> Get(int id)
         {
             try
             {
-                //return _routes.SingleOrDefault(r => r.Id == id);
-                return await _context.Routes.SingleOrDefaultAsync(r=>r.Id==id);
-
+                return await _context.Routes
+                    .Include(r => r.User)
+                    .Include(r => r.StartingPosition)
+                    .Include(r => r.DestinationPosition)
+                    .SingleOrDefaultAsync(r => r.Id == id);
             }
             catch
             {
@@ -98,24 +31,39 @@ namespace PlanAndRide.Database.Repository
         }
         public async Task<IEnumerable<Route>> GetAll()
         {
-            //return _routes;
-            return await _context.Routes.ToListAsync();
+            return await _context.Routes
+               .Include(r => r.User)
+               .Include(r => r.StartingPosition)
+               .Include(r => r.DestinationPosition)
+               .ToListAsync();
         }
+        
         public async Task Add(Route route)
         {
-            //if (_routes.Count > 0)
-            //{
-            //    route.Id = _routes.Max(r => r.Id) + 1;
-            //}
-            //else
-            //{
-            //    route.Id = 1;
-            //}
-            //_routes.Add(route);
+            var startingPosition = GetExistingGeoCoordinate(route.StartingPosition.Latitude, route.StartingPosition.Longitude);
+            if(startingPosition != null)
+                route.StartingPosition = startingPosition;
+            
+            var destinationPosition = GetExistingGeoCoordinate(route.DestinationPosition.Latitude, route.DestinationPosition.Longitude);
+            if (destinationPosition != null)
+                route.DestinationPosition = destinationPosition;
+            
+            var user = _context.Users.FirstOrDefault(u => u.Id == route.User.Id);
+            if (user == null)
+                throw new ArgumentException("User not found at route create");
+            route.User = user;
+
             await _context.Routes.AddAsync(route);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
-        public async Task Update(int id,Route route)
+
+        private GeoCoordinate? GetExistingGeoCoordinate(double latitude, double longitude)
+        {
+            return _context.GeoCoordinates
+                .FirstOrDefault(g => g.Latitude == latitude && g.Longitude == longitude);
+        }
+
+        public async Task Update(int id, Route route)
         {
             //var existingRoute = Get(id);
             //if (existingRoute == null)
@@ -150,9 +98,18 @@ namespace PlanAndRide.Database.Repository
 
         public async Task Delete(int id)
         {
-            //_ = _routes.Remove(Get(id));
-            _context.Routes.Remove(await Get(id));
-            await _context.SaveChangesAsync();
+            try
+            {
+                var route = await _context.Routes.SingleOrDefaultAsync(u => u.Id == id);
+                _context.Routes.Remove(route);
+                _context.SaveChanges();
+            }
+            catch (InvalidOperationException ex)
+            {
+                throw new InvalidOperationException($"Unique key violaton: Route ID:{id}");
+            }
+            
+
         }
     }
 }

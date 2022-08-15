@@ -12,9 +12,10 @@ builder.Services.AddScoped<IRepository<PlanAndRide.BusinessLogic.Route>, RouteRe
 builder.Services.AddScoped<IRepository<Ride>, RideRepository>();
 builder.Services.AddScoped<IRepository<Review>, ReviewRepository>();
 
-builder.Services.AddScoped<IRouteService,RouteService>();
-builder.Services.AddScoped<IRideService,RideService>();
-builder.Services.AddScoped<IReviewService,ReviewService>();
+builder.Services.AddScoped<IRouteService, RouteService>();
+builder.Services.AddScoped<IRideService, RideService>();
+builder.Services.AddScoped<IReviewService, ReviewService>();
+
 
 var connectionString = builder.Configuration.GetConnectionString("Database");
 builder.Services.AddDbContext<PlanAndRideContext>(
@@ -22,6 +23,7 @@ builder.Services.AddDbContext<PlanAndRideContext>(
     {
         options.UseSqlServer(connectionString);
         options.UseLazyLoadingProxies();
+        options.LogTo(Console.WriteLine, LogLevel.Information);
     });
 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);

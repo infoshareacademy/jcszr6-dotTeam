@@ -6,7 +6,7 @@ namespace PlanAndRide.BusinessLogic
     public class Ride
     {
         public int Id { get; set; }
-        public virtual int UserId { get; set; }
+        public int UserId { get; set; }
         public virtual User User { get; set; }
 
         public string Name { get; set; }

@@ -29,9 +29,9 @@ namespace PlanAndRide.Database.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Login = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
+                    Login = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -48,8 +48,8 @@ namespace PlanAndRide.Database.Migrations
                     Name = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
                     StartingPositionId = table.Column<int>(type: "int", nullable: true),
                     DestinationPositionId = table.Column<int>(type: "int", nullable: true),
-                    StartingCity = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    DestinationCity = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    StartingCity = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    DestinationCity = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Description = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     ShareRoute = table.Column<bool>(type: "bit", nullable: false),
                     IsPrivate = table.Column<bool>(type: "bit", nullable: false)
@@ -100,7 +100,8 @@ namespace PlanAndRide.Database.Migrations
                         name: "FK_Reviews_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

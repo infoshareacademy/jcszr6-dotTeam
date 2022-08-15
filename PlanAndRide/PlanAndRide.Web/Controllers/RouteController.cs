@@ -49,24 +49,18 @@ namespace PlanAndRide.Web.Controllers
         // POST: RouteController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(RouteViewModel model)
+        public async Task<ActionResult> Create(RouteViewModel model)
         {
             model.Route.User = new User { Id = 1 };
-            //model.Route.User = new User
-            //{
-            //    Id = 1,
-            //    Login = "test_user",
-            //    Email = "test@email.com",
-            //    Password = "default"
-            //};
+
             ModelState.Remove("Route.User");
             if (!ModelState.IsValid)
             {
                 ViewData["ApiKey"] = _config["Maps:ApiKey"];
                 return View(model);
             }
-            _routeService.Add(model.Route);
-            return RedirectToAction(nameof(Search), new {routeName=model.Name});
+            await _routeService.Add(model.Route);
+            return RedirectToAction(nameof(Details), new {Id=model.Route.Id});
         }
 
         // GET: RouteController/Edit/5
@@ -116,9 +110,9 @@ namespace PlanAndRide.Web.Controllers
         // POST: RouteController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, RouteViewModel model)
+        public async Task<ActionResult> Delete(int id, RouteViewModel model)
         {
-            _routeService.Delete(id);
+            await _routeService.Delete(id);
             return RedirectToAction(nameof(Index));
         }
 

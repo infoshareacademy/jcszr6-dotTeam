@@ -21,7 +21,7 @@ namespace PlanAndRide.BusinessLogic
 
         public async Task Delete(int id)
         {
-            await _repository.Delete(id);
+           await _repository.Delete(id);
         }
 
         public async Task<Review> Get(int id)

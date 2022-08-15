@@ -49,7 +49,7 @@
         }
         public double AverageScore(Route route)
         {
-            if (route.Reviews.Count == 0 || route.Reviews==null)
+            if (route.Reviews == null || route.Reviews.Count == 0)
             {
                 return 0d;
             }

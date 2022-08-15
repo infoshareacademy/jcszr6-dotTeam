@@ -5,7 +5,7 @@ namespace PlanAndRide.Database
 {
     public class PlanAndRideContext:DbContext
     {
-        private readonly bool _useLazyLoading;
+        //private readonly bool _useLazyLoading;
 
         public DbSet<Ride> Rides { get; set; }
         public DbSet<Route> Routes { get; set; }
@@ -20,19 +20,19 @@ namespace PlanAndRide.Database
         {
 
         }
-        public PlanAndRideContext(bool useLazyLoading)
-        {
-            _useLazyLoading = useLazyLoading;
-        }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            base.OnConfiguring(optionsBuilder);
-            if (_useLazyLoading)
-            {
-                optionsBuilder.UseLazyLoadingProxies();
-            }
-            optionsBuilder.UseSqlServer("Server=localhost;Database=PlanAndRideDb;Trusted_Connection=True;MultipleActiveResultSets=True;");
-        }
+        //public PlanAndRideContext(bool useLazyLoading)
+        //{
+        //    _useLazyLoading = useLazyLoading;
+        //}
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    base.OnConfiguring(optionsBuilder);
+        //    //if (_useLazyLoading)
+        //    //{
+        //    //    optionsBuilder.UseLazyLoadingProxies();
+        //    //}
+        //    optionsBuilder.UseSqlServer("Server=localhost;Database=PlanAndRideDb;Trusted_Connection=True;MultipleActiveResultSets=True;");
+        //}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -60,38 +60,38 @@ namespace PlanAndRide.Database
             modelBuilder.Entity<Review>()
                 .HasOne(r=>r.User).WithMany(u=>u.Reviews)
                 .HasForeignKey(r=>r.UserId).IsRequired()
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Review>()
                 .HasOne(rw => rw.Route).WithMany(r => r.Reviews)
                 .HasForeignKey(rw => rw.RouteId).IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<Review>(b =>
-            {
-                b.Property<string>("Description").HasMaxLength(255);
-            });
+            modelBuilder.Entity<Review>()
+                .Property<string>("Description").HasMaxLength(255);
+          
 
-            modelBuilder.Entity<Ride>(b =>
-            {
-                b.Property<string>("Description").HasMaxLength(255);
-                b.Property<string>("Name").HasMaxLength(60);
-            });
+            modelBuilder.Entity<Ride>()
+                .Property<string>("Description").HasMaxLength(255);
+            modelBuilder.Entity<Ride>()
+                .Property<string>("Name").HasMaxLength(60);
+            
 
-            modelBuilder.Entity<Route>(b =>
-            {
-                b.Property<string>("Description").HasMaxLength(255);
-                b.Property<string>("DestinationCity").HasMaxLength(255);
-                b.Property<string>("Name").HasMaxLength(60);
-                b.Property<string>("StartingCity").HasMaxLength(255);
-            });
+            modelBuilder.Entity<Route>()
+                .Property<string>("Description").HasMaxLength(255);
+            modelBuilder.Entity<Route>()
+                .Property<string>("DestinationCity").HasMaxLength(100);
+            modelBuilder.Entity<Route>()
+                .Property<string>("Name").HasMaxLength(60);
+            modelBuilder.Entity<Route>()
+                .Property<string>("StartingCity").HasMaxLength(100);
 
-            modelBuilder.Entity<User>(b =>
-            {
-                b.Property<string>("Email").HasMaxLength(255);
-                b.Property<string>("Login").HasMaxLength(255);
-                b.Property<string>("Password").HasMaxLength(255);
-            });
+            modelBuilder.Entity<User>()
+                .Property<string>("Email").HasMaxLength(100);
+            modelBuilder.Entity<User>()
+                .Property<string>("Login").HasMaxLength(100);
+            modelBuilder.Entity<User>()
+                .Property<string>("Password").HasMaxLength(60);
         }
     }
 }
