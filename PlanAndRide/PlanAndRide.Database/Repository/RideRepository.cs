@@ -1,5 +1,6 @@
-﻿using PlanAndRide.BusinessLogic.Exceptions;
-
+﻿using PlanAndRide.BusinessLogic;
+using PlanAndRide.BusinessLogic.Exceptions;
+using PlanAndRide.Database.Repository;
 
 namespace PlanAndRide.BusinessLogic
 {
@@ -20,6 +21,7 @@ namespace PlanAndRide.BusinessLogic
                     Description="Ala ma kota",
                     IsPrivate=true,
                     ShareRide=true,
+                    
                 },
                 new Ride
                 {

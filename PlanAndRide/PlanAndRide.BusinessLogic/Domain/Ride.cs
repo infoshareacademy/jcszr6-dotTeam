@@ -1,4 +1,5 @@
 ﻿
+using PlanAndRide.BusinessLogic;
 using System.ComponentModel.DataAnnotations;
 
 namespace PlanAndRide.BusinessLogic
@@ -12,7 +13,7 @@ namespace PlanAndRide.BusinessLogic
 
         public DateTime? Date { get; set; }
 
-        public List<User>? RideMembers;
+        public List<EventMemberships>? RideMembers;
 
         public  Route? Route{ get; set; }
 

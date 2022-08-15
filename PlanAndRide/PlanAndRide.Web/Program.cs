@@ -8,9 +8,10 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddSingleton<IRepository<PlanAndRide.BusinessLogic.Route>, RouteRepository>();
 builder.Services.AddSingleton<IRepository<Ride>, RideRepository>();
-
+builder.Services.AddSingleton < IRepository<EventMemberships>, EventMembershipsRepository>();
 builder.Services.AddScoped<IRouteService,RouteService>();
 builder.Services.AddScoped<IRideService,RideService>();
+builder.Services.AddScoped<IEventMembershipsService,EventMembershipsService>();
 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 

@@ -1,19 +1,17 @@
-﻿using PlanAndRide.BusinessLogic.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using PlanAndRide.BusinessLogic;
 
-namespace PlanAndRide.BusinessLogic.Services
+
+namespace PlanAndRide.BusinessLogic
 {
-    internal class EventMembershipsService: IEventMemberships
+    public class EventMembershipsService: IEventMembershipsService
     {
-        private readonly IRepository<EventMembershipsService> _repository;
+        private readonly IRepository<EventMemberships> _repository;
         public EventMembershipsService() { }
-        public EventMembershipsService(IRepository<EventMembershipsService> repository) 
-        { _repository = repository; }
-        public void Add(EventMembershipsService eventMemberships)
+        public EventMembershipsService(IRepository<EventMemberships> repository) 
+        { 
+            _repository = repository; 
+        }
+        public void Add(EventMemberships eventMemberships)
         {
             _repository.Add(eventMemberships);
         }
@@ -23,7 +21,7 @@ namespace PlanAndRide.BusinessLogic.Services
             _repository.Delete(id);
         }
 
-        public EventMembershipsService Get(int id)
+        public EventMemberships Get(int id)
         {
             {
                 try
@@ -37,12 +35,12 @@ namespace PlanAndRide.BusinessLogic.Services
             }
         }
 
-        public IEnumerable<EventMembershipsService> GetAll()
+        public IEnumerable<EventMemberships> GetAll()
         {
             return _repository.GetAll();
         }
 
-        public void Update(int id, EventMembershipsService eventMemberships)
+        public void Update(int id, EventMemberships eventMemberships)
         {
             try
             {
@@ -53,10 +51,10 @@ namespace PlanAndRide.BusinessLogic.Services
                 throw;
             };
         }
-        //public IEnumerable<EventMemberships> FindByName(string nickname)
+        //public IEnumerable<EventMemberships> FindByName(int idEventMemberships)
         //{
-        //    var nicknames = new List<User>; 
-        //        return _repository.GetAll().Where(r => r..ToLower().Contains(name.Trim().ToLower()));
+          //  var idEventMemberships = new List<EventMemberships>;
+            //return _repository.GetAll().Where(r => r.Id.ToLower().Contains(name.Trim().ToLower()));
         //}
     }
 

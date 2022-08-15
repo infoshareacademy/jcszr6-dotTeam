@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PlanAndRide.BusinessLogic;
-using PlanAndRide.BusinessLogic.Domain;
+using PlanAndRide.BusinessLogic;
 using PlanAndRide.BusinessLogic.Exceptions;
 
 namespace PlanAndRide.Database.Repository
@@ -20,28 +20,48 @@ namespace PlanAndRide.Database.Repository
                          new EventMemberships
                          {
                              Id = 1,
-                             Nickname ="Edwar",
+                             Login="Marek",
+                             User=new User
+                             {
+                                 Password="1234",
+                                 Login="Marek"
+                             },
                              DateOfJoin = DateTime.Now,
                              Comment = "Bedzie dobrze",
                          },
                          new EventMemberships
                          {
                              Id=2,
-                             Nickname="Ksawery",
+                             Login="Kociak",
+                             User=new User
+                             {
+                                 Login="Kociak",
+                                 Password="1234"
+                             },
                              DateOfJoin= DateTime.Now,
                              Comment="Jazda Panowie",
                          },
                          new EventMemberships
                          {
                              Id=3,
-                             Nickname="Twardziel",
+                             Login="Twardziel",
+                             User=new User
+                             {
+                                 Login="Twardziel",
+                                 Password="123"
+                             },
                              DateOfJoin= DateTime.Now,
                              Comment="Carpet Dijen",
                          },
                          new EventMemberships
                          {
                              Id=4,
-                             Nickname="Maczo",
+                             Login="Maczo",
+                             User=new User
+                             {
+                                 Login="Maczo",
+                                 Password ="123"
+                             },
                              DateOfJoin= DateTime.Now,
                              Comment="Lecimy",
                          }
@@ -87,7 +107,7 @@ namespace PlanAndRide.Database.Repository
             {
                 throw new RecordNotFoundException($"EventMemberships ID: {id} not found in repository");
             }
-            existingEventMemberships.Nickname = eventMemberships.Nickname;
+            existingEventMemberships.User.Login = eventMemberships.User.Login;
             existingEventMemberships.DateOfJoin = eventMemberships.DateOfJoin;
             existingEventMemberships.Comment = eventMemberships.Comment;
         }
@@ -95,6 +115,7 @@ namespace PlanAndRide.Database.Repository
         {
             _ = EventMemberships.Remove(Get(id));
         }
+        private static List<User> user=new List<User>();
     }
 }
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PlanAndRide.BusinessLogic;
 using PlanAndRide.Web.Models;
@@ -7,55 +8,89 @@ namespace PlanAndRide.Web.Controllers
 {
     public class EventMembershipsController : Controller
     {
-        var model = new EventMembershipsViewModel();
+        private readonly IEventMembershipsService _eventMembershipsService;
+        //private readonly IMapper _mapper;
+        public EventMembershipsController(IEventMembershipsService eventMembershipsService, IMapper mapper)
+        {
+            _eventMembershipsService = eventMembershipsService;
+            //_mapper = mapper;
+        }
+        
         // GET: EventMembershipsController
         public ActionResult Index()
         {
-            
+
+            // var model= _eventMemberships.GetAll().Select(eventMemberships=>_mapper.Map<EventMembershipsViewModel>(eventMemberships));
+            var model = new EventMembershipsCollectionViewModel();
+            model.EventMemberships = _eventMembershipsService.GetAll().Select(e => new EventMembershipsViewModel());
             return View(model);
         }
 
         // GET: EventMembershipsController/Details/5
-        public ActionResult Details()
+        public ActionResult Details(int id)
         {
-            return View(model);
+            var eventMemberships= _eventMembershipsService.Get(id);
+            if(eventMemberships!=null)
+            {
+                return View(new EventMembershipsViewModel());
+            }
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: EventMembershipsController/Create
         public ActionResult Create()
         {
-            return View(model);
+            //var user = _userService.GetAll();
+            //var model = new EventMembershipsViewModel() { User = users };
+            //return View(model);
+            return View();
         }
 
         // POST: EventMembershipsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(EventMembershipsViewModel model)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                //model. = _userService.GetAll();
+                return View(model);
             }
-            catch
-            {
-                return View();
-            }
+
+           // var ride = _mapper.Map<EventMemberships>(model);
+            //if (int.TryParse(model.UserId, out int id))
+            //    eventMemberships.User = _userService.Get(id);
+            //else
+            //    eventMemberships.User = null;
+            //_eventMemberships.Add(eventMemberships);
+            _eventMembershipsService.Add(model.EventMemberships);
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: EventMembershipsController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var eventMemberships=_eventMembershipsService.Get(id);
+            if(eventMemberships!=null)
+            {
+                return View(new EventMembershipsViewModel());
+            }
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: EventMembershipsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, EventMembershipsViewModel model)
         {
+            if(!ModelState.IsValid)
+            {
+                return View(model);
+            }
             try
             {
-                return RedirectToAction(nameof(Index));
+                _eventMembershipsService.Update(id, model.EventMemberships);
+                return RedirectToAction(nameof(Details), new {id=id});
             }
             catch
             {
@@ -66,22 +101,21 @@ namespace PlanAndRide.Web.Controllers
         // GET: EventMembershipsController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var eventMemberships= _eventMembershipsService.Get(id);
+            if(eventMemberships!= null)
+            {
+                return View(new EventMembershipsViewModel());
+            }
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: EventMembershipsController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, EventMembershipsViewModel model)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            _eventMembershipsService.Delete(id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }
