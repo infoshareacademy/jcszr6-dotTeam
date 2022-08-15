@@ -1,0 +1,42 @@
+﻿@model IEnumerable<PlanAndRide.Web.Models.EventMembershipsViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Event members</h1>
+
+<p>
+    <a asp-action="Create">Join to event</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+               <label>Event members </label>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comment)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Login)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comment)
+            </td>
+            <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) 
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    @Html.ActionLink("Leave", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            
+        </tr>
+}
+    </tbody>
+</table>

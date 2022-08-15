@@ -9,21 +9,22 @@ namespace PlanAndRide.Web.Controllers
     public class EventMembershipsController : Controller
     {
         private readonly IEventMembershipsService _eventMembershipsService;
-        //private readonly IMapper _mapper;
+        private readonly IMapper _mapper;
         public EventMembershipsController(IEventMembershipsService eventMembershipsService, IMapper mapper)
         {
             _eventMembershipsService = eventMembershipsService;
-            //_mapper = mapper;
+            _mapper = mapper;
         }
         
         // GET: EventMembershipsController
         public ActionResult Index()
         {
 
-            // var model= _eventMemberships.GetAll().Select(eventMemberships=>_mapper.Map<EventMembershipsViewModel>(eventMemberships));
-            var model = new EventMembershipsCollectionViewModel();
-            model.EventMemberships = _eventMembershipsService.GetAll().Select(e => new EventMembershipsViewModel());
+             var model= _eventMembershipsService.GetAll().Select(eventMemberships=>_mapper.Map<EventMembershipsViewModel>(eventMemberships));
+           // var model = new EventMembershipsViewModel();
+            //model.EventMemberships = _eventMembershipsService.GetAll().Select(e => new EventMembershipsViewModel());
             return View(model);
+            
         }
 
         // GET: EventMembershipsController/Details/5
@@ -32,7 +33,7 @@ namespace PlanAndRide.Web.Controllers
             var eventMemberships= _eventMembershipsService.Get(id);
             if(eventMemberships!=null)
             {
-                return View(new EventMembershipsViewModel());
+                return View(_mapper.Map<EventMembershipsViewModel>(eventMemberships));
             }
             return RedirectToAction(nameof(Index));
         }
@@ -41,9 +42,8 @@ namespace PlanAndRide.Web.Controllers
         public ActionResult Create()
         {
             //var user = _userService.GetAll();
-            //var model = new EventMembershipsViewModel() { User = users };
-            //return View(model);
-            return View();
+            var model = new EventMembershipsViewModel() ;
+            return View(model);
         }
 
         // POST: EventMembershipsController/Create
@@ -57,13 +57,13 @@ namespace PlanAndRide.Web.Controllers
                 return View(model);
             }
 
-           // var ride = _mapper.Map<EventMemberships>(model);
+            var eventMemberships = _mapper.Map<EventMemberships>(model);
             //if (int.TryParse(model.UserId, out int id))
             //    eventMemberships.User = _userService.Get(id);
             //else
             //    eventMemberships.User = null;
             //_eventMemberships.Add(eventMemberships);
-            _eventMembershipsService.Add(model.EventMemberships);
+            _eventMembershipsService.Add(eventMemberships);
             return RedirectToAction(nameof(Index));
         }
 
@@ -73,9 +73,10 @@ namespace PlanAndRide.Web.Controllers
             var eventMemberships=_eventMembershipsService.Get(id);
             if(eventMemberships!=null)
             {
-                return View(new EventMembershipsViewModel());
+                return RedirectToAction(nameof(Index));
             }
-            return RedirectToAction(nameof(Index));
+            var model = _mapper.Map<EventMembershipsViewModel>(eventMemberships);
+           return View(model);
         }
 
         // POST: EventMembershipsController/Edit/5
@@ -87,15 +88,9 @@ namespace PlanAndRide.Web.Controllers
             {
                 return View(model);
             }
-            try
-            {
-                _eventMembershipsService.Update(id, model.EventMemberships);
-                return RedirectToAction(nameof(Details), new {id=id});
-            }
-            catch
-            {
-                return View();
-            }
+           var eventMemberships= _mapper.Map<EventMemberships>(model);
+            _eventMembershipsService.Update(id, eventMemberships);
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: EventMembershipsController/Delete/5
@@ -104,9 +99,9 @@ namespace PlanAndRide.Web.Controllers
             var eventMemberships= _eventMembershipsService.Get(id);
             if(eventMemberships!= null)
             {
-                return View(new EventMembershipsViewModel());
+                return RedirectToAction(nameof(Index));
             }
-            return RedirectToAction(nameof(Index));
+            return View(_mapper.Map<EventMembershipsViewModel>(eventMemberships));
         }
 
         // POST: EventMembershipsController/Delete/5

@@ -1,0 +1,48 @@
+﻿@model PlanAndRide.Web.Models.EventMembershipsViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Join to event</h1>
+
+<h4>EventMembershipsViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" class="form-control" />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Login" class="control-label"></label>
+                <input asp-for="Login" class="form-control" />
+                <span asp-validation-for="Login" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Comment" class="control-label"></label>
+                <input asp-for="Comment" class="form-control" />
+                <span asp-validation-for="Comment" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateOfJoin" class="control-label"></label>
+                <input asp-for="DateOfJoin" class="form-control" />
+                <span asp-validation-for="DateOfJoin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Join" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

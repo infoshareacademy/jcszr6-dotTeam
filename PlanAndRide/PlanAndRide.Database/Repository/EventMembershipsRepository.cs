@@ -107,7 +107,7 @@ namespace PlanAndRide.Database.Repository
             {
                 throw new RecordNotFoundException($"EventMemberships ID: {id} not found in repository");
             }
-            existingEventMemberships.User.Login = eventMemberships.User.Login;
+            existingEventMemberships.Login = eventMemberships.Login;
             existingEventMemberships.DateOfJoin = eventMemberships.DateOfJoin;
             existingEventMemberships.Comment = eventMemberships.Comment;
         }

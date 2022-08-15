@@ -11,8 +11,8 @@ namespace PlanAndRide.BusinessLogic
     public class EventMemberships
     {   
         public int Id { get; set; }
-       public User? User { get; set; }
-       public string? Login { get; set; }
+        public User? User { get; set; }
+        public string? Login { get; set; }
         public DateTime? DateOfJoin { get; set; }
         public string? Comment { get; set; }
 
