@@ -66,6 +66,7 @@ namespace PlanAndRide.Web.Models
             {
                 Id = route.Id,
                 Name = route.Name,
+                User = route.User,
                 StartingPosition = new GeoCoordinate
                 {
                     Latitude = route.StartingPosition.Latitude,
@@ -87,8 +88,8 @@ namespace PlanAndRide.Web.Models
         public RouteViewModel()
         {
             Route = new BusinessLogic.Route()
-            { 
-                Reviews=new List<Review>()
+            {
+                Reviews = new List<Review>(),
             };
             _routeService = new RouteService();
         }

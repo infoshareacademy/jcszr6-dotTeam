@@ -37,17 +37,17 @@ namespace PlanAndRide.Database.Repository
                .Include(r => r.DestinationPosition)
                .ToListAsync();
         }
-        
+
         public async Task Add(Route route)
         {
             var startingPosition = GetExistingGeoCoordinate(route.StartingPosition.Latitude, route.StartingPosition.Longitude);
-            if(startingPosition != null)
+            if (startingPosition != null)
                 route.StartingPosition = startingPosition;
-            
+
             var destinationPosition = GetExistingGeoCoordinate(route.DestinationPosition.Latitude, route.DestinationPosition.Longitude);
             if (destinationPosition != null)
                 route.DestinationPosition = destinationPosition;
-            
+
             var user = _context.Users.FirstOrDefault(u => u.Id == route.User.Id);
             if (user == null)
                 throw new ArgumentException("User not found at route create");
@@ -65,35 +65,51 @@ namespace PlanAndRide.Database.Repository
 
         public async Task Update(int id, Route route)
         {
-            //var existingRoute = Get(id);
-            //if (existingRoute == null)
-            //{
-            //    throw new RecordNotFoundException($"Route ID:{id} not found in repository");
-            //}
-            //existingRoute.Name = route.Name;
-            //existingRoute.StartingPosition = route.StartingPosition;
-            //existingRoute.DestinationPosition = route.DestinationPosition;
-            //existingRoute.StartingCity = route.StartingCity;
-            //existingRoute.DestinationCity = route.DestinationCity;
-            //existingRoute.Description = route.Description;
-            //existingRoute.ShareRoute = route.ShareRoute;
-            //existingRoute.IsPrivate = route.IsPrivate;
+            Route existingRoute;
+            try
+            {
+                existingRoute = await _context.Routes.SingleOrDefaultAsync(r => r.Id == id);
+            }
+            catch (InvalidOperationException ex)
+            {
+                throw new InvalidOperationException($"Unique key violaton: Route ID:{id}");
+            }
 
-            var existingRoute = await Get(id);
             if (existingRoute == null)
             {
                 throw new RecordNotFoundException($"Route ID:{id} not found in repository");
             }
             existingRoute.Name = route.Name;
-            existingRoute.StartingPosition = route.StartingPosition;
-            existingRoute.DestinationPosition = route.DestinationPosition;
+
+
+            var existingPosition = GetExistingGeoCoordinate(route.StartingPosition.Latitude, route.StartingPosition.Longitude);
+            if (existingPosition == null)
+            {
+                existingRoute.StartingPosition = route.StartingPosition;
+            }
+            else
+            {
+                existingRoute.StartingPosition = existingPosition;
+            }
+
+            existingPosition = GetExistingGeoCoordinate(route.DestinationPosition.Latitude, route.DestinationPosition.Longitude);
+            if (existingPosition == null)
+            {
+                existingRoute.DestinationPosition = route.DestinationPosition;
+                
+            }
+            else
+            {
+                existingRoute.DestinationPosition = existingPosition;
+            }
+            
             existingRoute.StartingCity = route.StartingCity;
             existingRoute.DestinationCity = route.DestinationCity;
             existingRoute.Description = route.Description;
             existingRoute.ShareRoute = route.ShareRoute;
             existingRoute.IsPrivate = route.IsPrivate;
 
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
 
         public async Task Delete(int id)
@@ -108,7 +124,7 @@ namespace PlanAndRide.Database.Repository
             {
                 throw new InvalidOperationException($"Unique key violaton: Route ID:{id}");
             }
-            
+
 
         }
     }

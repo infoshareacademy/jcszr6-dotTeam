@@ -78,15 +78,17 @@ namespace PlanAndRide.Web.Controllers
         // POST: RouteController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, RouteViewModel model)
+        public async Task<ActionResult> Edit(int id, RouteViewModel model)
         {
+            ModelState.Remove("Route.User");
             if (!ModelState.IsValid)
             {
+                ViewData["ApiKey"] = _config["Maps:ApiKey"];
                 return View(model);
             }
             try
             {
-                _routeService.Update(id, model.Route);
+                await _routeService.Update(id, model.Route);
                 return RedirectToAction(nameof(Details), new { Id=id });
             }
             catch
