@@ -1,24 +1,25 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+
 a.navbar-brand {
     white-space: normal;
     text-align: center;
     word-break: break-all;
 }
 
-a {
-    color: #0077cc;
+a:hover{
+    text-decoration: none!important;
 }
 
 .btn-primary {
-    color: #fff;
+    color: #BFC0C0;
     background-color: #1b6ec2;
     border-color: #1861ac;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-    color: #fff;
+    color: #BFC0C0;
     background-color: darkred;
     border-color: #1861ac;
 }
@@ -73,10 +74,11 @@ button.accept-policy {
     position: absolute;
     z-index: 3;
     font-size: 70px;
-    color: white;
+    color: #BFC0C0;
     font-family: concbv2;
     top: 40%;
     justify-content: center !important;
+    text-align: center;
     float: none;
     padding: 0;
     margin-left: -15%;
@@ -91,15 +93,143 @@ button.accept-policy {
 }
 
 .dropdown-item:hover {
-    background-color: black!important;
-    color: white!important;
+    background-color: black !important;
+    color: #BFC0C0!important;
 }
 
 .dropdown-item {
     color: black;
 }
 
-.dropdown-item a {
-    background-color: black!important;
-    color: white!important;
+    .dropdown-item a {
+        background-color: black !important;
+        color: #BFC0C0!important;
+    }
+
+.scroll-animation {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    z-index: 3;
+    margin-top: 450px;
 }
+
+.chevron {
+    position: absolute;
+    width: 28px;
+    height: 8px;
+    opacity: 0;
+    transform: scale3d(0.5, 0.5, 0.5);
+    animation: move 3s ease-out infinite;
+}
+
+    .chevron:first-child {
+        animation: move 3s ease-out 1s infinite;
+    }
+
+    .chevron:nth-child(2) {
+        animation: move 3s ease-out 2s infinite;
+    }
+
+    .chevron:before,
+    .chevron:after {
+        content: ' ';
+        position: absolute;
+        top: 0;
+        height: 100%;
+        width: 51%;
+        background: #BFC0C0;
+    }
+
+    .chevron:before {
+        left: 0;
+        transform: skew(0deg, 30deg);
+    }
+
+    .chevron:after {
+        right: 0;
+        width: 50%;
+        transform: skew(0deg, -30deg);
+    }
+
+@keyframes move {
+    25% {
+        opacity: 1;
+    }
+
+    33% {
+        opacity: 1;
+        transform: translateY(30px);
+    }
+
+    67% {
+        opacity: 1;
+        transform: translateY(40px);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(55px) scale3d(0.5, 0.5, 0.5);
+    }
+}
+
+.text {
+    display: inline-block;
+    margin-top: 75px;
+    margin-left: -30px;
+    font-family: concbv2;
+    font-size: 12px;
+    color: #BFC0C0;
+    text-transform: uppercase;
+    white-space: nowrap;
+    opacity: .25;
+    animation: pulse 2s linear alternate infinite;
+}
+
+@keyframes pulse {
+    to {
+        opacity: 1;
+    }
+}
+
+/*Back to top button*/
+#top-button {
+    display: inline-block;
+    background-color: #f44336;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    border-radius: 4px;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    transition: background-color .3s, opacity .5s, visibility .5s;
+    opacity: 50%;
+    visibility: hidden;
+    z-index: 1000;
+}
+
+    #top-button::after {
+        content: "\f077";
+        font-family: FontAwesome;
+        font-weight: normal;
+        font-style: normal;
+        font-size: 2em;
+        line-height: 50px;
+        color: #BFC0C0;
+    }
+
+    #top-button:hover {
+        cursor: pointer;
+        background-color: #333;
+        border: 3px solid #f44336;
+    }
+
+    #top-button:active {
+        background-color: #555;
+    }
+
+    #top-button.show {
+        opacity: 75%;
+        visibility: visible;
+    }

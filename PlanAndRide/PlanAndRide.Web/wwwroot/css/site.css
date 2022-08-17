@@ -13,7 +13,84 @@ html {
   min-height: 100%;
 }
 
-body {
-    margin-bottom: 60px;
+.footer {
+    position: relative!important;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px;
 }
 
+body {
+    background-color: #333 !important;
+    color: #BFC0C0 !important;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Raleway:300,400');
+
+.button {
+    display: inline-flex;
+    height: 40px;
+    width: 150px;
+    border: 2px solid #BFC0C0;
+    margin: 20px 20px 20px 20px;
+    color: #BFC0C0;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: .8em;
+    letter-spacing: 1.5px;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+#button-animation {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+    #button-animation a {
+        position: relative;
+        transition: all .45s ease-Out;
+        text-decoration: none;
+    }
+
+#translate {
+    transform: rotate(50deg);
+    width: 100%;
+    height: 250%;
+    left: -200px;
+    top: -30px;
+    background: #BFC0C0;
+    position: absolute;
+    transition: all .3s ease-Out;
+}
+
+#button-animation:hover #translate {
+    left: 0;
+}
+
+#button-animation:hover a {
+    color: #333;
+    text-decoration: none;
+}
+.submit-button {
+    font-size: 1.5em;
+    text-align: center;
+    color: #BFC0C0;
+    font-weight: 300;
+    letter-spacing: 1px;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.form-check-input:checked {
+    background-color: #f44336;
+    border-color: #f44336;
+}
+
+.form-check-input:focus {
+    border-color: #BFC0C0;
+    box-shadow: 0 0 0 0.25rem rgb(191 192 192 / 25%);
+}

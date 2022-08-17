@@ -66,7 +66,10 @@
                         <label class="form-check-label" for="newsletterCheck">I agree to receive commercial information provided by Plan & Ride Company to the e-mail address provided on my own behalf or at the request of its Business Partners.</label>
                     </div>
                     <div class="space">   </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <div class="button" id="button-animation">
+                        <div id="translate"></div>
+                        <a class="submit-button" asp-area="" asp-controller="Route" asp-action="Index">Join</a>
+                    </div>
                 </form>
             </div>
         </div>
@@ -86,7 +89,11 @@
                         <label for="ContactFormControlInput">Your message</label>
                         <textarea class="form-control" id="ContactFormControlTextarea1" rows="3"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <div class="space">   </div>
+                    <div class="button" id="button-animation">
+                        <div id="translate"></div>
+                        <a class="submit-button" asp-area="" asp-controller="Route" asp-action="Index">Contact</a>
+                    </div>
                 </form>
             </div>
         </div>
