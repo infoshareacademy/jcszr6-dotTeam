@@ -16,3 +16,11 @@ html {
 body {
   margin-bottom: 60px;
 }
+.locationDescription {
+    border: none;
+    width: 100%;
+    resize: none;
+}
+.locationDescription:focus {
+    outline: none;
+}

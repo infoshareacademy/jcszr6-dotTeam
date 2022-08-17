@@ -1,0 +1,34 @@
+﻿@model RouteViewModel
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="form-group">
+    <label asp-for="Name" class="control-label"></label>
+    <input asp-for="Name" class="form-control" />
+    <span asp-validation-for="Name" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label class="control-label">From: </label><br />
+    <input type="text" id="StartingLocation" class="form-control" placeholder="" />
+    <input type="hidden" id="StartingLatitude" asp-for="StartingPosition.Latitude" class="form-control" />
+    <input type="hidden" id="StartingLongitude" asp-for="StartingPosition.Longitude" class="form-control" />
+    <input type="hidden" id="StartingCity" asp-for="StartingCity" class="form-control" />
+
+</div>
+<div class="form-group">
+    <label class="control-label">To:</label><br />
+    <input type="text" id="DestinationLocation" class="form-control" placeholder="" />
+    <input type="hidden" id="DestinationLatitude" asp-for="DestinationPosition.Latitude" class="form-control" />
+    <input type="hidden" id="DestinationLongitude" asp-for="DestinationPosition.Longitude" class="form-control" />
+    <input type="hidden" id="DestinationCity" asp-for="DestinationCity" class="form-control" />
+
+</div>
+<div class="form-group">
+    <label asp-for="Description" class="control-label"></label>
+    <input asp-for="Description" class="form-control" />
+    <span asp-validation-for="Description" class="text-danger"></span>
+</div>
+<div class="form-group form-check">
+    <label class="form-check-label">
+        <input class="form-check-input" asp-for="IsPrivate" /> Private@*@Html.DisplayNameFor(model => model.IsPrivate)*@
+    </label>
+</div>

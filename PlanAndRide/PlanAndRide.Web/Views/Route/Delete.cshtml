@@ -1,62 +1,33 @@
-﻿@model RouteViewModel
+﻿@model PlanAndRide.Web.Models.RouteViewModel
 
 @{
     ViewData["Title"] = "Delete";
+    var apiKey = ViewData["ApiKey"];
 }
 
-<h1>Delete</h1>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Are you sure you want to delete this route?</h3>
 <div>
-    <h4>Route</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            <label asp-for="Name"></label>
-        </dt>
-        <dd class = "col-sm-10">
-            @Model.Name
-        </dd>
-        <dt class = "col-sm-2">
-            <label asp-for="StartingPosition"></label>
-        </dt>
-        <dd class = "col-sm-10">
-            @Model.StartingPosition
-        </dd>
-        <dt class = "col-sm-2">
-            <label asp-for="DestinationPosition"></label>
-        </dt>
-        <dd class = "col-sm-10">
-            @Model.DestinationPosition
-        </dd>
-        <dt class = "col-sm-2">
-            <label asp-for="AverageScore"></label>
-        </dt>
-        <dd class = "col-sm-10">
-            @Model.AverageScore
-        </dd>
-        <dt class = "col-sm-2">
-            <label asp-for="Description"></label>
-        </dt>
-        <dd class = "col-sm-10">
-            @Model.Description
-        </dd>
-        <dt class = "col-sm-2">
-            <label asp-for="ShareRoute"></label>
-        </dt>
-        <dd class = "col-sm-10">
-            @Model.ShareRoute
-        </dd>
-        <dt class = "col-sm-2">
-            <label asp-for="IsPrivate"></label>
-        </dt>
-        <dd class = "col-sm-10">
-            @Model.IsPrivate
-        </dd>
-    </dl>
     
+
+    <div class="col-lg-6 gx-5" style="float:left">
+        <hr />
+        <h4>@Model.Name</h4>
+        <partial name="_Partials/_RouteDetails" model="@Model" />
+    </div>
+
+    <div class="col-lg-6 gx-5" style="float:left">
+        <partial name="_Partials/_Map" model="@Model" />
+    </div>
+
     <form asp-action="Delete">
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to Routes</a>
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <a class="btn btn-secondary" asp-action="Index">Cancel</a>
     </form>
 </div>
+@section Scripts {
+<script async type="text/javascript" src='https://maps.googleapis.com/maps/api/js?libraries=places&key=@apiKey'></script>
+<script type="text/javascript">
+    window.addEventListener('load', LatLngToFormattedAddress);
+</script>
+}
