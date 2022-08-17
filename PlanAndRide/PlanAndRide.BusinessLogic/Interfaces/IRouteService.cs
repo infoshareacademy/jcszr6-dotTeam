@@ -2,7 +2,7 @@
 {
     public interface IRouteService :IRepository<Route>
     {
-        IEnumerable<Route> FindByName(string name);
+        Task<IEnumerable<Route>> FindByName(string name);
         double AverageScore(Route route);
     }
 }

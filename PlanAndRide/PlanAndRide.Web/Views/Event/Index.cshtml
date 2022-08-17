@@ -1,0 +1,61 @@
+﻿@model IEnumerable<EventViewModel>
+
+@{
+    ViewData["Title"]= "Index";
+}
+
+<h1>Events</h1>
+<p>
+    <a asp-action= "Create">Create New Event</a>
+    
+</p>
+<table class="table" id="myTable">
+    <thead>
+        <tr>
+            <th>
+                <label asp-for="@Model.First().Name"></label>
+            </th>
+            <th>
+                <label>Start event</label>
+            </th>
+            <th>
+                <label asp-for="@Model.First().RouteName"></label>
+            </th><th>
+                <label asp-for="@Model.First().IsPrivate"></label>
+            </th>
+            <th>
+                <label>Action</label>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.Date
+                </td>
+                <td>
+                    @item.RouteName
+                </td><td>
+                    @item.IsPrivate
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section scripts {
+    <script> 
+       $(document).ready( function () {
+    $('#myTable').DataTable();
+} );
+   </script>
+}

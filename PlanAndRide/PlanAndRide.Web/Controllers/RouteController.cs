@@ -19,17 +19,18 @@ namespace PlanAndRide.Web.Controllers
             _reviewService = reviewService;
         }
         // GET: RouteController
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             var model = new RoutesCollectionViewModel();
-            model.Routes = _routeService.GetAll().Select(r => new RouteViewModel(r,_routeService));
+            var routes = await _routeService.GetAll();
+            model.Routes =routes.Select(r => new RouteViewModel(r,_routeService));
             return View(model);
         }
 
         // GET: RouteController/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            var route = _routeService.Get(id);
+            var route = await _routeService.Get(id);
             if (route != null)
             {
                 ViewData["ApiKey"] = _config["Maps:ApiKey"];
@@ -48,20 +49,24 @@ namespace PlanAndRide.Web.Controllers
         // POST: RouteController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(RouteViewModel model)
+        public async Task<ActionResult> Create(RouteViewModel model)
         {
+            model.Route.User = new User { Id = 1 };
+
+            ModelState.Remove("Route.User");
             if (!ModelState.IsValid)
             {
+                ViewData["ApiKey"] = _config["Maps:ApiKey"];
                 return View(model);
             }
-            _routeService.Add(model.Route);
-            return RedirectToAction(nameof(Search), new {routeName=model.Name});
+            await _routeService.Add(model.Route);
+            return RedirectToAction(nameof(Details), new {Id=model.Route.Id});
         }
 
         // GET: RouteController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            var route = _routeService.Get(id);
+            var route = await _routeService.Get(id);
             if (route != null)
             {
                 ViewData["ApiKey"] = _config["Maps:ApiKey"];
@@ -73,15 +78,17 @@ namespace PlanAndRide.Web.Controllers
         // POST: RouteController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, RouteViewModel model)
+        public async Task<ActionResult> Edit(int id, RouteViewModel model)
         {
+            ModelState.Remove("Route.User");
             if (!ModelState.IsValid)
             {
+                ViewData["ApiKey"] = _config["Maps:ApiKey"];
                 return View(model);
             }
             try
             {
-                _routeService.Update(id, model.Route);
+                await _routeService.Update(id, model.Route);
                 return RedirectToAction(nameof(Details), new { Id=id });
             }
             catch
@@ -91,9 +98,9 @@ namespace PlanAndRide.Web.Controllers
         }
 
         // GET: RouteController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            var route = _routeService.Get(id);
+            var route = await _routeService.Get(id);
             if (route != null)
             {
                 ViewData["ApiKey"] = _config["Maps:ApiKey"];
@@ -105,18 +112,18 @@ namespace PlanAndRide.Web.Controllers
         // POST: RouteController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, RouteViewModel model)
+        public async Task<ActionResult> Delete(int id, RouteViewModel model)
         {
-            _routeService.Delete(id);
+            await _routeService.Delete(id);
             return RedirectToAction(nameof(Index));
         }
 
         // GET: RouteController/Search
-        public ActionResult Search(string routeName)
+        public async Task<ActionResult> Search(string routeName)
         {
             if (!string.IsNullOrEmpty(routeName))
             {
-                var routes = _routeService.FindByName(routeName);
+                var routes = await _routeService.FindByName(routeName);
                 var model = new RoutesCollectionViewModel();
                 model.Routes = routes.Select(r => new RouteViewModel(r,_routeService));
                 model.RouteName = routeName;
@@ -125,9 +132,9 @@ namespace PlanAndRide.Web.Controllers
             return RedirectToAction(nameof(Index));
 
         }
-        public ActionResult Reviews(int referenceId)
+        public async Task<ActionResult> Reviews(int routeId)
         {
-            var route = _routeService.Get(referenceId);
+            var route = await _routeService.Get(routeId);
             var model = new RouteViewModel(route,_routeService);
             return View(model);
         }

@@ -3,6 +3,6 @@ namespace PlanAndRide.BusinessLogic
 {
     public interface IReviewService : IRepository<Review>
     {
-        IEnumerable<Review> GetByReferenceId(int referenceId, ReviewType type);
+        Task<IEnumerable<Review>> GetByRouteId(int id);
     }
 }

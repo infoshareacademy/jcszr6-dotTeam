@@ -1,4 +1,5 @@
-﻿using PlanAndRide.BusinessLogic;
+﻿using Microsoft.EntityFrameworkCore;
+using PlanAndRide.BusinessLogic;
 using PlanAndRide.BusinessLogic.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -10,75 +11,77 @@ namespace PlanAndRide.Database.Repository
 {
     public class ReviewRepository : IRepository<Review>
     {
-        private readonly IList<Review> _reviews;
-        public ReviewRepository()
+        private readonly PlanAndRideContext _context;
+
+        public ReviewRepository(PlanAndRideContext context)
         {
-            _reviews = new List<Review>
-            {
-                new Review { Id=1, ReferenceId=1, Type=ReviewType.ROUTE, Date=DateTime.Now.AddDays(-1).AddHours(-4),
-                Score=5, Description="Super trasa"},
-                new Review { Id=2, ReferenceId=1, Type=ReviewType.ROUTE, Date=DateTime.Now.AddDays(-2).AddHours(-3),
-                Score=4, Description="Polecam"},
-                new Review { Id=3, ReferenceId=1, Type=ReviewType.ROUTE, Date=DateTime.Now.AddDays(-4).AddHours(2),
-                Score=4, Description="Warto..."},
-                new Review { Id=4, ReferenceId=2, Type=ReviewType.ROUTE, Date=DateTime.Now.AddDays(-1).AddHours(-4),
-                Score=3, Description="Srednio"},
-                new Review { Id=5, ReferenceId=2, Type=ReviewType.ROUTE, Date=DateTime.Now.AddDays(-2).AddHours(-3),
-                Score=2, Description="Słabo.."},
-                new Review { Id=6, ReferenceId=2, Type=ReviewType.ROUTE, Date=DateTime.Now.AddDays(-4).AddHours(2),
-                Score=3}
-            };
+            _context = context;
+            //_reviews = new List<Review>
+            //{
+            //    new Review { Id=1, Route=new Route{ Id=1}, Date=DateTime.Now.AddDays(-1).AddHours(-4),
+            //    Score=5, Description="Super trasa"},
+            //    new Review { Id=2, Route=new Route{ Id=1}, Date=DateTime.Now.AddDays(-2).AddHours(-3),
+            //    Score=4, Description="Polecam"},
+            //    new Review { Id=3, Route=new Route{ Id=1}, Date=DateTime.Now.AddDays(-4).AddHours(2),
+            //    Score=4, Description="Warto..."},
+            //    new Review { Id=4, Route=new Route{ Id=2}, Date=DateTime.Now.AddDays(-1).AddHours(-4),
+            //    Score=3, Description="Srednio"},
+            //    new Review { Id=5, Route=new Route{ Id=2}, Date=DateTime.Now.AddDays(-2).AddHours(-3),
+            //    Score=2, Description="Słabo.."},
+            //    new Review { Id=6, Route=new Route{ Id=2}, Date=DateTime.Now.AddDays(-4).AddHours(2),
+            //    Score=3}
+            //};
+
         }
-        public void Add(Review entity)
+        public async Task Add(Review entity)
         {
-            if (_reviews.Count > 0)
-            {
-                entity.Id = _reviews.Max(r => r.Id) + 1;
-            }
-            else
-            {
-                entity.Id = 1;
-            }
-            _reviews.Add(entity);
+            //await _context.Reviews.AddAsync(entity);
+            //_context.SaveChanges();
+            throw new NotImplementedException();
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            _ = _reviews.Remove(Get(id));
+            //var review = await _context.Reviews.SingleOrDefaultAsync(r=>r.Id==id);
+            //_context.Remove(review);
+            //_context.SaveChanges();
+            throw new NotImplementedException();
         }
 
-        public Review Get(int id)
+        public async Task<Review> Get(int id)
         {
-            {
-                try
-                {
-                    return _reviews.SingleOrDefault(r => r.Id == id);
-                }
-                catch
-                {
-                    throw new InvalidOperationException($"Unique key violaton: Review ID:{id}");
-                }
-            }
+            //try
+            //{
+            //    return await _context.Reviews.SingleOrDefaultAsync(r => r.Id == id);
+            //}
+            //catch
+            //{
+            //    throw new InvalidOperationException($"Unique key violaton: Review ID:{id}");
+            //}
+            throw new NotImplementedException();
         }
 
-        public IEnumerable<Review> GetAll()
+        public async Task<IEnumerable<Review>> GetAll()
         {
-            return _reviews;
+            //return await _context.Reviews.ToListAsync();
+            throw new NotImplementedException();
         }
 
-        public void Update(int id, Review review)
+        public async Task Update(int id, Review review)
         {
-            var existingReview = Get(id);
-            if (existingReview == null)
-            {
-                throw new RecordNotFoundException($"Review ID:{id} not found in repository");
-            }
-            existingReview.ReferenceId = review.ReferenceId;
-            existingReview.Type = review.Type;
-            existingReview.UserId = review.UserId;
-            existingReview.Date = review.Date;
-            existingReview.Description = review.Description;
-            existingReview.Score = review.Score;    
+            //var existingReview = await _context.Reviews.SingleOrDefaultAsync(r=>r.Id==id);
+            //if (existingReview == null)
+            //{
+            //    throw new RecordNotFoundException($"Review ID:{id} not found in repository");
+            //}
+            //existingReview.Route = review.Route;
+            //existingReview.User = review.User;
+            //existingReview.Date = review.Date;
+            //existingReview.Description = review.Description;
+            //existingReview.Score = review.Score;
+
+            //_context.SaveChanges();
+            throw new NotImplementedException();
         }
     }
 }

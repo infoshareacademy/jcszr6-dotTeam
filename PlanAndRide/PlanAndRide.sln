@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlanAndRide.GUI", "PlanAndR
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlanAndRide.Web", "PlanAndRide.Web\PlanAndRide.Web.csproj", "{B19EB418-BC55-44AB-9E7B-F34354A2E914}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlanAndRide.Database", "PlanAndRide.Database\PlanAndRide.Database.csproj", "{A0992AD9-1A0C-4E53-993D-86D73EBD8A80}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlanAndRide.Database", "PlanAndRide.Database\PlanAndRide.Database.csproj", "{A0992AD9-1A0C-4E53-993D-86D73EBD8A80}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

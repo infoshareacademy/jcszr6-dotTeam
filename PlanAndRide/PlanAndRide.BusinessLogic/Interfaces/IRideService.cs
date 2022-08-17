@@ -2,6 +2,6 @@
 {
     public interface IRideService:IRepository<Ride>
     {
-        
+       
     }
 }

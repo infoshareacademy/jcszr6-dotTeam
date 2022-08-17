@@ -1,41 +1,80 @@
-﻿using GeoCoordinatePortable;
-using Newtonsoft.Json;
+﻿using Microsoft.EntityFrameworkCore;
 using PlanAndRide.BusinessLogic;
+using PlanAndRide.BusinessLogic.Exceptions;
+
 
 namespace PlanAndRide.Database.Repository
 {
-    public class RideRepository:IRepository<Ride>
+    public class RideRepository : IRepository<Ride>
     {
-        private List<Ride> _rides;
-
-        public RideRepository()
+        private readonly PlanAndRideContext _context;
+        public RideRepository(PlanAndRideContext context)
         {
-            var json = File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "TempDataFiles", "data.json"));
-            _rides = JsonConvert.DeserializeObject<List<Ride>>(json);
+            _context = context;
         }
-        public Ride Get(int id)
+        public async Task<Ride> Get(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return await _context.Rides.SingleOrDefaultAsync(r => r.Id == id);   
+            }
+            catch
+            {
+                throw new InvalidOperationException($"Unique key violaton: Ride Id:{id}");
+            }
         }
-
-        public IEnumerable<Ride> GetAll()
+        public async Task<IEnumerable<Ride>> GetAll()
         {
-            return _rides;
+            return await _context.Rides.ToListAsync();
         }
-
-        public void Add(Ride ride)
+        public async Task Add(Ride ride)
         {
-            _rides.Add(ride);
+            var userId = 1;
+            var user = _context.Users.FirstOrDefault(u => u.Id == userId);
+            if (user == null)
+                throw new ArgumentException("User not found at event create");
+            ride.User = user;
+            await _context.Rides.AddAsync(ride);
+            _context.SaveChanges();
         }
-
-        public void Update(int id, Ride ride)
+        public async Task Update(int id, Ride ride)
         {
-            throw new NotImplementedException();
+            Ride existingRide;
+            try
+            {
+                existingRide = await _context.Rides.SingleOrDefaultAsync(r => r.Id == id);
+            }
+            catch (InvalidOperationException ex)
+            {
+                throw new InvalidOperationException($"Unique key violaton: Ride ID:{id}");
+            }
+
+            if (existingRide == null)
+            {
+                throw new RecordNotFoundException($"Ride ID:{id} not found in repository");
+            }
+            existingRide.Name = ride.Name;
+            existingRide.Date = ride.Date;
+            existingRide.IsPrivate = ride.IsPrivate;
+            existingRide.ShareRide = ride.ShareRide;
+            existingRide.Route = ride.Route;
+            existingRide.Description = ride.Description;
+            existingRide.RideMembers = ride.RideMembers;
+
+            _context.SaveChanges();
         }
-
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var ride = await _context.Rides.SingleOrDefaultAsync(u => u.Id == id);
+                _context.Rides.Remove(ride);
+                _context.SaveChanges();
+            }
+            catch (InvalidOperationException ex)
+            {
+                throw new InvalidOperationException($"Unique key violaton: Ride ID:{id}");
+            }
         }
     }
 }

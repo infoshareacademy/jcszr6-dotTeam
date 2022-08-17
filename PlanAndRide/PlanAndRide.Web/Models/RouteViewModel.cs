@@ -1,5 +1,4 @@
-﻿using GeoCoordinatePortable;
-using PlanAndRide.BusinessLogic;
+﻿using PlanAndRide.BusinessLogic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -67,8 +66,17 @@ namespace PlanAndRide.Web.Models
             {
                 Id = route.Id,
                 Name = route.Name,
-                StartingPosition = new GeoCoordinate(route.StartingPosition.Latitude, route.StartingPosition.Longitude),
-                DestinationPosition = new GeoCoordinate(route.DestinationPosition.Latitude, route.DestinationPosition.Longitude),
+                User = route.User,
+                StartingPosition = new GeoCoordinate
+                {
+                    Latitude = route.StartingPosition.Latitude,
+                    Longitude = route.StartingPosition.Longitude
+                },
+                DestinationPosition = new GeoCoordinate
+                {
+                    Latitude = route.DestinationPosition.Latitude,
+                    Longitude = route.DestinationPosition.Longitude
+                },
                 StartingCity = route.StartingCity,
                 DestinationCity = route.DestinationCity,
                 Description = route.Description,
@@ -80,8 +88,8 @@ namespace PlanAndRide.Web.Models
         public RouteViewModel()
         {
             Route = new BusinessLogic.Route()
-            { 
-                Reviews=new List<Review>()
+            {
+                Reviews = new List<Review>(),
             };
             _routeService = new RouteService();
         }

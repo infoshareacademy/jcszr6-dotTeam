@@ -73,10 +73,8 @@ function LatLngToFormattedAddress() {
     });
 }
 
-
-
-
-
-
-
-
+(function ($) {
+     //your standard jquery code goes here with $ prefix
+    // best used inside a page with inline code, 
+    // or outside the document ready, enter code here
+})(jQuery);
