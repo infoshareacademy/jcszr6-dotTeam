@@ -2,47 +2,104 @@
 for details on configuring this project to bundle and minify static web assets. */
 
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
 }
 
 a {
-  color: #0077cc;
+    color: #0077cc;
 }
 
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: darkred;
+    border-color: #1861ac;
+}
+
+.navbar {
+    margin-bottom: -1px !important;
 }
 
 .border-top {
-  border-top: 1px solid #e5e5e5;
+    border-top: 1px solid #e5e5e5;
 }
+
 .border-bottom {
-  border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
 }
 
 .box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
 button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
+    font-size: 1rem;
+    line-height: inherit;
 }
 
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px;
+}
+
+.header-images {
+    padding: 0;
+    height: 600px;
+    width: 100%;
+}
+
+.black-mesh1 {
+    z-index: 2;
+    opacity: 65%;
+    position: absolute;
+}
+
+.headerBikeImage {
+    z-index: 1;
+    position: absolute;
+}
+
+.typewrite {
+    position: absolute;
+    z-index: 3;
+    font-size: 70px;
+    color: white;
+    font-family: concbv2;
+    top: 40%;
+    justify-content: center !important;
+    float: none;
+    padding: 0;
+    margin-left: -15%;
+}
+
+.parent {
+    position: relative;
+}
+
+.dropdown-menu {
+    background-color: darkred;
+}
+
+.dropdown-item:hover {
+    background-color: black!important;
+    color: white!important;
+}
+
+.dropdown-item {
+    color: black;
+}
+
+.dropdown-item a {
+    background-color: black!important;
+    color: white!important;
 }
