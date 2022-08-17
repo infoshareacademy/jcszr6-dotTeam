@@ -31,54 +31,57 @@ namespace PlanAndRide.Database.Repository
             //    new Review { Id=6, Route=new Route{ Id=2}, Date=DateTime.Now.AddDays(-4).AddHours(2),
             //    Score=3}
             //};
-            
+
         }
         public async Task Add(Review entity)
         {
-            await _context.Reviews.AddAsync(entity);
-            await _context.SaveChangesAsync();
+            //await _context.Reviews.AddAsync(entity);
+            //_context.SaveChanges();
+            throw new NotImplementedException();
         }
 
         public async Task Delete(int id)
         {
-            var review = await Get(id);
-            _context.Remove(review);
-            await _context.SaveChangesAsync();
+            //var review = await _context.Reviews.SingleOrDefaultAsync(r=>r.Id==id);
+            //_context.Remove(review);
+            //_context.SaveChanges();
+            throw new NotImplementedException();
         }
 
         public async Task<Review> Get(int id)
         {
-            {
-                try
-                {
-                    return await _context.Reviews.SingleOrDefaultAsync(r => r.Id == id);
-                }
-                catch
-                {
-                    throw new InvalidOperationException($"Unique key violaton: Review ID:{id}");
-                }
-            }
+            //try
+            //{
+            //    return await _context.Reviews.SingleOrDefaultAsync(r => r.Id == id);
+            //}
+            //catch
+            //{
+            //    throw new InvalidOperationException($"Unique key violaton: Review ID:{id}");
+            //}
+            throw new NotImplementedException();
         }
 
         public async Task<IEnumerable<Review>> GetAll()
         {
-            return await _context.Reviews.ToListAsync();
+            //return await _context.Reviews.ToListAsync();
+            throw new NotImplementedException();
         }
 
         public async Task Update(int id, Review review)
         {
-            var existingReview = await Get(id);
-            if (existingReview == null)
-            {
-                throw new RecordNotFoundException($"Review ID:{id} not found in repository");
-            }
-            existingReview.Route = review.Route;
-            existingReview.User = review.User;
-            existingReview.Date = review.Date;
-            existingReview.Description = review.Description;
-            existingReview.Score = review.Score;
+            //var existingReview = await _context.Reviews.SingleOrDefaultAsync(r=>r.Id==id);
+            //if (existingReview == null)
+            //{
+            //    throw new RecordNotFoundException($"Review ID:{id} not found in repository");
+            //}
+            //existingReview.Route = review.Route;
+            //existingReview.User = review.User;
+            //existingReview.Date = review.Date;
+            //existingReview.Description = review.Description;
+            //existingReview.Score = review.Score;
 
-            await _context.SaveChangesAsync();
+            //_context.SaveChanges();
+            throw new NotImplementedException();
         }
     }
 }

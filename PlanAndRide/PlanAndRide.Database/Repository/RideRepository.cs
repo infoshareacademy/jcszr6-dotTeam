@@ -8,51 +8,6 @@ namespace PlanAndRide.Database.Repository
     public class RideRepository : IRepository<Ride>
     {
         private readonly PlanAndRideContext _context;
-        //private static List<Ride>
-        //     Rides = new List<Ride>
-        //    {
-        //        new Ride
-        //        {
-        //            Id = 1,
-        //            Name ="Ride1",
-        //            Date=DateTime.Now,
-        //             Route= new Route
-        //            {
-        //                Name = "Route1"
-        //            },
-        //            Description="Ala ma kota",
-        //            IsPrivate=true,
-        //            ShareRide=true,
-        //        },
-        //        new Ride
-        //        {
-        //            Id = 2,
-        //            Name ="Ride2",
-        //            Date=DateTime.Now,
-        //            Route= new Route
-        //            {
-        //                Name = "Route1"
-        //            },
-        //            Description="Kot ma Ale",
-        //            IsPrivate=false,
-        //            ShareRide=true,
-        //        },
-        //        new Ride
-        //        {
-        //            Id = 3,
-        //            Name ="Ride3",
-        //            Date=DateTime.Now,
-        //            Route= new Route
-        //            {
-        //                Name = "Route2"
-        //            },
-        //            Description="Ale kod to kot",
-        //            IsPrivate=true,
-        //            ShareRide=true,
-        //        }
-        //    };
-
-
         public RideRepository(PlanAndRideContext context)
         {
             _context = context;
@@ -74,15 +29,29 @@ namespace PlanAndRide.Database.Repository
         }
         public async Task Add(Ride ride)
         {
+            var userId = 1;
+            var user = _context.Users.FirstOrDefault(u => u.Id == userId);
+            if (user == null)
+                throw new ArgumentException("User not found at event create");
+            ride.User = user;
             await _context.Rides.AddAsync(ride);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
         public async Task Update(int id, Ride ride)
         {
-            var existingRide = await Get(id);
+            Ride existingRide;
+            try
+            {
+                existingRide = await _context.Rides.SingleOrDefaultAsync(r => r.Id == id);
+            }
+            catch (InvalidOperationException ex)
+            {
+                throw new InvalidOperationException($"Unique key violaton: Ride ID:{id}");
+            }
+
             if (existingRide == null)
             {
-                throw new RecordNotFoundException($"Ride Id:{id} not found in repository");
+                throw new RecordNotFoundException($"Ride ID:{id} not found in repository");
             }
             existingRide.Name = ride.Name;
             existingRide.Date = ride.Date;
@@ -92,32 +61,20 @@ namespace PlanAndRide.Database.Repository
             existingRide.Description = ride.Description;
             existingRide.RideMembers = ride.RideMembers;
 
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
         public async Task Delete(int id)
         {
-            var ride = await Get(id);
-            _context.Rides.Remove(ride);
-            await _context.SaveChangesAsync();
+            try
+            {
+                var ride = await _context.Rides.SingleOrDefaultAsync(u => u.Id == id);
+                _context.Rides.Remove(ride);
+                _context.SaveChanges();
+            }
+            catch (InvalidOperationException ex)
+            {
+                throw new InvalidOperationException($"Unique key violaton: Ride ID:{id}");
+            }
         }
-
-               
-        //static RideRepository()
-        //{
-        //    var json = File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "data.json"));
-        //    rides = JsonConvert.DeserializeObject<List<Route>>(json);
-        //}
-
-        //public static List<Route> GetAllRides()
-        //{
-        //    return rides;
-        //}
-
-        //public static void AddRide(Route route)
-        //{
-        //    route.Add(route);
-        //}
-
-
     }
 }
