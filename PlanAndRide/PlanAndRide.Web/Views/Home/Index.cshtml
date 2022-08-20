@@ -5,14 +5,65 @@
 <div class="container-fluid">
     <div class="container">
         <div class="row">
-                <div class="col-12 home-title-text">
-                    <p class="last-tracks">Recently added routes</p>
+            <div class="col-12 home-title-text">
+                <p class="home-title-text">Recently added routes</p>
+            </div>
+            <div class="col-12 last-three-tracks">
+                @model RouteViewsModel
+                @*await Html.PartialAsync("~/Views/Shared/LastThreeRoutes.cshtml")*@
+                @*<partial name="~/Views/Shared/LastThreeRoutes.cshtml" model="@Model" />*@
+
+                @{
+                    ViewData["Title"] = "LastThreeRoutes";
+                }
+
+                <div class="container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <label asp-for="@Model.Routes.First().Name"></label>
+                                </th>
+                                <th>
+                                    <label asp-for="@Model.Routes.First().StartingPosition"></label>
+                                </th>
+                                <th>
+                                    <label asp-for="@Model.Routes.First().DestinationPosition"></label>
+                                </th>
+                                <th>
+                                    <label asp-for="@Model.Routes.First().Description"></label>
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Routes)
+                            {
+                                <tr>
+                                    <td>
+                                        @item.Name
+                                    </td>
+                                    <td>
+                                        @item.StartingPosition
+                                    </td>
+                                    <td>
+                                        @item.DestinationPosition
+                                    </td>
+                                    <td>
+                                        @item.Description
+                                    </td>
+                                    <td>
+                                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
-                <div class="col-12 last-three-tracks">
-                    @model RouteViewsModel
-                    @*@Html.Partial("~/Views/Route/LastThreeRoutes.cshtml")*@
-                    <partial name="~/Views/Route/LastThreeRoutes.cshtml" model="@Model" />
-                </div>
+
+
+
+            </div>
         </div>
     </div>
 
@@ -28,19 +79,61 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-4">
                 <div class="col-12 home-title-text">
-                    <img class="map" src="https://zeorouteplanner.com/blog/wp-content/uploads/2021/01/route-management-with-zeo-route-planner.jpg" />
+                <p class="home-title-text nearby-rides">Nearby rides</p>
+            </div>
+            <div class="col-12 last-three-tracks">
+                @*await Html.PartialAsync("~/Views/Shared/LastThreeRoutes.cshtml")*@
+                @*<partial name="~/Views/Shared/LastThreeRoutes.cshtml" model="@Model" />*@
+
+                @{
+                    ViewData["Title"] = "LastThreeRoutes";
+                }
+
+                <div class="container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <label asp-for="@Model.Routes.First().Name"></label>
+                                </th>
+                                <th>
+                                    <label asp-for="@Model.Routes.First().StartingPosition"></label>
+                                </th>
+                                <th>
+                                    <label asp-for="@Model.Routes.First().DestinationPosition"></label>
+                                </th>
+                                <th>
+                                    <label asp-for="@Model.Routes.First().Description"></label>
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Routes)
+                            {
+                                <tr>
+                                    <td>
+                                        @item.Name
+                                    </td>
+                                    <td>
+                                        @item.StartingPosition
+                                    </td>
+                                    <td>
+                                        @item.DestinationPosition
+                                    </td>
+                                    <td>
+                                        @item.Description
+                                    </td>
+                                    <td>
+                                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            <div class="col-8">
-                <div class="col-12 home-title-text">
-                    <p class="last-tracks">Nearby rides</p>
-                </div>
-                <div class="col-12 last-three-tracks">
-                </div>
-            </div>
-        </div>
     </div>
 
     <div class="container">

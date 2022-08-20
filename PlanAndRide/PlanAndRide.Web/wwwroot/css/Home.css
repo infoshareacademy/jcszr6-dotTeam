@@ -14,7 +14,7 @@
     height: 400px;
     position: absolute;
     width: 75%;
-    margin-left:10%;
+    margin-left:14%;
 }
 
 .parallax-text {
@@ -25,12 +25,25 @@
     text-align: center;
     position: absolute;
     margin-top: 10%;
-    margin-left: 10%;
+    margin-left: 14%;
     font-family: concbv2;
     width: 75%;
     opacity:100%;
 }
-
+.home-title-text {
+    color: #BFC0C0 !important;
+    font-size: 40px;
+    font-weight: 400;
+    text-align: center;
+    position: absolute;
+    font-family: concbv2;
+    height:120px!important;
+    margin-left: 200px;
+    margin-top: 10px;
+}
+.nearby-rides {
+    margin-left: 260px!important;
+}
 .map {
     width: 300px;
 }
@@ -62,4 +75,8 @@
 
 .contact {
     border-left: 1px solid black;
+}
+.last-three-tracks{
+    position: relative;
+    margin-top: 10%;
 }
