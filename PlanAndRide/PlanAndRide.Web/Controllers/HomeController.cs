@@ -28,5 +28,10 @@ namespace PlanAndRide.Web.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        public IActionResult LastThreeRoutes()
+        {
+            return RedirectToAction("LastThreeRoutes", "Route");
+        }
     }
 }

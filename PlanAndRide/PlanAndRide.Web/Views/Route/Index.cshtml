@@ -3,15 +3,15 @@
 @{
     ViewData["Title"] = "Index";
 }
+<div class="container">
+    <h1>Routes</h1>
 
-<h1>Routes</h1>
+    <p>
+        <a asp-action="Create">Create New Route</a>
+    </p>
 
-<p>
-    <a asp-action="Create">Create New Route</a>
-</p>
-
-<partial name="_Partials/_SearchForm" model="@Model" />
-<partial name="_Partials/_RoutesList" model="@Model" />
-
+    <partial name="_Partials/_SearchForm" model="@Model" />
+    <partial name="_Partials/_RoutesList" model="@Model" />
+</div>
 
 

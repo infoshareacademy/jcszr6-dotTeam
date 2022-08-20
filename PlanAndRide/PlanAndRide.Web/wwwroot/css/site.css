@@ -26,6 +26,48 @@ body {
     color: #BFC0C0 !important;
 }
 
+.table td {
+    color: #BFC0C0;
+}
+
+label {
+    color: #BFC0C0;
+}
+
+p a {
+    color: #f44336!important;
+}
+
+td a {
+    color: #f44336 !important;
+}
+p a:hover {
+    color: #BFC0C0 !important;
+}
+
+td a:hover {
+    color: #BFC0C0 !important;
+}
+.red-button {
+    color: #BFC0C0 !important;
+    background-color: #f44336 !important;
+    border-color: #f44336 !important;
+}
+.red-button:hover .red-button:focus {
+    color: #f44336 !important;
+    background-color: #333 !important;
+    border-color: #f44336 !important;
+    box-shadow: 0 0 0 0.25rem rgb(191 192 192 / 25%);
+}
+
+.back-to-list {
+    color: #f44336;
+}
+
+.back-to-list:hover {
+    color: #BFC0C0;
+}
+
 @import url('https://fonts.googleapis.com/css?family=Raleway:300,400');
 
 .button {
@@ -50,11 +92,11 @@ body {
     cursor: pointer;
 }
 
-    #button-animation a {
-        position: relative;
-        transition: all .45s ease-Out;
-        text-decoration: none;
-    }
+#button-animation a {
+    position: relative;
+    transition: all .45s ease-Out;
+    text-decoration: none;
+}
 
 #translate {
     transform: rotate(50deg);

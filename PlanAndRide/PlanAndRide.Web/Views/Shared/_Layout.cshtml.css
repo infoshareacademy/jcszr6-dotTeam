@@ -90,10 +90,11 @@ button.accept-policy {
 
 .dropdown-menu {
     background-color: darkred;
+    border: solid black 1px!important;
 }
 
 .dropdown-item:hover {
-    background-color: black !important;
+    background-color: black!important;
     color: #BFC0C0!important;
 }
 
@@ -101,10 +102,20 @@ button.accept-policy {
     color: black;
 }
 
-    .dropdown-item a {
-        background-color: black !important;
-        color: #BFC0C0!important;
-    }
+.dropdown-item a {
+    background-color: black!important;
+    color: #BFC0C0!important;
+}
+
+.dropdown-item a:hover {
+    background-color: black!important;
+    color: #BFC0C0!important;
+}
+
+.dropdown-item:focus, .dropdown-item:hover {
+    background-color: black!important;
+    color: #BFC0C0!important;
+}
 
 .scroll-animation {
     position: relative;

@@ -120,7 +120,7 @@ namespace PlanAndRide.Web.Controllers
         public ActionResult LastThreeRoutes()
         {
             var model = new RouteViewsModel();
-            model.Routes = _routeRepository.GetAll().Select(r => new RouteViewModel(r));
+            model.Routes = _routeRepository.GetAll().Select(r => new RouteViewModel(r)).OrderByDescending(r => r.Id).Take(3);
             return View(model);
         }
     }
