@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PlanAndRide.BusinessLogic;
 using PlanAndRide.Web.Models;
-
-
+using System.Linq;
 
 namespace PlanAndRide.Web.Controllers
 {

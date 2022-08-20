@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PlanAndRide.BusinessLogic;
 using PlanAndRide.Web.Models;
 using System.Diagnostics;
 
@@ -7,15 +8,21 @@ namespace PlanAndRide.Web.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IRouteService _routeService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger,IRouteService routeService)
         {
             _logger = logger;
+            _routeService = routeService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var routes = await _routeService.GetAll();
+            var lastThreeRoutes = routes.OrderByDescending(r => r.Id).Take(3);
+            var model = new RoutesCollectionViewModel();
+            model.Routes = routes.Select(r => new RouteViewModel(r,_routeService));
+            return View(model);
         }
 
         public IActionResult Privacy()

@@ -1,0 +1,63 @@
+﻿@model RoutesCollectionViewModel
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <label asp-for="@Model.Routes.First().Name"></label>
+            </th>
+            <th>
+                <label asp-for="@Model.Routes.First().StartingPosition"></label>
+            </th>
+            <th>
+                <label asp-for="@Model.Routes.First().DestinationPosition"></label>
+            </th>
+            <th>
+                <label asp-for="@Model.Routes.First().AverageScore"></label>
+            </th>
+            <th>
+                <label asp-for="@Model.Routes.First().Description"></label>
+            </th>
+            <th>
+                <label asp-for="@Model.Routes.First().ShareRoute"></label>
+            </th>
+            <th>
+                <label asp-for="@Model.Routes.First().IsPrivate"></label>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Routes)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.StartingPosition
+                </td>
+                <td>
+                    @item.DestinationPosition
+                </td>
+                <td>
+                    @item.AverageScore
+                </td>
+                <td>
+                    @item.Description
+                </td>
+                <td>
+                    @item.ShareRoute
+                </td>
+                <td>
+                    @item.IsPrivate
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> 
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
