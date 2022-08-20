@@ -117,11 +117,12 @@ namespace PlanAndRide.Web.Controllers
         }
 
         // GET: RouteController/LastThreeRoutes
-        public ActionResult LastThreeRoutes()
-        {
-            var model = new RouteViewsModel();
-            model.Routes = _routeRepository.GetAll().Select(r => new RouteViewModel(r));
-            return View(model);
-        }
+        //public ActionResult LastThreeRoutes()
+        //{
+        //    var routes = _routeRepository.GetAll().OrderByDescending(r => r.Id).Take(3);
+        //    var model = new RouteViewsModel();
+        //    model.Routes = routes.Select(r => new RouteViewModel(r));
+        //    return PartialView("_RoutesList", model);
+        //}
     }
 }
