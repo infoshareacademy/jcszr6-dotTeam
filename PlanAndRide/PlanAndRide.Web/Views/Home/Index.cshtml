@@ -6,44 +6,32 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-8">
-            <div class="col-12 home-title-text">
-                <p class="last-tracks">Recently added routes</p>
-            </div>
-            <div class="col-12 last-three-tracks">
-                <partial name="_Partials/_LastRoutesList" model=@Model></partial>
-            </div>
+        <div class="col-12 home-title-text">
+            <p class="home-title-text">Recently added routes</p>
         </div>
-        <div class="col-4">
-            <div class="col-12 home-title-text">
-                <img class="map" src="https://zeorouteplanner.com/blog/wp-content/uploads/2021/01/route-management-with-zeo-route-planner.jpg" />
-            </div>
+        <div class="col-12 last-three-tracks">
+            <partial name="_Partials/_LastRoutesList" model=@Model></partial>
         </div>
     </div>
 </div>
 
 <div class="container-fluid">
-    <div class="row">
-        <div class="parallax col-12 p-0">
-            <div class="container make-friends-div"></div>
-            <div class="parallax-text">Create an account and join your friends rides or make new friends on the rides.</div>
+        <div class="row">
+            <div class="parallax col-12 p-0">
+                <div class="container-fluid make-friends-div">
+                </div>
+                <div class="container parallax-text">Create an account and join your friends rides or make new friends on the rides.</div>
+            </div>
         </div>
     </div>
-</div>
 
 <div class="container">
     <div class="row">
-        <div class="col-4">
             <div class="col-12 home-title-text">
-                <img class="map" src="https://zeorouteplanner.com/blog/wp-content/uploads/2021/01/route-management-with-zeo-route-planner.jpg" />
-            </div>
-        </div>
-        <div class="col-8">
-            <div class="col-12 home-title-text">
-                <p class="last-tracks">Nearby rides</p>
+                <p class="home-title-text nearby-rides">Nearby rides</p>
             </div>
             <div class="col-12 last-three-tracks">
-            </div>
+            <partial name="_Partials/_LastRoutesList" model=@Model></partial>
         </div>
     </div>
 </div>

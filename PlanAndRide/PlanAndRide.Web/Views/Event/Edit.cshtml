@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Edit";
 }
-
+<div class="container"> 
 <h1>Edit</h1>
 
 <h4>Event</h4>
@@ -42,7 +42,7 @@
                 </label>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary red-button" />
             </div>
         </form>
     </div>
@@ -55,3 +55,4 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+</div>

@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Reviews";
 }
-
+<div class="container"> 
 <h1>Route Reviews</h1>
 
 <partial name="_Partials/_RouteDetails" model="@Model" />
@@ -38,4 +38,5 @@
 <div>
     <a asp-action="Details" asp-route-id="@Model.Id">Back to details</a> |
     <a asp-action="Index">Routes list</a>
+</div>
 </div>

@@ -8,7 +8,7 @@
         privacyDisplay = "[Public]";
     }
 }
-
+<div class="container"> 
 <h4>Event details</h4>
 <h6>@privacyDisplay</h6>
 <div>
@@ -54,6 +54,7 @@
     </dl>
 </div>
 <div>
-    <a class="btn btn-outline-primary" asp-action="Edit" asp-route-id=@Model.Id>Edit</a>
-    <a class="btn btn-outline-secondary" asp-action="Index">Back to routes</a>
+    <a class="btn btn-outline-primary red-button" asp-action="Edit" asp-route-id=@Model.Id>Edit</a>
+    <a class="btn btn-outline-secondary grey-button" asp-action="Index">Back to routes</a>
+</div>
 </div>

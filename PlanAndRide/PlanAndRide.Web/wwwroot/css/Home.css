@@ -1,4 +1,4 @@
-﻿.body {
+﻿﻿.body {
     margin: 0;
     padding: 0;
 }
@@ -9,23 +9,42 @@
 
 .make-friends-div {
     background-color: black;
-    opacity: 50%;
-    position: absolute;
-    margin: 0 auto;
+    opacity: 80%;
     z-index: 1;
     height: 400px;
+    position: absolute;
+    width: 75%;
+    margin-left: 14%;
 }
 
 .parallax-text {
-    color: #BFC0C0!important;
+    color: #BFC0C0 !important;
     font-size: 40px;
+    font-weight: 400;
     z-index: 2;
     text-align: center;
     position: absolute;
     margin-top: 10%;
-    margin-left: 10%;
+    margin-left: 14%;
     font-family: concbv2;
     width: 75%;
+    opacity: 100%;
+}
+
+.home-title-text {
+    color: #BFC0C0 !important;
+    font-size: 40px;
+    font-weight: 400;
+    text-align: center;
+    position: absolute;
+    font-family: concbv2;
+    height: 120px !important;
+    margin-left: 200px;
+    margin-top: 10px;
+}
+
+.nearby-rides {
+    margin-left: 260px !important;
 }
 
 .map {
@@ -33,7 +52,7 @@
 }
 
 .row {
-    height:400px;
+    height: 400px;
 }
 
 .parallax {
@@ -59,4 +78,9 @@
 
 .contact {
     border-left: 1px solid black;
+}
+
+.last-three-tracks {
+    position: relative;
+    margin-top: 10%;
 }
