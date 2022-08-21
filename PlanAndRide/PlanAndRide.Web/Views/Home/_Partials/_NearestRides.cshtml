@@ -1,0 +1,46 @@
+﻿@model IEnumerable<EventViewModel>
+
+
+<table class="table" id="myTable">
+    <thead>
+        <tr>
+            <th>
+                <label asp-for="@Model.First().Name"></label>
+            </th>
+            <th>
+                <label>Start event</label>
+            </th>
+            <th>
+                <label>Route</label>
+            <th>
+                
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.Date
+                </td>
+                <td>
+                    @item.RouteName
+                </td>
+                <td>
+                    <a a class="btn btn-outline-info grey-button" asp-action="Details" asp-controller="Event" asp-route-id="@item.Id">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section scripts {
+    <script> 
+       $(document).ready( function () {
+    $('#myTable').DataTable();
+} );
+   </script>
+}
