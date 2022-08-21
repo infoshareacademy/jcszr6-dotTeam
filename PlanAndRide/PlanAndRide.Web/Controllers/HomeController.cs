@@ -19,9 +19,9 @@ namespace PlanAndRide.Web.Controllers
         public async Task<IActionResult> Index()
         {
             var routes = await _routeService.GetAll();
-            var lastThreeRoutes = routes.OrderByDescending(r => r.Id).Take(3);
+            var lastThreeRoutes = routes.OrderByDescending(r => r.Id).Take(3).ToList();
             var model = new RoutesCollectionViewModel();
-            model.Routes = routes.Select(r => new RouteViewModel(r,_routeService));
+            model.Routes = lastThreeRoutes.Select(r => new RouteViewModel(r,_routeService));
             return View(model);
         }
 
