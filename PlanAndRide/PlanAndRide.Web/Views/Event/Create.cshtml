@@ -8,7 +8,7 @@
 
 <h1>Create</h1>
 
-<h4>Ride</h4>
+<h4>Event</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -35,23 +35,18 @@
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="ShareRide" /> @Html.DisplayNameFor(model => model.ShareRide)
+                    <input class="form-check-input" asp-for="ShareRide" /> Share Ride
                 </label>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsPrivate" /> @Html.DisplayNameFor(model => model.IsPrivate)
+                    <input class="form-check-input" asp-for="IsPrivate" /> Is Private
                 </label>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
+            </div><div class="form-group">
+                <input style="display:inline" type="submit" value="Create" class="btn btn-primary" />
+                <a class="btn btn-secondary" asp-action="Index">Cancel</a></div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
