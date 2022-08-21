@@ -9,15 +9,15 @@
                 <label asp-for="@Model.Routes.First().Name"></label>
             </th>
             <th>
-                <label asp-for="@Model.Routes.First().StartingPosition"></label>
+                <label asp-for="@Model.Routes.First().StartingPosition">From</label>
             </th>
             <th>
-                <label asp-for="@Model.Routes.First().DestinationPosition"></label>
+                <label asp-for="@Model.Routes.First().DestinationPosition">To</label>
             </th>
-            <th>
+            @*<th>
                 <label asp-for="@Model.Routes.First().AverageScore"></label>
-            </th>
-            <th>
+            </th>*@
+@*            <th>
                 <label asp-for="@Model.Routes.First().Description"></label>
             </th>
             <th>
@@ -25,7 +25,7 @@
             </th>
             <th>
                 <label asp-for="@Model.Routes.First().IsPrivate"></label>
-            </th>
+            </th>*@
             <th></th>
         </tr>
     </thead>
@@ -37,12 +37,12 @@
                     @item.Name
                 </td>
                 <td>
-                    @item.StartingPosition
+                    @item.StartingCity
                 </td>
                 <td>
-                    @item.DestinationPosition
+                    @item.DestinationCity
                 </td>
-                <td>
+@*                <td>
                     @item.AverageScore
                 </td>
                 <td>
@@ -53,9 +53,9 @@
                 </td>
                 <td>
                     @item.IsPrivate
-                </td>
+                </td>*@
                 <td>
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> 
+                    <a asp-action="Details" asp-controller="Route" asp-route-id="@item.Id">...</a> 
                 </td>
             </tr>
         }
