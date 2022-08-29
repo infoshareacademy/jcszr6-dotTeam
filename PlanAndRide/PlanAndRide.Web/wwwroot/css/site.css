@@ -1,26 +1,165 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
+}
+
+.footer {
+    position: relative !important;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px;
 }
 
 body {
-  margin-bottom: 60px;
+    background-color: #333 !important;
+    color: #BFC0C0 !important;
 }
-.locationDescription {
-    border: none;
-    width: 100%;
-    resize: none;
+
+.table td {
+    color: #BFC0C0;
 }
-.locationDescription:focus {
-    outline: none;
+
+label {
+    color: #BFC0C0;
+}
+
+p a {
+    color: #f44336 !important;
+}
+
+td a {
+    color: #f44336 !important;
+}
+
+p a:hover {
+    color: #BFC0C0 !important;
+}
+
+td a:hover {
+    color: #BFC0C0 !important;
+}
+
+.red-button {
+    color: #BFC0C0!important ;
+    background-color: #f44336!important ;
+    border-color: #f44336!important ;
+}
+
+.red-button:hover  {
+    color: #f44336 !important;
+    background-color: #333 !important;
+    border-color: #f44336 !important;
+    box-shadow: 0 0 0 0.25rem rgb(191 192 192 / 25%)!important;
+}
+.grey-button {
+    color: #f44336 !important;
+    background-color: #333 !important;
+    border-color: #f44336 !important;
+}
+
+    .grey-button:hover {
+        color: #BFC0C0 !important;
+        background-color: #333 !important;
+        border-color: #BFC0C0 !important;
+        box-shadow: 0 0 0 0.25rem rgb(191 192 192 / 25%) !important;
+    }
+.dataTables_wrapper .dataTables_filter input {
+    color: #BFC0C0 !important;
+}
+
+
+.back-to-list {
+    color: #f44336;
+}
+
+    .back-to-list:hover {
+        color: #BFC0C0;
+    }
+
+@import url('https://fonts.googleapis.com/css?family=Raleway:300,400');
+
+.button {
+    display: inline-flex;
+    height: 40px;
+    width: 180px;
+    border: 2px solid #BFC0C0;
+    margin: 20px 0px 20px 0px;
+    color: #BFC0C0;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: .8em;
+    letter-spacing: 1.5px;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+#button-animation {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+    #button-animation a {
+        position: relative;
+        transition: all .45s ease-Out;
+        text-decoration: none;
+    }
+
+#translate {
+    transform: rotate(50deg);
+    width: 102%;
+    height: 285%;
+    left: -200px;
+    top: -30px;
+    background: #BFC0C0;
+    position: absolute;
+    transition: all .3s ease-Out;
+}
+.dataTables_wrapper .dataTables_length select {
+    color: #BFC0C0;
+}
+#button-animation:hover #translate {
+    left: 0;
+}
+option {
+    background-color: #BFC0C0;
+    color: #f44336;
+    font-weight: bold!important;
+}
+#button-animation:hover a {
+    color: #333;
+    text-decoration: none;
+}
+
+.submit-button {
+    font-size: 1.5em;
+    text-align: center;
+    color: #BFC0C0;
+    font-weight: 300;
+    letter-spacing: 1px;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.form-check-input:checked {
+    background-color: #f44336;
+    border-color: #f44336;
+}
+
+.form-check-input:focus {
+    border-color: #BFC0C0;
+    box-shadow: 0 0 0 0.25rem rgb(191 192 192 / 25%);
 }

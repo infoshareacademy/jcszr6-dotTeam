@@ -5,7 +5,7 @@
     var routes = Model.Routes;
 
 }
-
+<div class="container"> 
 <h1>Create</h1>
 
 <h4>Event</h4>
@@ -43,8 +43,8 @@
                     <input class="form-check-input" asp-for="IsPrivate" /> Is Private
                 </label>
             </div><div class="form-group">
-                <input style="display:inline" type="submit" value="Create" class="btn btn-primary" />
-                <a class="btn btn-secondary" asp-action="Index">Cancel</a></div>
+                <input style="display:inline" type="submit" value="Create" class="btn btn-primary red-button" />
+                <a class="btn btn-secondary grey-button" asp-action="Index">Cancel</a></div>
         </form>
     </div>
 </div>
@@ -52,3 +52,4 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+</div>
