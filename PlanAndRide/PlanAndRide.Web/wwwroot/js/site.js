@@ -9,9 +9,20 @@ let map;
 
 function mapService() {
     $("document").ready(function () {
+
+        originLatLng = {
+            lat: parseFloat(document.getElementById("StartingLatitude").value),
+            lng: parseFloat(document.getElementById("StartingLongitude").value)
+        }
+        destinationLatLng = {
+            lat: parseFloat(document.getElementById("DestinationLatitude").value),
+            lng: parseFloat(document.getElementById("DestinationLongitude").value)
+        }
+
         initMap();
         placesAutocomplete();
-        latLngToFormattedAddress();
+        codeLatLngToFormattedAddress(originLatLng, "StartingLocation");
+        codeLatLngToFormattedAddress(destinationLatLng, "DestinationLocation");
     });
 }
 
@@ -110,27 +121,12 @@ function placesAutocomplete() {
     });
 }
 
-function latLngToFormattedAddress() {
+function codeLatLngToFormattedAddress(latLng, idAddressEl) {
         const geocoder = new google.maps.Geocoder();
-        originLatLng = {
-            lat: parseFloat(document.getElementById("StartingLatitude").value),
-            lng: parseFloat(document.getElementById("StartingLongitude").value)
-        }
-        destinationLatLng = {
-            lat: parseFloat(document.getElementById("DestinationLatitude").value),
-            lng: parseFloat(document.getElementById("DestinationLongitude").value)
-        }
-        geocoder.geocode({ location: originLatLng }).then
+        geocoder.geocode({ location: latLng }).then
             ((response) => {
                 if (response.results[0]) {
-                    document.getElementById("StartingLocation").value = response.results[0].formatted_address;
-                }
-            }).catch((e) => console.log("Geocoder failed due to: " + e));
-
-        geocoder.geocode({ location: destinationLatLng }).then
-            ((response) => {
-                if (response.results[0]) {
-                    document.getElementById("DestinationLocation").value = response.results[0].formatted_address;
+                    document.getElementById(idAddressEl).value = response.results[0].formatted_address;
                 }
             }).catch((e) => console.log("Geocoder failed due to: " + e));
 }
