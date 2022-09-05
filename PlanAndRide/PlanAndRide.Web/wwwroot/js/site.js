@@ -26,6 +26,24 @@ function mapService() {
     });
 }
 
+function mapWithRouteDetails() {
+    $("document").ready(
+        () => {
+            originLatLng = {
+                lat: parseFloat(document.getElementById("StartingLatitude").value),
+                lng: parseFloat(document.getElementById("StartingLongitude").value)
+            }
+            destinationLatLng = {
+                lat: parseFloat(document.getElementById("DestinationLatitude").value),
+                lng: parseFloat(document.getElementById("DestinationLongitude").value)
+            }
+            initMap();
+            codeLatLngToFormattedAddress(originLatLng, "StartingLocation");
+            codeLatLngToFormattedAddress(destinationLatLng, "DestinationLocation");
+        }
+    );
+}
+
 function initMap() {
     originLatLng = new google.maps.LatLng(
         document.getElementById('StartingLatitude').value,
