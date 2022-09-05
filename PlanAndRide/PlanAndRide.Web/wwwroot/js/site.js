@@ -3,8 +3,49 @@
 
 // Write your JavaScript code.
 
-function PlacesAutocomplete() {
-    
+let originLatLng, destinationLatLng;
+let originMapMarker, destinationMapMarker;
+let map;
+
+function mapService() {
+    $("document").ready(function () {
+        initMap();
+        placesAutocomplete();
+        latLngToFormattedAddress();
+    });
+}
+
+function initMap() {
+    originLatLng = new google.maps.LatLng(
+        document.getElementById('StartingLatitude').value,
+        document.getElementById('StartingLongitude').value);
+
+    destinationLatLng = new google.maps.LatLng(
+        document.getElementById('DestinationLatitude').value,
+        document.getElementById('DestinationLongitude').value);
+
+    let bounds = new google.maps.LatLngBounds(originLatLng, destinationLatLng);
+    let myCenter = bounds.getCenter();
+    let mapOptions = { center: myCenter, zoom: 10, scrollwheel: false, draggable: true, mapTypeId: google.maps.MapTypeId.ROADMAP };
+    map = new google.maps.Map(document.getElementById("map"), mapOptions);
+    originMapMarker = new google.maps.Marker({ position: originLatLng });
+    destinationMapMarker = new google.maps.Marker({ position: destinationLatLng });
+    originMapMarker.setMap(map);
+    destinationMapMarker.setMap(map);
+    map.fitBounds(bounds);
+}
+
+function fitMapBounds(map, LatLngArr) {
+    if (LatLngArr.length == 0)
+        return;
+    let bounds = new google.maps.LatLngBounds();
+    LatLngArr.forEach(x => bounds.extend(x));
+    map.fitBounds(bounds);
+
+}
+
+function placesAutocomplete() {
+
     const GetTownOrCity = function (addcomp) {
         const Intersect = function (a, b) {
             return new Set(a.filter(v => ~b.indexOf(v)));
@@ -22,62 +63,84 @@ function PlacesAutocomplete() {
         return false;
     };
 
-    $("document").ready(function () {
-        const originInput = new google.maps.places.Autocomplete(document.getElementById('StartingLocation'));
-        google.maps.event.addListener(originInput, 'place_changed', function () {
-            const placeDetails = originInput.getPlace();
-            document.getElementById('StartingLocation').value = placeDetails.formatted_address;
-            document.getElementById('StartingLatitude').value = placeDetails.geometry.location.lat();
-            document.getElementById('StartingLongitude').value = placeDetails.geometry.location.lng();
-            let townOrCity = GetTownOrCity(placeDetails.address_components);
-            if (townOrCity)
-                document.getElementById("StartingCity").value = townOrCity.long_name;
-        });
+    const originInput = new google.maps.places.Autocomplete(document.getElementById('StartingLocation'));
+    google.maps.event.addListener(originInput, 'place_changed', function () {
+        const placeDetails = originInput.getPlace();
+        document.getElementById('StartingLocation').value = placeDetails.formatted_address;
+        document.getElementById('StartingLatitude').value = placeDetails.geometry.location.lat();
+        document.getElementById('StartingLongitude').value = placeDetails.geometry.location.lng();
 
-        const destinationInput = new google.maps.places.Autocomplete(document.getElementById('DestinationLocation'));
-        google.maps.event.addListener(destinationInput, 'place_changed', function () {
-            const placeDetails = destinationInput.getPlace();
-            document.getElementById('DestinationLocation').value = placeDetails.formatted_address;
-            document.getElementById('DestinationLatitude').value = placeDetails.geometry.location.lat();
-            document.getElementById('DestinationLongitude').value = placeDetails.geometry.location.lng();
-            let townOrCity = GetTownOrCity(placeDetails.address_components);
-            if (townOrCity)
-                document.getElementById("DestinationCity").value = townOrCity.long_name;
-        });
+        let townOrCity = GetTownOrCity(placeDetails.address_components);
+        if (townOrCity)
+            document.getElementById("StartingCity").value = townOrCity.long_name;
+
+        let newOriginLatLng = new google.maps.LatLng(
+            document.getElementById('StartingLatitude').value,
+            document.getElementById('StartingLongitude').value);
+
+        let currentDestinationLatLng = new google.maps.LatLng(
+            document.getElementById('DestinationLatitude').value,
+            document.getElementById('DestinationLongitude').value);
+
+        originMapMarker.setPosition(newOriginLatLng);
+        fitMapBounds(map, [newOriginLatLng, currentDestinationLatLng]);
+
+    });
+    const destinationInput = new google.maps.places.Autocomplete(document.getElementById('DestinationLocation'));
+    google.maps.event.addListener(destinationInput, 'place_changed', function () {
+        const placeDetails = destinationInput.getPlace();
+        document.getElementById('DestinationLocation').value = placeDetails.formatted_address;
+        document.getElementById('DestinationLatitude').value = placeDetails.geometry.location.lat();
+        document.getElementById('DestinationLongitude').value = placeDetails.geometry.location.lng();
+
+        let townOrCity = GetTownOrCity(placeDetails.address_components);
+        if (townOrCity)
+            document.getElementById("DestinationCity").value = townOrCity.long_name;
+
+        let currentOriginLatLng = new google.maps.LatLng(
+            document.getElementById('StartingLatitude').value,
+            document.getElementById('StartingLongitude').value);
+
+        let newDestinationLatLng = new google.maps.LatLng(
+            document.getElementById('DestinationLatitude').value,
+            document.getElementById('DestinationLongitude').value);
+
+        destinationMapMarker.setPosition(newDestinationLatLng);
+        fitMapBounds(map, [currentOriginLatLng, newDestinationLatLng]);
     });
 }
-function LatLngToFormattedAddress() {
-    $("document").ready(function () {
+
+function latLngToFormattedAddress() {
         const geocoder = new google.maps.Geocoder();
-        const StartingLatLng = {
+        originLatLng = {
             lat: parseFloat(document.getElementById("StartingLatitude").value),
             lng: parseFloat(document.getElementById("StartingLongitude").value)
         }
-        const DestinationLatLng = {
+        destinationLatLng = {
             lat: parseFloat(document.getElementById("DestinationLatitude").value),
             lng: parseFloat(document.getElementById("DestinationLongitude").value)
         }
-        geocoder.geocode({ location: StartingLatLng }).then
+        geocoder.geocode({ location: originLatLng }).then
             ((response) => {
                 if (response.results[0]) {
                     document.getElementById("StartingLocation").value = response.results[0].formatted_address;
                 }
             }).catch((e) => console.log("Geocoder failed due to: " + e));
 
-        geocoder.geocode({ location: DestinationLatLng }).then
+        geocoder.geocode({ location: destinationLatLng }).then
             ((response) => {
                 if (response.results[0]) {
                     document.getElementById("DestinationLocation").value = response.results[0].formatted_address;
                 }
             }).catch((e) => console.log("Geocoder failed due to: " + e));
-    });
 }
 
-(function ($) {
-     //your standard jquery code goes here with $ prefix
-    // best used inside a page with inline code, 
-    // or outside the document ready, enter code here
-})(jQuery);
+//(function ($) {
+//     //your standard jquery code goes here with $ prefix
+//    // best used inside a page with inline code, 
+//    // or outside the document ready, enter code here
+//})(jQuery);
+
 var TxtType = function (el, toRotate, period) {
     this.toRotate = toRotate;
     this.el = el;
