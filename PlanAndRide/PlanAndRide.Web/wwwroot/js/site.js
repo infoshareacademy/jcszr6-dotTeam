@@ -37,40 +37,55 @@ function mapWithRouteDetails() {
                 lat: parseFloat(document.getElementById("DestinationLatitude").value),
                 lng: parseFloat(document.getElementById("DestinationLongitude").value)
             }
-            initMap();
+            initMap(originLatLng,destinationLatLng);
             codeLatLngToFormattedAddress(originLatLng, "StartingLocation");
             codeLatLngToFormattedAddress(destinationLatLng, "DestinationLocation");
         }
     );
 }
 
-function initMap() {
-    originLatLng = new google.maps.LatLng(
-        document.getElementById('StartingLatitude').value,
-        document.getElementById('StartingLongitude').value);
+function mapWithEditRouteForm() {
+    $("document").ready(
+        () => {
+            originLatLng = {
+                lat: parseFloat(document.getElementById("StartingLatitude").value),
+                lng: parseFloat(document.getElementById("StartingLongitude").value)
+            }
+            destinationLatLng = {
+                lat: parseFloat(document.getElementById("DestinationLatitude").value),
+                lng: parseFloat(document.getElementById("DestinationLongitude").value)
+            }
 
-    destinationLatLng = new google.maps.LatLng(
-        document.getElementById('DestinationLatitude').value,
-        document.getElementById('DestinationLongitude').value);
+            initMap(originLatLng,destinationLatLng);
+            codeLatLngToFormattedAddress(originLatLng, "StartingLocation");
+            codeLatLngToFormattedAddress(destinationLatLng, "DestinationLocation");
+            placesAutocomplete();
+        }
+    );
+}
 
-    let bounds = new google.maps.LatLngBounds(originLatLng, destinationLatLng);
+function initMap(originLatLng, destLatLng) {
+
+    function fitMapBounds(map, LatLngArr) {
+        if (LatLngArr.length == 0)
+            return;
+        let bounds = new google.maps.LatLngBounds();
+        LatLngArr.forEach(x => bounds.extend(x));
+        map.fitBounds(bounds);
+
+    }
+
+    let bounds = new google.maps.LatLngBounds(originLatLng, destLatLng);
     let myCenter = bounds.getCenter();
     let mapOptions = { center: myCenter, zoom: 10, scrollwheel: false, draggable: true, mapTypeId: google.maps.MapTypeId.ROADMAP };
     map = new google.maps.Map(document.getElementById("map"), mapOptions);
     originMapMarker = new google.maps.Marker({ position: originLatLng });
-    destinationMapMarker = new google.maps.Marker({ position: destinationLatLng });
+    destinationMapMarker = new google.maps.Marker({ position: destLatLng });
     originMapMarker.setMap(map);
     destinationMapMarker.setMap(map);
     map.fitBounds(bounds);
-}
 
-function fitMapBounds(map, LatLngArr) {
-    if (LatLngArr.length == 0)
-        return;
-    let bounds = new google.maps.LatLngBounds();
-    LatLngArr.forEach(x => bounds.extend(x));
-    map.fitBounds(bounds);
-
+    
 }
 
 function placesAutocomplete() {
