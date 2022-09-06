@@ -56,24 +56,31 @@ function mapWithEditRouteForm() {
                 lng: parseFloat(document.getElementById("DestinationLongitude").value)
             }
 
+            originElementsId = {
+                addressElementId: "StartingLocation",
+                latElementId: "StartingLatitude",
+                lngElementId: "StartingLongitude",
+                cityElementId: "StartingCity"
+            }
+            destinationElementsId = {
+                addressElementId: "DestinationLocation",
+                latElementId: "DestinationLatitude",
+                lngElementId: "DestinationLongitude",
+                cityElementId: "DestinationCity"
+            }
+
+
             initMap(originLatLng,destinationLatLng);
             codeLatLngToFormattedAddress(originLatLng, "StartingLocation");
             codeLatLngToFormattedAddress(destinationLatLng, "DestinationLocation");
-            placesAutocomplete();
+            placesAutocomplete(originElementsId, destinationElementsId);
         }
     );
 }
 
 function initMap(originLatLng, destLatLng) {
 
-    function fitMapBounds(map, LatLngArr) {
-        if (LatLngArr.length == 0)
-            return;
-        let bounds = new google.maps.LatLngBounds();
-        LatLngArr.forEach(x => bounds.extend(x));
-        map.fitBounds(bounds);
-
-    }
+    
 
     let bounds = new google.maps.LatLngBounds(originLatLng, destLatLng);
     let myCenter = bounds.getCenter();
@@ -88,7 +95,16 @@ function initMap(originLatLng, destLatLng) {
     
 }
 
-function placesAutocomplete() {
+function fitMapBounds(map, LatLngArr) {
+    if (LatLngArr.length == 0)
+        return;
+    let bounds = new google.maps.LatLngBounds();
+    LatLngArr.forEach(x => bounds.extend(x));
+    map.fitBounds(bounds);
+
+}
+
+function placesAutocomplete(origin,destination) {
 
     const GetTownOrCity = function (addcomp) {
         const Intersect = function (a, b) {
@@ -107,53 +123,46 @@ function placesAutocomplete() {
         return false;
     };
 
-    const originInput = new google.maps.places.Autocomplete(document.getElementById('StartingLocation'));
-    google.maps.event.addListener(originInput, 'place_changed', function () {
-        const placeDetails = originInput.getPlace();
-        document.getElementById('StartingLocation').value = placeDetails.formatted_address;
-        document.getElementById('StartingLatitude').value = placeDetails.geometry.location.lat();
-        document.getElementById('StartingLongitude').value = placeDetails.geometry.location.lng();
+    const originAddressInput = new google.maps.places.Autocomplete(document.getElementById(origin.addressElementId));
+    google.maps.event.addListener(originAddressInput, 'place_changed', function () {
+        const placeDetails = originAddressInput.getPlace();
+        document.getElementById(origin.addressElementId).value = placeDetails.formatted_address;
+        document.getElementById(origin.latElementId).value = placeDetails.geometry.location.lat();
+        document.getElementById(origin.lngElementId).value = placeDetails.geometry.location.lng();
 
         let townOrCity = GetTownOrCity(placeDetails.address_components);
         if (townOrCity)
-            document.getElementById("StartingCity").value = townOrCity.long_name;
+            document.getElementById(origin.cityElementId).value = townOrCity.long_name;
 
-        let newOriginLatLng = new google.maps.LatLng(
-            document.getElementById('StartingLatitude').value,
-            document.getElementById('StartingLongitude').value);
-
-        let currentDestinationLatLng = new google.maps.LatLng(
-            document.getElementById('DestinationLatitude').value,
-            document.getElementById('DestinationLongitude').value);
-
-        originMapMarker.setPosition(newOriginLatLng);
-        fitMapBounds(map, [newOriginLatLng, currentDestinationLatLng]);
-
+        updateMarkersPosition();
     });
-    const destinationInput = new google.maps.places.Autocomplete(document.getElementById('DestinationLocation'));
-    google.maps.event.addListener(destinationInput, 'place_changed', function () {
-        const placeDetails = destinationInput.getPlace();
-        document.getElementById('DestinationLocation').value = placeDetails.formatted_address;
-        document.getElementById('DestinationLatitude').value = placeDetails.geometry.location.lat();
-        document.getElementById('DestinationLongitude').value = placeDetails.geometry.location.lng();
+    const destinationAddressInput = new google.maps.places.Autocomplete(document.getElementById(destination.addressElementId));
+    google.maps.event.addListener(destinationAddressInput, 'place_changed', function () {
+        const placeDetails = destinationAddressInput.getPlace();
+        document.getElementById(destination.addressElementId).value = placeDetails.formatted_address;
+        document.getElementById(destination.latElementId).value = placeDetails.geometry.location.lat();
+        document.getElementById(destination.lngElementId).value = placeDetails.geometry.location.lng();
 
         let townOrCity = GetTownOrCity(placeDetails.address_components);
         if (townOrCity)
-            document.getElementById("DestinationCity").value = townOrCity.long_name;
+            document.getElementById(destination.cityElementId).value = townOrCity.long_name;
 
-        let currentOriginLatLng = new google.maps.LatLng(
-            document.getElementById('StartingLatitude').value,
-            document.getElementById('StartingLongitude').value);
-
-        let newDestinationLatLng = new google.maps.LatLng(
-            document.getElementById('DestinationLatitude').value,
-            document.getElementById('DestinationLongitude').value);
-
-        destinationMapMarker.setPosition(newDestinationLatLng);
-        fitMapBounds(map, [currentOriginLatLng, newDestinationLatLng]);
+        updateMarkersPosition();
     });
 }
+function updateMarkersPosition() {
+    let newOriginLatLng = new google.maps.LatLng(
+        document.getElementById('StartingLatitude').value,
+        document.getElementById('StartingLongitude').value);
 
+    let newDestinationLatLng = new google.maps.LatLng(
+        document.getElementById('DestinationLatitude').value,
+        document.getElementById('DestinationLongitude').value);
+
+    originMapMarker.setPosition(newOriginLatLng);
+    destinationMapMarker.setPosition(newDestinationLatLng);
+    fitMapBounds(map, [newOriginLatLng, newDestinationLatLng]);
+}
 function codeLatLngToFormattedAddress(latLng, idAddressEl) {
         const geocoder = new google.maps.Geocoder();
         geocoder.geocode({ location: latLng }).then
