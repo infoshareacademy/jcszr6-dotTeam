@@ -4,35 +4,27 @@
     ViewData["Title"] = "Edit";
     var apiKey = ViewData["ApiKey"];
 }
-<div class="container"> 
-<h1>Edit</h1>
-
-<h4>Route</h4>
-<hr />
-<div class="row">
-    <div class="col-lg-6">
-        <form asp-action="Edit">
-            <partial name="_Partials/_CreateEditForm" model="@Model" />
-            <div class="form-group">
-                <input style="display:inline" type="submit" value="Save" class="btn btn-primary red-button" />
-                <a class="btn btn-secondary grey-button" asp-action="Index">Cancel</a>
-            </div>
-        </form>
+<div class="container">
+    <h1>Edit</h1>
+    <h4>Route</h4>
+    <hr />
+    <div class="row">
+        <div class="col-lg-6">
+            <form asp-action="Edit">
+                <partial name="_Partials/_CreateEditForm" model="@Model" />
+                <div class="form-group">
+                    <input style="display:inline" type="submit" value="Save" class="btn btn-primary red-button" />
+                    <a class="btn btn-secondary grey-button" asp-action="Index">Cancel</a>
+                </div>
+            </form>
+        </div>
+        <div id="map" class="col-lg-6 gx-5" style="float:left"></div>
     </div>
-    <div class="col-lg-6 gx-5" style="float:left">
-    <partial name="_Partials/_Map" model="@Model" />
 </div>
-</div>
-
 @section Scripts {
     @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
-}
-<script async type="text/javascript" src='https://maps.googleapis.com/maps/api/js?libraries=places&key=@apiKey'></script>
-<script type="text/javascript">
-    window.addEventListener('load', PlacesAutocomplete);
-    window.addEventListener('load',LatLngToFormattedAddress);
-</script>
+    }
+    <script async type="text/javascript" src='https://maps.googleapis.com/maps/api/js?key=@apiKey&libraries=places&callback=createMapInEditRouteMode'></script>
 }
 
-</div>

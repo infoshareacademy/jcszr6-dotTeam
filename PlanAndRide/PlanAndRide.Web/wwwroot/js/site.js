@@ -3,12 +3,13 @@
 
 // Write your JavaScript code.
 
-let originLatLng, destinationLatLng;
-let originMapMarker, destinationMapMarker;
-let map;
+var originLatLng, destinationLatLng;
+var originMapMarker, destinationMapMarker;
+var map;
+var directionsService, directionsRenderer;
 
 
-function mapWithRouteDetails() {
+function createMapWithRouteDetails() {
     $("document").ready(
         () => {
             originLatLng = {
@@ -19,6 +20,7 @@ function mapWithRouteDetails() {
                 lat: parseFloat(document.getElementById("DestinationLatitude").value),
                 lng: parseFloat(document.getElementById("DestinationLongitude").value)
             }
+
             initMap(originLatLng,destinationLatLng);
             codeLatLngToFormattedAddress(originLatLng, "StartingLocation");
             codeLatLngToFormattedAddress(destinationLatLng, "DestinationLocation");
@@ -26,7 +28,7 @@ function mapWithRouteDetails() {
     );
 }
 
-function mapWithEditRouteForm() {
+function createMapInEditRouteMode() {
     $("document").ready(
         () => {
             originLatLng = {
@@ -52,7 +54,8 @@ function mapWithEditRouteForm() {
             }
 
 
-            initMap(originLatLng,destinationLatLng);
+            initMap(originLatLng, destinationLatLng);
+            directionsRenderer.setOptions({draggable:true});
             codeLatLngToFormattedAddress(originLatLng, "StartingLocation");
             codeLatLngToFormattedAddress(destinationLatLng, "DestinationLocation");
             placesAutocomplete(originElementsId, destinationElementsId);
@@ -61,7 +64,7 @@ function mapWithEditRouteForm() {
 }
 
 
-function mapWithCreateRouteForm() {
+function createMapInCreateRouteMode() {
     $("document").ready(
         () => {
             originElementsId = {
@@ -79,6 +82,7 @@ function mapWithCreateRouteForm() {
 
 
             initEmptyMap();
+            directionsRenderer.setOptions({ draggable: true });
             placesAutocomplete(originElementsId, destinationElementsId);
         }
     );
@@ -86,32 +90,45 @@ function mapWithCreateRouteForm() {
 
 
 function initEmptyMap() {
-    let myCenter = { lat: 52.218467, lng: 19.134643 }; 
+    let myCenter = { lat: 52.218467, lng: 19.134643 }; //Poland middle point
     let mapOptions = { center: myCenter, zoom: 5, scrollwheel: false, draggable: true, mapTypeId: google.maps.MapTypeId.ROADMAP };
     map = new google.maps.Map(document.getElementById("map"), mapOptions);
+    directionsService = new google.maps.DirectionsService();
+    directionsRenderer = new google.maps.DirectionsRenderer();
+    directionsRenderer.setMap(map);
 }
 
 function initMap(originLatLng, destLatLng) {
 
     initEmptyMap();
-
-    let bounds;
-    if (originLatLng.lng <= destLatLng.lng) {
-        bounds = new google.maps.LatLngBounds(originLatLng, destLatLng);
-    } else {
-        bounds = new google.maps.LatLngBounds(destLatLng, originLatLng);
-    }
-        
     originMapMarker = new google.maps.Marker({ position: originLatLng });
     destinationMapMarker = new google.maps.Marker({ position: destLatLng });
     originMapMarker.setPosition(originLatLng);
     destinationMapMarker.setPosition(destLatLng);
     originMapMarker.setMap(map);
     destinationMapMarker.setMap(map);
-    map.fitBounds(bounds);
+    calcRouteAndFitMap(map, [originLatLng, destinationLatLng]);
 }
 
-function fitMapBounds(map, LatLngArr) {
+function calcRouteAndFitMap(map, LatLngArr) {
+
+    function calcRoute() {
+        let start = originMapMarker.getPosition();
+        let end = destinationMapMarker.getPosition();
+        let request = {
+            origin: start,
+            destination: end,
+            travelMode: 'DRIVING'
+        };
+        directionsService.route(request, function (result, status) {
+            if (status == 'OK') {
+                originMapMarker.setVisible(false);
+                destinationMapMarker.setVisible(false);
+                directionsRenderer.setDirections(result);
+            }
+        });
+    }
+
     if (LatLngArr.length == 0)
         return;
     if (LatLngArr.length == 1) {
@@ -122,6 +139,7 @@ function fitMapBounds(map, LatLngArr) {
     let bounds = new google.maps.LatLngBounds();
     LatLngArr.forEach(x => bounds.extend(x));
     map.fitBounds(bounds);
+    calcRoute();
 
 }
 
@@ -155,7 +173,7 @@ function placesAutocomplete(origin,destination) {
         if (townOrCity)
             document.getElementById(origin.cityElementId).value = townOrCity.long_name;
 
-        createOriginMarkerPosition();
+        setOriginMarkerPosition();
     });
     const destinationAddressInput = new google.maps.places.Autocomplete(document.getElementById(destination.addressElementId));
     google.maps.event.addListener(destinationAddressInput, 'place_changed', function () {
@@ -168,12 +186,12 @@ function placesAutocomplete(origin,destination) {
         if (townOrCity)
             document.getElementById(destination.cityElementId).value = townOrCity.long_name;
 
-        createDestinationMarkerPosition();
+        setDestinationMarkerPosition();
     });
 }
 
-function createOriginMarkerPosition() {
-    let markersPosition = [];
+function setOriginMarkerPosition() {
+    let markers = [];
     let newOriginLatLng, currentDestinationLatLng;
 
     newOriginLatLng = {
@@ -193,22 +211,22 @@ function createOriginMarkerPosition() {
         originMapMarker.setPosition(newOriginLatLng);
     }
 
-    markersPosition.push(newOriginLatLng);
+    markers.push(newOriginLatLng);
 
     if (destinationMapMarker != null) {
         currentDestinationLatLng = {
             lat: parseFloat(document.getElementById('DestinationLatitude').value),
             lng: parseFloat(document.getElementById('DestinationLongitude').value)
         };
-        markersPosition.push(currentDestinationLatLng);
+        markers.push(currentDestinationLatLng);
     }
 
-    markersPosition.sort((a, b) => a.lng - b.lng);
-    fitMapBounds(map, markersPosition);
+    markers.sort((a, b) => a.lng - b.lng);
+    calcRouteAndFitMap(map, markers);
 }
 
-function createDestinationMarkerPosition() {
-    let markersPosition = [];
+function setDestinationMarkerPosition() {
+    let markers = [];
     let currentOriginLatLng, newDestinationLatLng;
 
     newDestinationLatLng = {
@@ -228,18 +246,18 @@ function createDestinationMarkerPosition() {
         destinationMapMarker.setPosition(newDestinationLatLng);
     }
 
-    markersPosition.push(newDestinationLatLng);
+    markers.push(newDestinationLatLng);
 
     if (originMapMarker != null) {
         currentOriginLatLng = {
             lat: parseFloat(document.getElementById('StartingLatitude').value),
             lng: parseFloat(document.getElementById('StartingLongitude').value)
         };
-        markersPosition.push(currentOriginLatLng);
+        markers.push(currentOriginLatLng);
     }
 
-    markersPosition.sort((a, b) => a.lng - b.lng);
-    fitMapBounds(map, markersPosition);
+    markers.sort((a, b) => a.lng - b.lng);
+    calcRouteAndFitMap(map, markers);
 }
 
 function codeLatLngToFormattedAddress(latLng, idAddressEl) {
@@ -252,11 +270,16 @@ function codeLatLngToFormattedAddress(latLng, idAddressEl) {
             }).catch((e) => console.log("Geocoder failed due to: " + e));
 }
 
-//(function ($) {
-//     //your standard jquery code goes here with $ prefix
-//    // best used inside a page with inline code, 
-//    // or outside the document ready, enter code here
-//})(jQuery);
+
+
+
+
+
+(function ($) {
+     //your standard jquery code goes here with $ prefix
+    // best used inside a page with inline code, 
+    // or outside the document ready, enter code here
+})(jQuery);
 
 var TxtType = function (el, toRotate, period) {
     this.toRotate = toRotate;

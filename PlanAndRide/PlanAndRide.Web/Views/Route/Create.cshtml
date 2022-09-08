@@ -4,22 +4,23 @@
     ViewData["Title"] = "Create";
     var apiKey = ViewData["ApiKey"];
 }
-<div class="container"> 
-<h1>Create</h1>
+<div class="container">
+    <h1>Create</h1>
 
-<h4>Route</h4>
-<hr />
-<div class="row">
-    <div class="col-lg-8">
-        <form asp-action="Create">
-            <partial name="_Partials/_CreateEditForm" model="@Model" />
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary red-button" />
-                <a class="btn btn-secondary grey-button" asp-action="Index">Cancel</a>
-            </div>
-        </form>
+    <h4>Route</h4>
+    <hr />
+    <div class="row">
+        <div class="col-lg-6">
+            <form asp-action="Create">
+                <partial name="_Partials/_CreateEditForm" model="@Model" />
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary red-button" />
+                    <a class="btn btn-secondary grey-button" asp-action="Index">Cancel</a>
+                </div>
+            </form>
+        </div>
+        <div id="map" class="col-lg-6 gx-5" style="float:left"></div>
     </div>
-</div>
 </div>
 
 
@@ -28,9 +29,5 @@
     @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-
-<script async type="text/javascript" src='https://maps.googleapis.com/maps/api/js?libraries=places&key=@apiKey'></script>
-<script type="text/javascript">
-    window.addEventListener('load', PlacesAutocomplete);
-</script>
+    <script async type="text/javascript" src='https://maps.googleapis.com/maps/api/js?key=@apiKey&libraries=places&callback=createMapInCreateRouteMode'></script>  
 }
