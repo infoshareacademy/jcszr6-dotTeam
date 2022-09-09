@@ -38,6 +38,11 @@ namespace PlanAndRide.Web.Models
             get => Route.DestinationCity;
             set { Route.DestinationCity = value; }
         }
+        public string GoogleMapsEncodedLine
+        {
+            get => Route.GoogleMapsEncodedLine;
+            set => Route.GoogleMapsEncodedLine = value;
+        }
 
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public double AverageScore

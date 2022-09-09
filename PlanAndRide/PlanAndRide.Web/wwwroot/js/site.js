@@ -7,7 +7,7 @@ var originLatLng, destinationLatLng;
 var originMapMarker, destinationMapMarker;
 var map;
 var directionsService, directionsRenderer;
-
+var EncodedLineElement;
 
 function createMapWithRouteDetails() {
     $("document").ready(
@@ -59,6 +59,7 @@ function createMapInEditRouteMode() {
             codeLatLngToFormattedAddress(originLatLng, "StartingLocation");
             codeLatLngToFormattedAddress(destinationLatLng, "DestinationLocation");
             placesAutocomplete(originElementsId, destinationElementsId);
+            
         }
     );
 }
@@ -83,6 +84,7 @@ function createMapInCreateRouteMode() {
 
             initEmptyMap();
             directionsRenderer.setOptions({ draggable: true });
+            calcRouteAndFitMap(map, [originLatLng, destinationLatLng]);
             placesAutocomplete(originElementsId, destinationElementsId);
         }
     );
@@ -107,7 +109,7 @@ function initMap(originLatLng, destLatLng) {
     destinationMapMarker.setPosition(destLatLng);
     originMapMarker.setMap(map);
     destinationMapMarker.setMap(map);
-    calcRouteAndFitMap(map, [originLatLng, destinationLatLng]);
+    //calcRouteAndFitMap(map, [originLatLng, destinationLatLng]);
 }
 
 function calcRouteAndFitMap(map, LatLngArr) {
@@ -120,13 +122,21 @@ function calcRouteAndFitMap(map, LatLngArr) {
             destination: end,
             travelMode: 'DRIVING'
         };
+
+        EncodedLineElement = document.getElementById("EncodeLine");
+
         directionsService.route(request, function (result, status) {
             if (status == 'OK') {
                 originMapMarker.setVisible(false);
                 destinationMapMarker.setVisible(false);
+
+                EncodedLineElement.value = result.routes[0].overview_polyline;
                 directionsRenderer.setDirections(result);
             }
         });
+    }
+    function drawRouteLine() {
+
     }
 
     if (LatLngArr.length == 0)
