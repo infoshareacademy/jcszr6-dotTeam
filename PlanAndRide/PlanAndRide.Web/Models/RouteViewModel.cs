@@ -84,6 +84,7 @@ namespace PlanAndRide.Web.Models
                 },
                 StartingCity = route.StartingCity,
                 DestinationCity = route.DestinationCity,
+                GoogleMapsEncodedLine = route.GoogleMapsEncodedLine,
                 Description = route.Description,
                 ShareRoute = route.ShareRoute,
                 IsPrivate = route.IsPrivate,

@@ -24,6 +24,7 @@ function createMapWithRouteDetails() {
             initMap(originLatLng,destinationLatLng);
             codeLatLngToFormattedAddress(originLatLng, "StartingLocation");
             codeLatLngToFormattedAddress(destinationLatLng, "DestinationLocation");
+            drawRouteLine();
         }
     );
 }
@@ -84,8 +85,9 @@ function createMapInCreateRouteMode() {
 
             initEmptyMap();
             directionsRenderer.setOptions({ draggable: true });
-            calcRouteAndFitMap(map, [originLatLng, destinationLatLng]);
+            //calcRouteAndFitMap(map, [originLatLng, destinationLatLng]);
             placesAutocomplete(originElementsId, destinationElementsId);
+            
         }
     );
 }
@@ -123,21 +125,19 @@ function calcRouteAndFitMap(map, LatLngArr) {
             travelMode: 'DRIVING'
         };
 
-        EncodedLineElement = document.getElementById("EncodeLine");
+        EncodedLineElement = document.getElementById("EncodedLine");
 
         directionsService.route(request, function (result, status) {
             if (status == 'OK') {
                 originMapMarker.setVisible(false);
                 destinationMapMarker.setVisible(false);
-
-                EncodedLineElement.value = result.routes[0].overview_polyline;
                 directionsRenderer.setDirections(result);
+                EncodedLineElement.value = result.routes[0].overview_polyline;
+                
             }
         });
     }
-    function drawRouteLine() {
-
-    }
+    
 
     if (LatLngArr.length == 0)
         return;
@@ -152,7 +152,21 @@ function calcRouteAndFitMap(map, LatLngArr) {
     calcRoute();
 
 }
+function drawRouteLine() {
+    let encodedPath = document.getElementById("EncodedLine").value;
+    let decodedPath = google.maps.geometry.encoding.decodePath(encodedPath);
+    let lineOptions = {
+        path: decodedPath,
+        geodesic: true,
+        strokeColor: "#FF0000",
+        strokeOpacity: 1,
+        strokeWeight: 3,
+    }
 
+
+    let poly = new google.maps.Polyline(lineOptions);
+    poly.setMap(map);
+}
 function placesAutocomplete(origin,destination) {
 
     const GetTownOrCity = function (addcomp) {
