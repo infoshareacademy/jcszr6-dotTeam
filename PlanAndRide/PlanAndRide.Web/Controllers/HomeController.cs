@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PlanAndRide.BusinessLogic;
+using PlanAndRide.Database;
 using PlanAndRide.Web.Models;
 using System.Diagnostics;
 
@@ -11,7 +12,7 @@ namespace PlanAndRide.Web.Controllers
         private readonly IRouteService _routeService;
         private readonly IConfiguration _config;
 
-        public HomeController(ILogger<HomeController> logger,IRouteService routeService, IConfiguration config)
+        public HomeController(ILogger<HomeController> logger,IRouteService routeService, IConfiguration config, PlanAndRideContext contex)
         {
             _logger = logger;
             _routeService = routeService;

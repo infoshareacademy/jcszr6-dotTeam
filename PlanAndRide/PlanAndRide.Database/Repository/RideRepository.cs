@@ -30,7 +30,7 @@ namespace PlanAndRide.Database.Repository
         public async Task Add(Ride ride)
         {
             var userId = 1;
-            var user = _context.Users.FirstOrDefault(u => u.Id == userId);
+            var user = _context.DomainUsers.FirstOrDefault(u => u.Id == userId);
             if (user == null)
                 throw new ArgumentException("User not found at event create");
             ride.User = user;

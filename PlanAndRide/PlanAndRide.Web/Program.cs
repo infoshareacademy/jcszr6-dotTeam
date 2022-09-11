@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PlanAndRide.BusinessLogic;
 using PlanAndRide.Database;
@@ -16,6 +17,9 @@ builder.Services.AddScoped<IRouteService, RouteService>();
 builder.Services.AddScoped<IRideService, RideService>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
 
+builder.Services.AddDefaultIdentity<IdentityUser>()
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<PlanAndRideContext>();
 
 var connectionString = builder.Configuration.GetConnectionString("Database");
 builder.Services.AddDbContext<PlanAndRideContext>(

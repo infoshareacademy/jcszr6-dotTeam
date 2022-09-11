@@ -1,14 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using PlanAndRide.BusinessLogic;
 
 namespace PlanAndRide.Database
 {
-    public class PlanAndRideContext : DbContext
+    public class PlanAndRideContext : IdentityDbContext
     {
         public DbSet<Ride> Rides { get; set; }
         public DbSet<Route> Routes { get; set; }
         public DbSet<Review> Reviews { get; set; }
-        public DbSet<User> Users { get; set; }
+        public DbSet<User> DomainUsers { get; set; }
         public DbSet<GeoCoordinate> GeoCoordinates { get; set; }
         public PlanAndRideContext()
         {

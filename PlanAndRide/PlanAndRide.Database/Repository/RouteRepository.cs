@@ -48,7 +48,7 @@ namespace PlanAndRide.Database.Repository
             if (destinationPosition != null)
                 route.DestinationPosition = destinationPosition;
 
-            var user = _context.Users.FirstOrDefault(u => u.Id == route.User.Id);
+            var user = _context.DomainUsers.FirstOrDefault(u => u.Id == route.User.Id);
             if (user == null)
                 throw new ArgumentException("User not found at route create");
             route.User = user;
