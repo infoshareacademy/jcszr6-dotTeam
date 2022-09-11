@@ -50,7 +50,7 @@ namespace PlanAndRide.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(RouteViewModel model)
         {
-            model.Route.User = new User { Id = 1 };
+            model.Route.ApplicationUser = new ApplicationUser { Id = 1 };
 
             ModelState.Remove("Route.User");
             if (!ModelState.IsValid)

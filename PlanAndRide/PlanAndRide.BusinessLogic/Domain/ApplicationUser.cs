@@ -1,6 +1,8 @@
-﻿namespace PlanAndRide.BusinessLogic
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace PlanAndRide.BusinessLogic
 {
-    public class User
+    public class ApplicationUser : IdentityUser
     {
         public int Id { get; set; }
         public string Login { get; set; }
