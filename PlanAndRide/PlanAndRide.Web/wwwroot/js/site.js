@@ -4,7 +4,7 @@
 // Write your JavaScript code.
 
 var originLatLng, destinationLatLng;
-var originMapMarker, destinationMapMarker;
+var originMarker, destinationMarker;
 var map;
 var directionsService, directionsRenderer;
 var EncodedPathElement;
@@ -99,19 +99,31 @@ function initEmptyMap() {
 function initMap(originLatLng, destLatLng) {
 
     initEmptyMap();
-    originMapMarker = new google.maps.Marker({ position: originLatLng });
-    destinationMapMarker = new google.maps.Marker({ position: destLatLng });
-    originMapMarker.setPosition(originLatLng);
-    destinationMapMarker.setPosition(destLatLng);
-    originMapMarker.setMap(map);
-    destinationMapMarker.setMap(map);
+    //setOriginMarkerPosition(originLatLng);
+    //setDestinationMarkerPosition(destLatLng);
+    originMarker = new google.maps.Marker({
+        position: originLatLng,
+        map: map,
+        draggable: true
+    });
+    destinationMarker = new google.maps.Marker({
+        position: destLatLng,
+        map: map,
+        draggable: true
+    });
+    //originMarker.setPosition(originLatLng);
+    //destinationMarker.setPosition(destLatLng);
+    //originMarker.setMap(map);
+    //destinationMarker.setMap(map);
+    //originMarker.addListener("position_changed", originMarkerPositionChangeHandler);
+    //destinationMarker.addListener("position_changed", destinationMarkerPositionChangeHandler);
 }
 function calcRoute() {
-    if (originMapMarker == null || destinationMapMarker == null)
+    if (originMarker == null || destinationMarker == null)
         return;
 
-    let start = originMapMarker.getPosition();
-    let end = destinationMapMarker.getPosition();
+    let start = originMarker.getPosition();
+    let end = destinationMarker.getPosition();
     let waypoints = [];
     let encodedWaypoints = document.getElementById("EncodedWaypoints").value;
     if (encodedWaypoints != ""){
@@ -127,9 +139,10 @@ function calcRoute() {
 
     directionsService.route(request, function (result, status) {
         if (status == 'OK') {
-            originMapMarker.setVisible(false);
-            destinationMapMarker.setVisible(false);
+            originMarker.setVisible(false);
+            destinationMarker.setVisible(false);
             directionsRenderer.setDirections(result);
+            document.getElementById("EncodedPath").value = result.routes[0].overview_polyline;
             directionsRenderer.addListener("directions_changed", directionsChangeHandler);
             lastDirectionsResult = result;
         }
@@ -137,11 +150,23 @@ function calcRoute() {
             console.log("Direction service response status: " + status);
         }
     });
-    fitMap(map, [originMapMarker.getPosition(), destinationMapMarker.getPosition()]);
+    fitMap(map, [originMarker.getPosition(), destinationMarker.getPosition()]);
 }
 function directionsChangeHandler() {
     let result = directionsRenderer.getDirections();
     document.getElementById("EncodedPath").value = result.routes[0].overview_polyline;
+
+    let directionsStartPosition = result.routes[0].legs[0].start_location;
+    let legsCount = result.routes[0].legs.length;
+    let directionsEndPosition = result.routes[0].legs[legsCount - 1].end_location;
+    if (!directionsStartPosition.equals(originMarker.getPosition())) {
+        originMarker.addListener("position_changed", originMarkerPositionChangeHandler);
+        setOriginMarkerPosition(directionsStartPosition);
+    }
+    if (!directionsEndPosition.equals(destinationMarker.getPosition())) {
+        destinationMarker.addListener("position_changed", destinationMarkerPositionChangeHandler);
+        setDestinationMarkerPosition(directionsEndPosition);
+    }
 
     let waypoints = result.request.waypoints;
     if (waypoints.length > maxWaypointsNumber) {
@@ -200,43 +225,45 @@ function drawRouteLine() {
     }
     let polyline = new google.maps.Polyline(lineOptions);
     polyline.setMap(map);
-
+    originMarker.setDraggable(false);
+    destinationMarker.setDraggable(false);
     fitMap(map, decodedPath);
 }
 function drawDirectionsLine() {
     calcRoute();
 }
+function getTownOrCity (addressComponent) {
+    const Intersect = function (a, b) {
+        return new Set(a.filter(v => ~b.indexOf(v)));
+    };
+    if (typeof (addressComponent) == 'object' && addressComponent instanceof Array) {
+
+        let order = ['locality', 'administrative_area_level_2', 'administrative_area_level_1'];
+
+        for (let i = 0; i < addressComponent.length; i++) {
+            let obj = addressComponent[i];
+            let types = obj.types;
+            if (Intersect(order, types).size > 0) return obj;
+        }
+    }
+    return false;
+};
 function setPlacesListenerAndRenderMapOnChange(origin, destination) {
 
-    const GetTownOrCity = function (addcomp) {
-        const Intersect = function (a, b) {
-            return new Set(a.filter(v => ~b.indexOf(v)));
-        };
-        if (typeof (addcomp) == 'object' && addcomp instanceof Array) {
-
-            let order = ['locality', 'administrative_area_level_2', 'administrative_area_level_1'];
-
-            for (let i = 0; i < addcomp.length; i++) {
-                let obj = addcomp[i];
-                let types = obj.types;
-                if (Intersect(order, types).size > 0) return obj;
-            }
-        }
-        return false;
-    };
+    
 
     const originAddressInput = new google.maps.places.Autocomplete(document.getElementById(origin.addressElementId));
     google.maps.event.addListener(originAddressInput, 'place_changed', function () {
         const placeDetails = originAddressInput.getPlace();
         document.getElementById(origin.addressElementId).value = placeDetails.formatted_address;
-        document.getElementById(origin.latElementId).value = placeDetails.geometry.location.lat();
-        document.getElementById(origin.lngElementId).value = placeDetails.geometry.location.lng();
+        //document.getElementById(origin.latElementId).value = placeDetails.geometry.location.lat();
+        //document.getElementById(origin.lngElementId).value = placeDetails.geometry.location.lng();
 
-        let townOrCity = GetTownOrCity(placeDetails.address_components);
+        let townOrCity = getTownOrCity(placeDetails.address_components);
         if (townOrCity)
             document.getElementById(origin.cityElementId).value = townOrCity.long_name;
 
-        setOriginMarkerPosition();
+        setOriginMarkerPosition(placeDetails.geometry.location);
         calcRoute();
 
     });
@@ -244,82 +271,86 @@ function setPlacesListenerAndRenderMapOnChange(origin, destination) {
     google.maps.event.addListener(destinationAddressInput, 'place_changed', function () {
         const placeDetails = destinationAddressInput.getPlace();
         document.getElementById(destination.addressElementId).value = placeDetails.formatted_address;
-        document.getElementById(destination.latElementId).value = placeDetails.geometry.location.lat();
-        document.getElementById(destination.lngElementId).value = placeDetails.geometry.location.lng();
+        //document.getElementById(destination.latElementId).value = placeDetails.geometry.location.lat();
+        //document.getElementById(destination.lngElementId).value = placeDetails.geometry.location.lng();
 
-        let townOrCity = GetTownOrCity(placeDetails.address_components);
+        let townOrCity = getTownOrCity(placeDetails.address_components);
         if (townOrCity)
             document.getElementById(destination.cityElementId).value = townOrCity.long_name;
 
-        setDestinationMarkerPosition();
+        setDestinationMarkerPosition(placeDetails.geometry.location);
         calcRoute();
     });
 }
-function setOriginMarkerPosition() {
-    let markers = [];
-    let newOriginLatLng, currentDestinationLatLng;
+function setOriginMarkerPosition(latLng) {
 
-    newOriginLatLng = {
-        lat: parseFloat(document.getElementById('StartingLatitude').value),
-        lng: parseFloat(document.getElementById('StartingLongitude').value)
-    };
 
-    if (originMapMarker == null) {
-        originMapMarker = new google.maps.Marker(
+    if (originMarker == null) {
+        originMarker = new google.maps.Marker(
             {
-                position: newOriginLatLng,
+                //position: latLng,
                 title: "START",
+                draggable: true
             });
-        originMapMarker.setMap(map);
+        originMarker.setMap(map);
+        originMarker.addListener("drag_end", originMarkerPositionChangeHandler);
+        originMarker.setPosition(latLng);
     }
     else {
-        originMapMarker.setPosition(newOriginLatLng);
+        //originMarker.removeListener("position_changed", originMarkerPositionChangeHandler);
+
+        originMarker.setPosition(latLng);
+        
     }
-
-    markers.push(newOriginLatLng);
-
-    if (destinationMapMarker != null) {
-        currentDestinationLatLng = {
-            lat: parseFloat(document.getElementById('DestinationLatitude').value),
-            lng: parseFloat(document.getElementById('DestinationLongitude').value)
-        };
-        markers.push(currentDestinationLatLng);
-    }
-
-    fitMap(map, markers);
 }
-function setDestinationMarkerPosition() {
-    let markers = [];
-    let currentOriginLatLng, newDestinationLatLng;
+function originMarkerPositionChangeHandler() {
+    let markersLatLng = [];
+    let newOriginLatLng = originMarker.getPosition();
+    document.getElementById('StartingLatitude').value = newOriginLatLng.lat();
+    document.getElementById('StartingLongitude').value = newOriginLatLng.lng();
+    codeLatLngToFormattedAddress(newOriginLatLng, 'StartingLocation');
+    codeLatLngToCityOrTown(newOriginLatLng, 'StartingCity');
+    markersLatLng.push(newOriginLatLng);
 
-    newDestinationLatLng = {
-        lat: parseFloat(document.getElementById('DestinationLatitude').value),
-        lng: parseFloat(document.getElementById('DestinationLongitude').value)
-    };
+    if (destinationMarker != null) {
+        markersLatLng.push(destinationMarker.getPosition());
+    }
 
-    if (destinationMapMarker == null) {
-        destinationMapMarker = new google.maps.Marker(
+    fitMap(map, markersLatLng);
+}
+function setDestinationMarkerPosition(latLng) {
+    if (destinationMarker == null) {
+        destinationMarker = new google.maps.Marker(
             {
-                position: newDestinationLatLng,
+                //position: latLng,
                 title: "END",
+                draggable: true
             });
-        destinationMapMarker.setMap(map);
+        destinationMarker.setMap(map);
+        destinationMarker.addListener("drag_end", destinationMarkerPositionChangeHandler);
+        destinationMarker.setPosition(latLng);
     }
     else {
-        destinationMapMarker.setPosition(newDestinationLatLng);
+        //destinationMarker.removeListener("position_changed", destinationMarkerPositionChangeHandler);
+        destinationMarker.setPosition(latLng);
+        
+    }
+}
+function destinationMarkerPositionChangeHandler() {
+    let markersLatLng = [];
+    let newDestinationLatLng = destinationMarker.getPosition();
+
+    document.getElementById('DestinationLatitude').value = newDestinationLatLng.lat();
+    document.getElementById('DestinationLongitude').value = newDestinationLatLng.lng();
+    codeLatLngToFormattedAddress(newDestinationLatLng, 'DestinationLocation');
+    codeLatLngToCityOrTown(newDestinationLatLng, 'DestinationCity');
+    markersLatLng.push(newDestinationLatLng);
+
+    if (originMarker != null) {
+        markersLatLng.push(originMarker.getPosition());
     }
 
-    markers.push(newDestinationLatLng);
-
-    if (originMapMarker != null) {
-        currentOriginLatLng = {
-            lat: parseFloat(document.getElementById('StartingLatitude').value),
-            lng: parseFloat(document.getElementById('StartingLongitude').value)
-        };
-        markers.push(currentOriginLatLng);
-    }
-
-    fitMap(map, markers);
+    fitMap(map, markersLatLng);
 }
 function codeLatLngToFormattedAddress(latLng, idAddressEl) {
     const geocoder = new google.maps.Geocoder();
@@ -327,6 +358,18 @@ function codeLatLngToFormattedAddress(latLng, idAddressEl) {
         ((response) => {
             if (response.results[0]) {
                 document.getElementById(idAddressEl).value = response.results[0].formatted_address;
+            }
+        }).catch((e) => console.log("Geocoder failed due to: " + e));
+}
+function codeLatLngToCityOrTown(latLng, idCityOrTownEl) {
+    const geocoder = new google.maps.Geocoder();
+    geocoder.geocode({ location: latLng }).then
+        ((response) => {
+            if (response.results[0]) {
+                let townOrCity = getTownOrCity(response.results[0].address_components);
+                if (townOrCity) {
+                    document.getElementById(idCityOrTownEl).value = townOrCity.long_name;
+                }
             }
         }).catch((e) => console.log("Geocoder failed due to: " + e));
 }
