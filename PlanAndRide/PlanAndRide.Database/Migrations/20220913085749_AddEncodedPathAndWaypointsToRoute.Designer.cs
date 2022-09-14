@@ -12,8 +12,8 @@ using PlanAndRide.Database;
 namespace PlanAndRide.Database.Migrations
 {
     [DbContext(typeof(PlanAndRideContext))]
-    [Migration("20220909185455_AddGoogleMapsEncodedLineToRoute")]
-    partial class AddGoogleMapsEncodedLineToRoute
+    [Migration("20220913085749_AddEncodedPathAndWaypointsToRoute")]
+    partial class AddEncodedPathAndWaypointsToRoute
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -137,7 +137,10 @@ namespace PlanAndRide.Database.Migrations
                     b.Property<int?>("DestinationPositionId")
                         .HasColumnType("int");
 
-                    b.Property<string>("GoogleMapsEncodedLine")
+                    b.Property<string>("EncodedGoogleMapsPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EncodedGoogleMapsWaypoints")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsPrivate")

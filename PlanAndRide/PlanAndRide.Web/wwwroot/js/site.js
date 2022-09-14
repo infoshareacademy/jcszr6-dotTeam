@@ -7,7 +7,9 @@ var originLatLng, destinationLatLng;
 var originMapMarker, destinationMapMarker;
 var map;
 var directionsService, directionsRenderer;
-var EncodedLineElement;
+var EncodedPathElement;
+var maxWaypointsNumber = 10;
+var lastDirectionsResult;
 
 function createMapWithRouteDetails() {
     $("document").ready(
@@ -21,14 +23,13 @@ function createMapWithRouteDetails() {
                 lng: parseFloat(document.getElementById("DestinationLongitude").value)
             }
 
-            initMap(originLatLng,destinationLatLng);
+            initMap(originLatLng, destinationLatLng);
             codeLatLngToFormattedAddress(originLatLng, "StartingLocation");
             codeLatLngToFormattedAddress(destinationLatLng, "DestinationLocation");
             drawRouteLine();
         }
     );
 }
-
 function createMapInEditRouteMode() {
     $("document").ready(
         () => {
@@ -56,16 +57,14 @@ function createMapInEditRouteMode() {
 
 
             initMap(originLatLng, destinationLatLng);
-            directionsRenderer.setOptions({draggable:true});
+            directionsRenderer.setOptions({ draggable: true });
             codeLatLngToFormattedAddress(originLatLng, "StartingLocation");
             codeLatLngToFormattedAddress(destinationLatLng, "DestinationLocation");
-            placesAutocomplete(originElementsId, destinationElementsId);
-            
+            setPlacesListenerAndRenderMapOnChange(originElementsId, destinationElementsId);
+            drawDirectionsLine();
         }
     );
 }
-
-
 function createMapInCreateRouteMode() {
     $("document").ready(
         () => {
@@ -85,14 +84,10 @@ function createMapInCreateRouteMode() {
 
             initEmptyMap();
             directionsRenderer.setOptions({ draggable: true });
-            //calcRouteAndFitMap(map, [originLatLng, destinationLatLng]);
-            placesAutocomplete(originElementsId, destinationElementsId);
-            
+            setPlacesListenerAndRenderMapOnChange(originElementsId, destinationElementsId);
         }
     );
 }
-
-
 function initEmptyMap() {
     let myCenter = { lat: 52.218467, lng: 19.134643 }; //Poland middle point
     let mapOptions = { center: myCenter, zoom: 5, scrollwheel: false, draggable: true, mapTypeId: google.maps.MapTypeId.ROADMAP };
@@ -101,7 +96,6 @@ function initEmptyMap() {
     directionsRenderer = new google.maps.DirectionsRenderer();
     directionsRenderer.setMap(map);
 }
-
 function initMap(originLatLng, destLatLng) {
 
     initEmptyMap();
@@ -111,50 +105,92 @@ function initMap(originLatLng, destLatLng) {
     destinationMapMarker.setPosition(destLatLng);
     originMapMarker.setMap(map);
     destinationMapMarker.setMap(map);
-    //calcRouteAndFitMap(map, [originLatLng, destinationLatLng]);
 }
-
-function calcRouteAndFitMap(map, LatLngArr) {
-
-    function calcRoute() {
-        let start = originMapMarker.getPosition();
-        let end = destinationMapMarker.getPosition();
-        let request = {
-            origin: start,
-            destination: end,
-            travelMode: 'DRIVING'
-        };
-
-        EncodedLineElement = document.getElementById("EncodedLine");
-
-        directionsService.route(request, function (result, status) {
-            if (status == 'OK') {
-                originMapMarker.setVisible(false);
-                destinationMapMarker.setVisible(false);
-                directionsRenderer.setDirections(result);
-                EncodedLineElement.value = result.routes[0].overview_polyline;
-                
-            }
-        });
-    }
-    
-
-    if (LatLngArr.length == 0)
+function calcRoute() {
+    if (originMapMarker == null || destinationMapMarker == null)
         return;
-    if (LatLngArr.length == 1) {
-        map.setCenter(LatLngArr[0]);
+
+    let start = originMapMarker.getPosition();
+    let end = destinationMapMarker.getPosition();
+    let waypoints = [];
+    let encodedWaypoints = document.getElementById("EncodedWaypoints").value;
+    if (encodedWaypoints != ""){
+        waypoints = decodeWaypoints(encodedWaypoints);
+    }
+
+    let request = {
+        origin: start,
+        destination: end,
+        travelMode: 'DRIVING',
+        waypoints: waypoints
+    };
+
+    directionsService.route(request, function (result, status) {
+        if (status == 'OK') {
+            originMapMarker.setVisible(false);
+            destinationMapMarker.setVisible(false);
+            directionsRenderer.setDirections(result);
+            directionsRenderer.addListener("directions_changed", directionsChangeHandler);
+            lastDirectionsResult = result;
+        }
+        else {
+            console.log("Direction service response status: " + status);
+        }
+    });
+    fitMap(map, [originMapMarker.getPosition(), destinationMapMarker.getPosition()]);
+}
+function directionsChangeHandler() {
+    let result = directionsRenderer.getDirections();
+    document.getElementById("EncodedPath").value = result.routes[0].overview_polyline;
+
+    let waypoints = result.request.waypoints;
+    if (waypoints.length > maxWaypointsNumber) {
+        alert("You can add up to " + maxWaypointsNumber + " waypoints.");
+        directionsRenderer.setDirections(lastDirectionsResult);
+        return;
+    }
+    lastDirectionsResult = result;
+    let encodedWaypoints = encodeWaypoints(waypoints);
+    document.getElementById("EncodedWaypoints").value = encodedWaypoints;
+}
+function encodeWaypoints(directionsWaypointArr) {
+    let latLngArr = directionsWaypointArr.map(x => x.location);
+    return google.maps.geometry.encoding.encodePath(latLngArr);
+}
+function decodeWaypoints(encodedWaypoints) {
+    let decodedLatLng = google.maps.geometry.encoding.decodePath(encodedWaypoints);
+    let waypoints = decodedLatLng.map(x => {
+        return {
+            location: x,
+            stopover: false
+        };
+        
+    });
+    return waypoints;
+
+}
+function decodeRoutePolyline() {
+    let encodedPath = document.getElementById("EncodedPath").value;
+    if (encodedPath == "")
+        return [];
+
+    return google.maps.geometry.encoding.decodePath(encodedPath);
+}
+function fitMap(map, boundsArr) {
+    if (boundsArr.length == 0)
+        return;
+    if (boundsArr.length == 1) {
+        map.setCenter(boundsArr[0]);
         map.setZoom(10);
         return;
     }
     let bounds = new google.maps.LatLngBounds();
-    LatLngArr.forEach(x => bounds.extend(x));
+    boundsArr.sort((a, b) => a.lng - b.lng);
+    boundsArr.forEach(x => bounds.extend(x));
     map.fitBounds(bounds);
-    calcRoute();
-
 }
 function drawRouteLine() {
-    let encodedPath = document.getElementById("EncodedLine").value;
-    let decodedPath = google.maps.geometry.encoding.decodePath(encodedPath);
+    let decodedPath = decodeRoutePolyline();
     let lineOptions = {
         path: decodedPath,
         geodesic: true,
@@ -162,12 +198,15 @@ function drawRouteLine() {
         strokeOpacity: 1,
         strokeWeight: 3,
     }
+    let polyline = new google.maps.Polyline(lineOptions);
+    polyline.setMap(map);
 
-
-    let poly = new google.maps.Polyline(lineOptions);
-    poly.setMap(map);
+    fitMap(map, decodedPath);
 }
-function placesAutocomplete(origin,destination) {
+function drawDirectionsLine() {
+    calcRoute();
+}
+function setPlacesListenerAndRenderMapOnChange(origin, destination) {
 
     const GetTownOrCity = function (addcomp) {
         const Intersect = function (a, b) {
@@ -198,6 +237,8 @@ function placesAutocomplete(origin,destination) {
             document.getElementById(origin.cityElementId).value = townOrCity.long_name;
 
         setOriginMarkerPosition();
+        calcRoute();
+
     });
     const destinationAddressInput = new google.maps.places.Autocomplete(document.getElementById(destination.addressElementId));
     google.maps.event.addListener(destinationAddressInput, 'place_changed', function () {
@@ -211,9 +252,9 @@ function placesAutocomplete(origin,destination) {
             document.getElementById(destination.cityElementId).value = townOrCity.long_name;
 
         setDestinationMarkerPosition();
+        calcRoute();
     });
 }
-
 function setOriginMarkerPosition() {
     let markers = [];
     let newOriginLatLng, currentDestinationLatLng;
@@ -245,10 +286,8 @@ function setOriginMarkerPosition() {
         markers.push(currentDestinationLatLng);
     }
 
-    markers.sort((a, b) => a.lng - b.lng);
-    calcRouteAndFitMap(map, markers);
+    fitMap(map, markers);
 }
-
 function setDestinationMarkerPosition() {
     let markers = [];
     let currentOriginLatLng, newDestinationLatLng;
@@ -280,27 +319,20 @@ function setDestinationMarkerPosition() {
         markers.push(currentOriginLatLng);
     }
 
-    markers.sort((a, b) => a.lng - b.lng);
-    calcRouteAndFitMap(map, markers);
+    fitMap(map, markers);
 }
-
 function codeLatLngToFormattedAddress(latLng, idAddressEl) {
-        const geocoder = new google.maps.Geocoder();
-        geocoder.geocode({ location: latLng }).then
-            ((response) => {
-                if (response.results[0]) {
-                    document.getElementById(idAddressEl).value = response.results[0].formatted_address;
-                }
-            }).catch((e) => console.log("Geocoder failed due to: " + e));
+    const geocoder = new google.maps.Geocoder();
+    geocoder.geocode({ location: latLng }).then
+        ((response) => {
+            if (response.results[0]) {
+                document.getElementById(idAddressEl).value = response.results[0].formatted_address;
+            }
+        }).catch((e) => console.log("Geocoder failed due to: " + e));
 }
-
-
-
-
-
 
 (function ($) {
-     //your standard jquery code goes here with $ prefix
+    //your standard jquery code goes here with $ prefix
     // best used inside a page with inline code, 
     // or outside the document ready, enter code here
 })(jQuery);

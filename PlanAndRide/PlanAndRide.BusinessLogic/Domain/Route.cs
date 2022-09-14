@@ -9,7 +9,8 @@ namespace PlanAndRide.BusinessLogic
         public string Name { get; set; }
         public virtual GeoCoordinate? StartingPosition { get; set; }
         public virtual GeoCoordinate? DestinationPosition { get; set; }
-        public string? GoogleMapsEncodedLine { get; set; }
+        public string? EncodedGoogleMapsPath { get; set; }
+        public string? EncodedGoogleMapsWaypoints { get; set; }
         public string? StartingCity { get; set; }
         public string? DestinationCity { get; set; }
         public string? Description { get; set; }

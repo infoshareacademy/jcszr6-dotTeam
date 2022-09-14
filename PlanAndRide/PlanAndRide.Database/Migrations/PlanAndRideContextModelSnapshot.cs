@@ -135,7 +135,10 @@ namespace PlanAndRide.Database.Migrations
                     b.Property<int?>("DestinationPositionId")
                         .HasColumnType("int");
 
-                    b.Property<string>("GoogleMapsEncodedLine")
+                    b.Property<string>("EncodedGoogleMapsPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EncodedGoogleMapsWaypoints")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsPrivate")

@@ -4,12 +4,18 @@
 
 namespace PlanAndRide.Database.Migrations
 {
-    public partial class AddGoogleMapsEncodedLineToRoute : Migration
+    public partial class AddEncodedPathAndWaypointsToRoute : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "GoogleMapsEncodedLine",
+                name: "EncodedGoogleMapsPath",
+                table: "Routes",
+                type: "nvarchar(max)",
+                nullable: true);
+
+            migrationBuilder.AddColumn<string>(
+                name: "EncodedGoogleMapsWaypoints",
                 table: "Routes",
                 type: "nvarchar(max)",
                 nullable: true);
@@ -18,7 +24,11 @@ namespace PlanAndRide.Database.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "GoogleMapsEncodedLine",
+                name: "EncodedGoogleMapsPath",
+                table: "Routes");
+
+            migrationBuilder.DropColumn(
+                name: "EncodedGoogleMapsWaypoints",
                 table: "Routes");
         }
     }

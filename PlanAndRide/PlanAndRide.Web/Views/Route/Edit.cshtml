@@ -25,6 +25,6 @@
     @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    <script async type="text/javascript" src='https://maps.googleapis.com/maps/api/js?key=@apiKey&libraries=places&callback=createMapInEditRouteMode'></script>
+    <script async type="text/javascript" src='https://maps.googleapis.com/maps/api/js?key=@apiKey&libraries=places,geometry&callback=createMapInEditRouteMode'></script>
 }
 
