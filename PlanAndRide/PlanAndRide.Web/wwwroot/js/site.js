@@ -6,13 +6,24 @@
 var originLatLng, destinationLatLng;
 var originMarker, destinationMarker;
 var map;
+var defaultMapOptions = {
+    center: {
+        lat: 52.218467,
+        lng: 19.134643
+    }, //Poland midlle point
+    zoom: 5,
+    scrollwheel: false,
+    draggable: true,
+    mapTypeId: 'roadmap'
+};
+var defaultOriginMarkerLabel = { text: 'A', color: 'white' };
+var defaultDestinationMarkerLabel = { text: 'B', color: 'white' };
 var directionsService, directionsRenderer;
 var EncodedPathElement;
 var maxWaypointsNumber = 10;
 var lastDirectionsResult;
-
-function createMapWithRouteDetails() {
-    $("document").ready(
+function routeDetails() {
+    $('document').ready(
         () => {
             originLatLng = {
                 lat: parseFloat(document.getElementById("StartingLatitude").value),
@@ -22,16 +33,66 @@ function createMapWithRouteDetails() {
                 lat: parseFloat(document.getElementById("DestinationLatitude").value),
                 lng: parseFloat(document.getElementById("DestinationLongitude").value)
             }
-
-            initMap(originLatLng, destinationLatLng);
-            codeLatLngToFormattedAddress(originLatLng, "StartingLocation");
-            codeLatLngToFormattedAddress(destinationLatLng, "DestinationLocation");
+            map = map = new google.maps.Map(document.getElementById("map"), defaultMapOptions);
+            originMarker = new google.maps.Marker({
+                position: originLatLng,
+                map: map,
+                draggable: false,
+                label: defaultOriginMarkerLabel
+            });
+            destinationMarker = new google.maps.Marker({
+                position: destinationLatLng,
+                map: map,
+                draggable: false,
+                label: defaultDestinationMarkerLabel
+            });
+            setFormattedAddressFromLatLng(originLatLng, "StartingLocation");
+            setFormattedAddressFromLatLng(destinationLatLng, "DestinationLocation");
             drawRouteLine();
         }
     );
 }
-function createMapInEditRouteMode() {
-    $("document").ready(
+function createRoute() {
+    $('document').ready(
+        () => {
+            originElementsId = {
+                addressElementId: "StartingLocation",
+                latElementId: "StartingLatitude",
+                lngElementId: "StartingLongitude",
+                cityElementId: "StartingCity"
+            }
+            destinationElementsId = {
+                addressElementId: "DestinationLocation",
+                latElementId: "DestinationLatitude",
+                lngElementId: "DestinationLongitude",
+                cityElementId: "DestinationCity"
+            }
+            map = map = map = new google.maps.Map(document.getElementById("map"), defaultMapOptions);
+            directionsService = new google.maps.DirectionsService();
+            directionsRenderer = new google.maps.DirectionsRenderer({
+                map: map,
+                draggable: true
+            });
+            originMarker = new google.maps.Marker({
+                map: null,
+                draggable: true,
+                visible: true,
+                label: defaultOriginMarkerLabel
+            });
+            destinationMarker = new google.maps.Marker({
+                map: null,
+                draggable: true,
+                visible: true,
+                label: defaultDestinationMarkerLabel
+            });
+            originMarker.addListener("dragend", originMarkerPositionChangeHandler);
+            destinationMarker.addListener("dragend", destinationMarkerPositionChangeHandler);
+            setPlacesListener(originElementsId, destinationElementsId);
+        }
+    );
+}
+function editRoute() {
+    $('document').ready(
         () => {
             originLatLng = {
                 lat: parseFloat(document.getElementById("StartingLatitude").value),
@@ -54,79 +115,44 @@ function createMapInEditRouteMode() {
                 lngElementId: "DestinationLongitude",
                 cityElementId: "DestinationCity"
             }
-
-
-            initMap(originLatLng, destinationLatLng);
-            directionsRenderer.setOptions({ draggable: true });
-            codeLatLngToFormattedAddress(originLatLng, "StartingLocation");
-            codeLatLngToFormattedAddress(destinationLatLng, "DestinationLocation");
-            setPlacesListenerAndRenderMapOnChange(originElementsId, destinationElementsId);
+            setFormattedAddressFromLatLng(originLatLng, "StartingLocation");
+            setFormattedAddressFromLatLng(destinationLatLng, "DestinationLocation");
+            map = map = map = new google.maps.Map(document.getElementById("map"), defaultMapOptions);
+            directionsService = new google.maps.DirectionsService();
+            directionsRenderer = new google.maps.DirectionsRenderer({
+                map: map,
+                draggable: true
+            });
+            originMarker = new google.maps.Marker({
+                map: map,
+                position: originLatLng,
+                draggable: true,
+                visible: false,
+                label: defaultOriginMarkerLabel
+            });
+            destinationMarker = new google.maps.Marker({
+                map: map,
+                position: destinationLatLng,
+                draggable: true,
+                visible: false,
+                label: defaultDestinationMarkerLabel
+            });
+            originMarker.addListener("dragend", originMarkerPositionChangeHandler);
+            destinationMarker.addListener("dragend", destinationMarkerPositionChangeHandler);
+            setPlacesListener(originElementsId, destinationElementsId);
             drawDirectionsLine();
         }
     );
 }
-function createMapInCreateRouteMode() {
-    $("document").ready(
-        () => {
-            originElementsId = {
-                addressElementId: "StartingLocation",
-                latElementId: "StartingLatitude",
-                lngElementId: "StartingLongitude",
-                cityElementId: "StartingCity"
-            }
-            destinationElementsId = {
-                addressElementId: "DestinationLocation",
-                latElementId: "DestinationLatitude",
-                lngElementId: "DestinationLongitude",
-                cityElementId: "DestinationCity"
-            }
-
-
-            initEmptyMap();
-            directionsRenderer.setOptions({ draggable: true });
-            setPlacesListenerAndRenderMapOnChange(originElementsId, destinationElementsId);
-        }
-    );
-}
-function initEmptyMap() {
-    let myCenter = { lat: 52.218467, lng: 19.134643 }; //Poland middle point
-    let mapOptions = { center: myCenter, zoom: 5, scrollwheel: false, draggable: true, mapTypeId: google.maps.MapTypeId.ROADMAP };
-    map = new google.maps.Map(document.getElementById("map"), mapOptions);
-    directionsService = new google.maps.DirectionsService();
-    directionsRenderer = new google.maps.DirectionsRenderer();
-    directionsRenderer.setMap(map);
-}
-function initMap(originLatLng, destLatLng) {
-
-    initEmptyMap();
-    //setOriginMarkerPosition(originLatLng);
-    //setDestinationMarkerPosition(destLatLng);
-    originMarker = new google.maps.Marker({
-        position: originLatLng,
-        map: map,
-        draggable: true
-    });
-    destinationMarker = new google.maps.Marker({
-        position: destLatLng,
-        map: map,
-        draggable: true
-    });
-    //originMarker.setPosition(originLatLng);
-    //destinationMarker.setPosition(destLatLng);
-    //originMarker.setMap(map);
-    //destinationMarker.setMap(map);
-    //originMarker.addListener("position_changed", originMarkerPositionChangeHandler);
-    //destinationMarker.addListener("position_changed", destinationMarkerPositionChangeHandler);
-}
-function calcRoute() {
-    if (originMarker == null || destinationMarker == null)
+function calcDirections() {
+    if (originMarker.getMap() == null || destinationMarker.getMap() == null)
         return;
 
     let start = originMarker.getPosition();
     let end = destinationMarker.getPosition();
     let waypoints = [];
     let encodedWaypoints = document.getElementById("EncodedWaypoints").value;
-    if (encodedWaypoints != ""){
+    if (encodedWaypoints != "") {
         waypoints = decodeWaypoints(encodedWaypoints);
     }
 
@@ -160,12 +186,10 @@ function directionsChangeHandler() {
     let legsCount = result.routes[0].legs.length;
     let directionsEndPosition = result.routes[0].legs[legsCount - 1].end_location;
     if (!directionsStartPosition.equals(originMarker.getPosition())) {
-        originMarker.addListener("position_changed", originMarkerPositionChangeHandler);
-        setOriginMarkerPosition(directionsStartPosition);
+        setOriginMarkerPosition(directionsStartPosition, false);
     }
     if (!directionsEndPosition.equals(destinationMarker.getPosition())) {
-        destinationMarker.addListener("position_changed", destinationMarkerPositionChangeHandler);
-        setDestinationMarkerPosition(directionsEndPosition);
+        setDestinationMarkerPosition(directionsEndPosition, false);
     }
 
     let waypoints = result.request.waypoints;
@@ -189,16 +213,14 @@ function decodeWaypoints(encodedWaypoints) {
             location: x,
             stopover: false
         };
-        
     });
     return waypoints;
-
 }
 function decodeRoutePolyline() {
     let encodedPath = document.getElementById("EncodedPath").value;
-    if (encodedPath == "")
+    if (encodedPath == "") {
         return [];
-
+    }
     return google.maps.geometry.encoding.decodePath(encodedPath);
 }
 function fitMap(map, boundsArr) {
@@ -219,20 +241,18 @@ function drawRouteLine() {
     let lineOptions = {
         path: decodedPath,
         geodesic: true,
-        strokeColor: "#FF0000",
-        strokeOpacity: 1,
-        strokeWeight: 3,
+        strokeColor: "#0066ff",
+        strokeOpacity: 0.7,
+        strokeWeight: 5,
     }
     let polyline = new google.maps.Polyline(lineOptions);
     polyline.setMap(map);
-    originMarker.setDraggable(false);
-    destinationMarker.setDraggable(false);
     fitMap(map, decodedPath);
 }
 function drawDirectionsLine() {
-    calcRoute();
+    calcDirections();
 }
-function getTownOrCity (addressComponent) {
+function getTownOrCity(addressComponent) {
     const Intersect = function (a, b) {
         return new Set(a.filter(v => ~b.indexOf(v)));
     };
@@ -248,59 +268,39 @@ function getTownOrCity (addressComponent) {
     }
     return false;
 };
-function setPlacesListenerAndRenderMapOnChange(origin, destination) {
-
-    
-
+function setPlacesListener(origin, destination) {
     const originAddressInput = new google.maps.places.Autocomplete(document.getElementById(origin.addressElementId));
     google.maps.event.addListener(originAddressInput, 'place_changed', function () {
         const placeDetails = originAddressInput.getPlace();
         document.getElementById(origin.addressElementId).value = placeDetails.formatted_address;
-        //document.getElementById(origin.latElementId).value = placeDetails.geometry.location.lat();
-        //document.getElementById(origin.lngElementId).value = placeDetails.geometry.location.lng();
-
         let townOrCity = getTownOrCity(placeDetails.address_components);
-        if (townOrCity)
+        if (townOrCity) {
             document.getElementById(origin.cityElementId).value = townOrCity.long_name;
-
-        setOriginMarkerPosition(placeDetails.geometry.location);
-        calcRoute();
-
+        }
+        setOriginMarkerPosition(placeDetails.geometry.location, true);
     });
     const destinationAddressInput = new google.maps.places.Autocomplete(document.getElementById(destination.addressElementId));
     google.maps.event.addListener(destinationAddressInput, 'place_changed', function () {
         const placeDetails = destinationAddressInput.getPlace();
         document.getElementById(destination.addressElementId).value = placeDetails.formatted_address;
-        //document.getElementById(destination.latElementId).value = placeDetails.geometry.location.lat();
-        //document.getElementById(destination.lngElementId).value = placeDetails.geometry.location.lng();
-
         let townOrCity = getTownOrCity(placeDetails.address_components);
-        if (townOrCity)
+        if (townOrCity) {
             document.getElementById(destination.cityElementId).value = townOrCity.long_name;
-
-        setDestinationMarkerPosition(placeDetails.geometry.location);
-        calcRoute();
+        }
+        setDestinationMarkerPosition(placeDetails.geometry.location, true);
     });
 }
-function setOriginMarkerPosition(latLng) {
-
-
-    if (originMarker == null) {
-        originMarker = new google.maps.Marker(
-            {
-                //position: latLng,
-                title: "START",
-                draggable: true
-            });
+function setOriginMarkerPosition(latLng, checkNewDirections) {
+    google.maps.event.addListenerOnce(originMarker, "position_changed", originMarkerPositionChangeHandler);
+    if (originMarker.getMap() == null) {
         originMarker.setMap(map);
-        originMarker.addListener("drag_end", originMarkerPositionChangeHandler);
         originMarker.setPosition(latLng);
     }
     else {
-        //originMarker.removeListener("position_changed", originMarkerPositionChangeHandler);
-
         originMarker.setPosition(latLng);
-        
+    }
+    if (checkNewDirections && destinationMarker.getMap() != null) {
+        calcDirections();
     }
 }
 function originMarkerPositionChangeHandler() {
@@ -308,70 +308,69 @@ function originMarkerPositionChangeHandler() {
     let newOriginLatLng = originMarker.getPosition();
     document.getElementById('StartingLatitude').value = newOriginLatLng.lat();
     document.getElementById('StartingLongitude').value = newOriginLatLng.lng();
-    codeLatLngToFormattedAddress(newOriginLatLng, 'StartingLocation');
-    codeLatLngToCityOrTown(newOriginLatLng, 'StartingCity');
+    setFormattedAddressFromLatLng(newOriginLatLng, 'StartingLocation');
+    setCityOrTownFromLatLng(newOriginLatLng, 'StartingCity');
     markersLatLng.push(newOriginLatLng);
-
-    if (destinationMarker != null) {
+    if (destinationMarker.getMap() != null) {
         markersLatLng.push(destinationMarker.getPosition());
     }
-
     fitMap(map, markersLatLng);
 }
-function setDestinationMarkerPosition(latLng) {
-    if (destinationMarker == null) {
-        destinationMarker = new google.maps.Marker(
-            {
-                //position: latLng,
-                title: "END",
-                draggable: true
-            });
+function setDestinationMarkerPosition(latLng, checkNewDirections) {
+    google.maps.event.addListenerOnce(destinationMarker, "position_changed", destinationMarkerPositionChangeHandler);
+    if (destinationMarker.getMap() == null) {
         destinationMarker.setMap(map);
-        destinationMarker.addListener("drag_end", destinationMarkerPositionChangeHandler);
         destinationMarker.setPosition(latLng);
     }
     else {
-        //destinationMarker.removeListener("position_changed", destinationMarkerPositionChangeHandler);
         destinationMarker.setPosition(latLng);
-        
+    }
+    if (checkNewDirections && originMarker.getMap() != null) {
+        calcDirections()
     }
 }
 function destinationMarkerPositionChangeHandler() {
     let markersLatLng = [];
     let newDestinationLatLng = destinationMarker.getPosition();
-
     document.getElementById('DestinationLatitude').value = newDestinationLatLng.lat();
     document.getElementById('DestinationLongitude').value = newDestinationLatLng.lng();
-    codeLatLngToFormattedAddress(newDestinationLatLng, 'DestinationLocation');
-    codeLatLngToCityOrTown(newDestinationLatLng, 'DestinationCity');
+    setFormattedAddressFromLatLng(newDestinationLatLng, 'DestinationLocation');
+    setCityOrTownFromLatLng(newDestinationLatLng, 'DestinationCity');
     markersLatLng.push(newDestinationLatLng);
-
-    if (originMarker != null) {
+    if (originMarker.getMap() != null) {
         markersLatLng.push(originMarker.getPosition());
     }
-
     fitMap(map, markersLatLng);
 }
-function codeLatLngToFormattedAddress(latLng, idAddressEl) {
+function setFormattedAddressFromLatLng(latLng, addressElementId) {
     const geocoder = new google.maps.Geocoder();
-    geocoder.geocode({ location: latLng }).then
-        ((response) => {
+    geocoder.geocode({ location: latLng })
+        .then((response) => {
             if (response.results[0]) {
-                document.getElementById(idAddressEl).value = response.results[0].formatted_address;
+                document.getElementById(addressElementId).value = response.results[0].formatted_address;
             }
-        }).catch((e) => console.log("Geocoder failed due to: " + e));
+        })
+        .catch((e) => {
+            console.log("Geocoder failed due to: " + e);
+            document.getElementById(addressElementId).value = "";
+        });
 }
-function codeLatLngToCityOrTown(latLng, idCityOrTownEl) {
+function setCityOrTownFromLatLng(latLng, idCityOrTownEl) {
     const geocoder = new google.maps.Geocoder();
-    geocoder.geocode({ location: latLng }).then
-        ((response) => {
+    geocoder.geocode({ location: latLng })
+        .then((response) => {
             if (response.results[0]) {
                 let townOrCity = getTownOrCity(response.results[0].address_components);
                 if (townOrCity) {
                     document.getElementById(idCityOrTownEl).value = townOrCity.long_name;
                 }
             }
-        }).catch((e) => console.log("Geocoder failed due to: " + e));
+        })
+        .catch((e) => {
+            console.log("Geocoder failed due to: " + e);
+            document.getElementById(idCityOrTownEl).value = "";
+        });
+        
 }
 
 (function ($) {
