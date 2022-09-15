@@ -41,7 +41,10 @@ namespace PlanAndRide.Web.Controllers.Events
         public async Task<ActionResult> Create()
         {
             var routes = await _routeService.GetAll();
-            var model = new EventViewModel() { Routes=routes};
+            var model = new EventViewModel()
+            {
+                Routes = _mapper.Map<IEnumerable<RouteViewModel>>(routes)
+            };
             return View(model);
         }
 
@@ -52,13 +55,17 @@ namespace PlanAndRide.Web.Controllers.Events
         {   
             if(!ModelState.IsValid)
             {
-                model.Routes= await _routeService.GetAll();
+                var routes = await _routeService.GetAll();
+                model.Routes = _mapper.Map<IEnumerable<RouteViewModel>>(routes); 
                 return View(model);
             }
             
             var ride = _mapper.Map<Ride>(model);
             if (int.TryParse(model.RouteId, out int id))
-                ride.Route = await _routeService.Get(id);
+            {
+                var routeDto = await _routeService.Get(id);
+                ride.Route = _mapper.Map<BusinessLogic.Route>(routeDto);
+            }
             else
                 ride.Route = null;
 
@@ -76,7 +83,8 @@ namespace PlanAndRide.Web.Controllers.Events
             }
             
             var model = _mapper.Map<EventViewModel>(ride);
-            model.Routes = await _routeService.GetAll();
+            var routes = await _routeService.GetAll();
+            model.Routes = _mapper.Map<IEnumerable<RouteViewModel>>(routes);
             return View(model);
         }
 
@@ -87,13 +95,18 @@ namespace PlanAndRide.Web.Controllers.Events
         {
             if (!ModelState.IsValid)
             {
-                model.Routes = await _routeService.GetAll();
+                var routes = await _routeService.GetAll();
+                model.Routes = _mapper.Map<IEnumerable<RouteViewModel>>(routes);
                 return View(model);
             }
 
             var ride = _mapper.Map<Ride>(model);
             if (int.TryParse(model.RouteId, out int routeId))
-                ride.Route = await _routeService.Get(routeId);
+            {
+                var routeDto = await _routeService.Get(routeId);
+                ride.Route = _mapper.Map<BusinessLogic.Route>(routeDto);
+            }
+                
             else
                 ride.Route = null;
 

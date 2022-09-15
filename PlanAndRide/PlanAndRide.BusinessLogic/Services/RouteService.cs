@@ -1,37 +1,45 @@
-﻿namespace PlanAndRide.BusinessLogic
+﻿using AutoMapper;
+
+namespace PlanAndRide.BusinessLogic
 {
     public class RouteService : IRouteService
     {
         private readonly IRepository<Route> _repository;
+        private readonly IMapper _mapper;
+
         public RouteService() { }                     
-        public RouteService(IRepository<Route> repository)
+        public RouteService(IRepository<Route> repository,IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
-        public async Task<IEnumerable<Route>> GetAll()
+        public async Task<IEnumerable<RouteDto>> GetAll()
         {
-            return await _repository.GetAll();
+            var routes = await _repository.GetAll();
+            return _mapper.Map<IEnumerable<RouteDto>>(routes);
         }
-        public async Task<Route> Get(int id)
+        public async Task<RouteDto> Get(int id)
         {
             try
             {
-                return await _repository.Get(id);
+                return _mapper.Map<RouteDto>(await _repository.Get(id));
             }
             catch
             {
                 throw;
             }
         }
-        public async Task Add(Route route)
+        public async Task Add(RouteDto dto)
         {
+            var route = _mapper.Map<Route>(dto);
             await _repository.Add(route);
         }
-        public async Task Update(int id, Route route)
+        public async Task Update(int id, RouteDto dto)
         {
             try
             {
-               await _repository.Update(id, route);
+                var route = _mapper.Map<Route>(dto);
+                await _repository.Update(id, route);
             }
             catch
             {
@@ -42,10 +50,12 @@
         {
             await _repository.Delete(id);
         }
-        public async Task<IEnumerable<Route>> FindByName(string name)
+        public async Task<IEnumerable<RouteDto>> FindByName(string name)
         {
             var routes = await _repository.GetAll();
-            return routes.Where(r => r.Name.ToLower().Contains(name.Trim().ToLower()));
+            var dtos = _mapper.Map<IEnumerable<RouteDto>>(routes
+                .Where(r => r.Name.ToLower().Contains(name.Trim().ToLower())));
+            return dtos;
         }
         public double AverageScore(Route route)
         {
@@ -53,7 +63,8 @@
             {
                 return 0d;
             }
-            return route.Reviews.Select(r => r.Score).Average();
+            var avg = route.Reviews.Select(r => r.Score).Average();
+            return Math.Round(avg, 1);
         }
 
     }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using PlanAndRide.BusinessLogic;
 using PlanAndRide.Web.Models;
 using System.Linq;
@@ -10,19 +11,22 @@ namespace PlanAndRide.Web.Controllers
         private readonly IRouteService _routeService;
         private readonly IConfiguration _config;
         private readonly IReviewService _reviewService;
+        private readonly IMapper _mapper;
 
-        public RouteController(IRouteService routeService, IConfiguration config,IReviewService reviewService)
+        public RouteController(IRouteService routeService, IConfiguration config,IReviewService reviewService, IMapper mapper)
         {
             _routeService = routeService;
             _config = config;
             _reviewService = reviewService;
+            _mapper = mapper;
         }
         // GET: RouteController
         public async Task<ActionResult> Index()
         {
             var model = new RoutesCollectionViewModel();
             var routes = await _routeService.GetAll();
-            model.Routes =routes.Select(r => new RouteViewModel(r,_routeService));
+            //model.Routes =routes.Select(r => new RouteViewModel(r,_routeService));
+            model.Routes = _mapper.Map<IEnumerable<RouteViewModel>>(routes);
             return View(model);
         }
 
@@ -33,7 +37,7 @@ namespace PlanAndRide.Web.Controllers
             if (route != null)
             {
                 ViewData["ApiKey"] = _config["Maps:ApiKey"];
-                return View(new RouteViewModel(route,_routeService));
+                return View(_mapper.Map<RouteViewModel>(route));
             }
             return RedirectToAction(nameof(Index));
         }
@@ -50,21 +54,22 @@ namespace PlanAndRide.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(RouteViewModel model)
         {
-            model.Route.User = new User { Id = 1 };
             var encodedWaypoints = model.EncodedGoogleMapsWaypoints;
             if (String.IsNullOrEmpty(encodedWaypoints) || String.IsNullOrWhiteSpace(encodedWaypoints))
             {
                 model.EncodedGoogleMapsWaypoints = null;
             }
 
-            ModelState.Remove("Route.User");
+            //ModelState.Remove("Route.User");
             if (!ModelState.IsValid)
             {
                 ViewData["ApiKey"] = _config["Maps:ApiKey"];
                 return View(model);
             }
-            await _routeService.Add(model.Route);
-            return RedirectToAction(nameof(Details), new {Id=model.Route.Id});
+            var routeDto = _mapper.Map<RouteDto>(model);
+            routeDto.User = new User { Id = 1 };
+            await _routeService.Add(routeDto);
+            return RedirectToAction(nameof(Details), new {Id=model.Id});
         }
 
         // GET: RouteController/Edit/5
@@ -74,7 +79,7 @@ namespace PlanAndRide.Web.Controllers
             if (route != null)
             {
                 ViewData["ApiKey"] = _config["Maps:ApiKey"];
-                return View(new RouteViewModel(route, _routeService));
+                return View(_mapper.Map<RouteViewModel>(route));
             }
             return RedirectToAction(nameof(Index));
         }
@@ -84,7 +89,7 @@ namespace PlanAndRide.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int id, RouteViewModel model)
         {
-            ModelState.Remove("Route.User");
+            //ModelState.Remove("Route.User");
             if (!ModelState.IsValid)
             {
                 ViewData["ApiKey"] = _config["Maps:ApiKey"];
@@ -92,7 +97,7 @@ namespace PlanAndRide.Web.Controllers
             }
             try
             {
-                await _routeService.Update(id, model.Route);
+                await _routeService.Update(id, _mapper.Map<RouteDto>(model));
                 return RedirectToAction(nameof(Details), new { Id=id });
             }
             catch
@@ -108,7 +113,7 @@ namespace PlanAndRide.Web.Controllers
             if (route != null)
             {
                 ViewData["ApiKey"] = _config["Maps:ApiKey"];
-                return View(new RouteViewModel(route, _routeService));
+                return View(_mapper.Map<RouteViewModel>(route));
             }
             return RedirectToAction(nameof(Index));
         }
@@ -129,7 +134,7 @@ namespace PlanAndRide.Web.Controllers
             {
                 var routes = await _routeService.FindByName(routeName);
                 var model = new RoutesCollectionViewModel();
-                model.Routes = routes.Select(r => new RouteViewModel(r,_routeService));
+                model.Routes = _mapper.Map<IEnumerable<RouteViewModel>>(routes);
                 model.RouteName = routeName;
                 return View(nameof(Index), model);
             }
@@ -139,7 +144,7 @@ namespace PlanAndRide.Web.Controllers
         public async Task<ActionResult> Reviews(int routeId)
         {
             var route = await _routeService.Get(routeId);
-            var model = new RouteViewModel(route,_routeService);
+            var model = _mapper.Map<RouteViewModel>(route);
             return View(model);
         }
     }

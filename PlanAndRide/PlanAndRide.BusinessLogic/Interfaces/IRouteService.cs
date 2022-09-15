@@ -1,8 +1,13 @@
 ﻿namespace PlanAndRide.BusinessLogic
 {
-    public interface IRouteService :IRepository<Route>
+    public interface IRouteService
     {
-        Task<IEnumerable<Route>> FindByName(string name);
+        Task<IEnumerable<RouteDto>> GetAll();
+        Task<RouteDto> Get(int id);
+        Task Add(RouteDto dto);
+        Task Update(int id, RouteDto dto);
+        Task Delete(int id);
+        Task<IEnumerable<RouteDto>> FindByName(string name);
         double AverageScore(Route route);
     }
 }
