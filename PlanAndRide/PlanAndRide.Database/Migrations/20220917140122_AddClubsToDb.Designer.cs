@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PlanAndRide.Database;
 
@@ -11,9 +12,10 @@ using PlanAndRide.Database;
 namespace PlanAndRide.Database.Migrations
 {
     [DbContext(typeof(PlanAndRideContext))]
-    partial class PlanAndRideContextModelSnapshot : ModelSnapshot
+    [Migration("20220917140122_AddClubsToDb")]
+    partial class AddClubsToDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -238,28 +240,29 @@ namespace PlanAndRide.Database.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Description")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsPrivate")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("ShareRide")
                         .HasColumnType("bit");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("ApplicationUserId");
 
                     b.ToTable("Clubs");
                 });
@@ -426,21 +429,6 @@ namespace PlanAndRide.Database.Migrations
                     b.ToTable("Routes");
                 });
 
-            modelBuilder.Entity("PlanAndRide.BusinessLogic.UserClub", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("ClubId")
-                        .HasColumnType("int");
-
-                    b.HasKey("UserId");
-
-                    b.HasIndex("ClubId");
-
-                    b.ToTable("UserClub");
-                });
-
             modelBuilder.Entity("PlanAndRide.BusinessLogic.UserRide", b =>
                 {
                     b.Property<int>("RideId")
@@ -449,7 +437,12 @@ namespace PlanAndRide.Database.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<int?>("ClubId")
+                        .HasColumnType("int");
+
                     b.HasKey("RideId", "UserId");
+
+                    b.HasIndex("ClubId");
 
                     b.HasIndex("UserId");
 
@@ -460,9 +453,6 @@ namespace PlanAndRide.Database.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.Property<int?>("ClubId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Login")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -472,8 +462,6 @@ namespace PlanAndRide.Database.Migrations
                         .IsRequired()
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
-
-                    b.HasIndex("ClubId");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
@@ -532,10 +520,8 @@ namespace PlanAndRide.Database.Migrations
             modelBuilder.Entity("PlanAndRide.BusinessLogic.Club", b =>
                 {
                     b.HasOne("PlanAndRide.BusinessLogic.ApplicationUser", "ApplicationUser")
-                        .WithMany("CreatedClubs")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId");
 
                     b.Navigation("ApplicationUser");
                 });
@@ -611,27 +597,12 @@ namespace PlanAndRide.Database.Migrations
                     b.Navigation("StartingPosition");
                 });
 
-            modelBuilder.Entity("PlanAndRide.BusinessLogic.UserClub", b =>
-                {
-                    b.HasOne("PlanAndRide.BusinessLogic.Club", "Club")
-                        .WithMany("UserClubs")
-                        .HasForeignKey("ClubId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PlanAndRide.BusinessLogic.ApplicationUser", "ApplicationUser")
-                        .WithMany("UserClubs")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("ApplicationUser");
-
-                    b.Navigation("Club");
-                });
-
             modelBuilder.Entity("PlanAndRide.BusinessLogic.UserRide", b =>
                 {
+                    b.HasOne("PlanAndRide.BusinessLogic.Club", null)
+                        .WithMany("UserRide")
+                        .HasForeignKey("ClubId");
+
                     b.HasOne("PlanAndRide.BusinessLogic.Ride", "Ride")
                         .WithMany("UserRide")
                         .HasForeignKey("RideId")
@@ -649,24 +620,15 @@ namespace PlanAndRide.Database.Migrations
                     b.Navigation("Ride");
                 });
 
-            modelBuilder.Entity("PlanAndRide.BusinessLogic.ApplicationUser", b =>
-                {
-                    b.HasOne("PlanAndRide.BusinessLogic.Club", null)
-                        .WithMany("ClubMembers")
-                        .HasForeignKey("ClubId");
-                });
-
             modelBuilder.Entity("PlanAndRide.BusinessLogic.Club", b =>
                 {
                     b.Navigation("AttendedRides");
-
-                    b.Navigation("ClubMembers");
 
                     b.Navigation("Reviews");
 
                     b.Navigation("Routes");
 
-                    b.Navigation("UserClubs");
+                    b.Navigation("UserRide");
                 });
 
             modelBuilder.Entity("PlanAndRide.BusinessLogic.Ride", b =>
@@ -681,15 +643,11 @@ namespace PlanAndRide.Database.Migrations
 
             modelBuilder.Entity("PlanAndRide.BusinessLogic.ApplicationUser", b =>
                 {
-                    b.Navigation("CreatedClubs");
-
                     b.Navigation("CreatedRides");
 
                     b.Navigation("Reviews");
 
                     b.Navigation("Routes");
-
-                    b.Navigation("UserClubs");
 
                     b.Navigation("UserRide");
                 });

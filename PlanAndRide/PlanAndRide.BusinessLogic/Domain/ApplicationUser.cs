@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using PlanAndRide.BusinessLogic;
 
 namespace PlanAndRide.BusinessLogic
 {
@@ -13,5 +14,7 @@ namespace PlanAndRide.BusinessLogic
         public virtual IList<Ride> AttendedRides { get; set; }
         public virtual IList<Ride> CreatedRides { get; set; }
         public virtual IList<UserRide> UserRide { get; set; }
+        public virtual IList<UserClub> UserClubs { get; set; }
+        public virtual IList<Club> CreatedClubs { get; set; }
     }
 }

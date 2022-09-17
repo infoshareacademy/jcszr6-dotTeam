@@ -12,6 +12,7 @@ namespace PlanAndRide.Database
         public DbSet<Review> Reviews { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<GeoCoordinate> GeoCoordinates { get; set; }
+        public DbSet<Club> Clubs { get; set; }
         public PlanAndRideContext()
         {
 
@@ -41,6 +42,21 @@ namespace PlanAndRide.Database
                 .UsingEntity<UserRide>(
                     ur => ur.HasOne(ur => ur.ApplicationUser).WithMany(u => u.UserRide).HasForeignKey(ur => ur.UserId),
                     ur => ur.HasOne(ur => ur.Ride).WithMany(r => r.UserRide).HasForeignKey(ur => ur.RideId));
+
+            modelBuilder.Entity<Club>()
+                .HasOne(c => c.ApplicationUser).WithMany(u => u.CreatedClubs)
+                .HasForeignKey(r => r.UserId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<UserClub>()
+                .HasOne(uc => uc.ApplicationUser)
+                .WithMany(u => u.UserClubs)
+                .HasForeignKey("UserId")
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<UserClub>().HasKey("UserId");
 
             modelBuilder.Entity<Route>()
                 .HasOne(r => r.ApplicationUser)
@@ -84,6 +100,11 @@ namespace PlanAndRide.Database
                 .Property<string>("Login").HasMaxLength(100);
             modelBuilder.Entity<ApplicationUser>()
                 .Property<string>("Password").HasMaxLength(60);
+
+            modelBuilder.Entity<Club>()
+                .Property<string>("Description").HasMaxLength(255);
+            modelBuilder.Entity<Club>()
+                .Property<string>("Name").HasMaxLength(60);
         }
     }
 }

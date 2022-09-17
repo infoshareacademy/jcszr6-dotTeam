@@ -12,10 +12,11 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IRepository<PlanAndRide.BusinessLogic.Route>, RouteRepository>();
 builder.Services.AddScoped<IRepository<Ride>, RideRepository>();
 builder.Services.AddScoped<IRepository<Review>, ReviewRepository>();
-
+builder.Services.AddScoped<IRepository<Club>, ClubRepository>();
 builder.Services.AddScoped<IRouteService, RouteService>();
 builder.Services.AddScoped<IRideService, RideService>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
+builder.Services.AddScoped<IClubService, ClubService>();
 
 builder.Services.AddDefaultIdentity<IdentityUser>()
     .AddRoles<IdentityRole>()

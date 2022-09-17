@@ -1,0 +1,42 @@
+﻿@model ClubViewModel
+
+@{
+    ViewData["Title"] = "Details";
+    var privacyDisplay = "[Private]";
+    if (!Model.IsPrivate)
+    {
+        privacyDisplay = "[Public]";
+    }
+}
+<div class="container"> 
+<h4>Club details</h4>
+<h6>@privacyDisplay</h6>
+<div>
+    @*<h4>Event</h4>*@
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IsPrivate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IsPrivate)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a class="btn btn-outline-primary red-button" asp-action="Edit" asp-route-id=@Model.Id>Edit</a>
+    <a class="btn btn-outline-secondary grey-button" asp-action="Index">Back to events</a>
+</div>
+</div>
