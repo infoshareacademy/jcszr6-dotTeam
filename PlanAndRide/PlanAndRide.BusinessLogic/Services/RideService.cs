@@ -1,4 +1,6 @@
-﻿namespace PlanAndRide.BusinessLogic
+﻿using PlanAndRide.BusinessLogic.Enums;
+
+namespace PlanAndRide.BusinessLogic
 {
     public class RideService:IRideService
     {
@@ -54,5 +56,7 @@
             var rides = await _repository.GetAll();
             return rides.Where(r => r.Name.ToLower().Contains(name.Trim().ToLower()));
         }
+       
+        
     }
 }

@@ -1,4 +1,5 @@
 ﻿
+using PlanAndRide.BusinessLogic.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace PlanAndRide.BusinessLogic
@@ -23,6 +24,8 @@ namespace PlanAndRide.BusinessLogic
 
         public bool IsPrivate { get; set; }
         public virtual IList<UserRide> UserRide { get; set; }
+        //public virtual IList<StatusList> StatusLists { get; set; }
+       public int StatusRide { get; set; }
 
         
     }

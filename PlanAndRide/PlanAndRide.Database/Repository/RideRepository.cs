@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PlanAndRide.BusinessLogic;
+using PlanAndRide.BusinessLogic.Enums;
 using PlanAndRide.BusinessLogic.Exceptions;
 
 
@@ -16,7 +17,7 @@ namespace PlanAndRide.Database.Repository
         {
             try
             {
-                return await _context.Rides.SingleOrDefaultAsync(r => r.Id == id);   
+                return await _context.Rides.SingleOrDefaultAsync(r => r.Id == id);
             }
             catch
             {
@@ -76,5 +77,23 @@ namespace PlanAndRide.Database.Repository
                 throw new InvalidOperationException($"Unique key violaton: Ride ID:{id}");
             }
         }
-    }
-}
+        public async Task TimeStatusRide( Ride ride)
+        {
+            
+            var compareDate = DateTime.Now.CompareTo(ride.Date, StatusList statuslist);
+            if (compareDate > 0)
+            {
+                return ride.StatusRide = StatusLitst().
+            }
+            if (compareDate == 0)
+            {
+                ride.StatusRide = rightNowEvent;
+
+            }
+
+            else
+            {
+                ride.StatusRide = completed;
+            }
+        }
+    } }
