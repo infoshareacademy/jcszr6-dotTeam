@@ -34,12 +34,12 @@ namespace PlanAndRide.Web.Controllers
         public async Task<ActionResult> Details(int id)
         {
             var route = await _routeService.Get(id);
-            if (route != null)
+            if (route is null)
             {
-                ViewData["ApiKey"] = _config["Maps:ApiKey"];
-                return View(_mapper.Map<RouteViewModel>(route));
+                return RedirectToAction(nameof(Index));
             }
-            return RedirectToAction(nameof(Index));
+            ViewData["ApiKey"] = _config["Maps:ApiKey"];
+            return View(_mapper.Map<RouteViewModel>(route));
         }
 
         // GET: RouteController/Create
@@ -144,6 +144,10 @@ namespace PlanAndRide.Web.Controllers
         public async Task<ActionResult> Reviews(int id)
         {
             var route = await _routeService.GetRouteWithReviews(id);
+            if(route is null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
             var model = _mapper.Map<RouteReviewsViewModel>(route);
             return View(model);
         }

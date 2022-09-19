@@ -7,7 +7,6 @@ namespace PlanAndRide.Web.Models
     public class RouteViewModel
     {
         public int Id { get; set; }
-        [Required]
         public string Name { get; set; }
         public GeoCoordinate StartingPosition { get; set; }
         public GeoCoordinate DestinationPosition { get; set; }
@@ -19,9 +18,5 @@ namespace PlanAndRide.Web.Models
         public string? Description { get; set; }
         public bool ShareRoute { get; set; }
         public bool IsPrivate { get; set; }
-        public RouteViewModel()
-        {
-
-        }
     }
 }

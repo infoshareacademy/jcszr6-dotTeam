@@ -4,6 +4,7 @@
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public double AverageScore { get; set; }
         public IEnumerable<ReviewViewModel>? Reviews { get; set; }
     }
 }

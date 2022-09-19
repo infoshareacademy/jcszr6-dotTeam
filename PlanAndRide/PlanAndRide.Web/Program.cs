@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddScoped<IRouteRepository, RouteRepository>();
+builder.Services.AddScoped<IRepository<PlanAndRide.BusinessLogic.Route>, RouteRepository>();
 builder.Services.AddScoped<IRepository<Ride>, RideRepository>();
 builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
 
@@ -22,7 +22,6 @@ builder.Services.AddDbContext<PlanAndRideContext>(
     options =>
     {
         options.UseSqlServer(connectionString);
-        options.UseLazyLoadingProxies();
         options.LogTo(Console.WriteLine, LogLevel.Information);
     });
 

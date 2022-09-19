@@ -8,12 +8,13 @@ namespace PlanAndRide.Web.Mapping
     {
         public RouteProfile()
         {
-            CreateMap<BusinessLogic.Route, RouteDto>();
+            CreateMap<BusinessLogic.Route, RouteDto>()
+                .ReverseMap();
             CreateMap<RouteDto, RouteViewModel>()
                 .ReverseMap();
             CreateMap<RouteDtoWithReviews, RouteReviewsViewModel>();
 
-            CreateProjection<BusinessLogic.Route, RouteDtoWithReviews>();
+            CreateMap<BusinessLogic.Route, RouteDtoWithReviews>();
 
         //    CreateProjection<RouteDto, RouteReviewsViewModel>()
         //        .ForMember(model => model.Route, expr => expr.MapFrom(dto => dto.Name))
