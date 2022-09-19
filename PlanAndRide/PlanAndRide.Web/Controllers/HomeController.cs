@@ -26,7 +26,7 @@ namespace PlanAndRide.Web.Controllers
             var routes = await _routeService.GetAll();
             var lastThreeRoutes = routes.OrderByDescending(r => r.Id).Take(3).ToList();
             var model = new RoutesCollectionViewModel();
-            model.Routes = _mapper.Map<IEnumerable<RouteViewModel>>(lastThreeRoutes);
+            model.Routes = lastThreeRoutes;
             return View(model);
         }
 

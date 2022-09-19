@@ -1,11 +1,11 @@
-﻿@model PlanAndRide.Web.Models.RoutesCollectionViewModel
+﻿@model IEnumerable<RouteDto>
 
 
 <table id="indexTable" class="table">
     <thead>
         <tr>
             <th>
-                <label asp-for="@Model.Routes.First().Name"></label>
+                <label asp-for="@Model.First().Name"></label>
             </th>
             <th>
                 <label>From </label>
@@ -14,16 +14,16 @@
                 <label>To </label>
             </th>
             <th>
-                <label asp-for="@Model.Routes.First().AverageScore">Score</label>
+                <label asp-for="@Model.First().AverageScore">Score</label>
             </th>
             <th>
-                <label asp-for="@Model.Routes.First().Description"></label>
+                <label asp-for="@Model.First().Description"></label>
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Routes)
+        @foreach (var item in Model)
         {
             <tr>
                 <td>
@@ -36,7 +36,7 @@
                     @item.DestinationCity
                 </td>
                 <td>
-                    <a asp-action="Reviews" asp-route-id=@item.Id>@Math.Round(item.AverageScore,1)</a>
+                    <a asp-action="Reviews" asp-route-id=@item.Id>@item.AverageScore</a>
                 </td>
                 <td>
                     @item.Description
