@@ -141,10 +141,10 @@ namespace PlanAndRide.Web.Controllers
             return RedirectToAction(nameof(Index));
 
         }
-        public async Task<ActionResult> Reviews(int routeId)
+        public async Task<ActionResult> Reviews(int id)
         {
-            var route = await _routeService.Get(routeId);
-            var model = _mapper.Map<RouteViewModel>(route);
+            var route = await _routeService.GetRouteWithReviews(id);
+            var model = _mapper.Map<RouteReviewsViewModel>(route);
             return View(model);
         }
     }

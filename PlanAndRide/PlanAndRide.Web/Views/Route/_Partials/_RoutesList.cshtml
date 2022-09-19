@@ -36,7 +36,7 @@
                     @item.DestinationCity
                 </td>
                 <td>
-                    @Math.Round(item.AverageScore,1)
+                    <a asp-action="Reviews" asp-route-id=@item.Id>@Math.Round(item.AverageScore,1)</a>
                 </td>
                 <td>
                     @item.Description

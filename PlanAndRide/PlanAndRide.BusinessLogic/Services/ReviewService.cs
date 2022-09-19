@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,15 +9,16 @@ namespace PlanAndRide.BusinessLogic
 {
     public class ReviewService : IReviewService
     {
-        private readonly IRepository<Review> _repository;
-
-        public ReviewService(IRepository<Review> repository)
+        private readonly IReviewRepository _repository;
+        private readonly IMapper _mapper;
+        public ReviewService(IReviewRepository repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
-        public async Task Add(Review entity)
+        public async Task Add(ReviewDto entity)
         {
-            await _repository.Add(entity);
+            await _repository.Add(_mapper.Map<Review>(entity));
         }
 
         public async Task Delete(int id)
@@ -36,21 +38,21 @@ namespace PlanAndRide.BusinessLogic
             }
         }
 
-        public async Task<IEnumerable<Review>> GetAll()
+        //public async Task<IEnumerable<Review>> GetAll()
+        //{
+        //    //return await _repository.GetAll();
+        //}
+        public async Task<IEnumerable<ReviewDto>> GetByRoute(int id)
         {
-            return await _repository.GetAll();
-        }
-        public async Task<IEnumerable<Review>> GetByRouteId(int id)
-        {
-            var reviews = await _repository.GetAll();
-            return reviews.Where(r => r.Route.Id==id);
+            var reviews = await _repository.GetByRoute(id);
+            return _mapper.Map<IEnumerable<ReviewDto>>(reviews);
         }
 
-        public async Task Update(int id, Review entity)
+        public async Task Update(int id, ReviewDto entity)
         {
             try
             {
-                await _repository.Update(id, entity);
+                await _repository.Update(id, _mapper.Map<Review>(entity));
             }
             catch
             {

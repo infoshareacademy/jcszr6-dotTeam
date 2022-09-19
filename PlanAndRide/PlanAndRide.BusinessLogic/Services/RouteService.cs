@@ -4,11 +4,11 @@ namespace PlanAndRide.BusinessLogic
 {
     public class RouteService : IRouteService
     {
-        private readonly IRepository<Route> _repository;
+        private readonly IRouteRepository _repository;
         private readonly IMapper _mapper;
 
         public RouteService() { }                     
-        public RouteService(IRepository<Route> repository,IMapper mapper)
+        public RouteService(IRouteRepository repository,IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
@@ -22,7 +22,10 @@ namespace PlanAndRide.BusinessLogic
         {
             try
             {
-                return _mapper.Map<RouteDto>(await _repository.Get(id));
+                var route = await _repository.Get(id);
+                var routeDto = _mapper.Map<RouteDto>(route);
+                routeDto.AverageScore = AverageScore(route);
+                return routeDto;
             }
             catch
             {
@@ -66,6 +69,10 @@ namespace PlanAndRide.BusinessLogic
             var avg = route.Reviews.Select(r => r.Score).Average();
             return Math.Round(avg, 1);
         }
-
+        public async Task<RouteDtoWithReviews> GetRouteWithReviews(int id)
+        {
+            var routes = await _repository.GetRouteWithReviews(id);
+            return routes.FirstOrDefault();
+        }
     }
 }

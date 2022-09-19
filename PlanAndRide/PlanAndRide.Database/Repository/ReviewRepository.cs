@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PlanAndRide.Database.Repository
 {
-    public class ReviewRepository : IRepository<Review>
+    public class ReviewRepository : IReviewRepository
     {
         private readonly PlanAndRideContext _context;
 
@@ -61,10 +61,9 @@ namespace PlanAndRide.Database.Repository
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<Review>> GetAll()
+        public async Task<IEnumerable<Review>> GetByRoute(int id)
         {
-            //return await _context.Reviews.ToListAsync();
-            throw new NotImplementedException();
+            return await _context.Reviews.Where(r => r.Route.Id == id).ToListAsync();
         }
 
         public async Task Update(int id, Review review)

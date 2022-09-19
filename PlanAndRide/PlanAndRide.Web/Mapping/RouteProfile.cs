@@ -4,21 +4,20 @@ using PlanAndRide.Web.Models;
 
 namespace PlanAndRide.Web.Mapping
 {
-    public class RouteProfile:Profile
+    public class RouteProfile : Profile
     {
         public RouteProfile()
         {
-            CreateMap<BusinessLogic.Route, RouteDto>()
-                .ForMember(dto => dto.AverageScore, expr => expr.MapFrom(r => MapRouteScore(r)))
-                .ReverseMap();
+            CreateMap<BusinessLogic.Route, RouteDto>();
             CreateMap<RouteDto, RouteViewModel>()
                 .ReverseMap();
+            CreateMap<RouteDtoWithReviews, RouteReviewsViewModel>();
 
-        }
-        private double MapRouteScore(BusinessLogic.Route route)
-        {
-            var _routeService = new RouteService();
-            return _routeService.AverageScore(route);
+            CreateProjection<BusinessLogic.Route, RouteDtoWithReviews>();
+
+        //    CreateProjection<RouteDto, RouteReviewsViewModel>()
+        //        .ForMember(model => model.Route, expr => expr.MapFrom(dto => dto.Name))
+        //        .ForMember(model => model.Reviews, expr => expr.MapFrom(dto => dto.Reviews));
         }
     }
 }

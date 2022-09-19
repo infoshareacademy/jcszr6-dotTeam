@@ -1,33 +1,44 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 using PlanAndRide.BusinessLogic;
 using PlanAndRide.BusinessLogic.Exceptions;
 
 namespace PlanAndRide.Database.Repository
 {
-    public class RouteRepository : IRepository<Route>
+    public class RouteRepository : IRouteRepository
     {
-        private readonly IRepository<Review> _reviewRepository;
+        //private readonly IReviewRepository _reviewRepository;
         private readonly PlanAndRideContext _context;
+        private readonly IMapper _mapper;
 
-        public RouteRepository(IRepository<Review> reviewRepository, PlanAndRideContext context)
+        public RouteRepository(PlanAndRideContext context, IMapper mapper)
         {
-            _reviewRepository = reviewRepository;
+            //_reviewRepository = reviewRepository;
             _context = context;
+            _mapper = mapper;
         }
         public async Task<Route> Get(int id)
         {
             try
             {
+                
                 return await _context.Routes
-                    .Include(r => r.User)
-                    .Include(r => r.StartingPosition)
-                    .Include(r => r.DestinationPosition)
+                    //.Include(r => r.User)
+                    //.Include(r => r.StartingPosition)
+                    //.Include(r => r.DestinationPosition)
+                    //.Include(r => r.Reviews)
                     .SingleOrDefaultAsync(r => r.Id == id);
             }
             catch
             {
                 throw new InvalidOperationException($"Unique key violaton: Route ID:{id}");
             }
+        }
+        public async Task<IEnumerable<RouteDtoWithReviews>> GetRouteWithReviews(int id)
+        {
+            return await _context.Routes
+                .Where(r => r.Id == id).ProjectTo<RouteDtoWithReviews>(_mapper.ConfigurationProvider).ToListAsync();
         }
         public async Task<IEnumerable<Route>> GetAll()
         {
