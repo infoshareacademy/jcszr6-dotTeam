@@ -10,24 +10,16 @@ namespace PlanAndRide.Web.Controllers
     {
         private readonly IRouteService _routeService;
         private readonly IConfiguration _config;
-        private readonly IReviewService _reviewService;
-        private readonly IMapper _mapper;
 
-        public RouteController(IRouteService routeService, IConfiguration config,IReviewService reviewService, IMapper mapper)
+        public RouteController(IRouteService routeService, IConfiguration config)
         {
             _routeService = routeService;
             _config = config;
-            _reviewService = reviewService;
-            _mapper = mapper;
         }
         // GET: RouteController
         public async Task<ActionResult> Index()
         {
             var routes = await _routeService.GetAll();
-            //var model = new RoutesCollectionViewModel { }
-            
-            //model.Routes =routes.Select(r => new RouteViewModel(r,_routeService));
-           // model.Routes = _mapper.Map<IEnumerable<RouteViewModel>>(routes);
             return View(routes);
         }
 

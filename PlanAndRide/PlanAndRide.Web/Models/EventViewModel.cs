@@ -13,7 +13,7 @@ namespace PlanAndRide.Web.Models
         public string? RouteId { get; set; }
         public string? RouteName { get; set; }
 
-        public IEnumerable<RouteViewModel>? Routes { get; set; }
+        public IEnumerable<RouteDto>? Routes { get; set; }
 
         public string? Description { get; set; }
 

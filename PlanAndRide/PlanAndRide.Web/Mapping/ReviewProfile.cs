@@ -9,14 +9,11 @@ namespace PlanAndRide.Web.Mapping
         public ReviewProfile()
         {
             CreateMap<Review, ReviewDto>()
-                .ForMember(dto => dto.User, expr => expr.MapFrom(r => r.User.Id))
+                .ForMember(dto => dto.UserName, expr => expr.MapFrom(r => r.User.Login))
                 .ForMember(dto => dto.Route, expr => expr.MapFrom(r => r.Route.Name))
                 .ForMember(dto => dto.Date, expr => expr.MapFrom(r => r.Date.ToString("d")));
-            CreateMap<ReviewDto, ReviewViewModel>();
+            CreateMap<CreateRouteReviewDto, Review>();
                 
-            //CreateProjection<Review, ReviewDto>()
-            //    .ForMember(dto => dto.User, expr => expr.MapFrom(r => r.User.Id))
-            //    .ForMember(dto => dto.Route, expr => expr.MapFrom(r => r.Route.Name));
         }
     }
 }

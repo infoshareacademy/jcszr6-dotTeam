@@ -3,10 +3,10 @@ namespace PlanAndRide.BusinessLogic
 {
     public interface IReviewService
     {
-        Task Add(ReviewDto entity);
+        Task Add(CreateRouteReviewDto entity);
         Task Delete(int id);
-        Task<Review> Get(int id);
-        Task<IEnumerable<ReviewDto>> GetByRoute(int id);
+        Task<ReviewDto> Get(int id);
+        Task<IEnumerable<ReviewDto>> GetAll();
         Task Update(int id, ReviewDto entity);
     }
 }

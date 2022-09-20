@@ -35,9 +35,8 @@ namespace PlanAndRide.Database.Repository
         }
         public async Task Add(Review entity)
         {
-            //await _context.Reviews.AddAsync(entity);
-            //_context.SaveChanges();
-            throw new NotImplementedException();
+            await _context.Reviews.AddAsync(entity);
+            _context.SaveChanges();
         }
 
         public async Task Delete(int id)
@@ -56,14 +55,23 @@ namespace PlanAndRide.Database.Repository
             //}
             //catch
             //{
-            //    throw new InvalidOperationException($"Unique key violaton: Review ID:{id}");
+            //    throw new InvalidOperationException($"Unique key violation: Review ID:{id}");
             //}
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<Review>> GetByRoute(int id)
+
+        //public async Task<IEnumerable<Review>> GetByRoute(int id)
+        //{
+        //    return await _context.Reviews.Where(r => r.Route.Id == id).ToListAsync();
+        //}
+
+        public async Task<IEnumerable<Review>> GetAll()
         {
-            return await _context.Reviews.Where(r => r.Route.Id == id).ToListAsync();
+            return await _context.Reviews
+                .Include(r => r.User)
+                .Include(r => r.Route)
+                .ToListAsync();
         }
 
         public async Task Update(int id, Review review)

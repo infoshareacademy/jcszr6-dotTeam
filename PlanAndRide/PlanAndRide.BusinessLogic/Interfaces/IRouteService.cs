@@ -10,5 +10,6 @@
         Task<IEnumerable<RouteDto>> FindByName(string name);
         double AverageScore(Route route);
         Task<RouteDtoWithReviews?> GetRouteWithReviews(int id);
+        Task<string> GetRouteName(int id);
     }
 }

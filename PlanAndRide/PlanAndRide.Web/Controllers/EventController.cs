@@ -41,9 +41,9 @@ namespace PlanAndRide.Web.Controllers.Events
         public async Task<ActionResult> Create()
         {
             var routes = await _routeService.GetAll();
-            var model = new EventViewModel()
+            var model = new EventViewModel
             {
-                Routes = _mapper.Map<IEnumerable<RouteViewModel>>(routes)
+                Routes = routes
             };
             return View(model);
         }
@@ -56,7 +56,7 @@ namespace PlanAndRide.Web.Controllers.Events
             if(!ModelState.IsValid)
             {
                 var routes = await _routeService.GetAll();
-                model.Routes = _mapper.Map<IEnumerable<RouteViewModel>>(routes); 
+                model.Routes = routes; 
                 return View(model);
             }
             
@@ -84,7 +84,7 @@ namespace PlanAndRide.Web.Controllers.Events
             
             var model = _mapper.Map<EventViewModel>(ride);
             var routes = await _routeService.GetAll();
-            model.Routes = _mapper.Map<IEnumerable<RouteViewModel>>(routes);
+            model.Routes = routes;
             return View(model);
         }
 
@@ -96,7 +96,7 @@ namespace PlanAndRide.Web.Controllers.Events
             if (!ModelState.IsValid)
             {
                 var routes = await _routeService.GetAll();
-                model.Routes = _mapper.Map<IEnumerable<RouteViewModel>>(routes);
+                model.Routes = routes;
                 return View(model);
             }
 

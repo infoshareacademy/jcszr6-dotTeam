@@ -14,6 +14,7 @@
         <thead>
             <tr>
                 <th><label asp-for="Reviews.First().Date"></label></th>
+                <th><label asp-for="Reviews.First().UserName">User</label></th>
                 <th><label asp-for="Reviews.First().Score"></label></th>
                 <th><label asp-for="Reviews.First().Description"></label></th>
             </tr>
@@ -24,6 +25,9 @@
                 <tr>
                     <td>
                         @item.Date
+                    </td>
+                    <td>
+                        @item.UserName
                     </td>
                     <td>
                         @item.Score

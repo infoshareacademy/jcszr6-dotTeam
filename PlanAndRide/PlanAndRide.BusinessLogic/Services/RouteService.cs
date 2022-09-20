@@ -100,5 +100,17 @@ namespace PlanAndRide.BusinessLogic
                 throw;
             }
         }
+        public async Task<string> GetRouteName(int id)
+        {
+            try
+            {
+                var route = await _repository.Get(id);
+                return route.Name;
+            }
+            catch
+            {
+                throw;
+            }
+        }
     }
 }

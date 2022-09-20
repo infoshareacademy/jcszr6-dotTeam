@@ -1,0 +1,50 @@
+﻿@model CreateRouteReviewDto
+
+@{
+    ViewData["Title"] = "Create route review";
+}
+<div class="container col-md-6 align-items-center"
+    <br /><br />
+    <h4>Add review to route "@ViewData["RouteName"]"        </h4>
+
+    <hr />
+    <div class="row">
+        <div>
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <input type="hidden" asp-for="RouteId" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Score" class="control-label"></label>
+                    <input asp-for="Score" class="form-control" />
+                    <span asp-validation-for="Score" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <textarea asp-for="Description" id="review-description" class="form-control"></textarea>
+                    <small class="form-text text-muted">0 characters remaining</small>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+</div>
+@section Scripts {
+
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+<script>
+    $(document).ready(function () {
+    $("#review-description").each(countDescriptionCharacters);
+    $("#review-description").keyup(countDescriptionCharacters);
+    });
+</script>
+
+}
+

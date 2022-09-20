@@ -373,6 +373,26 @@ function setCityOrTownFromLatLng(latLng, idCityOrTownEl) {
         
 }
 
+function countDescriptionCharacters() {
+    var max = $(this).attr("maxlength");
+    var length = $(this).val().length;
+    var counter = max - length;
+    var helper = $(this).next(".form-text");
+    // Switch to the singular if there's exactly 1 character remaining
+    if (counter !== 1) {
+        helper.text(counter + " characters remaining");
+    } else {
+        helper.text(counter + " character remaining");
+    }
+    // Make it red if there are 0 characters remaining
+    if (counter === 0) {
+        helper.removeClass("text-muted");
+        helper.addClass("text-danger");
+    } else {
+        helper.removeClass("text-danger");
+        helper.addClass("text-muted");
+    }
+}
 (function ($) {
     //your standard jquery code goes here with $ prefix
     // best used inside a page with inline code, 
