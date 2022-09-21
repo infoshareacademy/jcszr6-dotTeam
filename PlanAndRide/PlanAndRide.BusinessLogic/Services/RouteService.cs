@@ -84,8 +84,9 @@ namespace PlanAndRide.BusinessLogic
             {
                 return 0d;
             }
-            var avg = route.Reviews.Select(r => r.Score).Average();
-            return Math.Round(avg, 1);
+            var avg = route.Reviews.Average(r => r.Score);
+            
+            return Math.Round(avg*2)/2;
         }
 
         public async Task<RouteDtoWithReviews?> GetRouteWithReviews(int id)
@@ -93,7 +94,12 @@ namespace PlanAndRide.BusinessLogic
             try
             {
                 var route = await _repository.Get(id);
-                return _mapper.Map<RouteDtoWithReviews>(route);
+                var dto = _mapper.Map<RouteDtoWithReviews>(route);
+                if(dto != null)
+                {
+                    dto.AverageScore = AverageScore(route);
+                }
+                return dto;
             }
             catch
             {

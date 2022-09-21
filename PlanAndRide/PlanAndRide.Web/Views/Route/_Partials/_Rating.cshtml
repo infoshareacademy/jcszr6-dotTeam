@@ -1,0 +1,7 @@
+﻿@model RouteDto
+<div>
+    <div class="route-rating" style="display:inline-block">
+    <input type="hidden" asp-for="@Model.AverageScore" id="rating-value" />
+    </div>
+    <a asp-action="Reviews" asp-route-id="@Model.Id">Reviews</a>
+</div>

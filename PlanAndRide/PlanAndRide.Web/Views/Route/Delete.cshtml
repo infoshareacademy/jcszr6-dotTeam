@@ -13,6 +13,8 @@
         <div class="col-lg-6 gx-5" style="float:left">
             <hr />
             <h4>@Model.Name</h4>
+            <partial name="_Partials/_Rating" model="@Model" />
+            <hr />
             <partial name="_Partials/_RouteDetails" model="@Model" />
         </div>
 
@@ -23,7 +25,10 @@
             <a class="btn btn-secondary grey-button" asp-action="Index">Cancel</a>
         </form>
     </div>
-    @section Scripts {
-    <script async type="text/javascript" src='https://maps.googleapis.com/maps/api/js?key=@apiKey&libraries=places,geometry&callback=routeDetails'></script>
-    }
 </div>
+@section Scripts {
+<script async type="text/javascript" src='https://maps.googleapis.com/maps/api/js?key=@apiKey&libraries=places,geometry&callback=routeDetails'></script>
+<script>
+    $('document').ready(initRaiting());
+</script>
+}

@@ -2,46 +2,55 @@
 @{
     ViewData["Title"] = "Reviews";
 }
-<div class="container"> 
-@*<h1>Route Reviews</h1>*@
-
-<h3>@Model.Name</h3>
-@*<partial name="_Partials/_RouteDetails" model="@Model" />*@
-
-<h5>Reviews: </h5>
-<div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th><label asp-for="Reviews.First().Date"></label></th>
-                <th><label asp-for="Reviews.First().UserName">User</label></th>
-                <th><label asp-for="Reviews.First().Score"></label></th>
-                <th><label asp-for="Reviews.First().Description"></label></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach(var item in Model.Reviews)
-            {
+<div class="container">
+    @*<h1>Route Reviews</h1>*@
+    
+    <h3>@Model.Name</h3>
+    <div class="route-rating">
+        <input type="hidden" asp-for="@Model.AverageScore" id="rating-value" />
+    </div>
+    
+    <a class="btn btn-outline-primary red-button" asp-controller="Review" asp-action="Create" asp-route-routeId=@Model.Id>Add review</a>
+    <hr />
+    <h5>Reviews: </h5>
+    <div>
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>
-                        @item.Date
-                    </td>
-                    <td>
-                        @item.UserName
-                    </td>
-                    <td>
-                        @item.Score
-                    </td>
-                    <td>
-                        @item.Description
-                    </td>
+                    <th><label asp-for="Reviews.First().Date"></label></th>
+                    <th><label asp-for="Reviews.First().UserName">User</label></th>
+                    <th><label asp-for="Reviews.First().Score"></label></th>
+                    <th><label asp-for="Reviews.First().Description"></label></th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Reviews)
+                {
+                    <tr>
+                        <td>
+                            @item.Date
+                        </td>
+                        <td>
+                            @item.UserName
+                        </td>
+                        <td>
+                            @item.Score
+                        </td>
+                        <td>
+                            @item.Description
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <a asp-action="Details" asp-route-id="@Model.Id">Back to details</a> |
+        <a asp-action="Index">Routes list</a>
+    </div>
 </div>
-<div>
-    <a asp-action="Details" asp-route-id="@Model.Id">Back to details</a> |
-    <a asp-action="Index">Routes list</a>
-</div>
-</div>
+@section Scripts{
+<script>
+    $('document').ready(initRaiting());
+</script>
+}
