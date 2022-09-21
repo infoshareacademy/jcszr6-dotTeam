@@ -14,10 +14,7 @@
                 <label>To </label>
             </th>
             <th>
-                <label asp-for="@Model.First().AverageScore">Score</label>
-            </th>
-            <th>
-                <label asp-for="@Model.First().Description"></label>
+                <label asp-for="@Model.First().AverageScore">Rating</label>
             </th>
             <th></th>
         </tr>
@@ -36,10 +33,11 @@
                     @item.DestinationCity
                 </td>
                 <td>
-                    <a asp-action="Reviews" asp-route-id=@item.Id>@item.AverageScore</a>
-                </td>
-                <td>
-                    @item.Description
+                    <a asp-action="Reviews" asp-route-id=@item.Id>
+                        <div class="route-rating">
+                            <input type="hidden" asp-for="@item.AverageScore" id="rating-value" />
+                        </div>
+                   </a>
                 </td>
                 <td>
                     <a class="btn btn-outline-info grey-button" asp-action="Details" asp-route-id="@item.Id">Details</a>

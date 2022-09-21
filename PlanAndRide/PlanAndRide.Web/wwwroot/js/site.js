@@ -373,7 +373,7 @@ function setCityOrTownFromLatLng(latLng, idCityOrTownEl) {
         
 }
 
-function initRaiting() {
+function initRaitingDisplay() {
     $(".route-rating").starRating({
         starSize: 25,
         initialRating: $("#rating-value").val(),

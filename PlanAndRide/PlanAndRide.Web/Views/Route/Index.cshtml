@@ -5,24 +5,22 @@
 }
 <div class="container">
     <h1>Routes</h1>
-
     <p>
         <div class="button" id="button-animation">
             <div id="translate"></div>
             <a class="submit-button" asp-area="" asp-controller="Route" asp-action="Create">New Route</a>
         </div>
     </p>
-
     <partial name="_Partials/_RoutesList" model="@Model" />
 
-    @section scripts{
-        <script>
-            $(document).ready(function() {
-                $('#indexTable').DataTable();
-            });
-        </script>
-
-    }
-
-    </div>
-
+</div>
+@section scripts{
+<script>
+    $(document).ready(function() {
+        $('#indexTable').DataTable();
+    });
+</script>
+<script>
+    $('document').ready(initRaitingDisplay());
+</script>
+}
