@@ -16,8 +16,9 @@
                     <input type="hidden" asp-for="RouteId" class="form-control" />
                 </div>
                 <div class="form-group">
-                    <label asp-for="Score" class="control-label"></label>
-                    <input asp-for="Score" class="form-control" />
+                    <label asp-for="Score" class="control-label">Your score</label>
+                    <div class="route-rating"></div>
+                    <input type="hidden" asp-for="Score" id="rating-value"class="form-control" />
                     <span asp-validation-for="Score" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -27,11 +28,12 @@
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary" />
+                    <input type="submit" value="Create" class="btn btn-primary red-button" />
+                    <a class="btn btn-outline-secondary grey-button" asp-controller="Route" asp-action="Index">Back to List</a>
                 </div>
             </form>
         </div>
-        <a asp-action="Index">Back to List</a>
+        
     </div>
 </div>
 @section Scripts {
@@ -39,12 +41,20 @@
     @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-<script>
-    $(document).ready(function () {
-    $("#review-description").each(countDescriptionCharacters);
-    $("#review-description").keyup(countDescriptionCharacters);
-    });
-</script>
-
+    <script>
+        $(document).ready(function () {
+            $("#review-description").each(countDescriptionCharacters);
+            $("#review-description").keyup(countDescriptionCharacters);
+            $(".route-rating").starRating({
+                starSize: 25,
+                initialRating:0,
+                readOnly: false,
+                useFullStars: true,
+                callback: function(currentRating, $el){
+    	            $("#rating-value").val(currentRating);
+                } 
+            });
+        });
+    </script>
 }
 

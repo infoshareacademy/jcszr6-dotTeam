@@ -9,9 +9,8 @@
     <div class="route-rating">
         <input type="hidden" asp-for="@Model.AverageScore" id="rating-value" />
     </div>
-    
-    <a class="btn btn-outline-primary red-button" asp-controller="Review" asp-action="Create" asp-route-routeId=@Model.Id>Add review</a>
     <hr />
+    <a class="btn btn-outline-primary red-button" asp-controller="Review" asp-action="Create" asp-route-routeId=@Model.Id>Add review</a>
     <h5>Reviews: </h5>
     <div>
         <table class="table">

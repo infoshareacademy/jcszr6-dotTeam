@@ -13,7 +13,7 @@ namespace PlanAndRide.BusinessLogic
         public int UserId { get; set; }
         public int RouteId { get; set; }
         [Required]
-        [Range(1,5)]
+        [Range(1,5, ErrorMessage = "Please select your rating!") ]
         public int Score { get; set; }
         public DateTime Date { get; set; }
         [MaxLength(200)]

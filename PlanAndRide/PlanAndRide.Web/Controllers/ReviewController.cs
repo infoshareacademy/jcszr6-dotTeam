@@ -1,14 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using PlanAndRide.BusinessLogic;
-using PlanAndRide.Database;
-using PlanAndRide.Web.Models;
 
 namespace PlanAndRide.Web.Controllers
 {
@@ -17,7 +8,7 @@ namespace PlanAndRide.Web.Controllers
         private readonly IReviewService _reviewService;
         private readonly IRouteService _routeService;
 
-        public ReviewController(IReviewService service,IRouteService routeService)
+        public ReviewController(IReviewService service, IRouteService routeService)
         {
             _reviewService = service;
             _routeService = routeService;
@@ -64,13 +55,9 @@ namespace PlanAndRide.Web.Controllers
         // GET: Reviews/Create
         public async Task<IActionResult> Create(int routeId)
         {
-            //ViewData["RouteId"] = new SelectList(_context.Routes, "Id", "Name");
-            //ViewData["UserId"] = new SelectList(_context.Users, "Id", "Email");
-            //var model = new CreateRouteReviewDto { RouteId = routeId };
             ViewData["RouteName"] = await _routeService.GetRouteName(routeId);
             var model = new CreateRouteReviewDto { RouteId = routeId };
             return View(model);
-
         }
 
         // POST: Reviews/Create
@@ -80,15 +67,6 @@ namespace PlanAndRide.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("RouteId,Score,Description")] CreateRouteReviewDto dto)
         {
-            //    if (ModelState.IsValid)
-            //    {
-            //        _context.Add(review);
-            //        await _context.SaveChangesAsync();
-            //        return RedirectToAction(nameof(Index));
-            //    }
-            //    ViewData["RouteId"] = new SelectList(_context.Routes, "Id", "Name", review.RouteId);
-            //    ViewData["UserId"] = new SelectList(_context.Users, "Id", "Email", review.UserId);
-            //    return View(review);
             if (!ModelState.IsValid)
             {
                 return View(dto);
@@ -96,10 +74,7 @@ namespace PlanAndRide.Web.Controllers
             dto.UserId = 1;
             dto.Date = DateTime.UtcNow;
             await _reviewService.Add(dto);
-            return RedirectToAction(actionName:"Reviews",controllerName:"Route", new { Id = dto.RouteId });
-                
-
-                
+            return RedirectToAction(actionName: "Reviews", controllerName: "Route", new { Id = dto.RouteId });
         }
 
         // GET: Reviews/Edit/5
