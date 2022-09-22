@@ -373,14 +373,6 @@ function setCityOrTownFromLatLng(latLng, idCityOrTownEl) {
         
 }
 
-function initRaitingDisplay() {
-    $(".route-rating").starRating({
-        starSize: 25,
-        initialRating: $("#rating-value").val(),
-        readOnly: true,
-    });
-}
-
 function countDescriptionCharacters() {
     var max = $(this).attr("maxlength");
     var length = $(this).val().length;

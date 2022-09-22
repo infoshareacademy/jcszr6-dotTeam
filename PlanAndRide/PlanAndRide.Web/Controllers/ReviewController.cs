@@ -55,7 +55,7 @@ namespace PlanAndRide.Web.Controllers
         // GET: Reviews/Create
         public async Task<IActionResult> Create(int routeId)
         {
-            ViewData["RouteName"] = await _routeService.GetRouteName(routeId);
+            TempData["RouteName"] = await _routeService.GetRouteName(routeId);
             var model = new CreateRouteReviewDto { RouteId = routeId };
             return View(model);
         }

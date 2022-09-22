@@ -34,8 +34,8 @@
                 </td>
                 <td>
                     <a asp-action="Reviews" asp-route-id=@item.Id>
-                        <div class="route-rating">
-                            <input type="hidden" asp-for="@item.AverageScore" id="rating-value" />
+                        <div class="route-star-rating" id="route-rating-@item.Id">
+                            <input type="hidden" asp-for="@item.AverageScore" id="rating-value-@item.Id" />
                         </div>
                    </a>
                 </td>

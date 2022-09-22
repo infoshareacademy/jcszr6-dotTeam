@@ -2,11 +2,11 @@
 
 @{
     ViewData["Title"] = "Create route review";
+    var routeName = TempData.Peek("RouteName") ?? "";
 }
 <div class="container col-md-6 align-items-center"
-    <br /><br />
-    <h4>Add review to route "@ViewData["RouteName"]"        </h4>
-
+    <br /><br/>
+    <h4>Create review for route @routeName</h4>
     <hr />
     <div class="row">
         <div>
@@ -45,15 +45,7 @@
         $(document).ready(function () {
             $("#review-description").each(countDescriptionCharacters);
             $("#review-description").keyup(countDescriptionCharacters);
-            $(".route-rating").starRating({
-                starSize: 25,
-                initialRating:0,
-                readOnly: false,
-                useFullStars: true,
-                callback: function(currentRating, $el){
-    	            $("#rating-value").val(currentRating);
-                } 
-            });
+            createNewStarRating();
         });
     </script>
 }
