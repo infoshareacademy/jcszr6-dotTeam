@@ -1,51 +1,34 @@
-﻿@model PlanAndRide.BusinessLogic.Review
+﻿@model CreateEditRouteReviewDto
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit route review";
+    var routeName = TempData.Peek("RouteName") ?? "";
 }
-
-<h1>Edit</h1>
-
-<h4>Review</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
-                <span asp-validation-for="UserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RouteId" class="control-label"></label>
-                <select asp-for="RouteId" class="form-control" asp-items="ViewBag.RouteId"></select>
-                <span asp-validation-for="RouteId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Score" class="control-label"></label>
-                <input asp-for="Score" class="form-control" />
-                <span asp-validation-for="Score" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Date" class="control-label"></label>
-                <input asp-for="Date" class="form-control" />
-                <span asp-validation-for="Date" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+<div class="container col-md-6 align-items-center"
+    <br /><br/>
+    <h4>Edit review for route @routeName</h4>
+    <hr />
+    <div class="row">
+        <div>
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <partial name="_Partials/_CreateEditFormFields" model="@Model" />
+                <div class="form-group">
+                    <input type="submit" value="Edit" class="btn btn-primary red-button" />
+                    <a class="btn btn-outline-secondary grey-button" asp-controller="Route" asp-action="Index">Back to List</a>
+                </div>
+            </form>
+        </div>
+        
     </div>
 </div>
+@section Scripts {
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
+    <script>
+        $(document).ready(function () {
+            $("#review-description").each(countDescriptionCharacters);
+            $("#review-description").keyup(countDescriptionCharacters);
+            createEditStarRating($("#rating-value").val());
+        });
+    </script>
+}

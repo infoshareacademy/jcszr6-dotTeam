@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PlanAndRide.BusinessLogic
 {
-    public class CreateRouteReviewDto
+    public class CreateEditRouteReviewDto
     {
         public int Id { get; set; }
         public int UserId { get; set; }

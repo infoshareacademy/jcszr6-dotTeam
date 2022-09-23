@@ -36,7 +36,7 @@ namespace PlanAndRide.Database.Repository
         public async Task Add(Review entity)
         {
             await _context.Reviews.AddAsync(entity);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
         public async Task Delete(int id)
@@ -47,17 +47,19 @@ namespace PlanAndRide.Database.Repository
             throw new NotImplementedException();
         }
 
-        public async Task<Review> Get(int id)
+        public async Task<Review?> Get(int id)
         {
-            //try
-            //{
-            //    return await _context.Reviews.SingleOrDefaultAsync(r => r.Id == id);
-            //}
-            //catch
-            //{
-            //    throw new InvalidOperationException($"Unique key violation: Review ID:{id}");
-            //}
-            throw new NotImplementedException();
+            try
+            {
+                return await _context.Reviews
+                    .Include(r => r.User)
+                    .Include(r => r.Route)
+                    .SingleOrDefaultAsync(r => r.Id == id);
+            }
+            catch
+            {
+                throw new InvalidOperationException($"Unique key violation: Review ID:{id}");
+            }
         }
 
 
@@ -76,19 +78,21 @@ namespace PlanAndRide.Database.Repository
 
         public async Task Update(int id, Review review)
         {
-            //var existingReview = await _context.Reviews.SingleOrDefaultAsync(r=>r.Id==id);
-            //if (existingReview == null)
-            //{
-            //    throw new RecordNotFoundException($"Review ID:{id} not found in repository");
-            //}
-            //existingReview.Route = review.Route;
-            //existingReview.User = review.User;
-            //existingReview.Date = review.Date;
-            //existingReview.Description = review.Description;
-            //existingReview.Score = review.Score;
-
-            //_context.SaveChanges();
-            throw new NotImplementedException();
+            try
+            {
+                var existingReview = await _context.Reviews.SingleOrDefaultAsync(r => r.Id == id);
+                if (existingReview == null)
+                {
+                    throw new RecordNotFoundException($"Review ID:{id} not found in repository");
+                }
+                existingReview.Description = review.Description;
+                existingReview.Score = review.Score;
+                await _context.SaveChangesAsync();
+            }
+            catch
+            {
+                throw;
+            }
         }
     }
 }

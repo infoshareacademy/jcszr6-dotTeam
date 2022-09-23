@@ -29,3 +29,15 @@ function createNewStarRating() {
         }
     });
 }
+function createEditStarRating(initialRatingValue) {
+    $(".route-rating").starRating({
+        starSize: 25,
+        initialRating: initialRatingValue,
+        readOnly: false,
+        useFullStars: true,
+        disableAfterRate: false,
+        callback: function (currentRating, $el) {
+            $("#rating-value").val(currentRating);
+        }
+    });
+}

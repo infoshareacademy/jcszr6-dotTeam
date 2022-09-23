@@ -16,7 +16,7 @@ namespace PlanAndRide.BusinessLogic
             _repository = repository;
             _mapper = mapper;
         }
-        public async Task Add(CreateRouteReviewDto entity)
+        public async Task Add(CreateEditRouteReviewDto entity)
         {
             await _repository.Add(_mapper.Map<Review>(entity));
         }
@@ -28,16 +28,15 @@ namespace PlanAndRide.BusinessLogic
 
         public async Task<ReviewDto> Get(int id)
         {
-            Review? review;
             try
             {
-                review = await _repository.Get(id);
+                var review = await _repository.Get(id);
+                return _mapper.Map<ReviewDto>(review);
             }
             catch
             {
                 throw;
             }
-            return _mapper.Map<ReviewDto>(review);
         }
 
         public async Task<IEnumerable<ReviewDto>> GetAll()
@@ -51,7 +50,7 @@ namespace PlanAndRide.BusinessLogic
         //    return _mapper.Map<IEnumerable<ReviewDto>>(reviews);
         //}
 
-        public async Task Update(int id, ReviewDto entity)
+        public async Task Update(int id, CreateEditRouteReviewDto entity)
         {
             try
             {
