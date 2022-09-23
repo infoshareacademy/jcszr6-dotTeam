@@ -111,6 +111,10 @@ namespace PlanAndRide.BusinessLogic
             try
             {
                 var route = await _repository.Get(id);
+                if(route is null)
+                {
+                    return String.Empty;
+                }
                 return route.Name;
             }
             catch

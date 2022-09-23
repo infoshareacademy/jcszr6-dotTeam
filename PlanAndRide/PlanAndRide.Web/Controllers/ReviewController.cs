@@ -55,7 +55,12 @@ namespace PlanAndRide.Web.Controllers
         // GET: Reviews/Create
         public async Task<IActionResult> Create(int routeId)
         {
-            TempData["RouteName"] = await _routeService.GetRouteName(routeId);
+            var route = await _routeService.Get(routeId);
+            if (route is null)
+            {
+                return NotFound();
+            }
+            TempData["RouteName"] = route.Name;
             var model = new CreateEditRouteReviewDto { RouteId = routeId };
             return View(model);
         }
@@ -111,24 +116,14 @@ namespace PlanAndRide.Web.Controllers
         }
 
         // GET: Reviews/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int id)
         {
-            //if (id == null || _context.Reviews == null)
-            //{
-            //    return NotFound();
-            //}
-
-            //var review = await _context.Reviews
-            //    .Include(r => r.Route)
-            //    .Include(r => r.User)
-            //    .FirstOrDefaultAsync(m => m.Id == id);
-            //if (review == null)
-            //{
-            //    return NotFound();
-            //}
-
-            //return View(review);
-            throw new NotImplementedException();
+            var review = await _reviewService.Get(id);
+            if(review is null)
+            {
+                return NotFound();
+            }
+            return View(review);
         }
 
         // POST: Reviews/Delete/5
@@ -136,25 +131,13 @@ namespace PlanAndRide.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            //if (_context.Reviews == null)
-            //{
-            //    return Problem("Entity set 'PlanAndRideContext.Reviews'  is null.");
-            //}
-            //var review = await _context.Reviews.FindAsync(id);
-            //if (review != null)
-            //{
-            //    _context.Reviews.Remove(review);
-            //}
-
-            //await _context.SaveChangesAsync();
-            //return RedirectToAction(nameof(Index));
-            throw new NotImplementedException();
-        }
-
-        private bool ReviewExists(int id)
-        {
-            //return (_context.Reviews?.Any(e => e.Id == id)).GetValueOrDefault();
-            throw new NotImplementedException();
+            var review = await _reviewService.Get(id); 
+            if(review is null)
+            {
+                return NotFound();
+            }
+            await _reviewService.Delete(id);
+            return RedirectToAction(actionName: "Reviews", controllerName: "Route", new { Id = review.RouteId });
         }
     }
 }

@@ -23,7 +23,14 @@ namespace PlanAndRide.BusinessLogic
 
         public async Task Delete(int id)
         {
-           await _repository.Delete(id);
+            try
+            {
+                await _repository.Delete(id);
+            }
+            catch
+            {
+                throw;
+            }
         }
 
         public async Task<ReviewDto> Get(int id)
@@ -44,11 +51,6 @@ namespace PlanAndRide.BusinessLogic
             var reviews =  await _repository.GetAll();
             return _mapper.Map<IEnumerable<ReviewDto>>(reviews);
         }
-        //public async Task<IEnumerable<ReviewDto>> GetByRoute(int id)
-        //{
-        //    var reviews = await _repository.GetByRoute(id);
-        //    return _mapper.Map<IEnumerable<ReviewDto>>(reviews);
-        //}
 
         public async Task Update(int id, CreateEditRouteReviewDto entity)
         {
