@@ -24,8 +24,9 @@
             @Html.DisplayNameFor(model => model.Score)
         </dt>
         <dd class="col-sm-10">
-            <div class="route-rating"></div>
-            <input type="hidden" asp-for="@Model.Score" id="rating-value" />            
+            <div class="route-rating">
+                <input type="hidden" asp-for="@Model.Score" id="rating-value" />            
+            </div>
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Description)
