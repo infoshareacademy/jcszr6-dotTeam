@@ -1,10 +1,10 @@
 ﻿function showStarRatingForRoutesList() {
-    let ratingElements = document.getElementsByClassName("route-star-rating");
+    let ratingElements = document.getElementsByClassName("route-collection-rating");
     for (let i = 0; i < ratingElements.length; i++) {
         let markupElementId = ratingElements[i].id;
         let valueElementId = ratingElements[i].firstElementChild.id;
         $("#" + markupElementId).starRating({
-            starSize: 25,
+            starSize: 15,
             initialRating: $("#" + valueElementId).val(),
             readOnly: true,
         });

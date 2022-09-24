@@ -168,3 +168,23 @@ option {
     min-width: 500px;
     min-height: 350px;
 }
+
+.review {
+    margin: 10px 0px;
+    padding: 2px;
+    border-top: 1px solid;
+}
+.display-inline{
+    display: inline-block
+}
+.route-rating {
+    margin: 5px 0px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+.review-content {
+   margin: 5px 0px;
+   padding-right: 15px;
+   padding-left: 15px;
+   font-style: italic;
+}
