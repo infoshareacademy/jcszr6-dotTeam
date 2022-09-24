@@ -1,0 +1,60 @@
+﻿@model RouteDtoWithReviews
+@{
+    ViewData["Title"] = "Manage reviews";
+}
+<div class="container">
+    @*<h1>Route Reviews</h1>*@
+
+    <h3>@Model.Name</h3>
+    <div class="route-rating">
+        <input type="hidden" asp-for="@Model.AverageScore" id="rating-value" />
+    </div>
+    <hr />
+    <a class="btn btn-outline-primary red-button" asp-controller="Review" asp-action="Create" asp-route-routeId=@Model.Id>Add review</a>
+    <h5>Reviews: </h5>
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th><label asp-for="Reviews.First().Date"></label></th>
+                    <th><label asp-for="Reviews.First().UserName">User</label></th>
+                    <th><label asp-for="Reviews.First().Score"></label></th>
+                    <th><label asp-for="Reviews.First().Description"></label></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Reviews)
+                {
+                    <tr>
+                        <td>
+                            @item.Date
+                        </td>
+                        <td>
+                            @item.UserName
+                        </td>
+                        <td>
+                            @item.Score
+                        </td>
+                        <td>
+                            @item.Description
+                        </td>
+                        <td class="col-sm-2">
+                            <a class="btn btn-outline-primary grey-button" asp-controller="Review" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                            <a class="btn btn-outline-danger grey-button" asp-controller="Review" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <a asp-action="Details" asp-route-id="@Model.Id">Back to details</a> |
+        <a asp-action="Index">Routes list</a>
+    </div>
+</div>
+@section Scripts{
+<script>
+    $('document').ready(showStarRatingForSingleRoute());
+</script>
+}

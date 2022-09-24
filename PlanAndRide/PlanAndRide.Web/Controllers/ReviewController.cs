@@ -112,7 +112,7 @@ namespace PlanAndRide.Web.Controllers
                 return View(dto);
             }
             await _reviewService.Update(id,dto);
-            return RedirectToAction(actionName: "Reviews", controllerName: "Route", new { Id = dto.RouteId });
+            return RedirectToAction(actionName: "ManageReviews", controllerName: "Route", new { Id = dto.RouteId });
         }
 
         // GET: Reviews/Delete/5
@@ -137,7 +137,7 @@ namespace PlanAndRide.Web.Controllers
                 return NotFound();
             }
             await _reviewService.Delete(id);
-            return RedirectToAction(actionName: "Reviews", controllerName: "Route", new { Id = review.RouteId });
+            return RedirectToAction(actionName: "ManageReviews", controllerName: "Route", new { Id = review.RouteId });
         }
     }
 }

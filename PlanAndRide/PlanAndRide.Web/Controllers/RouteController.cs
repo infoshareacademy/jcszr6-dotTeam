@@ -145,5 +145,15 @@ namespace PlanAndRide.Web.Controllers
             }
             return View(route);
         }
+        public async Task<ActionResult> ManageReviews(int id)
+        {
+            var route = await _routeService.GetRouteWithReviews(id);
+            if (route is null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            return View(route);
+        }
     }
 }
+
