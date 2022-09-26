@@ -188,3 +188,19 @@ option {
    padding-left: 15px;
    font-style: italic;
 }
+label.orderBy {
+    display: inline-block;
+    margin-bottom: 0;
+    padding: 0.375rem 0.75rem;
+    white-space:nowrap;
+}
+select.form-control#orderBy {
+    display: inline-block;
+    background-color: #333;
+    color: #BFC0C0;
+}
+    select.form-control#orderBy > option {
+        background-color: #333;
+        color: #BFC0C0;
+        font-weight: normal !important;
+    }

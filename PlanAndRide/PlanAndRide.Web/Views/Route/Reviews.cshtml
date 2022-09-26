@@ -1,10 +1,16 @@
 ﻿@model RouteDtoWithReviews
 @{
     ViewData["Title"] = "Reviews";
+    var orderSelectList = new List<SelectListItem>() {
+                new SelectListItem(text:"date descending",value:"date_desc",selected: true),
+                new SelectListItem(text:"date ascending",value:"date_asc"),
+                new SelectListItem(text:"score descending",value:"score_desc"),
+                new SelectListItem(text:"score ascending",value:"score_asc")
+                };
 }
 <div class="container">
     @*<h1>Route Reviews</h1>*@
-    
+
     <h3>@Model.Name</h3>
     <div class="route-rating">
         <input type="hidden" asp-for="@Model.AverageScore" id="rating-value" />
@@ -13,24 +19,37 @@
     <a class="btn btn-outline-primary red-button" asp-controller="Review" asp-action="Create" asp-route-routeId=@Model.Id>Add review</a>
     <h5>Reviews: </h5>
     <div class="fluid-container">
-        @foreach(var item in Model.Reviews)
-        {
-         <div class="review">
-            <div>
-                <div class="display-inline col-sm-2">
-                    @item.Date
+        <div class="col-md-5 col-lg-4 col-xl-3">
+            <form asp-action="Reviews" method="get">
+                <div class="form-row">
+                    <label class="orderBy col-md-5">Order by: </label> 
+                    @Html.DropDownList("orderBy",orderSelectList,
+                    new
+                    {
+                        @class="col-sm-6 col-md-7 form-control",
+                        @onchange=$"var form = document.forms[0];form.action='{@Model.Id}?orderBy=this.value';form.submit();"
+                    })
                 </div>
-                <div class="display-inline col-sm-9">
-                    @item.UserName
-                </div>
-                <div class="route-collection-rating" id="route-rating-@item.Id">
-                    <input type="hidden" asp-for="@item.Score" id="rating-value-@item.Id"/>
-                </div>
-            </div>
-            <div class="review-content">
-                @item.Description
-            </div>
+            </form>
         </div>
+        @foreach (var item in Model.Reviews)
+        {
+            <div class="review">
+                <div>
+                    <div class="display-inline col-sm-2">
+                        @item.Date
+                    </div>
+                    <div class="display-inline col-sm-9">
+                        @item.UserName
+                    </div>
+                    <div class="route-collection-rating" id="route-rating-@item.Id">
+                        <input type="hidden" asp-for="@item.Score" id="rating-value-@item.Id" />
+                    </div>
+                </div>
+                <div class="review-content">
+                    @item.Description
+                </div>
+            </div>
         }
     </div>
     <div>
@@ -44,4 +63,3 @@
     $('document').ready(showStarRatingForRoutesList());
 </script>
 }
-          

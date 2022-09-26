@@ -89,7 +89,7 @@ namespace PlanAndRide.BusinessLogic
             return Math.Round(avg * 2) / 2;
         }
 
-        public async Task<RouteDtoWithReviews?> GetRouteWithReviews(int id, string sortOrder)
+        public async Task<RouteDtoWithReviews?> GetRouteWithReviews(int id, string orderBy)
         {
             try
             {
@@ -101,7 +101,7 @@ namespace PlanAndRide.BusinessLogic
                 }
                 if(dto != null && dto.Reviews != null)
                 {
-                    dto.Reviews = SortRouteReviews(dto.Reviews, sortOrder);
+                    dto.Reviews = GetOrderedReviews(dto.Reviews, orderBy);
                 }
                 return dto;
             }
@@ -110,8 +110,8 @@ namespace PlanAndRide.BusinessLogic
                 throw;
             }
         }
-        private IOrderedEnumerable<ReviewDto> SortRouteReviews(IEnumerable<ReviewDto> reviews, string sortOrder) =>
-            sortOrder switch
+        private IOrderedEnumerable<ReviewDto> GetOrderedReviews(IEnumerable<ReviewDto> reviews, string orderBy) =>
+            orderBy switch
             {
                 "score_asc" => reviews.OrderBy(dto => dto.Score),
                 "score_desc" => reviews.OrderByDescending(dto => dto.Score),

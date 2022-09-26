@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using PlanAndRide.BusinessLogic;
 using PlanAndRide.Web.Models;
 using System.Linq;
@@ -136,18 +137,18 @@ namespace PlanAndRide.Web.Controllers
             return RedirectToAction(nameof(Index));
 
         }
-        public async Task<ActionResult> Reviews(int id, string sortOrder)
+        public async Task<ActionResult> Reviews(int id, string orderBy="date_desc")
         {
-            var route = await _routeService.GetRouteWithReviews(id, sortOrder);
+            var route = await _routeService.GetRouteWithReviews(id, orderBy);
             if(route is null)
             {
                 return RedirectToAction(nameof(Index));
             }
             return View(route);
         }
-        public async Task<ActionResult> ManageReviews(int id, string sortOrder)
+        public async Task<ActionResult> ManageReviews(int id, string orderBy)
         {
-            var route = await _routeService.GetRouteWithReviews(id, sortOrder);
+            var route = await _routeService.GetRouteWithReviews(id, orderBy);
             if (route is null)
             {
                 return RedirectToAction(nameof(Index));
