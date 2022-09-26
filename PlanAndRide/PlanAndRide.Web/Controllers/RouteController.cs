@@ -136,18 +136,18 @@ namespace PlanAndRide.Web.Controllers
             return RedirectToAction(nameof(Index));
 
         }
-        public async Task<ActionResult> Reviews(int id)
+        public async Task<ActionResult> Reviews(int id, string sortOrder)
         {
-            var route = await _routeService.GetRouteWithReviews(id);
+            var route = await _routeService.GetRouteWithReviews(id, sortOrder);
             if(route is null)
             {
                 return RedirectToAction(nameof(Index));
             }
             return View(route);
         }
-        public async Task<ActionResult> ManageReviews(int id)
+        public async Task<ActionResult> ManageReviews(int id, string sortOrder)
         {
-            var route = await _routeService.GetRouteWithReviews(id);
+            var route = await _routeService.GetRouteWithReviews(id, sortOrder);
             if (route is null)
             {
                 return RedirectToAction(nameof(Index));

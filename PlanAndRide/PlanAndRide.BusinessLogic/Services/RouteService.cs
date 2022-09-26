@@ -85,19 +85,23 @@ namespace PlanAndRide.BusinessLogic
                 return 0d;
             }
             var avg = route.Reviews.Average(r => r.Score);
-            
-            return Math.Round(avg*2)/2;
+
+            return Math.Round(avg * 2) / 2;
         }
 
-        public async Task<RouteDtoWithReviews?> GetRouteWithReviews(int id)
+        public async Task<RouteDtoWithReviews?> GetRouteWithReviews(int id, string sortOrder)
         {
             try
             {
                 var route = await _repository.Get(id);
                 var dto = _mapper.Map<RouteDtoWithReviews>(route);
-                if(dto != null)
+                if (dto != null)
                 {
                     dto.AverageScore = AverageScore(route);
+                }
+                if(dto != null && dto.Reviews != null)
+                {
+                    dto.Reviews = SortRouteReviews(dto.Reviews, sortOrder);
                 }
                 return dto;
             }
@@ -106,12 +110,22 @@ namespace PlanAndRide.BusinessLogic
                 throw;
             }
         }
+        private IOrderedEnumerable<ReviewDto> SortRouteReviews(IEnumerable<ReviewDto> reviews, string sortOrder) =>
+            sortOrder switch
+            {
+                "score_asc" => reviews.OrderBy(dto => dto.Score),
+                "score_desc" => reviews.OrderByDescending(dto => dto.Score),
+                "date_asc" => reviews.OrderBy(dto => dto.Date),
+                _ or "date_desc" => reviews.OrderByDescending(dto => dto.Date),
+
+            };
+
         public async Task<string> GetRouteName(int id)
         {
             try
             {
                 var route = await _repository.Get(id);
-                if(route is null)
+                if (route is null)
                 {
                     return String.Empty;
                 }

@@ -9,7 +9,7 @@
         Task Delete(int id);
         Task<IEnumerable<RouteDto>> FindByName(string name);
         double AverageScore(Route route);
-        Task<RouteDtoWithReviews?> GetRouteWithReviews(int id);
+        Task<RouteDtoWithReviews?> GetRouteWithReviews(int id, string sortOrder);
         Task<string> GetRouteName(int id);
     }
 }
