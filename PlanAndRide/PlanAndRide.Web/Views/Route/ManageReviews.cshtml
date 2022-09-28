@@ -16,15 +16,15 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th><label asp-for="Reviews.First().Date"></label></th>
-                    <th><label asp-for="Reviews.First().UserName">User</label></th>
-                    <th><label asp-for="Reviews.First().Score"></label></th>
-                    <th><label asp-for="Reviews.First().Description"></label></th>
+                    <th><label asp-for="PagedReviews.First().Date"></label></th>
+                    <th><label asp-for="PagedReviews.First().UserName">User</label></th>
+                    <th><label asp-for="PagedReviews.First().Score"></label></th>
+                    <th><label asp-for="PagedReviews.First().Description"></label></th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.Reviews)
+                @foreach (var item in Model.PagedReviews)
                 {
                     <tr>
                         <td>

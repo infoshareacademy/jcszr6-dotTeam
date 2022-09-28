@@ -1,4 +1,7 @@
-﻿@model RouteDtoWithReviews
+﻿@using X.PagedList.Mvc.Core;
+@using X.PagedList.Web.Common;
+
+@model RouteDtoWithReviews
 @{
     ViewData["Title"] = "Reviews";
     var orderSelectList = new List<SelectListItem>() {
@@ -7,6 +10,9 @@
                 new SelectListItem(text:"score descending",value:"score_desc"),
                 new SelectListItem(text:"score ascending",value:"score_asc")
                 };
+    var orderBy = ViewBag.OrderBy;
+    var pageSize = ViewBag.PageSize;
+    var currentPage = ViewBag.Page;
 }
 <div class="container">
     @*<h1>Route Reviews</h1>*@
@@ -23,16 +29,16 @@
             <form asp-action="Reviews" method="get">
                 <div class="form-row">
                     <label class="orderBy col-md-5">Order by: </label> 
-                    @Html.DropDownList("orderBy",orderSelectList,
+                    @Html.DropDownList("orderBy", orderSelectList,
                     new
                     {
                         @class="col-sm-6 col-md-7 form-control",
-                        @onchange=$"var form = document.forms[0];form.action='{@Model.Id}?orderBy=this.value';form.submit();"
+                        @onchange="redirectOnOrderChange(this.value);"
                     })
                 </div>
             </form>
         </div>
-        @foreach (var item in Model.Reviews)
+        @foreach (var item in Model.PagedReviews)
         {
             <div class="review">
                 <div>
@@ -52,14 +58,44 @@
             </div>
         }
     </div>
+
+    <br />
+    Page @(Model.PagedReviews.PageCount < Model.PagedReviews.PageNumber ? 0 : Model.PagedReviews.PageNumber) of @Model.PagedReviews.PageCount
+
+    @{
+        if(Model.PagedReviews.PageCount > 1)
+        {
+            @Html.PagedListPager(
+            Model.PagedReviews, 
+            page => Url.Action("Reviews", new { page, orderBy = @orderBy,id=@Model.Id, pageSize=@pageSize}),
+            new PagedListRenderOptions {
+                    LiElementClasses = new string[] { "page-item" },
+                    PageClasses = new string[] { "page-link" }
+                    }
+                )
+        }
+
+    }
+    
+
     <div>
-        <a asp-action="Details" asp-route-id="@Model.Id">Back to details</a> |
-        <a asp-action="Index">Routes list</a>
+        <a class="btn btn-outline-secondary grey-button" asp-action="Index">Routes list</a>
+        <a class="btn btn-outline-secondary grey-button" asp-action="Details" asp-route-id="@Model.Id">Back to details</a> 
+        
     </div>
 </div>
 @section Scripts{
 <script>
     $('document').ready(showStarRatingForSingleRoute());
     $('document').ready(showStarRatingForRoutesList());
+</script>
+<script>
+    function redirectOnOrderChange(dropDownValue){
+        window.location.href = '/Route/Reviews/'
+        + @Model.Id 
+        + '?orderBy=' + dropDownValue
+        + '&page=' + @currentPage
+        + '&pageSize=' + @pageSize;
+    }
 </script>
 }

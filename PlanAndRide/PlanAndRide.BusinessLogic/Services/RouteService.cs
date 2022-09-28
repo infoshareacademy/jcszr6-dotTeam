@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using X.PagedList;
 
 namespace PlanAndRide.BusinessLogic
 {
@@ -89,28 +90,31 @@ namespace PlanAndRide.BusinessLogic
             return Math.Round(avg * 2) / 2;
         }
 
-        public async Task<RouteDtoWithReviews?> GetRouteWithReviews(int id, string orderBy)
+        public async Task<RouteDtoWithReviews?> GetRouteWithReviews(int id, string orderBy, int page, int pageSize)
         {
             try
             {
                 var route = await _repository.Get(id);
-                var dto = _mapper.Map<RouteDtoWithReviews>(route);
-                if (dto != null)
+                if (route is null)
                 {
-                    dto.AverageScore = AverageScore(route);
+                    return null;
                 }
-                if(dto != null && dto.Reviews != null)
+                var routeDto = _mapper.Map<RouteDtoWithReviews>(route);
+                routeDto.AverageScore = AverageScore(route);
+                if (route.Reviews != null)
                 {
-                    dto.Reviews = GetOrderedReviews(dto.Reviews, orderBy);
+                    var reviewDtos = _mapper.Map<IList<ReviewDto>>(route.Reviews);
+                    var orderedReviewDtos = GetOrderedReviews(reviewDtos, orderBy);
+                    routeDto.PagedReviews = orderedReviewDtos.ToPagedList(page, pageSize);
                 }
-                return dto;
+                return routeDto;
             }
             catch
             {
                 throw;
             }
         }
-        private IOrderedEnumerable<ReviewDto> GetOrderedReviews(IEnumerable<ReviewDto> reviews, string orderBy) =>
+        private IOrderedEnumerable<ReviewDto> GetOrderedReviews(IList<ReviewDto> reviews, string orderBy) =>
             orderBy switch
             {
                 "score_asc" => reviews.OrderBy(dto => dto.Score),

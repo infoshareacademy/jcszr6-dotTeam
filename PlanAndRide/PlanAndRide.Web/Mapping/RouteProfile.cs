@@ -10,7 +10,8 @@ namespace PlanAndRide.Web.Mapping
         {
             CreateMap<BusinessLogic.Route, RouteDto>()
                 .ReverseMap();
-            CreateMap<BusinessLogic.Route, RouteDtoWithReviews>();
+            CreateMap<BusinessLogic.Route, RouteDtoWithReviews>()
+                .ForMember(dto => dto.PagedReviews, expr => expr.Ignore());
         }
     }
 }

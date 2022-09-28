@@ -137,18 +137,30 @@ namespace PlanAndRide.Web.Controllers
             return RedirectToAction(nameof(Index));
 
         }
-        public async Task<ActionResult> Reviews(int id, string orderBy="date_desc")
+        public async Task<ActionResult> Reviews(int id, string orderBy,int? page, int? pageSize)
         {
-            var route = await _routeService.GetRouteWithReviews(id, orderBy);
-            if(route is null)
+            var currentOrderBy = orderBy ?? "date_desc";
+            var pageNumber = page ?? 1;
+            var pageSizeNumber = pageSize ?? 3;
+            ViewBag.OrderBy = currentOrderBy;
+            ViewBag.Page = pageNumber;
+            ViewBag.PageSize = pageSizeNumber;
+            var model = await _routeService.GetRouteWithReviews(id, currentOrderBy,pageNumber,pageSizeNumber);
+            if(model is null)
             {
                 return RedirectToAction(nameof(Index));
             }
-            return View(route);
+            return View(model);
         }
-        public async Task<ActionResult> ManageReviews(int id, string orderBy)
+        public async Task<ActionResult> ManageReviews(int id, string orderBy,int? page, int? pageSize)
         {
-            var route = await _routeService.GetRouteWithReviews(id, orderBy);
+            var currentOrderBy = orderBy ?? "date_desc";
+            var pageNumber = page ?? 1;
+            var pageSizeNumber = pageSize ?? 3;
+            ViewBag.OrderBy = currentOrderBy;
+            ViewBag.Page = pageNumber;
+            ViewBag.PageSize = pageSizeNumber;
+            var route = await _routeService.GetRouteWithReviews(id, currentOrderBy, pageNumber, pageSizeNumber);
             if (route is null)
             {
                 return RedirectToAction(nameof(Index));
