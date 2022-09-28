@@ -15,29 +15,29 @@
     var currentPage = ViewBag.Page;
 }
 <div class="container">
-    @*<h1>Route Reviews</h1>*@
-
+    <h2>Reviews</h2>
     <h3>@Model.Name</h3>
     <div class="route-rating">
         <input type="hidden" asp-for="@Model.AverageScore" id="rating-value" />
     </div>
     <hr />
     <a class="btn btn-outline-primary red-button" asp-controller="Review" asp-action="Create" asp-route-routeId=@Model.Id>Add review</a>
-    <h5>Reviews: </h5>
+@*    <h5>Reviews: </h5>*@
     <div class="fluid-container">
-        <div class="col-md-5 col-lg-4 col-xl-3">
+        <div class="order-by-dropdown">
             <form asp-action="Reviews" method="get">
                 <div class="form-row">
-                    <label class="orderBy col-md-5">Order by: </label> 
+                    <label class="orderBy">Order by: </label> 
                     @Html.DropDownList("orderBy", orderSelectList,
                     new
                     {
-                        @class="col-sm-6 col-md-7 form-control",
+                        @class="",
                         @onchange="redirectOnOrderChange(this.value);"
                     })
                 </div>
             </form>
         </div>
+        <div style="clear:both;"></div>
         @foreach (var item in Model.PagedReviews)
         {
             <div class="review">
@@ -59,8 +59,10 @@
         }
     </div>
 
-    <br />
-    Page @(Model.PagedReviews.PageCount < Model.PagedReviews.PageNumber ? 0 : Model.PagedReviews.PageNumber) of @Model.PagedReviews.PageCount
+    <div class="page-current-number">
+         Page @(Model.PagedReviews.PageCount < Model.PagedReviews.PageNumber ? 0 : Model.PagedReviews.PageNumber) of @Model.PagedReviews.PageCount
+    </div>
+   
 
     @{
         if(Model.PagedReviews.PageCount > 1)
