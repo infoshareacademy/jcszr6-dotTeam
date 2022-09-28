@@ -194,21 +194,25 @@ option {
 }
 .order-by-dropdown {
     float: right;
-    margin: 0 0.75rem;
+    margin: 0.75rem 0.75rem 0 0;
 }
-label.orderBy {
+.page-size-dropdown {
+    float: left;
+    margin: 0.75rem 0 0 0;
+}
+.dropdown-label {
     margin-bottom: 0;
     padding: 0.375rem 0.75rem;
     white-space: nowrap;
 }
-select#orderBy {
+select#orderBy, select#pageSize {
     display: inline-block;
     background-color: #333;
     color: #BFC0C0;
     width:auto;
     border-radius: 5px
 }
-    select#orderBy > option {
+    select#orderBy > option, select#pageSize > option {
         background-color: #333;
         color: #BFC0C0;
         font-weight: normal !important;

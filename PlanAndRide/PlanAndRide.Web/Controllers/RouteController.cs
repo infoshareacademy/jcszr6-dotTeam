@@ -141,7 +141,7 @@ namespace PlanAndRide.Web.Controllers
         {
             var currentOrderBy = orderBy ?? "date_desc";
             var pageNumber = page ?? 1;
-            var pageSizeNumber = pageSize ?? 3;
+            var pageSizeNumber = pageSize ?? 5;
             ViewBag.OrderBy = currentOrderBy;
             ViewBag.Page = pageNumber;
             ViewBag.PageSize = pageSizeNumber;
