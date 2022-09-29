@@ -27,8 +27,12 @@
         <input type="hidden" asp-for="@Model.AverageScore" id="rating-value" />
     </div>
     <hr />
-    <a class="btn btn-outline-primary red-button" asp-controller="Review" asp-action="Create" asp-route-routeId=@Model.Id>Add review</a>
-    @*    <h5>Reviews: </h5>*@
+    <div class="button" id="button-animation">
+        <div id="translate"></div>
+        <a class="submit-button" asp-controller="Review" asp-action="Create" asp-route-routeId=@Model.Id>Add review</a>
+    </div>        
+    
+
     <div class="fluid-container">
         <div class="page-size-dropdown">
             <form asp-action="Reviews" method="get">
