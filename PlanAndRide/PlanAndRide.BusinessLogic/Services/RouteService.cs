@@ -105,7 +105,7 @@ namespace PlanAndRide.BusinessLogic
                 {
                     var reviewDtos = _mapper.Map<IList<ReviewDto>>(route.Reviews);
                     var orderedReviewDtos = GetOrderedReviews(reviewDtos, orderBy);
-                    routeDto.PagedReviews = orderedReviewDtos.ToPagedList(page, pageSize);
+                    routeDto.PagedReviews = GetPagedReviews(orderedReviewDtos, page, pageSize);
                 }
                 return routeDto;
             }
@@ -123,7 +123,16 @@ namespace PlanAndRide.BusinessLogic
                 _ or "date_desc" => reviews.OrderByDescending(dto => dto.Date),
 
             };
-
+        private IPagedList<ReviewDto> GetPagedReviews (IEnumerable<ReviewDto> reviews, int pageNumber, int pageSize)
+        {
+            var pagedReviews = reviews.ToPagedList(pageNumber, pageSize);
+            var lastPageNumber = pagedReviews.PageCount;
+            if(reviews.Any() && pageNumber > lastPageNumber)
+            {
+                pagedReviews = reviews.ToPagedList(lastPageNumber, pageSize);
+            }
+            return pagedReviews;
+        }
         public async Task<string> GetRouteName(int id)
         {
             try
