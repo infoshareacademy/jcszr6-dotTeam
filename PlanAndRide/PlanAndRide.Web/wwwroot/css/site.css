@@ -25,7 +25,12 @@ body {
     background-color: #333 !important;
     color: #BFC0C0 !important;
 }
-
+.locationDescription {
+    background-color: #333;
+    color: #BFC0C0;
+    border: none;
+    resize: none !important;
+}
 .table td {
     color: #BFC0C0;
 }
@@ -105,7 +110,18 @@ td a:hover {
     overflow: hidden;
     border-radius: 5px;
 }
+#review-button {
+    width: 120px;
+    height: 28px;
+    font-size: 0.7em;
+    margin: 5px 10px;
+    border-color: #BFC0C0 !important;
+    color: #BFC0C0 !important;
+}
+a#review-button:hover {
+    text-decoration:none !important;
 
+}
 #button-animation {
     position: relative;
     overflow: hidden;
@@ -223,4 +239,7 @@ select#orderBy, select#pageSize {
     margin: 0.75rem 0;
     padding-top: 0.75rem;
     border-top: 1px solid;
+}
+.route-details-section {
+    margin: 5px 0px;
 }

@@ -10,14 +10,13 @@
     <partial name="_Partials/_Rating" model="@Model" />
     <hr />
     <div class=row>
-        <div class="col-lg-6" style="float:left">
-            <br />
+        <div class="col-xl-5 gx-5 order-2 order-xl-1 route-details-section" style="float:left">
             <partial name="_Partials/_RouteDetails" model="@Model" />
         </div>
         
-        <div id="map" class="col-lg-6 gx-5" style="float:left"></div>
+        <div id="map" class="col-xl-7 gx-5 order-1 order-xl-2 route-details-section" style="float:left"></div>
     </div>
-    <div>
+    <div class="route-details-section">
         <a class="btn btn-outline-primary red-button" asp-action="Edit" asp-route-id=@Model.Id>Edit</a>
         <a class="btn btn-outline-secondary grey-button" asp-action="Index">Back to routes</a>
     </div>

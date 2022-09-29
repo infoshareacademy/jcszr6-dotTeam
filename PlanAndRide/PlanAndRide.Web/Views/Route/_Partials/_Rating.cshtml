@@ -3,5 +3,5 @@
     <div class="route-rating" style="display:inline-block">
     <input type="hidden" asp-for="@Model.AverageScore" id="rating-value" />
     </div>
-    <a asp-action="Reviews" asp-route-id="@Model.Id">Reviews</a>
+    <a class="button grey-button" id="review-button" asp-action="Reviews" asp-route-id="@Model.Id">Show reviews</a>
 </div>

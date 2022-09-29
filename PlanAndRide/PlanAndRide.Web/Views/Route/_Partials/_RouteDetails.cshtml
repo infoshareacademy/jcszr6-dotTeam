@@ -8,36 +8,29 @@
     }
 }
 <h6>@privacyDisplay</h6>
-<dl class="row">
-    <dt class="col-sm-3">
+<div class="row">
+    <div class="route-details-section">
         <label>From: </label>
-    </dt>
-    <dd class="col-sm-9">
-        <textarea id="StartingLocation" class="locationDescription" readonly></textarea>
+        <textarea class="form-control locationDescription" id="StartingLocation" readonly></textarea>
         <input type="hidden" id="StartingLatitude" value="@Model.StartingPosition.Latitude" />
         <input type="hidden" id="StartingLongitude" value="@Model.StartingPosition.Longitude" />
         <input type="hidden" id="EncodedPath" value="@Model.EncodedGoogleMapsPath" />
-
-    </dd>
-    <dt class="col-sm-3">
-        <label asp-for="DestinationPosition">To: </label>
-    </dt>
-    <dd class="col-sm-9">
-        <textarea id="DestinationLocation" class="locationDescription" readonly></textarea>
+    </div>
+    <div class="route-details-section">
+        <label>To: </label>
+        <textarea class="form-control locationDescription" id="DestinationLocation" readonly></textarea>
         <input type="hidden" id="DestinationLatitude" value="@Model.DestinationPosition.Latitude" />
         <input type="hidden" id="DestinationLongitude" value="@Model.DestinationPosition.Longitude" />
-    </dd>
-    <dt class="col-sm-3">
-        <label asp-for="Description">Description: </label>
-    </dt>
-    <dd class="col-sm-9">
-        @Model.Description
-    </dd>
-    @*    <dt class="col-sm-3">
-        <label asp-for="AverageScore">Score: </label>
-        </dt>
-        <dd class="col-sm-9">
-        @Model.AverageScore
-        </dd>*@
-</dl>
+    </div>
+    @{
+        if (!String.IsNullOrEmpty(Model.Description) && !String.IsNullOrEmpty(Model.Description))
+        {
+            <div class="route-details-section">
+                <label>Description: </label>
+                <textarea class="form-control locationDescription" id="DestinationLocation" readonly>@Model.Description</textarea>
+            </div>
+        }
+    }
+
+</div>
 
