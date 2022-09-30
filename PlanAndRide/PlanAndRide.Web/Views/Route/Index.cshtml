@@ -17,7 +17,15 @@
 @section scripts{
 <script>
     $(document).ready(function() {
-        $('#indexTable').DataTable();
+        $('#indexTable').DataTable({
+            "columns": [
+                null,
+                null,
+                null,
+                {"searchable":false},
+                {"searchable":false}
+            ]
+        });
     });
 </script>
 <script>
