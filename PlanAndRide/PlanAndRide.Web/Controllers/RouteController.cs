@@ -156,16 +156,16 @@ namespace PlanAndRide.Web.Controllers
         {
             var currentOrderBy = orderBy ?? "date_desc";
             var pageNumber = page ?? 1;
-            var pageSizeNumber = pageSize ?? 3;
-            ViewBag.OrderBy = currentOrderBy;
-            ViewBag.Page = pageNumber;
-            ViewBag.PageSize = pageSizeNumber;
-            var route = await _routeService.GetRouteWithReviews(id, currentOrderBy, pageNumber, pageSizeNumber);
-            if (route is null)
+            var pageSizeNumber = pageSize ?? 5;
+            var model = await _routeService.GetRouteWithReviews(id, currentOrderBy, pageNumber, pageSizeNumber);
+            if (model is null)
             {
                 return RedirectToAction(nameof(Index));
             }
-            return View(route);
+            ViewBag.OrderBy = currentOrderBy;
+            ViewBag.PageSize = pageSizeNumber;
+            ViewBag.Page = model.PagedReviews.PageNumber;
+            return View(model);
         }
     }
 }
