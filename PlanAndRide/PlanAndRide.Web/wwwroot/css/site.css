@@ -243,3 +243,6 @@ select#orderBy, select#pageSize {
 .route-details-section {
     margin: 5px 0px;
 }
+.table-hidden-value {
+    display:none;
+}
