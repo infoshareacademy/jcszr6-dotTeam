@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,10 +9,10 @@ namespace PlanAndRide.BusinessLogic.Enums
 {
     public enum StatusList
     {
-        [Description("Unknown")] Unknown,
-        [Description("Is coming")] Comming,
-        [Description("Right now")] Right_Now,
-        [Description("Completed")] Completed,
-        [Description("Archived")] Archived
+        [Display(Name ="Unknown")] Unknown,
+        [Display(Name ="Is coming")] Comming,
+        [Display(Name ="Right now")] Right_Now,
+        [Display(Name ="Completed")] Completed,
+        [Display(Name ="Archived")] Archived
     }
 }  

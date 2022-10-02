@@ -71,7 +71,7 @@ namespace PlanAndRide.Database
             modelBuilder.Entity<Ride>()
                 .Property<string>("Name").HasMaxLength(60);
             modelBuilder.Entity<Ride>()
-                .Property<int>("StatusRide").HasMaxLength(1);
+                .Property<string>("StatusRide").HasMaxLength(255);
 
             modelBuilder.Entity<Route>()
                 .Property<string>("Description").HasMaxLength(255);

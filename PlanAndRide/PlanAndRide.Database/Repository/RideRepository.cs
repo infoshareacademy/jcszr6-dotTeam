@@ -2,7 +2,8 @@
 using PlanAndRide.BusinessLogic;
 using PlanAndRide.BusinessLogic.Enums;
 using PlanAndRide.BusinessLogic.Exceptions;
-
+using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 
 namespace PlanAndRide.Database.Repository
 {
@@ -78,25 +79,35 @@ namespace PlanAndRide.Database.Repository
                 throw new InvalidOperationException($"Unique key violaton: Ride ID:{id}");
             }
         }
-        public int TimeStatusRide(Ride ride)
+        public string TimeStatusRide(Ride ride)
         {
             var date1 = DateTime.Now;
             var date2 = ride.Date;
             var compareDate = DateTime.Compare(date1, date2);
             if (compareDate > 0)
             {
-                return ride.StatusRide = 1;
+                var status = StatusList.Comming;
+                var nameStatus = status.GetType().GetMember(status.ToString()).First().GetCustomAttribute<DisplayAttribute>().GetName();
+                return ride.StatusRide = nameStatus;
             }
             if (compareDate == 0)
             {
-                ride.StatusRide = 0;
+                var status = StatusList.Right_Now;
+                var nameStatus = status.GetType().GetMember(status.ToString()).First().GetCustomAttribute<DisplayAttribute>().GetName();
+               return ride.StatusRide = nameStatus;
             }
             if (compareDate < 0)
             {
-                return ride.StatusRide = 3;
+                var status = StatusList.Completed;
+                var nameStatus = status.GetType().GetMember(status.ToString()).First().GetCustomAttribute<DisplayAttribute>().GetName();
+                return ride.StatusRide = nameStatus;
             }
             else
-                return ride.StatusRide = 0;
+            {
+                var status = StatusList.Unknown;
+                var nameStatus = status.GetType().GetMember(status.ToString()).First().GetCustomAttribute<DisplayAttribute>().GetName();
+                return ride.StatusRide = nameStatus;
+            }
 
         }
 

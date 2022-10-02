@@ -123,5 +123,6 @@ namespace PlanAndRide.Web.Controllers.Events
             await _rideService.Delete(id);
             return RedirectToAction(nameof(Index));
         }
+       
     }
 }
