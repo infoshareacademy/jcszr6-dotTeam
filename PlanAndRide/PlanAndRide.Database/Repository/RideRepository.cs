@@ -81,8 +81,9 @@ namespace PlanAndRide.Database.Repository
         }
         public string TimeStatusRide(Ride ride)
         {
-            var date1 = DateTime.Now;
-            var date2 = ride.Date;
+            var date2 = DateTime.Now;
+            var date1 = ride.Date;
+            
             var compareDate = DateTime.Compare(date1, date2);
             if (compareDate > 0)
             {

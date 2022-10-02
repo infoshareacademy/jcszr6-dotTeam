@@ -87,7 +87,7 @@ namespace PlanAndRide.GUI
             var newDate = GetNewDateTime("Wprowadź nową datę (dd.mm.yyyy gg:mm): ");
             if (newDate != null)
             {
-                ride.Date = newDate;
+                ride.Date = (DateTime)newDate;
                 Console.WriteLine($"Data została zmieniona\nAktualna data to: {ride.Date}");
                 Console.WriteLine();
             }
