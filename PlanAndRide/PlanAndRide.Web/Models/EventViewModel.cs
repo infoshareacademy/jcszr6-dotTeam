@@ -19,6 +19,7 @@ namespace PlanAndRide.Web.Models
 
         public bool ShareRide { get; set; }
         public bool IsPrivate { get; set; }
+        public int StatusRide { get; set; }
 
 
         public EventViewModel(Ride ride)
@@ -29,6 +30,7 @@ namespace PlanAndRide.Web.Models
             Description = ride.Description;
             ShareRide = ride.ShareRide;
             IsPrivate = ride.IsPrivate;
+            StatusRide = ride.StatusRide;
         }
         public EventViewModel()
         {

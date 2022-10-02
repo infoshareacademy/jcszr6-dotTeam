@@ -18,6 +18,7 @@ namespace PlanAndRide.Web.Mapping
                 .ForMember(model => model.Description, expr => expr.MapFrom(source => source.Description))
                 .ForMember(model => model.IsPrivate, expr => expr.MapFrom(source => source.IsPrivate))
                 .ForMember(model => model.ShareRide, expr => expr.MapFrom(source => source.ShareRide))
+                .ForMember(model=>model.StatusRide, expr=>expr.MapFrom(source=>source.StatusRide))
                 .ReverseMap();
         }
     }

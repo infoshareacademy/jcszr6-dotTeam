@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PlanAndRide.BusinessLogic;
+using PlanAndRide.BusinessLogic.Enums;
 
 namespace PlanAndRide.Database
 {
@@ -10,6 +11,10 @@ namespace PlanAndRide.Database
         public DbSet<Review> Reviews { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<GeoCoordinate> GeoCoordinates { get; set; }
+        
+
+        
+
         public PlanAndRideContext()
         {
 
@@ -65,7 +70,8 @@ namespace PlanAndRide.Database
                 .Property<string>("Description").HasMaxLength(255);
             modelBuilder.Entity<Ride>()
                 .Property<string>("Name").HasMaxLength(60);
-
+            modelBuilder.Entity<Ride>()
+                .Property<int>("StatusRide").HasMaxLength(1);
 
             modelBuilder.Entity<Route>()
                 .Property<string>("Description").HasMaxLength(255);

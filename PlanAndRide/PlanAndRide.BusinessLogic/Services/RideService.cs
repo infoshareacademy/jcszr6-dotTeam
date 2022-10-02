@@ -56,7 +56,27 @@ namespace PlanAndRide.BusinessLogic
             var rides = await _repository.GetAll();
             return rides.Where(r => r.Name.ToLower().Contains(name.Trim().ToLower()));
         }
-       
-        
+        public int TimeStatusRide(Ride ride)
+        {
+            var date1 = DateTime.Now;
+            var date2 = ride.Date;
+            var compareDate = DateTime.Compare(date1, date2);
+            if (compareDate > 0)
+            {
+                return ride.StatusRide = 1;
+            }
+            if (compareDate == 0)
+            {
+                ride.StatusRide = 0;
+            }
+            if (compareDate < 0)
+            {
+                return ride.StatusRide = 3;
+            }
+            else
+                return ride.StatusRide = 0;
+
+        }
+
     }
 }

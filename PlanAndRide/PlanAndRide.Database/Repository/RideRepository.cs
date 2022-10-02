@@ -35,6 +35,7 @@ namespace PlanAndRide.Database.Repository
             if (user == null)
                 throw new ArgumentException("User not found at event create");
             ride.User = user;
+            TimeStatusRide(ride);
             await _context.Rides.AddAsync(ride);
             _context.SaveChanges();
         }
@@ -77,23 +78,26 @@ namespace PlanAndRide.Database.Repository
                 throw new InvalidOperationException($"Unique key violaton: Ride ID:{id}");
             }
         }
-        public async Task TimeStatusRide( Ride ride)
+        public int TimeStatusRide(Ride ride)
         {
-            
-            var compareDate = DateTime.Now.CompareTo(ride.Date, StatusList statuslist);
+            var date1 = DateTime.Now;
+            var date2 = ride.Date;
+            var compareDate = DateTime.Compare(date1, date2);
             if (compareDate > 0)
             {
-                return ride.StatusRide = StatusLitst().
+                return ride.StatusRide = 1;
             }
             if (compareDate == 0)
             {
-                ride.StatusRide = rightNowEvent;
-
+                ride.StatusRide = 0;
             }
-
-            else
+            if (compareDate < 0)
             {
-                ride.StatusRide = completed;
+                return ride.StatusRide = 3;
             }
+            else
+                return ride.StatusRide = 0;
+
         }
+
     } }

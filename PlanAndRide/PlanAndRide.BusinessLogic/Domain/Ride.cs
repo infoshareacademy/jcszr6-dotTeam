@@ -12,7 +12,7 @@ namespace PlanAndRide.BusinessLogic
 
         public string Name { get; set; }
 
-        public virtual DateTime? Date { get; set; }
+        public virtual DateTime Date { get; set; }
 
         public virtual IList<User> RideMembers { get; set; }
 

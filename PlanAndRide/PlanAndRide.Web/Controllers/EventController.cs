@@ -57,6 +57,7 @@ namespace PlanAndRide.Web.Controllers.Events
             }
             
             var ride = _mapper.Map<Ride>(model);
+            
             if (int.TryParse(model.RouteId, out int id))
                 ride.Route = await _routeService.Get(id);
             else
