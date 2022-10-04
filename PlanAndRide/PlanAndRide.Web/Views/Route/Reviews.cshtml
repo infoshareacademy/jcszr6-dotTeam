@@ -5,10 +5,10 @@
 @{
     ViewData["Title"] = "Reviews";
     var orderSelectList = new List<SelectListItem>() {
-                new SelectListItem(text:"date descending",value:"date_desc",selected: true),
-                new SelectListItem(text:"date ascending",value:"date_asc"),
-                new SelectListItem(text:"score descending",value:"score_desc"),
-                new SelectListItem(text:"score ascending",value:"score_asc")
+                new SelectListItem(text:"newest",value:"date_desc",selected: true),
+                new SelectListItem(text:"oldest",value:"date_asc"),
+                new SelectListItem(text:"best",value:"score_desc"),
+                new SelectListItem(text:"worst",value:"score_asc")
                 };
     var pageSizeSelectList = new List<SelectListItem>() {
                 new SelectListItem(text:"5",value:"5",selected: true),
