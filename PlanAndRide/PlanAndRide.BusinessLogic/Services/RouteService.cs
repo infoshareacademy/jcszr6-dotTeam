@@ -103,8 +103,9 @@ namespace PlanAndRide.BusinessLogic
                 routeDto.AverageScore = AverageScore(route);
                 if (route.Reviews != null)
                 {
-                    var reviewDtos = _mapper.Map<IList<ReviewDto>>(route.Reviews);
-                    var orderedReviewDtos = GetOrderedReviews(reviewDtos, orderBy);
+                    
+                    var orderedReviews = GetOrderedReviews(route.Reviews, orderBy);
+                    var orderedReviewDtos = _mapper.Map<IList<ReviewDto>>(orderedReviews);
                     routeDto.PagedReviews = GetPagedReviews(orderedReviewDtos, page, pageSize);
                 }
                 return routeDto;
@@ -114,7 +115,7 @@ namespace PlanAndRide.BusinessLogic
                 throw;
             }
         }
-        private IOrderedEnumerable<ReviewDto> GetOrderedReviews(IList<ReviewDto> reviews, string orderBy) =>
+        private IOrderedEnumerable<Review> GetOrderedReviews(IList<Review> reviews, string orderBy) =>
             orderBy switch
             {
                 "score_asc" => reviews.OrderBy(dto => dto.Score),
