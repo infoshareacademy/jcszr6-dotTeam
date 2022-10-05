@@ -1,9 +1,44 @@
 ﻿@model IEnumerable<RouteDto>
+@{
+    var minRating = ViewBag.MinRating ?? 0;
+    var maxRatingValue = 5;
+    var minRatingSelectList = new List<SelectListItem>();
 
-<label>Min rating:</label>
-<input type="number" id="min-rating" value=1 min=1 max=5 />
-<label>Max rating:</label>
-<input type="number" id="max-rating" value=5 min=1 max=5 />
+    for(int i=0; i <= maxRatingValue; i++)
+    {
+        var listItem = new SelectListItem(text:"",value: i.ToString());
+        switch(i){
+            case 5: listItem.Text = "five stars";break;
+            case 4: listItem.Text = "four stars";break;
+            case 3: listItem.Text = "three stars";break;
+            case 2: listItem.Text = "two stars";break;
+            case 1: listItem.Text = "one star";break;
+            default: listItem.Text = "Any";break;
+        }
+        if(i== minRating)
+            listItem.Selected = true;
+        minRatingSelectList.Add(listItem);
+    }
+}
+
+<div id="min-rating-select">
+    <form asp-action="Rating" method="get">
+        <div class="form-group">
+            <label class="form-label">Rating from:</label>
+            @Html.DropDownList("min", minRatingSelectList, new {@class="",@onchange="this.form.submit()"})
+        </div>
+    </form>
+</div>
+
+
+
+
+
+
+
+
+
+
 
 <table id="indexTable" class="table">
     <thead>
@@ -42,7 +77,7 @@
                         <div class="route-collection-rating" id="route-rating-@item.Id">
                             <input type="hidden" asp-for="@item.AverageScore" id="rating-value-@item.Id" />
                         </div>
-                   </a>
+                    </a>
                 </td>
                 <td>
                     <a class="btn btn-outline-info grey-button" asp-action="Details" asp-route-id="@item.Id">Details</a>

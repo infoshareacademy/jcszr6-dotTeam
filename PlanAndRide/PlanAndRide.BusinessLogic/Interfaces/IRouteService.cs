@@ -11,5 +11,6 @@
         double AverageScore(Route route);
         Task<RouteDtoWithReviews?> GetRouteWithReviews(int id, string orderBy,int page, int pageSize);
         Task<string> GetRouteName(int id);
+        Task<IEnumerable<RouteDto>> GetByRating(double minRating);
     }
 }

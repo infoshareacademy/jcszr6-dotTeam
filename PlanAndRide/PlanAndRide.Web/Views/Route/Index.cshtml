@@ -16,36 +16,25 @@
 </div>
 @section scripts{
 <script>
-    /* Custom filtering function which will search data in column four between two values */
-    $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
-        var min = parseInt($('#min-rating').val(), 10);
-        var max = parseInt($('#max-rating').val(), 10);
-        var rating = parseFloat(data[3]) || 0; // use data for the rating column
- 
-        if (
-            (isNaN(min) && isNaN(max)) ||
-            (isNaN(min) && rating <= max) ||
-            (min <= rating && isNaN(max)) ||
-            (min <= rating && rating <= max)
-        ) {
-            return true;
-        }
-        return false;
-    });
+
+    function createRouteRatingFilter() {
+        let tableRatingFilterEl = document.getElementById('rating-filter');
+        let ratingSelectList = document.getElementById('min-rating-select');
+        tableRatingFilterEl.appendChild(ratingSelectList);
+    }
 
     $(document).ready(function() {
-        var table = $('#indexTable').DataTable({
+        let table = $('#indexTable').DataTable({
                     "columns": [
                         null,
                         null,
                         null,
-                        {"searchable":true},
+                        {"searchable":false},
                         {"searchable":false}
-                    ]
+                    ],
+                    "dom":"<'row'<'col-sm-3'l><'#rating-filter.col-sm-3'><'col'f>>tp"
                 });
-        $('#min-rating, #max-rating').change(function () {
-        table.draw();
-    });
+        createRouteRatingFilter();
     });
 </script>
 <script>

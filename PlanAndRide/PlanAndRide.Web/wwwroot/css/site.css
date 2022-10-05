@@ -147,6 +147,14 @@ a#review-button:hover {
 .dataTables_wrapper .dataTables_length select {
     color: #BFC0C0;
 }
+
+@media screen and (max-width: 640px){
+    #min-rating-select {
+        float: none;
+        text-align: center
+    }
+}
+
 #button-animation:hover #translate {
     left: 0;
 }
@@ -217,19 +225,22 @@ option {
     padding: 0.375rem 0.75rem;
     white-space: nowrap;
 }
-select#orderBy, select#pageSize {
+
+select {
     display: inline-block;
     background-color: #333;
     color: #BFC0C0;
-    width:auto;
-    border-radius: 5px
+    width: auto;
+    border-radius: 5px;
+    border: 1px solid;
+    padding: 4px;
 }
-    select#orderBy > option, select#pageSize > option {
+
+    select > option {
         background-color: #333;
         color: #BFC0C0;
         font-weight: normal !important;
     }
-
 .page-item.active .page-link {
     background-color: #333 !important;
     color: #BFC0C0 !important;

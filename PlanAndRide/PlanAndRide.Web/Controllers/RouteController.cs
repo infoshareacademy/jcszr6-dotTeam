@@ -23,7 +23,13 @@ namespace PlanAndRide.Web.Controllers
             var routes = await _routeService.GetAll();
             return View(routes);
         }
-
+        public async Task<ActionResult> Rating(double? min)
+        {
+            var minRating = min ?? 0;
+            ViewBag.MinRating = minRating;
+            var routes = await _routeService.GetByRating(minRating);
+            return View(nameof(Index),routes);
+        }
         // GET: RouteController/Details/5
         public async Task<ActionResult> Details(int id)
         {
