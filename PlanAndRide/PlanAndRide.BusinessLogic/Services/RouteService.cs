@@ -47,6 +47,7 @@ namespace PlanAndRide.BusinessLogic
             if (routeDto != null)
             {
                 routeDto.AverageScore = AverageScore(route);
+                routeDto.ReviewsCount = route.Reviews != null ? route.Reviews.Count:0;
             }
             return routeDto;
         }

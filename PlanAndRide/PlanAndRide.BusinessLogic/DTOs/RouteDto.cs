@@ -28,5 +28,6 @@ namespace PlanAndRide.BusinessLogic
         public bool ShareRoute { get; set; }
         public bool IsPrivate { get; set; }
         public double AverageScore { get; set; }
+        public int ReviewsCount { get; set; }
     }
 }

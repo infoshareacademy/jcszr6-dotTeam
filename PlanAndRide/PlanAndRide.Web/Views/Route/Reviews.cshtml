@@ -19,13 +19,19 @@
     var orderBy = ViewBag.OrderBy;
     var pageSize = ViewBag.PageSize;
     var currentPage = ViewBag.Page;
+    var reviewsCountDesc = $"{Model.PagedReviews.TotalItemCount} ";
+    if (Model.PagedReviews.TotalItemCount == 1)
+        reviewsCountDesc += "review";
+    else
+        reviewsCountDesc += "reviews";
 }
 <div class="container">
     <h2>Reviews</h2>
     <h3>@Model.Name</h3>
-    <div class="route-rating">
+    <div class="route-rating display-inline">
         <input type="hidden" asp-for="@Model.AverageScore" id="rating-value" />
     </div>
+    <span>@reviewsCountDesc</span>
     <hr />
     <div class="button" id="button-animation">
         <div id="translate"></div>

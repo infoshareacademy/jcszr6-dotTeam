@@ -1,7 +1,18 @@
 ﻿@model RouteDto
+@{
+    var reviewsLinkContent = $"{@Model.ReviewsCount} ";
+    if (Model.ReviewsCount == 1)
+        reviewsLinkContent += "review";
+    else
+        reviewsLinkContent += "reviews";
+
+}
 <div>
     <div class="route-rating" style="display:inline-block">
     <input type="hidden" asp-for="@Model.AverageScore" id="rating-value" />
     </div>
-    <a class="button grey-button" id="review-button" asp-action="Reviews" asp-route-id="@Model.Id">Show reviews</a>
+    <div class="display-inline">
+        <a  asp-action="Reviews" asp-route-id="@Model.Id">@reviewsLinkContent</a>
+    </div>
+       
 </div>
