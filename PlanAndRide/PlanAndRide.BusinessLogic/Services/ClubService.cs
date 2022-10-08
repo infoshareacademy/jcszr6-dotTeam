@@ -1,17 +1,17 @@
 ﻿namespace PlanAndRide.BusinessLogic
 {
-    public class RideService:IRideService
+    public class ClubService : IClubService
     {
-        private readonly IRepository<Ride> _repository;
-        public RideService() { }
-        public RideService(IRepository<Ride> repository)
+        private readonly IRepository<Club> _repository;
+        public ClubService() { }
+        public ClubService(IRepository<Club> repository)
         {
             _repository = repository;
         }
         
-        public async Task Add(Ride ride)
+        public async Task Add(Club club)
         {
-            await _repository.Add(ride);
+            await _repository.Add(club);
         }
 
         public async Task Delete(int id)
@@ -19,7 +19,7 @@
             await _repository.Delete(id);
         }
 
-        public async Task<Ride> Get(int id)
+        public async Task<Club> Get(int id)
         {
             {
                 try
@@ -33,26 +33,26 @@
             }
         }
 
-        public async Task<IEnumerable<Ride>> GetAll()
+        public async Task<IEnumerable<Club>> GetAll()
         {
             return await _repository.GetAll();
         }
 
-        public async Task Update(int id, Ride ride)
+        public async Task Update(int id, Club club)
         {
             try
             {
-                await _repository.Update(id, ride);
+                await _repository.Update(id, club);
             }
             catch
             {
                 throw;
             };
         }
-        public async Task<IEnumerable<Ride>> FindByName(string name)
+        public async Task<IEnumerable<Club>> FindByName(string name)
         {
-            var rides = await _repository.GetAll();
-            return rides.Where(r => r.Name.ToLower().Contains(name.Trim().ToLower()));
+            var clubs = await _repository.GetAll();
+            return clubs.Where(r => r.Name.ToLower().Contains(name.Trim().ToLower()));
         }
     }
 }

@@ -23,7 +23,7 @@ namespace PlanAndRide.Web.Controllers
         {
             var model = new ClubsCollectionViewModel();
             var clubs = await _clubService.GetAll();
-            model.Clubs = clubs.Select(c => new ClubViewModel(c, _clubService));
+            model.Clubs = _mapper.Map<IEnumerable<ClubViewModel>>(clubs);
             return View(model);
 
             //var rides = await _clubService.GetAll();
@@ -37,13 +37,13 @@ namespace PlanAndRide.Web.Controllers
             var club = await _clubService.Get(id);
             if (club != null)
             {
-                return View(new ClubViewModel(club, _clubService));
+                return View(_mapper.Map<ClubViewModel>(club));
             }
             return RedirectToAction(nameof(Index));
         }
 
         // GET: ClubsController/Create
-        public async Task<ActionResult> Create()
+        public ActionResult Create()
         {
             return View();
         }
@@ -53,7 +53,7 @@ namespace PlanAndRide.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(ClubViewModel model)
         {
-            model.Club.ApplicationUser = new ApplicationUser { Id = 1 };
+            //model.Club.ApplicationUser = new ApplicationUser { Id = 1 };
 
             ModelState.Remove("Club.User");
             if (!ModelState.IsValid)
@@ -70,7 +70,7 @@ namespace PlanAndRide.Web.Controllers
             var club = await _clubService.Get(id);
             if (club != null)
             {
-                return View(new ClubViewModel(club, _clubService));
+                return View(_mapper.Map<ClubViewModel>(club));
             }
             return RedirectToAction(nameof(Index));
         }
@@ -87,7 +87,7 @@ namespace PlanAndRide.Web.Controllers
             }
             try
             {
-                await _clubService.Update(id, model.Club);
+                await _clubService.Update(id, _mapper.Map<Club>(model));
                 return RedirectToAction(nameof(Details), new { Id = id });
             }
             catch
@@ -103,7 +103,7 @@ namespace PlanAndRide.Web.Controllers
             var club = await _clubService.Get(id);
             if (club != null)
             {
-                return View(new ClubViewModel(club, _clubService));
+                return View(_mapper.Map<ClubViewModel>(club));
             }
             return RedirectToAction(nameof(Index));
         }
