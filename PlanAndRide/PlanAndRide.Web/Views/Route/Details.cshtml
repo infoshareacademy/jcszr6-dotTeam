@@ -4,28 +4,23 @@
     ViewData["Title"] = "Details";
     var apiKey = ViewData["ApiKey"];
 }
-<div class="container"> 
-<h4>@Model.Name</h4>
-
-<div class="col-lg-6 gx-5" style="float:left">
-    <hr />
-    <partial name="_Partials/_RouteDetails" model="@Model"/>
-</div>
-
-<div class="col-lg-6 gx-5" style="float:left">
-    <partial name="_Partials/_Map" model="@Model" />
-</div>
-
-<div style="clear:both">
-    @*<a asp-action="Reviews" asp-route-referenceId="@Model.Id">Reviews</a> |*@ 
-    <a class="btn btn-outline-primary red-button" asp-action="Edit" asp-route-id=@Model.Id>Edit</a>
-    <a class="btn btn-outline-secondary grey-button" asp-action="Index">Back to routes</a>
+<div class="container">
+    <h4>@Model.Name</h4>
+    <div class=row>
+        <div class="col-lg-6" style="float:left">
+            <hr />
+            <partial name="_Partials/_RouteDetails" model="@Model" />
+        </div>
+        
+        <div id="map" class="col-lg-6 gx-5" style="float:left"></div>
+    </div>
+    <div>
+            @*<a asp-action="Reviews" asp-route-referenceId="@Model.Id">Reviews</a> |*@
+            <a class="btn btn-outline-primary red-button" asp-action="Edit" asp-route-id=@Model.Id>Edit</a>
+            <a class="btn btn-outline-secondary grey-button" asp-action="Index">Back to routes</a>
+    </div>
 </div>
 
 @section Scripts {
-<script async type="text/javascript" src='https://maps.googleapis.com/maps/api/js?libraries=places&key=@apiKey'></script>
-<script type="text/javascript">
-    window.addEventListener('load', LatLngToFormattedAddress);
-</script>
-}
-</div>
+    <script async type="text/javascript" src='https://maps.googleapis.com/maps/api/js?key=@apiKey&libraries=places,geometry&callback=routeDetails'></script>
+    }

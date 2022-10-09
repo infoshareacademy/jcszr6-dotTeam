@@ -108,6 +108,8 @@ namespace PlanAndRide.Database.Repository
             existingRoute.Description = route.Description;
             existingRoute.ShareRoute = route.ShareRoute;
             existingRoute.IsPrivate = route.IsPrivate;
+            existingRoute.EncodedGoogleMapsPath = route.EncodedGoogleMapsPath;
+            existingRoute.EncodedGoogleMapsWaypoints = route.EncodedGoogleMapsWaypoints;
 
             _context.SaveChanges();
         }

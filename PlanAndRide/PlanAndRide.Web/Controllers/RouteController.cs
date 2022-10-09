@@ -51,6 +51,11 @@ namespace PlanAndRide.Web.Controllers
         public async Task<ActionResult> Create(RouteViewModel model)
         {
             model.Route.User = new User { Id = 1 };
+            var encodedWaypoints = model.EncodedGoogleMapsWaypoints;
+            if (String.IsNullOrEmpty(encodedWaypoints) || String.IsNullOrWhiteSpace(encodedWaypoints))
+            {
+                model.EncodedGoogleMapsWaypoints = null;
+            }
 
             ModelState.Remove("Route.User");
             if (!ModelState.IsValid)
