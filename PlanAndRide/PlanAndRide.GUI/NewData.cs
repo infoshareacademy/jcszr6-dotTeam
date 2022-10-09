@@ -13,7 +13,7 @@ namespace PlanAndRide.GUI
     {
         public void NewUser()
         {
-            User user = new User();
+            ApplicationUser user = new ApplicationUser();
             NewUserLogin(user);
             NewUserPassword(user);
             NewUserMail(user);
@@ -253,7 +253,7 @@ namespace PlanAndRide.GUI
             Console.WriteLine($"\nNazwa nowej trasy to: {route.Name}\n");
         }
 
-        private void NewUserLogin(User user)
+        private void NewUserLogin(ApplicationUser user)
         {
             Console.WriteLine("Podaj login:");
             user.Login = Console.ReadLine().Trim();
@@ -267,7 +267,7 @@ namespace PlanAndRide.GUI
             Console.WriteLine($"\nLogin nowego konta to: {user.Login}\n");
         }
 
-        private void NewUserPassword(User user)
+        private void NewUserPassword(ApplicationUser user)
         {
             Console.WriteLine("Stwórz hasło:");
             user.Password = Console.ReadLine().Trim();
@@ -281,7 +281,7 @@ namespace PlanAndRide.GUI
             Console.WriteLine($"\nStworzono hasło!\n");
         }
 
-        private void NewUserMail(User user)
+        private void NewUserMail(ApplicationUser user)
         {
             Console.WriteLine("Wprowadź adres email:");
             user.Email = Console.ReadLine().Trim();

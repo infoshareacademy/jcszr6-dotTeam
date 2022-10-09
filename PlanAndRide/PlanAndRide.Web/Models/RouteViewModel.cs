@@ -76,7 +76,7 @@ namespace PlanAndRide.Web.Models
             {
                 Id = route.Id,
                 Name = route.Name,
-                User = route.User,
+                ApplicationUser = route.ApplicationUser,
                 StartingPosition = new GeoCoordinate
                 {
                     Latitude = route.StartingPosition.Latitude,

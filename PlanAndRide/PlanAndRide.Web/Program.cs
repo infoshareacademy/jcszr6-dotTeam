@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PlanAndRide.BusinessLogic;
 using PlanAndRide.Database;
@@ -11,11 +12,39 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IRepository<PlanAndRide.BusinessLogic.Route>, RouteRepository>();
 builder.Services.AddScoped<IRepository<Ride>, RideRepository>();
 builder.Services.AddScoped<IRepository<Review>, ReviewRepository>();
-
+builder.Services.AddScoped<IRepository<Club>, ClubRepository>();
 builder.Services.AddScoped<IRouteService, RouteService>();
 builder.Services.AddScoped<IRideService, RideService>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
+builder.Services.AddScoped<IClubService, ClubService>();
 
+builder.Services.AddDefaultIdentity<IdentityUser>()
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<PlanAndRideContext>();
+
+builder.Services.AddAuthentication()
+        .AddGoogle(google =>
+        {
+            google.ClientId = "937689180086-vrtb4tbfqghme5st02676jqjdj5s3e8g.apps.googleusercontent.com";
+            google.ClientSecret = "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";
+            google.SignInScheme = IdentityConstants.ExternalScheme;
+        })
+        .AddFacebook(facebookOptions =>
+         {
+             facebookOptions.AppId = "459357132843873";
+             facebookOptions.AppSecret = "4dc94b33644d387662bee62bcef6960f";
+             facebookOptions.AccessDeniedPath = "/AccessDeniedPathInfo";
+         })
+        .AddTwitter(twitterOptions =>
+        {
+            twitterOptions.ConsumerKey = "QUl4U05VaWQxQWlYd2ZXLTg3eEE6MTpjaQ";
+            twitterOptions.ConsumerSecret = "JiezdUb7FeDk7pePrDFW83HH3IkRvvM0O8bMOTJTCl1C6OfoEU";
+        })
+        .AddLinkedIn(linkedInOptions =>
+        {
+            linkedInOptions.ClientId = "77yc8nr6j8531g";
+            linkedInOptions.ClientSecret = "HV93P3HOIKaCZc66";
+        });
 
 var connectionString = builder.Configuration.GetConnectionString("Database");
 builder.Services.AddDbContext<PlanAndRideContext>(
@@ -44,9 +73,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
-
+app.MapRazorPages();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
