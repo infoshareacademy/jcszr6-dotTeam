@@ -18,6 +18,8 @@
         <textarea  id="StartingLocation" class="locationDescription" readonly></textarea>
         <input type="hidden" id="StartingLatitude" value="@Model.StartingPosition.Latitude"/>
         <input type="hidden" id="StartingLongitude" value="@Model.StartingPosition.Longitude"/>
+        <input type="hidden" id="EncodedPath" value="@Model.EncodedGoogleMapsPath"/>
+        
     </dd>
     <dt class="col-sm-3">
         <label asp-for="DestinationPosition">To: </label>

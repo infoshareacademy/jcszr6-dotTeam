@@ -15,17 +15,17 @@ namespace PlanAndRide.Web.Models
         [Required]
         public string Name
         {
-            get {return Route.Name;}
+            get { return Route.Name; }
             set { Route.Name = value; }
         }
         public GeoCoordinate StartingPosition
         {
-            get {return Route.StartingPosition;}
+            get { return Route.StartingPosition; }
             set { Route.StartingPosition = value; }
         }
         public GeoCoordinate DestinationPosition
         {
-            get {return Route.DestinationPosition;}
+            get { return Route.DestinationPosition; }
             set { Route.DestinationPosition = value; }
         }
         public string StartingCity
@@ -38,7 +38,17 @@ namespace PlanAndRide.Web.Models
             get => Route.DestinationCity;
             set { Route.DestinationCity = value; }
         }
-
+        public string? EncodedGoogleMapsPath
+        {
+            get => Route.EncodedGoogleMapsPath;
+            set => Route.EncodedGoogleMapsPath = value;
+        }
+        public string? EncodedGoogleMapsWaypoints
+        {
+            get => Route.EncodedGoogleMapsWaypoints;
+            set => Route.EncodedGoogleMapsWaypoints = value;
+            
+        }
         [DisplayFormat(DataFormatString = "{0:n2}", ApplyFormatInEditMode = true)]
         public double AverageScore
         {
@@ -79,6 +89,8 @@ namespace PlanAndRide.Web.Models
                 },
                 StartingCity = route.StartingCity,
                 DestinationCity = route.DestinationCity,
+                EncodedGoogleMapsPath = route.EncodedGoogleMapsPath,
+                EncodedGoogleMapsWaypoints = route.EncodedGoogleMapsWaypoints,
                 Description = route.Description,
                 ShareRoute = route.ShareRoute,
                 IsPrivate = route.IsPrivate,
