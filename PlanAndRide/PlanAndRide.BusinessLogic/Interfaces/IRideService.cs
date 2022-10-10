@@ -1,4 +1,5 @@
-﻿namespace PlanAndRide.BusinessLogic
+﻿
+namespace PlanAndRide.BusinessLogic
 {
     public interface IRideService:IRepository<Ride>
     {

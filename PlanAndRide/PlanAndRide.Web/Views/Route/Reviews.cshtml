@@ -1,42 +1,134 @@
-﻿@model RouteViewModel
+﻿@using X.PagedList.Mvc.Core;
+@using X.PagedList.Web.Common;
+
+@model RouteDtoWithReviews
 @{
     ViewData["Title"] = "Reviews";
+    var orderSelectList = new List<SelectListItem>() {
+                new SelectListItem(text:"newest",value:"date_desc",selected: true),
+                new SelectListItem(text:"oldest",value:"date_asc"),
+                new SelectListItem(text:"best",value:"score_desc"),
+                new SelectListItem(text:"worst",value:"score_asc")
+                };
+    var pageSizeSelectList = new List<SelectListItem>() {
+                new SelectListItem(text:"5",value:"5",selected: true),
+                new SelectListItem(text:"10",value:"10"),
+                new SelectListItem(text:"20",value:"20"),
+                new SelectListItem(text:"50",value:"50")
+                };
+    var orderBy = ViewBag.OrderBy;
+    var pageSize = ViewBag.PageSize;
+    var currentPage = ViewBag.Page;
+    var reviewsCountDesc = $"{Model.PagedReviews.TotalItemCount} ";
+    if (Model.PagedReviews.TotalItemCount == 1)
+        reviewsCountDesc += "review";
+    else
+        reviewsCountDesc += "reviews";
 }
-<div class="container"> 
-<h1>Route Reviews</h1>
+<div class="container">
+    <h2>Reviews</h2>
+    <h3>@Model.Name</h3>
+    <div class="route-rating display-inline">
+        <input type="hidden" asp-for="@Model.AverageScore" id="rating-value" />
+    </div>
+    <span>@reviewsCountDesc</span>
+    <hr />
+    <div class="button" id="button-animation">
+        <div id="translate"></div>
+        <a class="submit-button" asp-controller="Review" asp-action="Create" asp-route-routeId=@Model.Id>Add review</a>
+    </div>        
+    
 
-<partial name="_Partials/_RouteDetails" model="@Model" />
+    <div class="fluid-container">
+        <div class="page-size-dropdown">
+            <form asp-action="Reviews" method="get">
+                <div class="form-row">
+                    <label class="dropdown-label">Show </label>
+                    @Html.DropDownList("pageSize", pageSizeSelectList,
+                    new
+                    {
+                    @class="",
+                    @onchange="redirectOnPageSizeChange(this.value);"
+                    })
+                    <label class="dropdown-label"> entries </label>
+                </div>
+            </form>
+        </div>
+        <div class="order-by-dropdown">
+            <form asp-action="Reviews" method="get">
+                <div class="form-row">
+                    <label class="dropdown-label">Order by: </label>
+                    @Html.DropDownList("orderBy", orderSelectList,
+                    new
+                    {
+                    @class="",
+                    @onchange="redirectOnOrderChange(this.value);"
+                    })
+                </div>
+            </form>
+        </div>
+        <div style="clear:both;"></div>
+        @foreach (var item in Model.PagedReviews)
+        {
+            <div class="review">
+                <div>
+                    <div class="display-inline col-sm-2">
+                        @item.Date
+                    </div>
+                    <div class="display-inline col-sm-9">
+                        @item.UserName
+                    </div>
+                    <div class="route-collection-rating" id="route-rating-@item.Id">
+                        <input type="hidden" asp-for="@item.Score" id="rating-value-@item.Id" />
+                    </div>
+                </div>
+                <div class="review-content">
+                    @item.Description
+                </div>
+            </div>
+        }
+    </div>
 
-<h5>Reviews: </h5>
-<div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th><label asp-for="Route.Reviews.First().Date"></label></th>
-                <th><label asp-for="Route.Reviews.First().Score"></label></th>
-                <th><label asp-for="Route.Reviews.First().Description"></label></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach(var item in Model.Route.Reviews)
-            {
-                <tr>
-                    <td>
-                        @item.Date.ToString("dd.MM.yyyy HH:mm")
-                    </td>
-                    <td>
-                        @item.Score
-                    </td>
-                    <td>
-                        @item.Description
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <div class="page-current-number">
+        Page @(Model.PagedReviews.PageCount < Model.PagedReviews.PageNumber ? 0 : Model.PagedReviews.PageNumber) of @Model.PagedReviews.PageCount
+    </div>
+
+
+    @{
+        if (Model.PagedReviews.PageCount > 1)
+        {
+            @Html.PagedListPager(Model.PagedReviews,
+    page => Url.Action("Reviews", new { page, orderBy = @orderBy,id=@Model.Id, pageSize=@pageSize}),
+    new PagedListRenderOptions {LiElementClasses = new string[] { "page-item" }, PageClasses = new string[] { "page-link" }})
+        }
+    }
+
+
+    <div>
+        <a class="btn btn-outline-secondary grey-button" asp-action="Index">Routes list</a>
+        <a class="btn btn-outline-secondary grey-button" asp-action="Details" asp-route-id="@Model.Id">Back to details</a>
+
+    </div>
 </div>
-<div>
-    <a asp-action="Details" asp-route-id="@Model.Id">Back to details</a> |
-    <a asp-action="Index">Routes list</a>
-</div>
-</div>
+@section Scripts{
+<script>
+    $('document').ready(showStarRatingForSingleRoute());
+    $('document').ready(showStarRatingForRoutesList());
+</script>
+<script>
+    function redirectOnOrderChange(dropDownValue){
+        window.location.href = '/Route/Reviews/'
+        + @Model.Id
+        + '?orderBy=' + dropDownValue
+        + '&page=' + @currentPage
+        + '&pageSize=' + @pageSize;
+    }
+    function redirectOnPageSizeChange(dropDownValue){
+        window.location.href = '/Route/Reviews/'
+        + @Model.Id
+        + '?orderBy=' + '@orderBy'
+        + '&page=' + @currentPage
+        + '&pageSize=' + dropDownValue;
+    }
+</script>
+}

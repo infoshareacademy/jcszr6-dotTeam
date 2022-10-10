@@ -1,0 +1,16 @@
+﻿@model CreateEditRouteReviewDto
+<div class="form-group">
+    <input type="hidden" asp-for="RouteId" class="form-control" />
+</div>
+<div class="form-group">
+    <label asp-for="Score" class="control-label">Your score</label>
+    <div class="route-rating"></div>
+    <input type="hidden" asp-for="Score" id="rating-value" class="form-control" />
+    <span asp-validation-for="Score" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="Description" class="control-label"></label>
+    <textarea asp-for="Description" id="review-description" class="form-control"></textarea>
+    <small class="form-text text-muted">0 characters remaining</small>
+    <span asp-validation-for="Description" class="text-danger"></span>
+</div>

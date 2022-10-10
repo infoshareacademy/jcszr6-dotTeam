@@ -1,28 +1,43 @@
-﻿@model PlanAndRide.Web.Models.RoutesCollectionViewModel
+﻿@model IEnumerable<RouteDto>
 
 @{
     ViewData["Title"] = "Index";
 }
 <div class="container">
     <h1>Routes</h1>
-
     <p>
         <div class="button" id="button-animation">
             <div id="translate"></div>
             <a class="submit-button" asp-area="" asp-controller="Route" asp-action="Create">New Route</a>
         </div>
     </p>
-
     <partial name="_Partials/_RoutesList" model="@Model" />
 
-    @section scripts{
-        <script>
-            $(document).ready(function() {
-                $('#indexTable').DataTable();
-            });
-        </script>
+</div>
+@section scripts{
+<script>
 
+    function createRouteRatingFilter() {
+        let tableRatingFilterEl = document.getElementById('rating-filter');
+        let ratingSelectList = document.getElementById('min-rating-select');
+        tableRatingFilterEl.appendChild(ratingSelectList);
     }
 
-    </div>
-
+    $(document).ready(function() {
+        let table = $('#indexTable').DataTable({
+                    "columns": [
+                        null,
+                        null,
+                        null,
+                        {"searchable":false},
+                        {"searchable":false}
+                    ],
+                    "dom":"<'row'<'col-sm-3'l><'#rating-filter.col-sm-3'><'col'f>>tp"
+                });
+        createRouteRatingFilter();
+    });
+</script>
+<script>
+    $('document').ready(showStarRatingForRoutesList());
+</script>
+}

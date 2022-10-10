@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using PlanAndRide.BusinessLogic;
 using PlanAndRide.Database;
 using PlanAndRide.Web.Models;
@@ -11,12 +12,14 @@ namespace PlanAndRide.Web.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IRouteService _routeService;
         private readonly IConfiguration _config;
+        private readonly IMapper _mapper;
 
-        public HomeController(ILogger<HomeController> logger,IRouteService routeService, IConfiguration config, PlanAndRideContext contex)
+        public HomeController(ILogger<HomeController> logger,IRouteService routeService, IConfiguration config,IMapper mapper)
         {
             _logger = logger;
             _routeService = routeService;
             _config = config;
+            _mapper = mapper;
         }
 
         public async Task<IActionResult> Index()
@@ -24,7 +27,7 @@ namespace PlanAndRide.Web.Controllers
             var routes = await _routeService.GetAll();
             var lastThreeRoutes = routes.OrderByDescending(r => r.Id).Take(3).ToList();
             var model = new RoutesCollectionViewModel();
-            model.Routes = lastThreeRoutes.Select(r => new RouteViewModel(r,_routeService));
+            model.Routes = lastThreeRoutes;
             return View(model);
         }
 
