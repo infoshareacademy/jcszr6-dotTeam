@@ -42,7 +42,7 @@ namespace PlanAndRide.Database.Repository
             try
             {
                 return await _context.Reviews
-                    .Include(r => r.User)
+                    .Include(r => r.ApplicationUser)
                     .Include(r => r.Route)
                     .SingleOrDefaultAsync(r => r.Id == id);
             }
@@ -55,7 +55,7 @@ namespace PlanAndRide.Database.Repository
         public async Task<IEnumerable<Review>> GetAll()
         {
             return await _context.Reviews
-                .Include(r => r.User)
+                .Include(r => r.ApplicationUser)
                 .Include(r => r.Route)
                 .ToListAsync();
         }

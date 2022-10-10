@@ -65,7 +65,7 @@ namespace PlanAndRide.Web.Controllers
                 ViewData["ApiKey"] = _config["Maps:ApiKey"];
                 return View(route);
             }
-            route.ApplicationUser = new ApplicationUser { Id = 1 };
+            route.User = new ApplicationUser { Id = 1 };
             await _routeService.Add(route);
             return RedirectToAction(nameof(Details), new {Id=route.Id});
         }

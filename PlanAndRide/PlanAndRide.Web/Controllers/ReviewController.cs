@@ -32,8 +32,8 @@ namespace PlanAndRide.Web.Controllers
         //}
 
         // GET: Reviews/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
+        //public async Task<IActionResult> Details(int? id)
+        //{
             //if (id == null || _context.Reviews == null)
             //{
             //    return NotFound();
@@ -49,8 +49,7 @@ namespace PlanAndRide.Web.Controllers
             //}
 
             //return View(review);
-            throw new NotImplementedException();
-        }
+        //}
 
         // GET: Reviews/Create
         public async Task<IActionResult> Create(int routeId)
