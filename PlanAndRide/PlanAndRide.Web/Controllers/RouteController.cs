@@ -60,13 +60,12 @@ namespace PlanAndRide.Web.Controllers
                 route.EncodedGoogleMapsWaypoints = null;
             }
 
-            //ModelState.Remove("Route.User");
             if (!ModelState.IsValid)
             {
                 ViewData["ApiKey"] = _config["Maps:ApiKey"];
                 return View(route);
             }
-            route.User = new User { Id = 1 };
+            route.ApplicationUser = new ApplicationUser { Id = 1 };
             await _routeService.Add(route);
             return RedirectToAction(nameof(Details), new {Id=route.Id});
         }

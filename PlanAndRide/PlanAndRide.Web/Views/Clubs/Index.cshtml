@@ -1,0 +1,53 @@
+﻿@model PlanAndRide.Web.Models.ClubsCollectionViewModel
+
+@{
+    ViewData["Title"]= "Index";
+}
+<div class="container"> 
+<h1>Clubs</h1>
+<p>
+     <div class="button" id="button-animation">
+            <div id="translate"></div>
+            <a class="submit-button" asp-area="" asp-controller="Clubs" asp-action="Create">New Club</a>
+        </div>
+</p>
+<table class="table" id="myTable">
+    <thead>
+        <tr>
+            <th>
+                <label asp-for="@Model.Clubs.FirstOrDefault().Name"></label>
+            </th>
+        </tr>
+        <tr>
+            <th>
+                <label asp-for="@Model.Clubs.FirstOrDefault().Description"></label>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model.Clubs)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.Description
+                </td>
+                <td>
+                    <a class="btn btn-outline-info grey-button" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    <a class="btn btn-outline-primary grey-button" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    <a class="btn btn-outline-danger grey-button" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section scripts {
+    <script> 
+       $(document).ready( function () {
+    $('#myTable').DataTable();
+} );
+   </script>
+}
+</div>

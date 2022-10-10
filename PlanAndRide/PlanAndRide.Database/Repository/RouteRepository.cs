@@ -21,7 +21,7 @@ namespace PlanAndRide.Database.Repository
             try
             {
                 return await _context.Routes
-                    .Include(r => r.User)
+                    .Include(r => r.ApplicationUser)
                     .Include(r => r.StartingPosition)
                     .Include(r => r.DestinationPosition)
                     .Include(r => r.Reviews)
@@ -35,7 +35,7 @@ namespace PlanAndRide.Database.Repository
         public async Task<IEnumerable<Route>> GetAll()
         {
             return await _context.Routes
-               .Include(r => r.User)
+               .Include(r => r.ApplicationUser)
                .Include(r => r.StartingPosition)
                .Include(r => r.DestinationPosition)
                .Include(r => r.Reviews)
@@ -52,10 +52,10 @@ namespace PlanAndRide.Database.Repository
             if (destinationPosition != null)
                 route.DestinationPosition = destinationPosition;
 
-            var user = _context.Users.FirstOrDefault(u => u.Id == route.User.Id);
+            var user = _context.ApplicationUsers.FirstOrDefault(u => u.Id == route.ApplicationUser.Id);
             if (user == null)
                 throw new ArgumentException("User not found at route create");
-            route.User = user;
+            route.ApplicationUser = user;
 
             await _context.Routes.AddAsync(route);
             _context.SaveChanges();
