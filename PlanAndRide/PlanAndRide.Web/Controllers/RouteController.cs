@@ -12,9 +12,9 @@ namespace PlanAndRide.Web.Controllers
     {
         private readonly IRouteService _routeService;
         private readonly IConfiguration _config;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public RouteController(IRouteService routeService, IConfiguration config,UserManager<IdentityUser> userManager)
+        public RouteController(IRouteService routeService, IConfiguration config,UserManager<ApplicationUser> userManager)
         {
             _routeService = routeService;
             _config = config;
