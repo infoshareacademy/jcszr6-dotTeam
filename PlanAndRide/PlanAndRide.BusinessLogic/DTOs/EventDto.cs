@@ -1,15 +1,14 @@
 ﻿using PlanAndRide.BusinessLogic;
-using PlanAndRide.Database;
 using System.ComponentModel.DataAnnotations;
-namespace PlanAndRide.Web.Models
+namespace PlanAndRide.BusinessLogic
 {
-    public class EventViewModel
+    public class EventDto
     {
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
  
-        public DateTime? Date { get; set; }
+        public DateTime Date { get; set; }
         public string? RouteId { get; set; }
         public string? RouteName { get; set; }
 
@@ -20,21 +19,5 @@ namespace PlanAndRide.Web.Models
         public bool ShareRide { get; set; }
         public bool IsPrivate { get; set; }
         public string? StatusRide { get; set; }
-
-
-        public EventViewModel(Ride ride)
-        {
-            Name = ride.Name;
-            Date = ride.Date;
-            RouteId=ride.Route.Id.ToString();
-            Description = ride.Description;
-            ShareRide = ride.ShareRide;
-            IsPrivate = ride.IsPrivate;
-            
-        }
-        public EventViewModel()
-        {
-
-        }
     }
 }

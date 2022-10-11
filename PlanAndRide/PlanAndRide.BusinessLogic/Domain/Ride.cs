@@ -25,7 +25,6 @@ namespace PlanAndRide.BusinessLogic
         public bool IsPrivate { get; set; }
         public virtual IList<UserRide> UserRide { get; set; }
         //public virtual IList<StatusList> StatusLists { get; set; }
-       public string StatusRide { get; set; }
 
         
     }

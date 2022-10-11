@@ -10,31 +10,29 @@ namespace PlanAndRide.Web.Controllers.Events
     {
         private readonly IRideService _rideService;
         private readonly IRouteService _routeService;
-        private readonly IMapper _mapper;
 
-        public EventController(IRideService rideService, IRouteService routeService, IMapper mapper)
+        public EventController(IRideService rideService, IRouteService routeService)
         {
             _routeService = routeService;
-            _mapper = mapper;
+            
             _rideService = rideService;
         }
         // GET: EventsController
         public async Task<ActionResult> Index()
         {
             var rides = await _rideService.GetAll();
-            var model = rides.Select(ride=>_mapper.Map<EventViewModel>(ride));
-            return View(model);
+            return View(rides);
         }
 
         // GET: EventsController/Details/5
         public async Task<ActionResult> Details(int id)
         {
             var ride = await _rideService.Get(id);
-            if(ride!= null)
+            if(ride== null)
             {
-                return View(_mapper.Map<EventViewModel>(ride));
+                return RedirectToAction(nameof(Index));
             }
-            return RedirectToAction(nameof(Index));
+            return View(ride);
         }
 
         // GET: EventsController/Create
@@ -48,22 +46,22 @@ namespace PlanAndRide.Web.Controllers.Events
         // POST: EventsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(EventViewModel model)
+        public async Task<ActionResult> Create(EventDto eventDto)
         {   
             if(!ModelState.IsValid)
             {
-                model.Routes= await _routeService.GetAll();
-                return View(model);
+                eventDto.Routes= await _routeService.GetAll();
+                return View(eventDto);
             }
             
-            var ride = _mapper.Map<Ride>(model);
             
-            if (int.TryParse(model.RouteId, out int id))
-                ride.Route = await _routeService.Get(id);
+            
+            if (int.TryParse(eventDto.RouteId, out int id))
+                eventDto.Routes = (IEnumerable<BusinessLogic.Route>?)await _routeService.Get(id);
             else
-                ride.Route = null;
+                eventDto.Routes = null;
 
-            await _rideService.Add(ride);
+            await _rideService.Add(eventDto);
             return RedirectToAction(nameof(Index));
         }
 
@@ -107,18 +105,19 @@ namespace PlanAndRide.Web.Controllers.Events
         public async Task<ActionResult> Delete(int id)
         {
             var ride = await _rideService.Get(id);
-            if (ride == null)
+            if (ride != null)
             {
-                return RedirectToAction(nameof(Index));
+                return View(ride);
             }
 
-           return View(_mapper.Map<EventViewModel>(ride));
+           
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: EventsController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Delete(int id,EventViewModel model)
+        public async Task<ActionResult> Delete(int id,EventDto eventDto)
         {
             await _rideService.Delete(id);
             return RedirectToAction(nameof(Index));

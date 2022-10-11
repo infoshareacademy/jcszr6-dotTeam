@@ -57,8 +57,8 @@ namespace PlanAndRide.GUI
 
             //Szukanie po datach i wyświetlanie wyników
 
-            var loadedRides = await _rideService.GetAll();
-            var filtredReviews = loadedRides.SelectMany(r => r.Route.Reviews).Where(r => r.Date.Date >= firstDateTimeToSearch.Date && r.Date.Date <= lastDateTimeToSearch.Date).ToList();
+            var loadedRides = await _routeService.GetAll();
+            var filtredReviews = loadedRides.SelectMany(r => r.Reviews).Where(r => r.Date.Date >= firstDateTimeToSearch.Date && r.Date.Date <= lastDateTimeToSearch.Date).ToList();
             if (filtredReviews.Count != 0)
             {
                 foreach (var filtredReview in filtredReviews)

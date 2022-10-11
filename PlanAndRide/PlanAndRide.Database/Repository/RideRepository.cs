@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using PlanAndRide.BusinessLogic;
 using PlanAndRide.BusinessLogic.Enums;
 using PlanAndRide.BusinessLogic.Exceptions;
@@ -10,9 +11,11 @@ namespace PlanAndRide.Database.Repository
     public class RideRepository : IRepository<Ride>
     {
         private readonly PlanAndRideContext _context;
-        public RideRepository(PlanAndRideContext context)
+        private readonly IMapper _mapper;
+        public RideRepository(PlanAndRideContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
         public async Task<Ride> Get(int id)
         {
@@ -36,7 +39,6 @@ namespace PlanAndRide.Database.Repository
             if (user == null)
                 throw new ArgumentException("User not found at event create");
             ride.User = user;
-            TimeStatusRide(ride);
             await _context.Rides.AddAsync(ride);
             _context.SaveChanges();
         }
@@ -49,7 +51,7 @@ namespace PlanAndRide.Database.Repository
             }
             catch (InvalidOperationException ex)
             {
-                throw new InvalidOperationException($"Unique key violaton: Ride ID:{id}");
+                throw new InvalidOperationException($"Unique key violation: Ride ID:{id}");
             }
 
             if (existingRide == null)
@@ -76,40 +78,12 @@ namespace PlanAndRide.Database.Repository
             }
             catch (InvalidOperationException ex)
             {
-                throw new InvalidOperationException($"Unique key violaton: Ride ID:{id}");
+                throw new InvalidOperationException($"Unique key violation: Ride ID:{id}");
             }
         }
-        public string TimeStatusRide(Ride ride)
-        {
-            var date2 = DateTime.Now;
-            var date1 = ride.Date;
-            
-            var compareDate = DateTime.Compare(date1, date2);
-            if (compareDate > 0)
-            {
-                var status = StatusList.Comming;
-                var nameStatus = status.GetType().GetMember(status.ToString()).First().GetCustomAttribute<DisplayAttribute>().GetName();
-                return ride.StatusRide = nameStatus;
-            }
-            if (compareDate == 0)
-            {
-                var status = StatusList.Right_Now;
-                var nameStatus = status.GetType().GetMember(status.ToString()).First().GetCustomAttribute<DisplayAttribute>().GetName();
-               return ride.StatusRide = nameStatus;
-            }
-            if (compareDate < 0)
-            {
-                var status = StatusList.Completed;
-                var nameStatus = status.GetType().GetMember(status.ToString()).First().GetCustomAttribute<DisplayAttribute>().GetName();
-                return ride.StatusRide = nameStatus;
-            }
-            else
-            {
-                var status = StatusList.Unknown;
-                var nameStatus = status.GetType().GetMember(status.ToString()).First().GetCustomAttribute<DisplayAttribute>().GetName();
-                return ride.StatusRide = nameStatus;
-            }
 
-        }
 
-    } }
+
+
+    }
+}

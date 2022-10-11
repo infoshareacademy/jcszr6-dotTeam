@@ -38,7 +38,7 @@ namespace PlanAndRide.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GeoCoordinates");
+                    b.ToTable("GeoCoordinates", (string)null);
                 });
 
             modelBuilder.Entity("PlanAndRide.BusinessLogic.Review", b =>
@@ -72,7 +72,7 @@ namespace PlanAndRide.Database.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Reviews");
+                    b.ToTable("Reviews", (string)null);
                 });
 
             modelBuilder.Entity("PlanAndRide.BusinessLogic.Ride", b =>
@@ -83,7 +83,7 @@ namespace PlanAndRide.Database.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("Date")
+                    b.Property<DateTime?>("Date")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -104,11 +104,6 @@ namespace PlanAndRide.Database.Migrations
                     b.Property<bool>("ShareRide")
                         .HasColumnType("bit");
 
-                    b.Property<string>("StatusRide")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
@@ -118,7 +113,7 @@ namespace PlanAndRide.Database.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Rides");
+                    b.ToTable("Rides", (string)null);
                 });
 
             modelBuilder.Entity("PlanAndRide.BusinessLogic.Route", b =>
@@ -169,7 +164,7 @@ namespace PlanAndRide.Database.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Routes");
+                    b.ToTable("Routes", (string)null);
                 });
 
             modelBuilder.Entity("PlanAndRide.BusinessLogic.User", b =>
@@ -197,7 +192,7 @@ namespace PlanAndRide.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("PlanAndRide.BusinessLogic.UserRide", b =>
@@ -212,7 +207,7 @@ namespace PlanAndRide.Database.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserRide");
+                    b.ToTable("UserRide", (string)null);
                 });
 
             modelBuilder.Entity("PlanAndRide.BusinessLogic.Review", b =>

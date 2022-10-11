@@ -8,7 +8,7 @@ namespace PlanAndRide.Web.Mapping
     {
         public EventProfile()
         {
-            CreateMap<Ride, EventViewModel>()
+            CreateMap<Ride, EventDto>()
                 .ForMember(model => model.Id, expr => expr.MapFrom(source => source.Id))
                 .ForMember(model => model.Name, expr => expr.MapFrom(source => source.Name))
                 .ForMember(model => model.Date, expr => expr.MapFrom(source => source.Date))
@@ -18,7 +18,6 @@ namespace PlanAndRide.Web.Mapping
                 .ForMember(model => model.Description, expr => expr.MapFrom(source => source.Description))
                 .ForMember(model => model.IsPrivate, expr => expr.MapFrom(source => source.IsPrivate))
                 .ForMember(model => model.ShareRide, expr => expr.MapFrom(source => source.ShareRide))
-                .ForMember(model=>model.StatusRide, expr=>expr.MapFrom(source=>source.StatusRide))
                 .ReverseMap();
         }
     }
