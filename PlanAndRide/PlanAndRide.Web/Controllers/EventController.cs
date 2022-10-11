@@ -50,16 +50,16 @@ namespace PlanAndRide.Web.Controllers.Events
         {   
             if(!ModelState.IsValid)
             {
-                eventDto.Routes= await _routeService.GetAll();
+                //eventDto.Routes= await _routeService.GetAll();
                 return View(eventDto);
             }
             
             
             
             if (int.TryParse(eventDto.RouteId, out int id))
-                eventDto.Routes = (IEnumerable<BusinessLogic.Route>?)await _routeService.Get(id);
+                eventDto.Route = await _routeService.Get(id);
             else
-                eventDto.Routes = null;
+                eventDto.Route = null;
 
             await _rideService.Add(eventDto);
             return RedirectToAction(nameof(Index));
@@ -83,15 +83,15 @@ namespace PlanAndRide.Web.Controllers.Events
         {
             if (!ModelState.IsValid)
             {
-                eventDto.Routes = await _routeService.GetAll();
+                //eventDto.Routes = await _routeService.GetAll();
                 return View(eventDto);
             }
 
             
             if (int.TryParse(eventDto.RouteId, out int routeId))
-                eventDto.Routes = (IEnumerable<BusinessLogic.Route>?)await _routeService.Get(id);
+                eventDto.Route = await _routeService.Get(id);
             else
-                eventDto.Routes = null;
+                eventDto.Route = null;
 
             await _rideService.Update(id,eventDto);
             return RedirectToAction(nameof(Index));
