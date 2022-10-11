@@ -69,34 +69,31 @@ namespace PlanAndRide.Web.Controllers.Events
         public async Task<ActionResult> Edit(int id)
         {
             var ride = await _rideService.Get(id);
-            if (ride == null)
+            if (ride != null)
             {
-                return RedirectToAction(nameof(Index));
+                return View(ride);
             }
-            
-            var model = _mapper.Map<EventViewModel>(ride);
-            model.Routes = await _routeService.GetAll();
-            return View(model);
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: EventsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(int id, EventViewModel model)
+        public async Task<ActionResult> Edit(int id, EventDto eventDto)
         {
             if (!ModelState.IsValid)
             {
-                model.Routes = await _routeService.GetAll();
-                return View(model);
+                eventDto.Routes = await _routeService.GetAll();
+                return View(eventDto);
             }
 
-            var ride = _mapper.Map<Ride>(model);
-            if (int.TryParse(model.RouteId, out int routeId))
-                ride.Route = await _routeService.Get(routeId);
+            
+            if (int.TryParse(eventDto.RouteId, out int routeId))
+                eventDto.Routes = (IEnumerable<BusinessLogic.Route>?)await _routeService.Get(id);
             else
-                ride.Route = null;
+                eventDto.Routes = null;
 
-            await _rideService.Update(id,ride);
+            await _rideService.Update(id,eventDto);
             return RedirectToAction(nameof(Index));
         }
     
