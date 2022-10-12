@@ -44,36 +44,36 @@ namespace PlanAndRide.GUI
             }
 
         }
-        public async Task SearchByReviewDates()
-        {
+        //public async Task SearchByReviewDates()
+        //{
 
-            //Wprowadzanie przez użytkonika danych do szukania.
+        //    //Wprowadzanie przez użytkonika danych do szukania.
 
-            Console.WriteLine("Aby rozpocząć szukanie wprowadź dane,aby zacząć szukać");
-            DateTime firstDateTimeToSearch = WriteDate();
+        //    Console.WriteLine("Aby rozpocząć szukanie wprowadź dane,aby zacząć szukać");
+        //    DateTime firstDateTimeToSearch = WriteDate();
 
-            Console.WriteLine("Teraz wprowadź dane do którego mamy  szukać (liczbowo)");
-            DateTime lastDateTimeToSearch = WriteDate();
+        //    Console.WriteLine("Teraz wprowadź dane do którego mamy  szukać (liczbowo)");
+        //    DateTime lastDateTimeToSearch = WriteDate();
 
-            //Szukanie po datach i wyświetlanie wyników
+        //    //Szukanie po datach i wyświetlanie wyników
 
-            var loadedRides = await _rideService.GetAll();
-            var filtredReviews = loadedRides.SelectMany(r => r.Route.Reviews).Where(r => r.Date.Date >= firstDateTimeToSearch.Date && r.Date.Date <= lastDateTimeToSearch.Date).ToList();
-            if (filtredReviews.Count != 0)
-            {
-                foreach (var filtredReview in filtredReviews)
-                {
-                    Console.WriteLine($"Data:{filtredReview.Date}");
-                    Console.WriteLine($"Ocena:{filtredReview.Score}");
-                    Console.WriteLine($"Opis: {filtredReview.Description}\n");
-                }
-            }
-            else
-            {
-                Console.WriteLine("Brak wyników");
-            }
+        //    var loadedRides = await _rideService.GetAll();
+        //    var filtredReviews = loadedRides.SelectMany(r => r.Route.Reviews).Where(r => r.Date.Date >= firstDateTimeToSearch.Date && r.Date.Date <= lastDateTimeToSearch.Date).ToList();
+        //    if (filtredReviews.Count != 0)
+        //    {
+        //        foreach (var filtredReview in filtredReviews)
+        //        {
+        //            Console.WriteLine($"Data:{filtredReview.Date}");
+        //            Console.WriteLine($"Ocena:{filtredReview.Score}");
+        //            Console.WriteLine($"Opis: {filtredReview.Description}\n");
+        //        }
+        //    }
+        //    else
+        //    {
+        //        Console.WriteLine("Brak wyników");
+        //    }
 
-        }
+        //}
         public async Task SearchByGradeRoute()
         {
             //Wprowadzania przez użytkownika zakres szukania tras po ocenach
@@ -86,14 +86,14 @@ namespace PlanAndRide.GUI
             //Szukanie po ocenach i wyświetlanie wyników
 
             var loadedRides = await _rideService.GetAll();
-            var filtredLoadRides = loadedRides.Where(r=>_routeService.AverageScore(r.Route) >= minValueScore && _routeService.AverageScore(r.Route) <= maxValueScore).ToList();
+            var filtredLoadRides = loadedRides.Where(r=>r.Route.AverageScore >= minValueScore && r.Route.AverageScore <= maxValueScore).ToList();
             if (filtredLoadRides.Count != 0)
             {
                 foreach (var ride in filtredLoadRides)
                 {
                     Console.WriteLine($"Nazwa trasy: {ride.Route.Name} ");
                     Console.WriteLine($"Opis trasy: {ride.Route.Description}");
-                    Console.WriteLine($"Średnia ocena trasy: {_routeService.AverageScore(ride.Route)}\n");
+                    Console.WriteLine($"Średnia ocena trasy: {ride.Route.AverageScore}\n");
                 }
             }
             else
@@ -121,7 +121,7 @@ namespace PlanAndRide.GUI
                 {
                     Console.WriteLine($"Nazwa trasy: {ride.Route.Name} ");
                     Console.WriteLine($"Opis trasy: {ride.Route.Description}");
-                    Console.WriteLine($"Średnia ocena trasy: {_routeService.AverageScore(ride.Route)}\n");
+                    Console.WriteLine($"Średnia ocena trasy: {ride.Route.AverageScore}\n");
                 }
             }
             else

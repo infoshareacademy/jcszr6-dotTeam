@@ -13,7 +13,7 @@ namespace PlanAndRide.BusinessLogic
         public string? RouteName { get; set; }
 
         //public IEnumerable<BusinessLogic.Route>? Routes { get; set; }
-        public Route Route { get; set; }
+        public RouteDto Route { get; set; }
 
         public string? Description { get; set; }
 

@@ -42,17 +42,17 @@ namespace PlanAndRide.GUI
                 }
                 Console.WriteLine($"Nazwa trasy: {ride.Route.Name} ");
                 Console.WriteLine($"Opis trasy: {ride.Route.Description}");
-                Console.WriteLine($"Średnia ocena trasy: {_routeService.AverageScore(ride.Route)}");
+                Console.WriteLine($"Średnia ocena trasy: {ride.Route.AverageScore}");
 
-                Console.WriteLine();
-                Console.WriteLine("Poniżej zostaną przedstawione opinie dotyczące trasy: ");
-                foreach (var rides in ride.Route.Reviews)
-                {
-                    Console.WriteLine($"Data utworzenia oceny: {rides.Date}");
-                    Console.WriteLine($"Ocena trasy: {rides.Score}");
-                    Console.WriteLine($"Opinia: {rides.Description}\n");
+                //Console.WriteLine();
+                //Console.WriteLine("Poniżej zostaną przedstawione opinie dotyczące trasy: ");
+                //foreach (var rides in ride.Route.Reviews)
+                //{
+                //    Console.WriteLine($"Data utworzenia oceny: {rides.Date}");
+                //    Console.WriteLine($"Ocena trasy: {rides.Score}");
+                //    Console.WriteLine($"Opinia: {rides.Description}\n");
 
-                }
+                //}
                 Console.WriteLine("-------------------------------------------------");
             }
         }
