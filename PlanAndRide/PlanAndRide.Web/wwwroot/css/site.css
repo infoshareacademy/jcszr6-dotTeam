@@ -14,7 +14,7 @@ html {
 }
 
 .footer {
-    position: relative !important;
+    position: absolute !important;
     bottom: 0;
     width: 100%;
     white-space: nowrap;
@@ -167,7 +167,7 @@ option {
     font-weight: bold!important;
 }
 #button-animation:hover a {
-    color: #333;
+    color: #333!important;
     text-decoration: none;
 }
 
@@ -270,4 +270,30 @@ select {
 }
 .table-hidden-value {
     display:none;
+}
+.dropdown-item {
+    background-color: darkred;
+}
+
+dropdown-item.dropdown-item:hover {
+    background-color: black !important;
+    color: #BFC0C0 !important;
+}
+
+dropdown-item.dropdown-item:focus {
+    background-color: black !important;
+    color: #BFC0C0 !important;
+}
+
+.dropdown-item-class {
+    color: black;
+}
+
+    .dropdown-item-class a {
+        background-color: black !important;
+        color: #BFC0C0 !important;
+    }
+.navbar-nav > li > .dropdown-menu a:link,
+.navbar-nav > li > .dropdown-menu a:hover {
+    background-color: black !important;
 }
