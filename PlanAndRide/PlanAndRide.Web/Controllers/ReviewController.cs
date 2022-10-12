@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using PlanAndRide.BusinessLogic;
 
 namespace PlanAndRide.Web.Controllers
@@ -7,11 +8,13 @@ namespace PlanAndRide.Web.Controllers
     {
         private readonly IReviewService _reviewService;
         private readonly IRouteService _routeService;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public ReviewController(IReviewService service, IRouteService routeService)
+        public ReviewController(IReviewService service, IRouteService routeService, UserManager<ApplicationUser> userManager)
         {
             _reviewService = service;
             _routeService = routeService;
+            _userManager = userManager;
         }
 
         // GET: Reviews
@@ -71,11 +74,12 @@ namespace PlanAndRide.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("RouteId,Score,Description")] CreateEditRouteReviewDto dto)
         {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
             if (!ModelState.IsValid)
             {
                 return View(dto);
             }
-            dto.UserId = 1;
+            dto.UserId = user.Id;
             dto.Date = DateTime.UtcNow;
             await _reviewService.Add(dto);
             return RedirectToAction(actionName: "Reviews", controllerName: "Route", new { Id = dto.RouteId });
