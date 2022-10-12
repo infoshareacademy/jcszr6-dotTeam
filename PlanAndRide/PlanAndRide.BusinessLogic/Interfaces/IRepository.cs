@@ -4,7 +4,6 @@
     {
         Task<T> Get(int id);
         Task<IEnumerable<T>> GetAll();
-        Task<IEnumerable<T>> GetByUser(string id);
         Task Add(T entity);
         Task Update(int id, T entity);
         Task Delete(int id);
