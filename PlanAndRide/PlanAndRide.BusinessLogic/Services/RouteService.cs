@@ -5,10 +5,10 @@ namespace PlanAndRide.BusinessLogic
 {
     public class RouteService : IRouteService
     {
-        private readonly IRepository<Route> _repository;
+        private readonly IRouteRepository _repository;
         private readonly IMapper _mapper;
 
-        public RouteService(IRepository<Route> repository, IMapper mapper)
+        public RouteService(IRouteRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
@@ -41,6 +41,20 @@ namespace PlanAndRide.BusinessLogic
             }
             return dtos;
         }
+        public async Task<IEnumerable<RouteDto>> GetPublicRoutes()
+        {
+            var routes = await _repository.GetPublicRoutes();
+            var dtos = _mapper.Map<IEnumerable<RouteDto>>(routes);
+            var routesList = routes.ToList();
+            var i = 0;
+            foreach (var dto in dtos)
+            {
+                dto.AverageScore = AverageScore(routesList[i]);
+                i++;
+            }
+            return dtos;
+        }
+
         public async Task<IEnumerable<RouteDto>> GetByRating(double minRating)
         {
             var routes = await GetAll();

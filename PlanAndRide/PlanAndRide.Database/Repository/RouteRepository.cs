@@ -5,7 +5,7 @@ using PlanAndRide.BusinessLogic.Exceptions;
 
 namespace PlanAndRide.Database.Repository
 {
-    public class RouteRepository : IRepository<Route>
+    public class RouteRepository : IRouteRepository
     {
         private readonly PlanAndRideContext _context;
         private readonly IMapper _mapper;
@@ -51,6 +51,17 @@ namespace PlanAndRide.Database.Repository
                .Include(r => r.Reviews)
                .ToListAsync();
         }
+        public async Task<IEnumerable<Route>> GetPublicRoutes()
+        {
+            return await _context.Routes
+               .Where(r => r.IsPrivate == false)
+               .Include(r => r.ApplicationUser)
+               .Include(r => r.StartingPosition)
+               .Include(r => r.DestinationPosition)
+               .Include(r => r.Reviews)
+               .ToListAsync();
+        }
+
         public async Task Add(Route route)
         {
             var startingPosition = GetExistingGeoCoordinate(route.StartingPosition.Latitude, route.StartingPosition.Longitude);
