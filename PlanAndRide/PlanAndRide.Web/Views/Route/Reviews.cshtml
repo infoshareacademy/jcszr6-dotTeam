@@ -33,12 +33,19 @@
     </div>
     <span>@reviewsCountDesc</span>
     <hr />
-    <div class="button" id="button-animation">
-        <div id="translate"></div>
-        <a class="submit-button" asp-controller="Review" asp-action="Create" asp-route-routeId=@Model.Id>Add review</a>
-    </div>        
-    
-
+    @{
+        if (Model.ReviewedByCurrentUser)
+        {
+            <span>You've reviewed this route</span>
+        }
+        else
+        {
+            <div class="button" id="button-animation">
+            <div id="translate"></div>
+                <a class="submit-button" asp-controller="Review" asp-action="Create" asp-route-routeId=@Model.Id>Add review</a>
+            </div>
+        }
+    }
     <div class="fluid-container">
         <div class="page-size-dropdown">
             <form asp-action="Reviews" method="get">

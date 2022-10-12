@@ -123,7 +123,7 @@ namespace PlanAndRide.BusinessLogic
             return Math.Round(avg * 2) / 2;
         }
 
-        public async Task<RouteDtoWithReviews?> GetRouteWithReviews(int id, string orderBy, int page, int pageSize)
+        public async Task<RouteDtoWithReviews?> GetRouteWithReviews(int id, string currentUserId, string orderBy, int page, int pageSize)
         {
             try
             {
@@ -134,6 +134,7 @@ namespace PlanAndRide.BusinessLogic
                 }
                 var routeDto = _mapper.Map<RouteDtoWithReviews>(route);
                 routeDto.AverageScore = AverageScore(route);
+                routeDto.ReviewedByCurrentUser = route.Reviews.Any(r => r.UserId == currentUserId);
                 if (route.Reviews != null)
                 {
                     
