@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -21,11 +22,13 @@ namespace PlanAndRide.Web.Controllers
             _userManager = userManager;
         }
         // GET: RouteController
+        [Authorize]
         public async Task<ActionResult> Index()
         {
             var routes = await _routeService.GetAll();
             return View(routes);
         }
+        [Authorize]
         public async Task<ActionResult> Rating(double? min)
         {
             var minRating = min ?? 0;
@@ -33,6 +36,7 @@ namespace PlanAndRide.Web.Controllers
             var routes = await _routeService.GetByRating(minRating);
             return View(nameof(Index),routes);
         }
+        [Authorize]
         // GET: RouteController/Details/5
         public async Task<ActionResult> Details(int id)
         {
@@ -46,6 +50,7 @@ namespace PlanAndRide.Web.Controllers
         }
 
         // GET: RouteController/Create
+        [Authorize]
         public ActionResult Create()
         {
             ViewData["ApiKey"] = _config["Maps:ApiKey"];
@@ -54,6 +59,7 @@ namespace PlanAndRide.Web.Controllers
 
         // POST: RouteController/Create
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(RouteDto route)
         {
@@ -75,6 +81,7 @@ namespace PlanAndRide.Web.Controllers
         }
 
         // GET: RouteController/Edit/5
+        [Authorize]
         public async Task<ActionResult> Edit(int id)
         {
             var route = await _routeService.Get(id);
@@ -88,6 +95,7 @@ namespace PlanAndRide.Web.Controllers
 
         // POST: RouteController/Edit/5
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int id, RouteDto route)
         {
@@ -109,6 +117,7 @@ namespace PlanAndRide.Web.Controllers
         }
 
         // GET: RouteController/Delete/5
+        [Authorize]
         public async Task<ActionResult> Delete(int id)
         {
             var route = await _routeService.Get(id);
@@ -122,6 +131,7 @@ namespace PlanAndRide.Web.Controllers
 
         // POST: RouteController/Delete/5
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(int id, RouteDto route)
         {
@@ -130,6 +140,7 @@ namespace PlanAndRide.Web.Controllers
         }
 
         // GET: RouteController/Search
+        [Authorize]
         public async Task<ActionResult> Search(string routeName)
         {
             if (!string.IsNullOrEmpty(routeName))
@@ -146,6 +157,7 @@ namespace PlanAndRide.Web.Controllers
             return RedirectToAction(nameof(Index));
 
         }
+        [Authorize]
         public async Task<ActionResult> Reviews(int id, string orderBy,int? page, int? pageSize)
         {
             var currentOrderBy = orderBy ?? "date_desc";
@@ -161,6 +173,7 @@ namespace PlanAndRide.Web.Controllers
             ViewBag.Page = model.PagedReviews.PageNumber;
             return View(model);
         }
+        [Authorize]
         public async Task<ActionResult> ManageReviews(int id, string orderBy,int? page, int? pageSize)
         {
             var currentOrderBy = orderBy ?? "date_desc";

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PlanAndRide.BusinessLogic;
 
@@ -37,24 +38,25 @@ namespace PlanAndRide.Web.Controllers
         // GET: Reviews/Details/5
         //public async Task<IActionResult> Details(int? id)
         //{
-            //if (id == null || _context.Reviews == null)
-            //{
-            //    return NotFound();
-            //}
+        //if (id == null || _context.Reviews == null)
+        //{
+        //    return NotFound();
+        //}
 
-            //var review = await _context.Reviews
-            //    .Include(r => r.Route)
-            //    .Include(r => r.User)
-            //    .FirstOrDefaultAsync(m => m.Id == id);
-            //if (review == null)
-            //{
-            //    return NotFound();
-            //}
+        //var review = await _context.Reviews
+        //    .Include(r => r.Route)
+        //    .Include(r => r.User)
+        //    .FirstOrDefaultAsync(m => m.Id == id);
+        //if (review == null)
+        //{
+        //    return NotFound();
+        //}
 
-            //return View(review);
+        //return View(review);
         //}
 
         // GET: Reviews/Create
+        [Authorize]
         public async Task<IActionResult> Create(int routeId)
         {
             var route = await _routeService.Get(routeId);
@@ -71,6 +73,7 @@ namespace PlanAndRide.Web.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("RouteId,Score,Description")] CreateEditRouteReviewDto dto)
         {
@@ -86,6 +89,7 @@ namespace PlanAndRide.Web.Controllers
         }
 
         // GET: Reviews/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int id)
         {
             var review = await _reviewService.Get(id);
@@ -107,6 +111,7 @@ namespace PlanAndRide.Web.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("RouteId,Score,Description")] CreateEditRouteReviewDto dto)
         {
@@ -119,6 +124,7 @@ namespace PlanAndRide.Web.Controllers
         }
 
         // GET: Reviews/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
             var review = await _reviewService.Get(id);
@@ -131,6 +137,7 @@ namespace PlanAndRide.Web.Controllers
 
         // POST: Reviews/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

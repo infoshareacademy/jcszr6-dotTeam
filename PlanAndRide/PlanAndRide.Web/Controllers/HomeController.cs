@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PlanAndRide.BusinessLogic;
 using PlanAndRide.Database;
@@ -21,7 +22,7 @@ namespace PlanAndRide.Web.Controllers
             _config = config;
             _mapper = mapper;
         }
-
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var routes = await _routeService.GetAll();
@@ -40,12 +41,12 @@ namespace PlanAndRide.Web.Controllers
         //        return View(new RouteViewModel(route, _routeService));
  
         //}
-
+        [AllowAnonymous]
         public IActionResult Privacy()
         {
             return View();
         }
-
+        [Authorize]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

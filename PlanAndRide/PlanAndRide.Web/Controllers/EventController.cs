@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +21,7 @@ namespace PlanAndRide.Web.Controllers.Events
             _rideService = rideService;
         }
         // GET: EventsController
+        [Authorize]
         public async Task<ActionResult> Index()
         {
             var rides = await _rideService.GetAll();
@@ -27,6 +29,7 @@ namespace PlanAndRide.Web.Controllers.Events
         }
 
         // GET: EventsController/Details/5
+        [Authorize]
         public async Task<ActionResult> Details(int id)
         {
             var ride = await _rideService.Get(id);
@@ -38,6 +41,7 @@ namespace PlanAndRide.Web.Controllers.Events
         }
 
         // GET: EventsController/Create
+        [Authorize]
         public async Task<ActionResult> Create()
         {
             var routes = await _routeService.GetAll();
@@ -47,6 +51,7 @@ namespace PlanAndRide.Web.Controllers.Events
         
         // POST: EventsController/Create
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(int Id,EventDto eventDto)
         {
@@ -67,6 +72,7 @@ namespace PlanAndRide.Web.Controllers.Events
         }
 
         // GET: EventsController/Edit/5
+        [Authorize]
         public async Task<ActionResult> Edit(int id)
         {
             var ride = await _rideService.Get(id);
@@ -80,6 +86,7 @@ namespace PlanAndRide.Web.Controllers.Events
 
         // POST: EventsController/Edit/5
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int id, EventDto eventDto)
         {
@@ -101,6 +108,7 @@ namespace PlanAndRide.Web.Controllers.Events
 
 
         // GET: EventsController/Delete/5
+        [Authorize]
         public async Task<ActionResult> Delete(int id)
         {
             var ride = await _rideService.Get(id);
@@ -115,6 +123,7 @@ namespace PlanAndRide.Web.Controllers.Events
 
         // POST: EventsController/Delete/5
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(int id, EventDto eventDto)
         {

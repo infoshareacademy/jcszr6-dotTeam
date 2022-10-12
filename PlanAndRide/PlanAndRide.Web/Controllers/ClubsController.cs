@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PlanAndRide.BusinessLogic;
@@ -19,6 +20,7 @@ namespace PlanAndRide.Web.Controllers
             _config = config;
         }
         // GET: ClubsController
+        [Authorize]
         public async Task<ActionResult> Index()
         {
             var model = new ClubsCollectionViewModel();
@@ -32,6 +34,7 @@ namespace PlanAndRide.Web.Controllers
         }
 
         // GET: ClubsController/Details/5
+        [Authorize]
         public async Task<ActionResult> Details(int id)
         {
             var club = await _clubService.Get(id);
@@ -43,6 +46,7 @@ namespace PlanAndRide.Web.Controllers
         }
 
         // GET: ClubsController/Create
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -50,6 +54,7 @@ namespace PlanAndRide.Web.Controllers
 
         // POST: ClubsController/Create
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(ClubViewModel model)
         {
@@ -65,6 +70,7 @@ namespace PlanAndRide.Web.Controllers
         }
 
         // GET: ClubsController/Edit/5
+        [Authorize]
         public async Task<ActionResult> Edit(int id)
         {
             var club = await _clubService.Get(id);
@@ -74,9 +80,9 @@ namespace PlanAndRide.Web.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
-
         // POST: ClubsController/Edit/5
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int id, ClubViewModel model)
         {
@@ -98,6 +104,7 @@ namespace PlanAndRide.Web.Controllers
 
 
         // GET: ClubsController/Delete/5
+        [Authorize]
         public async Task<ActionResult> Delete(int id)
         {
             var club = await _clubService.Get(id);
@@ -110,6 +117,7 @@ namespace PlanAndRide.Web.Controllers
 
         // POST: ClubsController/Delete/5
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(int id, ClubViewModel model)
         {
