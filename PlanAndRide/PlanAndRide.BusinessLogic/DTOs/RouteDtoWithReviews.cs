@@ -12,6 +12,7 @@ namespace PlanAndRide.BusinessLogic
         public int Id { get; set; }
         public string Name { get; set; }
         public double AverageScore { get; set; }
+        public bool ReviewedByCurrentUser { get; set; }
         public IPagedList<ReviewDto> PagedReviews { get; set; }
     }
 }
