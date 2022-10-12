@@ -27,6 +27,20 @@ namespace PlanAndRide.BusinessLogic
             }
             return dtos;
         }
+
+        public async Task<IEnumerable<RouteDto>> GetByUser(string id)
+        {
+            var routes = await _repository.GetByUser(id);
+            var dtos = _mapper.Map<IEnumerable<RouteDto>>(routes);
+            var routesList = routes.ToList();
+            var i = 0;
+            foreach (var dto in dtos)
+            {
+                dto.AverageScore = AverageScore(routesList[i]);
+                i++;
+            }
+            return dtos;
+        }
         public async Task<IEnumerable<RouteDto>> GetByRating(double minRating)
         {
             var routes = await GetAll();

@@ -79,5 +79,10 @@ namespace PlanAndRide.Database.Repository
                 throw new InvalidOperationException($"Unique key violaton: Club ID:{id}");
             }
         }
+
+        public Task<IEnumerable<Club>> GetByUser(string id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

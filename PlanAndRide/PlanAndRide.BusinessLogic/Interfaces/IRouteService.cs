@@ -3,6 +3,7 @@
     public interface IRouteService
     {
         Task<IEnumerable<RouteDto>> GetAll();
+        Task<IEnumerable<RouteDto>> GetByUser(string id);
         Task<RouteDto?> Get(int id);
         Task Add(RouteDto dto);
         Task Update(int id, RouteDto dto);

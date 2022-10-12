@@ -41,7 +41,16 @@ namespace PlanAndRide.Database.Repository
                .Include(r => r.Reviews)
                .ToListAsync();
         }
-
+        public async Task<IEnumerable<Route>> GetByUser(string id)
+        {
+            return await _context.Routes
+               .Where(r => r.ApplicationUser.Id == id)
+               .Include(r => r.ApplicationUser)
+               .Include(r => r.StartingPosition)
+               .Include(r => r.DestinationPosition)
+               .Include(r => r.Reviews)
+               .ToListAsync();
+        }
         public async Task Add(Route route)
         {
             var startingPosition = GetExistingGeoCoordinate(route.StartingPosition.Latitude, route.StartingPosition.Longitude);

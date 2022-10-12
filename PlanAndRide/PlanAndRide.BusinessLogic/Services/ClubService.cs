@@ -38,6 +38,11 @@
             return await _repository.GetAll();
         }
 
+        public Task<IEnumerable<Club>> GetByUser(string id)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task Update(int id, Club club)
         {
             try

@@ -91,5 +91,10 @@ namespace PlanAndRide.Database.Repository
                 throw new InvalidOperationException($"Unique key violation: Ride ID:{id}");
             }
         }
+
+        public Task<IEnumerable<Ride>> GetByUser(string id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

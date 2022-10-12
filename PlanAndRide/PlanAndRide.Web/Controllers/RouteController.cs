@@ -25,7 +25,8 @@ namespace PlanAndRide.Web.Controllers
         [Authorize]
         public async Task<ActionResult> Index()
         {
-            var routes = await _routeService.GetAll();
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var routes = await _routeService.GetByUser(user.Id);
             return View(routes);
         }
         [Authorize]
