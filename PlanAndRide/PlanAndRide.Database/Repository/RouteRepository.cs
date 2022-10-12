@@ -52,10 +52,10 @@ namespace PlanAndRide.Database.Repository
             if (destinationPosition != null)
                 route.DestinationPosition = destinationPosition;
 
-            var user = _context.ApplicationUsers.FirstOrDefault(u => u.Id == route.ApplicationUser.Id);
-            if (user == null)
-                throw new ArgumentException("User not found at route create");
-            route.ApplicationUser = user;
+            //var user = _context.ApplicationUsers.FirstOrDefault(u => u.Id == route.ApplicationUser.Id);
+            //if (user == null)
+            //    throw new ArgumentException("User not found at route create");
+            //route.ApplicationUser = user;
 
             await _context.Routes.AddAsync(route);
             _context.SaveChanges();
