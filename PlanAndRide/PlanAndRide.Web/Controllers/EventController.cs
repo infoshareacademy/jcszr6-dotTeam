@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PlanAndRide.BusinessLogic;
 using PlanAndRide.Web.Models;
@@ -10,11 +11,12 @@ namespace PlanAndRide.Web.Controllers.Events
     {
         private readonly IRideService _rideService;
         private readonly IRouteService _routeService;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public EventController(IRideService rideService, IRouteService routeService)
+        public EventController(IRideService rideService, IRouteService routeService,UserManager<ApplicationUser> userManager)
         {
             _routeService = routeService;
-
+            _userManager = userManager;
             _rideService = rideService;
         }
         // GET: EventsController
@@ -39,23 +41,22 @@ namespace PlanAndRide.Web.Controllers.Events
         public async Task<ActionResult> Create()
         {
             var routes = await _routeService.GetAll();
-            var model = new EventViewModel() { Routes = routes };
+            var model = new EventDto() { AvailableRoutes = routes };
             return View(model);
         }
-
+        
         // POST: EventsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(int Id,EventDto eventDto)
         {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            eventDto.ApplicationUser = user;
             if (!ModelState.IsValid)
             {
-                //eventDto.Routes= await _routeService.GetAll();
+                eventDto.AvailableRoutes = await _routeService.GetAll();
                 return View(eventDto);
             }
-
-            
-
             if (int.TryParse(eventDto.RouteId, out int id))
                 eventDto.Route = await _routeService.Get(id) ;
             else
@@ -71,6 +72,7 @@ namespace PlanAndRide.Web.Controllers.Events
             var ride = await _rideService.Get(id);
             if (ride != null)
             {
+                ride.AvailableRoutes = await _routeService.GetAll();
                 return View(ride);
             }
             return RedirectToAction(nameof(Index));

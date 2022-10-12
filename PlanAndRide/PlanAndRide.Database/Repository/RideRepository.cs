@@ -16,7 +16,11 @@ namespace PlanAndRide.Database.Repository
         {
             try
             {
-                return await _context.Rides.SingleOrDefaultAsync(r => r.Id == id);   
+                return await _context.Rides
+                    .Include(r => r.ApplicationUser)
+                    .Include(r => r.Route)
+                    .Include(r => r.RideMembers)
+                    .SingleOrDefaultAsync(r => r.Id == id);   
             }
             catch
             {
@@ -25,16 +29,17 @@ namespace PlanAndRide.Database.Repository
         }
         public async Task<IEnumerable<Ride>> GetAll()
         {
-            return await _context.Rides.ToListAsync();
+            return await _context.Rides
+                .Include(r => r.Route)
+                .ToListAsync();
         }
         public async Task Add(Ride ride)
         {
-            //var userId = 1;
-            var userId = Guid.NewGuid().ToString();
-            var user = _context.ApplicationUsers.FirstOrDefault(u => u.Id == userId);
-            if (user == null)
-                throw new ArgumentException("User not found at event create");
-            ride.ApplicationUser = user;
+            if(ride.Route != null)
+            {
+                var existingRoute = await _context.Routes.FindAsync(ride.Route.Id);
+                ride.Route = existingRoute;
+            }
             await _context.Rides.AddAsync(ride);
             _context.SaveChanges();
         }
@@ -53,6 +58,15 @@ namespace PlanAndRide.Database.Repository
             if (existingRide == null)
             {
                 throw new RecordNotFoundException($"Ride ID:{id} not found in repository");
+            }
+            Route? existingRoute = new();
+            if(ride.Route != null)
+            {
+                existingRoute = await _context.Routes.FindAsync(ride.Route.Id); 
+            }
+            if(existingRoute != null)
+            {
+                ride.Route = existingRoute;
             }
             existingRide.Name = ride.Name;
             existingRide.Date = ride.Date;

@@ -5,6 +5,7 @@ namespace PlanAndRide.BusinessLogic
     public class EventDto
     {
         public int Id { get; set; }
+        public ApplicationUser? ApplicationUser { get; set; }
         [Required]
         public string Name { get; set; }
 
@@ -12,8 +13,8 @@ namespace PlanAndRide.BusinessLogic
         public string? RouteId { get; set; }
         public string? RouteName { get; set; }
 
-        //public IEnumerable<BusinessLogic.Route>? Routes { get; set; }
-        public RouteDto Route { get; set; }
+        public IEnumerable<RouteDto>? AvailableRoutes { get; set; }
+        public RouteDto? Route { get; set; }
 
         public string? Description { get; set; }
 
