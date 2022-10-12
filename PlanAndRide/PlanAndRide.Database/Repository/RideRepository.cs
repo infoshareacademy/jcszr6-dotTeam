@@ -46,7 +46,7 @@ namespace PlanAndRide.Database.Repository
             }
             catch (InvalidOperationException ex)
             {
-                throw new InvalidOperationException($"Unique key violaton: Ride ID:{id}");
+                throw new InvalidOperationException($"Unique key violation: Ride ID:{id}");
             }
 
             if (existingRide == null)
@@ -73,7 +73,7 @@ namespace PlanAndRide.Database.Repository
             }
             catch (InvalidOperationException ex)
             {
-                throw new InvalidOperationException($"Unique key violaton: Ride ID:{id}");
+                throw new InvalidOperationException($"Unique key violation: Ride ID:{id}");
             }
         }
     }

@@ -22,6 +22,10 @@
             </th>
             <th>
                 <label>Route</label>
+            </th>
+            <th>
+                <label>Status Event</label>
+            </th>
             <th>
                 
             </th>
@@ -39,6 +43,9 @@
                 </td>
                 <td>
                     @item.RouteName
+                </td>
+                <td>
+                     @item.StatusRide
                 </td>
                 <td>
                     <a class="btn btn-outline-info grey-button" asp-action="Details" asp-route-id="@item.Id">Details</a>
