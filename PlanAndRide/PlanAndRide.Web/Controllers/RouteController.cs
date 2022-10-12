@@ -31,7 +31,7 @@ namespace PlanAndRide.Web.Controllers
         public async Task<ActionResult> Public()
         {
             var routes = await _routeService.GetPublicRoutes();
-            return View(routes);
+            return View(viewName: nameof(Index), model: routes);
         }
         public async Task<ActionResult> Rating(double? min)
         {
