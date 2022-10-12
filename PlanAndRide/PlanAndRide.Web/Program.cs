@@ -18,9 +18,15 @@ builder.Services.AddScoped<IRideService, RideService>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddScoped<IClubService, ClubService>();
 
-builder.Services.AddDefaultIdentity<IdentityUser>()
-    .AddRoles<IdentityRole>()
-    .AddEntityFrameworkStores<PlanAndRideContext>();
+//builder.Services.AddDefaultIdentity<IdentityUser>()
+//    .AddRoles<IdentityRole>()
+//    .AddEntityFrameworkStores<PlanAndRideContext>();
+
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+    .AddEntityFrameworkStores<PlanAndRideContext>() 
+    .AddDefaultUI()
+    .AddDefaultTokenProviders();
+builder.Services.AddRazorPages();
 
 builder.Services.AddAuthentication()
         .AddGoogle(google =>

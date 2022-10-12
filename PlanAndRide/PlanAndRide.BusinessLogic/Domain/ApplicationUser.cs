@@ -5,10 +5,10 @@ namespace PlanAndRide.BusinessLogic
 {
     public class ApplicationUser : IdentityUser
     {
-        public int Id { get; set; }
-        public string Login { get; set; }
-        public string Password { get; set; }
-        public string Email { get; set; }
+        //public int Id { get; set; }
+        //public string Login { get; set; }
+        //public string Password { get; set; }
+        //public string Email { get; set; }
         public virtual IList<Review> Reviews { get; set; }
         public virtual IList<Route> Routes { get; set; }
         public virtual IList<Ride> AttendedRides { get; set; }

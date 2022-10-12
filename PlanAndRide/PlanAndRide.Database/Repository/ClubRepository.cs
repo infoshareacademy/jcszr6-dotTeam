@@ -30,7 +30,8 @@ namespace PlanAndRide.Database.Repository
 
         public async Task Add(Club club)
         {
-            var userId = 1;
+            //var userId = 1;
+            var userId = Guid.NewGuid().ToString();
             var user = _context.ApplicationUsers.FirstOrDefault(u => u.Id == userId);
             if (user == null)
                 throw new ArgumentException("User not found at club create");

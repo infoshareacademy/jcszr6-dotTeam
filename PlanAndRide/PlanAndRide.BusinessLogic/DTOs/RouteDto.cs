@@ -12,7 +12,7 @@ namespace PlanAndRide.BusinessLogic
         public int Id { get; set; }
         [Required]
         public string? Name { get; set; }
-        public ApplicationUser? User { get; set; }
+        public ApplicationUser? ApplicationUser { get; set; }
         [Required(ErrorMessage="Please enter a starting location")]
         public string? StartingLocation { get; set; }
         [Required(ErrorMessage = "Please enter a target location")]

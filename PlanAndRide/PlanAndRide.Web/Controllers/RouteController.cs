@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PlanAndRide.BusinessLogic;
@@ -11,11 +12,13 @@ namespace PlanAndRide.Web.Controllers
     {
         private readonly IRouteService _routeService;
         private readonly IConfiguration _config;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public RouteController(IRouteService routeService, IConfiguration config)
+        public RouteController(IRouteService routeService, IConfiguration config,UserManager<ApplicationUser> userManager)
         {
             _routeService = routeService;
             _config = config;
+            _userManager = userManager;
         }
         // GET: RouteController
         public async Task<ActionResult> Index()
@@ -54,6 +57,7 @@ namespace PlanAndRide.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(RouteDto route)
         {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
             var encodedWaypoints = route.EncodedGoogleMapsWaypoints;
             if (String.IsNullOrEmpty(encodedWaypoints) || String.IsNullOrWhiteSpace(encodedWaypoints))
             {
@@ -65,7 +69,7 @@ namespace PlanAndRide.Web.Controllers
                 ViewData["ApiKey"] = _config["Maps:ApiKey"];
                 return View(route);
             }
-            route.User = new ApplicationUser { Id = 1 };
+            route.ApplicationUser = user;
             await _routeService.Add(route);
             return RedirectToAction(nameof(Details), new {Id=route.Id});
         }

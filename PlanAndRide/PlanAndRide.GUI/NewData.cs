@@ -256,26 +256,26 @@ namespace PlanAndRide.GUI
         private void NewUserLogin(ApplicationUser user)
         {
             Console.WriteLine("Podaj login:");
-            user.Login = Console.ReadLine().Trim();
+            user.UserName = Console.ReadLine().Trim();
 
-            while (user.Login == String.Empty)
+            while (user.UserName == String.Empty)
             {
                 Console.WriteLine("Wprowadź login:");
-                user.Login = Console.ReadLine().Trim();
+                user.UserName = Console.ReadLine().Trim();
             }
 
-            Console.WriteLine($"\nLogin nowego konta to: {user.Login}\n");
+            Console.WriteLine($"\nLogin nowego konta to: {user.UserName}\n");
         }
 
         private void NewUserPassword(ApplicationUser user)
         {
             Console.WriteLine("Stwórz hasło:");
-            user.Password = Console.ReadLine().Trim();
+            user.PasswordHash = Console.ReadLine().Trim();
 
-            while (user.Password == String.Empty)
+            while (user.PasswordHash == String.Empty)
             {
                 Console.WriteLine("Stwórz hasło:");
-                user.Password = Console.ReadLine().Trim();
+                user.PasswordHash = Console.ReadLine().Trim();
             }
 
             Console.WriteLine($"\nStworzono hasło!\n");
