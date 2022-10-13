@@ -70,9 +70,3 @@ button.accept-policy {
     font-size: 1rem;
     line-height: inherit;
 }
-
-.footer {
-    position: absolute!important;
-    bottom: 0;
-    width: 100%;
-}
