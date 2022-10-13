@@ -222,15 +222,25 @@ option {
 .route-collection-rating {
 }
 .review-content {
-   margin: 5px 0px;
-   padding-right: 15px;
-   padding-left: 15px;
-   font-style: italic;
+    margin: 5px 0px;
+    padding-right: 15px;
+    padding-left: 15px;
+    font-style: italic;
+    white-space: normal;
+    overflow: hidden;
+    max-width: 300px;
+    overflow-wrap: break-word;
 }
-.order-by-dropdown {
-    float: right;
-    margin: 0.75rem 0.75rem 0 0;
+
+.review-content-header {
+    margin: 5px 0px;
+    padding-right: 15px;
+    padding-left: 15px;
 }
+    .order-by-dropdown {
+        float: right;
+        margin: 0.75rem 0.75rem 0 0;
+    }
 .page-size-dropdown {
     float: left;
     margin: 0.75rem 0 0 0;

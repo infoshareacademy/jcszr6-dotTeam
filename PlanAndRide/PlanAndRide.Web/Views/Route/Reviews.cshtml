@@ -78,19 +78,24 @@
         @foreach (var item in Model.PagedReviews)
         {
             <div class="review">
-                <div>
-                    <div class="display-inline col-sm-2">
-                        @item.Date
+                <div class="col-sm-12">
+                    <div class="col-12 col-sm-5 col-md-3 col-lg-3 display-inline">
+                        Date: @item.Date
                     </div>
-                    <div class="display-inline col-sm-9">
-                        @item.UserName
-                    </div>
-                    <div class="route-collection-rating" id="route-rating-@item.Id">
+                    <div class="route-collection-rating col-12 col-sm-5 col-md-4 col-lg-3 display-inline" id="route-rating-@item.Id">Rating: 
                         <input type="hidden" asp-for="@item.Score" id="rating-value-@item.Id" />
                     </div>
+                    <div class="col-sm-12 col-md-5 col-lg-6">
+                        Author: @item.UserName
+                    </div>                    
                 </div>
-                <div class="review-content">
-                    @item.Description
+                <div class="col-sm-12">
+                    <div class="col-2 col-sm-2 display-inline review-content-header">
+                        Review:
+                    </div>
+                    <div class="col-10 col-sm-10 display-inline review-content">
+                        @item.Description
+                    </div>
                 </div>
             </div>
         }
