@@ -3706,15 +3706,21 @@ textarea.form-control-lg {
   background-color: transparent;
   border: 0;
 }
-.dropdown-item:hover, .dropdown-item:focus {
-  color: white;
-  background-color: black;
-}
-.dropdown-item.active, .dropdown-item:active {
-  color: #fff;
-  text-decoration: none;
-  background-color: #0d6efd;
-}
+    .dropdown-item:hover {
+        color: #BFC0C0!important;
+        background-color: black!important;
+    }
+
+    .dropdown-item:focus {
+        color: #BFC0C0 !important;
+        background-color: black !important;
+    }
+
+    .dropdown-item.active, .dropdown-item:active {
+        color: #BFC0C0!important;
+        text-decoration: none;
+        background-color: black!important;
+    }
 .dropdown-item.disabled, .dropdown-item:disabled {
   color: #adb5bd;
   pointer-events: none;

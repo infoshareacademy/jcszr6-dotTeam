@@ -20,8 +20,34 @@ a:hover{
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
     color: #BFC0C0;
-    background-color: darkred;
+    background-color: darkred !important;
     border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link:hover {
+    color: #BFC0C0;
+    background-color: darkred !important;
+    border-color: #1861ac;
+}
+
+.nav > li > a:focus {
+    background-color: darkred !important;
+}
+
+.nav > li > a:hover {
+    background-color: darkred !important;
+}
+
+.dropdown-menu {
+    background-color: darkred !important;
+}
+
+.nav-item > a :hover{
+    background-color: darkred !important;
+}
+
+.dropdown-item:hover {
+    background-color: black !important;
 }
 
 .navbar {
@@ -46,9 +72,7 @@ button.accept-policy {
 }
 
 .footer {
-    position: absolute;
+    position: absolute!important;
     bottom: 0;
     width: 100%;
-    white-space: nowrap;
-    line-height: 60px;
 }

@@ -120,24 +120,6 @@
     position: relative;
 }
 
-.dropdown-menu {
-    background-color: darkred;
-}
-
-.dropdown-item:hover {
-    background-color: black !important;
-    color: #BFC0C0 !important;
-}
-
-.dropdown-item {
-    color: black;
-}
-
-    .dropdown-item a {
-        background-color: black !important;
-        color: #BFC0C0 !important;
-    }
-
 .scroll-animation {
     position: relative;
     width: 24px;
