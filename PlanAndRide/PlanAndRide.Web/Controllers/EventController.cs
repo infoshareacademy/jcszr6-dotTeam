@@ -130,6 +130,22 @@ namespace PlanAndRide.Web.Controllers.Events
             await _rideService.Delete(id);
             return RedirectToAction(nameof(Index));
         }
+        // GET: EventsController/Create
+        //[Authorize]
+        //public async Task<ActionResult> AddMember()
+        //{
+        //    var routes = await _routeService.GetAll();
+        //    var model = new EventDto() { AvailableRoutes = routes };
+        //    return View(model);
+        //}
+
+        [Authorize]
+        public async Task<ActionResult> Join(int id)
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            await _rideService.AddRideMember(id, user.Id);
+            return RedirectToAction(nameof(Details), new {Id=id});
+        }
 
     }
 }

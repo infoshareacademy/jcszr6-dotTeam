@@ -5,7 +5,7 @@ using PlanAndRide.BusinessLogic.Exceptions;
 
 namespace PlanAndRide.Database.Repository
 {
-    public class RideRepository : IRepository<Ride>
+    public class RideRepository : IRideRepository
     {
         private readonly PlanAndRideContext _context;
         public RideRepository(PlanAndRideContext context)
@@ -90,6 +90,14 @@ namespace PlanAndRide.Database.Repository
             {
                 throw new InvalidOperationException($"Unique key violation: Ride ID:{id}");
             }
+        }
+        public async Task AddRideMember(Ride ride, string userId)
+        {
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.Id == userId);
+            if (user == null)
+                return;
+            ride.RideMembers.Add(user);
+            await _context.SaveChangesAsync();
         }
     }
 }

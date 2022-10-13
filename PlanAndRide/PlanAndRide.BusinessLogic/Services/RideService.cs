@@ -7,10 +7,10 @@ namespace PlanAndRide.BusinessLogic
 {
     public class RideService : IRideService
     {
-        private readonly IRepository<Ride> _repository;
+        private readonly IRideRepository _repository;
         private readonly IMapper _mapper;
         public RideService() { }
-        public RideService(IRepository<Ride> repository, IMapper mapper)
+        public RideService(IRideRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
@@ -104,6 +104,15 @@ namespace PlanAndRide.BusinessLogic
                 return nameStatus;
             }
 
+        }
+        public async Task AddRideMember(int rideId, string userId)
+        {
+            var ride = await _repository.Get(rideId);
+            if (ride == null || ride.RideMembers.Any(u => u.Id == userId))
+            {
+                return;
+            }
+            await _repository.AddRideMember(ride, userId);
         }
     }
 }

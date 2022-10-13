@@ -8,5 +8,6 @@ namespace PlanAndRide.BusinessLogic
         Task Add(EventDto dto);
         Task Update(int id, EventDto dto);
         Task Delete(int id);
+        Task AddRideMember(int rideId, string userId);
     }
 }
