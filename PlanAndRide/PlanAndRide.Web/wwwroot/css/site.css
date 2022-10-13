@@ -292,10 +292,10 @@ dropdown-item.dropdown-item:focus {
 }
 
     .dropdown-item-class a {
-        background-color: black !important;
+
         color: #BFC0C0 !important;
     }
-.navbar-nav > li > .dropdown-menu a:link,
+
 .navbar-nav > li > .dropdown-menu a:hover {
     background-color: black !important;
 }
