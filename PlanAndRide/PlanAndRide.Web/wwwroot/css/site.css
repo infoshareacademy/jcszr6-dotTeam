@@ -11,19 +11,26 @@ html {
 html {
     position: relative;
     min-height: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 .footer {
-    position: absolute !important;
-    bottom: 0;
+    font-size: 1em;
+    text-align: center;
+    clear: both;
+    padding-top: 15px;
+    height: 50px;
+    border-top: 5px solid #d0d0d0;
     width: 100%;
-    white-space: nowrap;
-    line-height: 60px;
+    overflow: none;
+    bottom: 0;
 }
 
 body {
     background-color: #333 !important;
     color: #BFC0C0 !important;
+
 }
 a {
     color: #BFC0C0 !important;
@@ -222,15 +229,25 @@ option {
 .route-collection-rating {
 }
 .review-content {
-   margin: 5px 0px;
-   padding-right: 15px;
-   padding-left: 15px;
-   font-style: italic;
+    margin: 5px 0px;
+    padding-right: 15px;
+    padding-left: 15px;
+    font-style: italic;
+    white-space: normal;
+    overflow: hidden;
+    max-width: 300px;
+    overflow-wrap: break-word;
 }
-.order-by-dropdown {
-    float: right;
-    margin: 0.75rem 0.75rem 0 0;
+
+.review-content-header {
+    margin: 5px 0px;
+    padding-right: 15px;
+    padding-left: 15px;
 }
+    .order-by-dropdown {
+        float: right;
+        margin: 0.75rem 0.75rem 0 0;
+    }
 .page-size-dropdown {
     float: left;
     margin: 0.75rem 0 0 0;
