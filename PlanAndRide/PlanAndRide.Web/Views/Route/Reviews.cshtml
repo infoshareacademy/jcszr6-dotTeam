@@ -36,12 +36,12 @@
     @{
         if (Model.ReviewedByCurrentUser)
         {
-            <span>You've reviewed this route</span>
+            <div>You have already reviewed this route</div>
         }
         else
         {
             <div class="button" id="button-animation">
-            <div id="translate"></div>
+                <div id="translate"></div>
                 <a class="submit-button" asp-controller="Review" asp-action="Create" asp-route-routeId=@Model.Id>Add review</a>
             </div>
         }

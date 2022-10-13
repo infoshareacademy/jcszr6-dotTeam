@@ -10,7 +10,7 @@ namespace PlanAndRide.BusinessLogic
     public class CreateEditRouteReviewDto
     {
         public int Id { get; set; }
-        public string UserId { get; set; }
+        public string? UserId { get; set; }
         public int RouteId { get; set; }
         [Required]
         [Range(1,5, ErrorMessage = "Please select your rating!") ]

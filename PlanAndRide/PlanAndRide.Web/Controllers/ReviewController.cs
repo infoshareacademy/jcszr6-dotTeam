@@ -59,10 +59,15 @@ namespace PlanAndRide.Web.Controllers
         [Authorize]
         public async Task<IActionResult> Create(int routeId)
         {
-            var route = await _routeService.Get(routeId);
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var route = await _routeService.GetRouteWithReviews(routeId,user.Id, "date_desc",1,1);
             if (route is null)
             {
                 return NotFound();
+            }
+            if (route.ReviewedByCurrentUser)
+            {
+                return RedirectToAction(actionName: "Reviews", controllerName: "Route", routeValues: new { Id = routeId });
             }
             TempData["RouteName"] = route.Name;
             var model = new CreateEditRouteReviewDto { RouteId = routeId };

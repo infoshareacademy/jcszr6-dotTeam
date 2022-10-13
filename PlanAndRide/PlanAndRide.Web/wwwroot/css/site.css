@@ -200,6 +200,7 @@ option {
 
 #registerSubmit {
     margin-top: 10px;
+}
 
 #map {
     min-width: 500px;
@@ -238,6 +239,7 @@ option {
     margin-bottom: 0;
     padding: 0.375rem 0.75rem;
     white-space: nowrap;
+    font-weight: 400
 }
 
 select {
