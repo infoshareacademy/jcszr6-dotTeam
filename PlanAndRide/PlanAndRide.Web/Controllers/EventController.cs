@@ -32,7 +32,8 @@ namespace PlanAndRide.Web.Controllers.Events
         [Authorize]
         public async Task<ActionResult> Details(int id)
         {
-            var ride = await _rideService.Get(id);
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var ride = await _rideService.Get(id,user.Id);
             if (ride == null)
             {
                 return RedirectToAction(nameof(Index));
@@ -75,7 +76,8 @@ namespace PlanAndRide.Web.Controllers.Events
         [Authorize]
         public async Task<ActionResult> Edit(int id)
         {
-            var ride = await _rideService.Get(id);
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var ride = await _rideService.Get(id,user.Id);
             if (ride != null)
             {
                 ride.AvailableRoutes = await _routeService.GetAll();
@@ -111,7 +113,8 @@ namespace PlanAndRide.Web.Controllers.Events
         [Authorize]
         public async Task<ActionResult> Delete(int id)
         {
-            var ride = await _rideService.Get(id);
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var ride = await _rideService.Get(id, user.Id);
             if (ride != null)
             {
                 return View(ride);
@@ -146,6 +149,32 @@ namespace PlanAndRide.Web.Controllers.Events
             await _rideService.AddRideMember(id, user.Id);
             return RedirectToAction(nameof(Details), new {Id=id});
         }
+        [Authorize]
+        public async Task<ActionResult> Unjoin(int id)
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var model = await _rideService.Get(id, user.Id);
+            if (model == null)
+            {
+                return RedirectToAction(nameof(Details), new { Id = id });
+            }
+            return View(model);
+        }
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Unjoin(int id, EventDto dto)
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            await _rideService.RemoveRideMember(id, user.Id);
+            return RedirectToAction(nameof(Details), new { Id = id });
+        }
 
+        //public async Task<ActionResult> Unjoin(int id)
+        //{
+        //    var user = await _userManager.GetUserAsync(HttpContext.User);
+        //    await _rideService.RemoveRideMember(id, user.Id);
+        //    return RedirectToAction(nameof(Details), new { Id = id });
+        //}
     }
 }

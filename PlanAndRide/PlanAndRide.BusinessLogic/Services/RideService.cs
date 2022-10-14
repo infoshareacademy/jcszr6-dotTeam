@@ -27,7 +27,7 @@ namespace PlanAndRide.BusinessLogic
             await _repository.Delete(id);
         }
 
-        public async Task<EventDto> Get(int id)
+        public async Task<EventDto> Get(int id, string userId)
         {
             {
                 try
@@ -36,6 +36,7 @@ namespace PlanAndRide.BusinessLogic
                     var ride = await _repository.Get(id);
                     var model = _mapper.Map<EventDto>(ride);
                     model.StatusRide = GetRideStatus(model);
+                    model.IsViewerJoined = ride.RideMembers.Any(u => u.Id == userId);
                     return model;
                 }
                 catch
@@ -113,6 +114,15 @@ namespace PlanAndRide.BusinessLogic
                 return;
             }
             await _repository.AddRideMember(ride, userId);
+        }
+        public async Task RemoveRideMember(int rideId, string userId)
+        {
+            var ride = await _repository.Get(rideId);
+            if (ride == null || !ride.RideMembers.Any(u => u.Id == userId))
+            {
+                return;
+            }
+            await _repository.RemoveRideMember(ride, userId);
         }
     }
 }

@@ -17,6 +17,7 @@ namespace PlanAndRide.BusinessLogic
         public RouteDto? Route { get; set; }
 
         public string? Description { get; set; }
+        public bool IsViewerJoined { get; set; }
 
         public bool ShareRide { get; set; }
         public bool IsPrivate { get; set; }

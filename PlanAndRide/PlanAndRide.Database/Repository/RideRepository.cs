@@ -99,5 +99,13 @@ namespace PlanAndRide.Database.Repository
             ride.RideMembers.Add(user);
             await _context.SaveChangesAsync();
         }
+        public async Task RemoveRideMember(Ride ride, string userId)
+        {
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.Id == userId);
+            if (user == null)
+                return;
+            ride.RideMembers.Remove(user);
+            await _context.SaveChangesAsync();
+        }
     }
 }
