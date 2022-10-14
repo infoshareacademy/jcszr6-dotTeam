@@ -3,19 +3,21 @@
     var minRating = ViewBag.MinRating ?? 0;
     var maxRatingValue = 5;
     var minRatingSelectList = new List<SelectListItem>();
+    var showEditButtons = ViewBag.ShowEditButtons ?? false;
 
-    for(int i=0; i <= maxRatingValue; i++)
+    for (int i = 0; i <= maxRatingValue; i++)
     {
-        var listItem = new SelectListItem(text:"",value: i.ToString());
-        switch(i){
-            case 5: listItem.Text = "five stars";break;
-            case 4: listItem.Text = "four stars";break;
-            case 3: listItem.Text = "three stars";break;
-            case 2: listItem.Text = "two stars";break;
-            case 1: listItem.Text = "one star";break;
-            default: listItem.Text = "Any";break;
+        var listItem = new SelectListItem(text: "", value: i.ToString());
+        switch (i)
+        {
+            case 5: listItem.Text = "five stars"; break;
+            case 4: listItem.Text = "four stars"; break;
+            case 3: listItem.Text = "three stars"; break;
+            case 2: listItem.Text = "two stars"; break;
+            case 1: listItem.Text = "one star"; break;
+            default: listItem.Text = "Any"; break;
         }
-        if(i== minRating)
+        if (i == minRating)
             listItem.Selected = true;
         minRatingSelectList.Add(listItem);
     }
@@ -29,16 +31,6 @@
         </div>
     </form>
 </div>
-
-
-
-
-
-
-
-
-
-
 
 <table id="indexTable" class="table">
     <thead>
@@ -81,8 +73,11 @@
                 </td>
                 <td>
                     <a class="btn btn-outline-info grey-button" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                    <a class="btn btn-outline-primary grey-button" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                    <a class="btn btn-outline-danger grey-button" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    @if (showEditButtons)
+                    {
+                        <a class="btn btn-outline-primary grey-button" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                        <a class="btn btn-outline-danger grey-button" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    }
                 </td>
             </tr>
         }

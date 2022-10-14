@@ -26,11 +26,13 @@ namespace PlanAndRide.Web.Controllers
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var routes = await _routeService.GetByUser(user.Id);
+            ViewBag.ShowEditButtons = true;
             return View(routes);
         }
         public async Task<ActionResult> Public()
         {
             var routes = await _routeService.GetPublicRoutes();
+            ViewBag.ShowEditButtons = false;
             return View(viewName: nameof(Index), model: routes);
         }
         public async Task<ActionResult> Rating(double? min)
@@ -48,6 +50,11 @@ namespace PlanAndRide.Web.Controllers
             {
                 return RedirectToAction(nameof(Index));
             }
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var isOwner = await IsOwner(id, user.Id);
+            if (isOwner)
+                ViewBag.ShowEditButtons = true;
+            ViewBag.ReturnUrl = Request.Headers["Referer"].ToString();
             ViewData["ApiKey"] = _config["Maps:ApiKey"];
             return View(route);
         }
@@ -84,29 +91,36 @@ namespace PlanAndRide.Web.Controllers
         // GET: RouteController/Edit/5
         public async Task<ActionResult> Edit(int id)
         {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
             var route = await _routeService.Get(id);
-            if (route != null)
+            var isOwner = await IsOwner(id, user.Id);
+            if (route == null || !isOwner)
             {
-                ViewData["ApiKey"] = _config["Maps:ApiKey"];
-                return View(route);
+                return RedirectToAction(nameof(Index));
             }
-            return RedirectToAction(nameof(Index));
+            ViewData["ApiKey"] = _config["Maps:ApiKey"];
+            return View(route);
         }
 
         // POST: RouteController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(int id, RouteDto route)
+        public async Task<ActionResult> Edit(int id, RouteDto model)
         {
-            //ModelState.Remove("Route.User");
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var isOwner = await IsOwner(id, user.Id);
+            if(!isOwner)
+            {
+                return RedirectToAction(nameof(Index));
+            }
             if (!ModelState.IsValid)
             {
                 ViewData["ApiKey"] = _config["Maps:ApiKey"];
-                return View(route);
+                return View(model);
             }
             try
             {
-                await _routeService.Update(id, route);
+                await _routeService.Update(id, model);
                 return RedirectToAction(nameof(Details), new { Id=id });
             }
             catch
@@ -118,13 +132,15 @@ namespace PlanAndRide.Web.Controllers
         // GET: RouteController/Delete/5
         public async Task<ActionResult> Delete(int id)
         {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
             var route = await _routeService.Get(id);
-            if (route != null)
+            var isOwner = await IsOwner(id, user.Id);
+            if (route == null || !isOwner)
             {
-                ViewData["ApiKey"] = _config["Maps:ApiKey"];
-                return View(route);
+                return RedirectToAction(nameof(Index));
             }
-            return RedirectToAction(nameof(Index));
+            ViewData["ApiKey"] = _config["Maps:ApiKey"];
+            return View(route);
         }
 
         // POST: RouteController/Delete/5
@@ -132,6 +148,12 @@ namespace PlanAndRide.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(int id, RouteDto route)
         {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var isOwner = await IsOwner(id, user.Id);
+            if (!isOwner)
+            {
+                return RedirectToAction(nameof(Index));
+            }
             await _routeService.Delete(id);
             return RedirectToAction(nameof(Index));
         }
@@ -184,6 +206,15 @@ namespace PlanAndRide.Web.Controllers
             ViewBag.PageSize = pageSizeNumber;
             ViewBag.Page = model.PagedReviews.PageNumber;
             return View(model);
+        }
+        private async Task<bool> IsOwner(int routeId, string userId)
+        {
+            var route = await _routeService.Get(routeId);
+            if (route == null || route.ApplicationUser == null || userId != route.ApplicationUser.Id)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

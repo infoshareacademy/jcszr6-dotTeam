@@ -3,6 +3,8 @@
 @{
     ViewData["Title"] = "Details";
     var apiKey = ViewData["ApiKey"];
+    var showEditButtons = ViewBag.ShowEditButtons ?? false;
+    var returnUrl = ViewBag.ReturnUrl;
 }
 <div class="container">
     <br />
@@ -17,8 +19,11 @@
         <div id="map" class="col-xl-7 gx-5 order-1 order-xl-2 route-details-section" style="float:left"></div>
     </div>
     <div class="route-details-section">
-        <a class="btn btn-outline-primary red-button" asp-action="Edit" asp-route-id=@Model.Id>Edit</a>
-        <a class="btn btn-outline-secondary grey-button" asp-action="Index">Back to routes</a>
+        @if (showEditButtons)
+        {
+            <a class="btn btn-outline-primary red-button" asp-action="Edit" asp-route-id=@Model.Id>Edit</a>
+        }
+        <a class="btn btn-outline-secondary grey-button" href=@returnUrl>Back</a>
     </div>
 </div>
 
