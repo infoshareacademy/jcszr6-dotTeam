@@ -100,7 +100,7 @@ namespace PlanAndRide.Web.Controllers.Events
 
 
             if (int.TryParse(eventDto.RouteId, out int routeId))
-                eventDto.Route = await _routeService.Get(id);
+                eventDto.Route = await _routeService.Get(routeId);
             else
                 eventDto.Route = null;
 

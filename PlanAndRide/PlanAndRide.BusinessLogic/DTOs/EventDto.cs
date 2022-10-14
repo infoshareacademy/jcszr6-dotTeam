@@ -18,7 +18,7 @@ namespace PlanAndRide.BusinessLogic
 
         public string? Description { get; set; }
         public bool IsViewerJoined { get; set; }
-
+        public int MembersCount { get; set; }
         public bool ShareRide { get; set; }
         public bool IsPrivate { get; set; }
         public string? StatusRide { get; set; }
