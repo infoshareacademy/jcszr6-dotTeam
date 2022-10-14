@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PlanAndRide.Database;
 
@@ -11,9 +12,10 @@ using PlanAndRide.Database;
 namespace PlanAndRide.Database.Migrations
 {
     [DbContext(typeof(PlanAndRideContext))]
-    partial class PlanAndRideContextModelSnapshot : ModelSnapshot
+    [Migration("20221013212602_Added pictures and userNameChangeLimit")]
+    partial class AddedpicturesanduserNameChangeLimit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -209,6 +211,7 @@ namespace PlanAndRide.Database.Migrations
                         .HasColumnType("bit");
 
                     b.Property<byte[]>("ProfilePicture")
+                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<string>("SecurityStamp")
