@@ -52,6 +52,36 @@ function routeDetails() {
         }
     );
 }
+function routeDetailsInEventView() {
+    $('document').ready(
+        () => {
+            originLatLng = {
+                lat: parseFloat(document.getElementById("StartingLatitude").value),
+                lng: parseFloat(document.getElementById("StartingLongitude").value)
+            }
+            destinationLatLng = {
+                lat: parseFloat(document.getElementById("DestinationLatitude").value),
+                lng: parseFloat(document.getElementById("DestinationLongitude").value)
+            }
+            map = map = new google.maps.Map(document.getElementById("map"), defaultMapOptions);
+            originMarker = new google.maps.Marker({
+                position: originLatLng,
+                map: map,
+                draggable: false,
+                label: defaultOriginMarkerLabel
+            });
+            destinationMarker = new google.maps.Marker({
+                position: destinationLatLng,
+                map: map,
+                draggable: false,
+                label: defaultDestinationMarkerLabel
+            });
+            //setFormattedAddressFromLatLng(originLatLng, "StartingLocation");
+            //setFormattedAddressFromLatLng(destinationLatLng, "DestinationLocation");
+            drawRouteLine();
+        }
+    );
+}
 function createRoute() {
     $('document').ready(
         () => {

@@ -13,11 +13,17 @@ namespace PlanAndRide.Web.Controllers.Events
         private readonly IRideService _rideService;
         private readonly IRouteService _routeService;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IConfiguration _config;
 
-        public EventController(IRideService rideService, IRouteService routeService,UserManager<ApplicationUser> userManager)
+        public EventController(
+            IRideService rideService, 
+            IRouteService routeService,
+            UserManager<ApplicationUser> userManager,
+            IConfiguration config)
         {
             _routeService = routeService;
             _userManager = userManager;
+            _config = config;
             _rideService = rideService;
         }
         // GET: EventsController
@@ -38,6 +44,7 @@ namespace PlanAndRide.Web.Controllers.Events
             {
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ApiKey"] = _config["Maps:ApiKey"];
             return View(ride);
         }
 
