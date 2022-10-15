@@ -7,10 +7,10 @@ namespace PlanAndRide.BusinessLogic
 {
     public class RideService : IRideService
     {
-        private readonly IRepository<Ride> _repository;
+        private readonly IRideRepository _repository;
         private readonly IMapper _mapper;
         public RideService() { }
-        public RideService(IRepository<Ride> repository, IMapper mapper)
+        public RideService(IRideRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
@@ -27,7 +27,7 @@ namespace PlanAndRide.BusinessLogic
             await _repository.Delete(id);
         }
 
-        public async Task<EventDto> Get(int id)
+        public async Task<EventDto> Get(int id, string memberId)
         {
             {
                 try
@@ -36,6 +36,7 @@ namespace PlanAndRide.BusinessLogic
                     var ride = await _repository.Get(id);
                     var model = _mapper.Map<EventDto>(ride);
                     model.StatusRide = GetRideStatus(model);
+                    model.IsViewerJoined = ride.RideMembers.Any(u => u.Id == memberId);
                     return model;
                 }
                 catch
@@ -48,6 +49,26 @@ namespace PlanAndRide.BusinessLogic
         public async Task<IEnumerable<EventDto>> GetAll()
         {
             var rides = await _repository.GetAll();
+            var model = _mapper.Map<IEnumerable<EventDto>>(rides);
+            foreach (var ride in model)
+            {
+                ride.StatusRide = GetRideStatus(ride);
+            }
+            return model;
+        }
+        public async Task<IEnumerable<EventDto>> GetByUser(string id)
+        {
+            var rides = await _repository.GetByUser(id);
+            var model = _mapper.Map<IEnumerable<EventDto>>(rides);
+            foreach (var ride in model)
+            {
+                ride.StatusRide = GetRideStatus(ride);
+            }
+            return model;
+        }
+        public async Task<IEnumerable<EventDto>> GetPublic()
+        {
+            var rides = await _repository.GetPublic();
             var model = _mapper.Map<IEnumerable<EventDto>>(rides);
             foreach (var ride in model)
             {
@@ -104,6 +125,24 @@ namespace PlanAndRide.BusinessLogic
                 return nameStatus;
             }
 
+        }
+        public async Task AddRideMember(int rideId, string memberId)
+        {
+            var ride = await _repository.Get(rideId);
+            if (ride == null || ride.RideMembers.Any(u => u.Id == memberId))
+            {
+                return;
+            }
+            await _repository.AddRideMember(ride, memberId);
+        }
+        public async Task RemoveRideMember(int rideId, string memberId)
+        {
+            var ride = await _repository.Get(rideId);
+            if (ride == null || !ride.RideMembers.Any(u => u.Id == memberId))
+            {
+                return;
+            }
+            await _repository.RemoveRideMember(ride, memberId);
         }
     }
 }

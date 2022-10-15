@@ -31,25 +31,22 @@
                 <label class="control-label">Route</label>
                 @Html.DropDownListFor(r=>r.RouteId, new SelectList(Model.AvailableRoutes, nameof(RouteDto.Id),nameof(RouteDto.Name)),"Select route",new {@class="form-control"})
             </div>
-            <div class="form-group form-check">
+@*            <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="ShareRide" /> Share Ride
                 </label>
-            </div>
+            </div>*@
             <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsPrivate" /> Is Private
-                </label>
+                <br />
+                <label class="form-check-label"></label>
+                <input class="form-check-input" asp-for="IsPrivate" /> Is Private
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary red-button" />
+                <a class="btn btn-secondary grey-button" asp-action="Index">Cancel</a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

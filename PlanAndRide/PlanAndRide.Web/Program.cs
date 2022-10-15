@@ -20,7 +20,7 @@ IConfiguration config = new ConfigurationBuilder()
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IRouteRepository, RouteRepository>();
-builder.Services.AddScoped<IRepository<Ride>, RideRepository>();
+builder.Services.AddScoped<IRideRepository, RideRepository>();
 builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
 builder.Services.AddScoped<IRepository<Club>, ClubRepository>();
 builder.Services.AddScoped<IRouteService, RouteService>();

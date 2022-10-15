@@ -5,7 +5,7 @@ using PlanAndRide.BusinessLogic.Exceptions;
 
 namespace PlanAndRide.Database.Repository
 {
-    public class RideRepository : IRepository<Ride>
+    public class RideRepository : IRideRepository
     {
         private readonly PlanAndRideContext _context;
         public RideRepository(PlanAndRideContext context)
@@ -17,20 +17,36 @@ namespace PlanAndRide.Database.Repository
             try
             {
                 return await _context.Rides
-                    .Include(r => r.ApplicationUser)
-                    .Include(r => r.Route)
-                    .Include(r => r.RideMembers)
-                    .SingleOrDefaultAsync(r => r.Id == id);   
+                    .Include(ride => ride.ApplicationUser)
+                    .Include(ride => ride.Route.StartingPosition)
+                    .Include(ride => ride.Route.DestinationPosition)
+                    .Include(ride => ride.RideMembers)
+                    .SingleOrDefaultAsync(ride => ride.Id == id);   
             }
             catch
             {
-                throw new InvalidOperationException($"Unique key violaton: Ride Id:{id}");
+                throw;
             }
         }
         public async Task<IEnumerable<Ride>> GetAll()
         {
             return await _context.Rides
                 .Include(r => r.Route)
+                .ToListAsync();
+        }
+        public async Task<IEnumerable<Ride>> GetByUser(string id)
+        {
+            return await _context.Rides
+                .Where(r => r.ApplicationUser.Id == id)
+                .Include(r => r.Route)
+                .ToListAsync();
+        }
+        public async Task<IEnumerable<Ride>> GetPublic()
+        {
+            return await _context.Rides
+                .Where(r => r.IsPrivate == false)
+                .Include(r => r.Route)
+                .Include(r => r.ApplicationUser)
                 .ToListAsync();
         }
         public async Task Add(Ride ride)
@@ -48,7 +64,9 @@ namespace PlanAndRide.Database.Repository
             Ride existingRide;
             try
             {
-                existingRide = await _context.Rides.SingleOrDefaultAsync(r => r.Id == id);
+                existingRide = await _context.Rides
+                    .Include(r=>r.Route)
+                    .SingleOrDefaultAsync(r => r.Id == id);
             }
             catch (InvalidOperationException ex)
             {
@@ -59,20 +77,18 @@ namespace PlanAndRide.Database.Repository
             {
                 throw new RecordNotFoundException($"Ride ID:{id} not found in repository");
             }
-            Route? existingRoute = new();
-            if(ride.Route != null)
+            if(ride.Route == null)
             {
-                existingRoute = await _context.Routes.FindAsync(ride.Route.Id); 
+                existingRide.Route = null;
             }
-            if(existingRoute != null)
+            else
             {
-                ride.Route = existingRoute;
+                existingRide.Route = await _context.Routes.FindAsync(ride.Route.Id);
             }
             existingRide.Name = ride.Name;
             existingRide.Date = ride.Date;
             existingRide.IsPrivate = ride.IsPrivate;
             existingRide.ShareRide = ride.ShareRide;
-            existingRide.Route = ride.Route;
             existingRide.Description = ride.Description;
             existingRide.RideMembers = ride.RideMembers;
 
@@ -90,6 +106,22 @@ namespace PlanAndRide.Database.Repository
             {
                 throw new InvalidOperationException($"Unique key violation: Ride ID:{id}");
             }
+        }
+        public async Task AddRideMember(Ride ride, string userId)
+        {
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.Id == userId);
+            if (user == null)
+                return;
+            ride.RideMembers.Add(user);
+            await _context.SaveChangesAsync();
+        }
+        public async Task RemoveRideMember(Ride ride, string userId)
+        {
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.Id == userId);
+            if (user == null)
+                return;
+            ride.RideMembers.Remove(user);
+            await _context.SaveChangesAsync();
         }
     }
 }

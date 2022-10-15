@@ -22,14 +22,12 @@
         <input type="hidden" id="DestinationLatitude" value="@Model.DestinationPosition.Latitude" />
         <input type="hidden" id="DestinationLongitude" value="@Model.DestinationPosition.Longitude" />
     </div>
-    @{
-        if (!String.IsNullOrEmpty(Model.Description) && !String.IsNullOrEmpty(Model.Description))
-        {
-            <div class="route-details-section">
-                <label>Description: </label>
-                <textarea class="form-control locationDescription" id="DestinationLocation" readonly>@Model.Description</textarea>
-            </div>
-        }
+    @if (!String.IsNullOrEmpty(Model.Description) && !String.IsNullOrEmpty(Model.Description))
+    {
+        <div class="route-details-section">
+            <label>Description: </label>
+            <textarea class="form-control locationDescription" id="DestinationLocation" readonly>@Model.Description</textarea>
+        </div>
     }
 
 </div>

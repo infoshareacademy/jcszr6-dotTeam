@@ -26,25 +26,24 @@
         reviewsCountDesc += "reviews";
 }
 <div class="container">
-    <h2>Reviews</h2>
+    @*<h2>Reviews</h2>*@
+    <br />
     <h3>@Model.Name</h3>
     <div class="route-rating display-inline">
         <input type="hidden" asp-for="@Model.AverageScore" id="rating-value" />
     </div>
     <span>@reviewsCountDesc</span>
     <hr />
-    @{
-        if (Model.ReviewedByCurrentUser)
-        {
-            <div>You have already reviewed this route</div>
-        }
-        else
-        {
-            <div class="button" id="button-animation">
-                <div id="translate"></div>
-                <a class="submit-button" asp-controller="Review" asp-action="Create" asp-route-routeId=@Model.Id>Add review</a>
-            </div>
-        }
+    @if (Model.ReviewedByCurrentUser)
+    {
+        <div>You have already reviewed this route</div>
+    }
+    else
+    {
+        <div class="button" id="button-animation">
+            <div id="translate"></div>
+            <a class="submit-button" asp-controller="Review" asp-action="Create" asp-route-routeId=@Model.Id>Add review</a>
+        </div>
     }
     <div class="container">
         <div class="page-size-dropdown">
@@ -77,21 +76,25 @@
         <div style="clear:both;"></div>
         @foreach (var item in Model.PagedReviews)
         {
-            <div class="review">
+            <div class="review row">
                 <div class="col-sm-12">
                     <div class="col-12 col-sm-5 col-md-3 col-lg-3 display-inline">
                         Date: @item.Date
                     </div>
-                    <div class="route-collection-rating col-12 col-sm-5 col-md-4 col-lg-3 display-inline" id="route-rating-@item.Id">Rating: 
+                    <div class="route-collection-rating col-12 col-sm-5 col-md-4 col-lg-3 display-inline" id="route-rating-@item.Id">
+                        Rating:
                         <input type="hidden" asp-for="@item.Score" id="rating-value-@item.Id" />
                     </div>
                     <div class="col-sm-12 col-md-5 col-lg-6">
                         Author: @item.UserName
-                    </div>                    
+                    </div>
                 </div>
                 <div class="col-sm-12">
                     <div class="col-2 col-sm-2 display-inline review-content-header">
-                        Review:
+                        @if (!String.IsNullOrEmpty(item.Description))
+                        {
+                            <span>Review:</span> 
+                        }
                     </div>
                     <div class="col-10 col-sm-10 display-inline review-content">
                         @item.Description
@@ -106,20 +109,15 @@
     </div>
 
 
-    @{
-        if (Model.PagedReviews.PageCount > 1)
-        {
-            @Html.PagedListPager(Model.PagedReviews,
+    @if (Model.PagedReviews.PageCount > 1)
+    {
+        @Html.PagedListPager(Model.PagedReviews,
     page => Url.Action("Reviews", new { page, orderBy = @orderBy,id=@Model.Id, pageSize=@pageSize}),
     new PagedListRenderOptions {LiElementClasses = new string[] { "page-item" }, PageClasses = new string[] { "page-link" }})
-        }
     }
-
-
     <div>
         <a class="btn btn-outline-secondary grey-button" asp-action="Index">Routes list</a>
         <a class="btn btn-outline-secondary grey-button" asp-action="Details" asp-route-id="@Model.Id">Back to details</a>
-
     </div>
 </div>
 @section Scripts{

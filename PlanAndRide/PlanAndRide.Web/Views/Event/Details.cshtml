@@ -3,64 +3,114 @@
 @{
     ViewData["Title"] = "Details";
     var privacyDisplay = "[Private]";
+    var apiKey = ViewData["ApiKey"];
+    var showEditButtons = ViewBag.ShowEditButtons ?? false;
+    var returnUrl = ViewBag.ReturnUrl;
     if (!Model.IsPrivate)
     {
         privacyDisplay = "[Public]";
     }
 }
-<div class="container"> 
-<h4>Event details</h4>
-<h6>@privacyDisplay</h6>
-<div>
-    @*<h4>Event</h4>*@
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Date)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Date)
-        </dd>
-        <dt class = "col-sm-2">
-            Route
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.RouteName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.StatusRide)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.StatusRide)
-        </dd>
-        @*<dt class = "col-sm-2">
-           Share Ride
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ShareRide)
-        </dd>
-        <dt class = "col-sm-2">
-            Is Private
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsPrivate)
-        </dd>*@
-    </dl>
-</div>
-<div>
-    <a class="btn btn-outline-primary red-button" asp-action="Edit" asp-route-id=@Model.Id>Edit</a>
-    <a class="btn btn-outline-secondary grey-button" asp-action="Index">Back to events</a>
-</div>
-</div>
+<div class="container">
+    <br />
+    @{
+        if (Model.IsViewerJoined)
+        {
+            <p>
+                <h5>You are member of this ride</h5>
+                <a class="btn btn-outline-secondary" asp-action="Unjoin" asp-route-id="@Model.Id">Unjoin</a>
+            </p>
+        }
+        else
+        {
+            <div class="button" id="button-animation">
+                <div id="translate"></div>
+                <a class="submit-button" asp-area="" asp-controller="Event" asp-action="Join" asp-route-id="@Model.Id">Join to ride</a>
+            </div>
+        }
+    }
+
+    <div>
+        <h4>Event details:</h4>
+        <hr />
+        <div class="col-xl-5 gx-5 order-1 order-xl-2 route-details-section" style="float:left">
+            <h6>@privacyDisplay</h6>
+            <dl class="row">
+
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Date)
+                </dt>
+                <dd class="col-sm-8">
+                    @Model.Date.ToString("dd MMM yyyy hh:mm")
+                </dd>
+                <dt class="col-sm-4">
+                    Route
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.RouteName)
+                </dd>
+                @{
+                    if (!String.IsNullOrEmpty(Model.Description))
+                    {
+                        <dt class="col-sm-4">
+                            @Html.DisplayNameFor(model => model.Description)
+                        </dt>
+                        <dd class="col-sm-8">
+                            @Html.DisplayFor(model => model.Description)
+                        </dd>
+                    }
+                }
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.StatusRide)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.StatusRide)
+                </dd>
+                <dt class="col-sm-4">
+                    Members count:
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.MembersCount)
+                </dd>
+            </dl>
+        </div>
+        @if (Model.Route != null)
+        {
+            <div id="map" class="col-xl-7 gx-5 order-1 order-xl-2 route-details-section" style="float:left"></div>
+            <form>
+                <input type="hidden" id="StartingLatitude" value="@Model.Route.StartingPosition.Latitude" />
+                <input type="hidden" id="StartingLongitude" value="@Model.Route.StartingPosition.Longitude" />
+                <input type="hidden" id="EncodedPath" value="@Model.Route.EncodedGoogleMapsPath" />
+                <input type="hidden" id="DestinationLatitude" value="@Model.Route.DestinationPosition.Latitude" />
+                <input type="hidden" id="DestinationLongitude" value="@Model.Route.DestinationPosition.Longitude" />
+            </form>
+        }
+        else
+        {
+            <div id="map" class="col-xl-7 gx-5 order-1 order-xl-2 route-details-section" style="display:none;float:left"></div>
+            <form>
+                <input type="hidden" id="StartingLatitude" value=0 />
+                <input type="hidden" id="StartingLongitude" value=0 />
+                <input type="hidden" id="EncodedPath" value="" />
+                <input type="hidden" id="DestinationLatitude" value=0 />
+                <input type="hidden" id="DestinationLongitude" value=0 />
+            </form>
+        }
+
+        <div style="clear:both">
+            @if (showEditButtons)
+            {
+                <a class="btn btn-outline-primary red-button" asp-action="Edit" asp-route-id=@Model.Id>Edit</a>
+            }
+            <a class="btn btn-outline-secondary grey-button" href=@returnUrl>Back</a>
+        </div>
+    </div>
+    @section Scripts {
+    <script async type="text/javascript" src='https://maps.googleapis.com/maps/api/js?key=@apiKey&libraries=geometry&callback=routeDetailsInEventView'></script>
+    }
