@@ -68,7 +68,8 @@ namespace PlanAndRide.Web.Controllers.Events
         [Authorize]
         public async Task<ActionResult> Create()
         {
-            var routes = await _routeService.GetAll();
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var routes = await _routeService.GetByUser(user.Id);
             var dateTimeNow = DateTime.Now;
             var dateTimeNowWithoutSeconds = dateTimeNow.AddTicks(-(dateTimeNow.Ticks % TimeSpan.TicksPerMinute));
             var model = new EventDto() { AvailableRoutes = routes, Date = dateTimeNowWithoutSeconds };
@@ -85,7 +86,7 @@ namespace PlanAndRide.Web.Controllers.Events
             eventDto.ApplicationUser = user;
             if (!ModelState.IsValid)
             {
-                eventDto.AvailableRoutes = await _routeService.GetAll();
+                eventDto.AvailableRoutes = await _routeService.GetByUser(user.Id);
                 return View(eventDto);
             }
             if (int.TryParse(eventDto.RouteId, out int id))
@@ -108,7 +109,7 @@ namespace PlanAndRide.Web.Controllers.Events
             {
                 return RedirectToAction(nameof(Index));
             }
-            ride.AvailableRoutes = await _routeService.GetAll();
+            ride.AvailableRoutes = await _routeService.GetByUser(user.Id);
             return View(ride);
         }
 
