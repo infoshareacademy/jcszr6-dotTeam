@@ -2,14 +2,9 @@
 
 @{
     ViewData["Title"] = "Details";
-    var privacyDisplay = "[Private]";
     var apiKey = ViewData["ApiKey"];
     var showEditButtons = ViewBag.ShowEditButtons ?? false;
     var returnUrl = ViewBag.ReturnUrl;
-    if (!Model.IsPrivate)
-    {
-        privacyDisplay = "[Public]";
-    }
 }
 <div class="container">
     <br />
@@ -34,7 +29,14 @@
         <h4>Event details:</h4>
         <hr />
         <div class="col-xl-5 gx-5 order-1 order-xl-2 route-details-section" style="float:left">
-            <h6>@privacyDisplay</h6>
+            @if (Model.IsPrivate)
+            {
+                <i class="fa-solid fa-lock" style="margin-bottom: 10px;"></i><span>Private</span>
+            }
+            else
+            {
+                <i class="fa-solid fa-lock-open" style="margin-bottom: 10px;"></i><span>Public</span>
+            }
             <dl class="row">
 
                 <dt class="col-sm-4">

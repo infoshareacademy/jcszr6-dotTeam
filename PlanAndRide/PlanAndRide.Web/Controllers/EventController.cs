@@ -34,6 +34,7 @@ namespace PlanAndRide.Web.Controllers.Events
             var rides = await _rideService.GetByUser(user.Id);
             ViewBag.ShowEditButtons = true;
             ViewBag.ShowOwnerName = false;
+            ViewBag.ShowPrivacySettings = true;
             return View(rides);
         }
         // GET: EventsController
@@ -43,6 +44,7 @@ namespace PlanAndRide.Web.Controllers.Events
             var rides = await _rideService.GetPublic();
             ViewBag.ShowEditButtons = false;
             ViewBag.ShowOwnerName = true;
+            ViewBag.ShowPrivacySettings = false; 
             return View(viewName:nameof(Index),model:rides);
         }
 

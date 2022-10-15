@@ -1,13 +1,14 @@
 ﻿@model RouteDto
 
-@{
-    var privacyDisplay = "[Private]";
-    if (!Model.IsPrivate)
-    {
-        privacyDisplay = "[Public]";
-    }
+@if (Model.IsPrivate)
+{
+    <i class="fa-solid fa-lock"></i><span>Private</span>
 }
-<h6>@privacyDisplay</h6>
+else
+{
+    <i class="fa-solid fa-lock-open"></i><span>Public</span>
+}
+
 <div class="row">
     <div class="route-details-section">
         <label>From: </label>

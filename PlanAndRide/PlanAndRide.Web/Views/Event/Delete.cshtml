@@ -11,6 +11,17 @@
         <hr />
         <dl class="row">
             <dt class="col-sm-2">
+                @if (Model.IsPrivate)
+                {
+                    <i class="fa-solid fa-lock"></i><span>Private</span>
+                }
+                else
+                {
+                    <i class="fa-solid fa-lock-open"></i><span>Public</span>
+                }
+            </dt>
+            <dd></dd>
+            <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Name)
             </dt>
             <dd class="col-sm-10">

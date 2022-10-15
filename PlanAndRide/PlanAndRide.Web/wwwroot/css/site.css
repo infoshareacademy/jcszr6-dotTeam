@@ -316,3 +316,10 @@ dropdown-item.dropdown-item:focus {
 .navbar-nav > li > .dropdown-menu a:hover {
     background-color: black !important;
 }
+.fa-lock, .fa-lock-open {
+    font-size: 1.5rem;
+    margin-right: 10px;
+}
+td > .fa-lock, td > .fa-lock-open {
+    font-size: 1rem;
+}

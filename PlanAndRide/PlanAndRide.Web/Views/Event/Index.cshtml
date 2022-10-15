@@ -4,6 +4,7 @@
     ViewData["Title"] = "Index";
     var showEditButtons = ViewBag.ShowEditButtons ?? false;
     var showOwnerName = ViewBag.ShowOwnerName ?? true;
+    var showPrivacySettings = false;
 }
 <div class="container">
     <h1>Events</h1>
@@ -19,6 +20,12 @@
                 <th>
                     <label asp-for="@Model.First().Name"></label>
                 </th>
+                @if(showPrivacySettings)
+                {
+                 <th>
+                    <label>Private/Public</label>
+                </th>
+                }
                 @if (showOwnerName)
                 {
                   <th>
@@ -52,6 +59,19 @@
                     <td>
                         @item.Name
                     </td>
+                    @if(showPrivacySettings)
+                    {
+                        <td style="text-align:center;">
+                            @if (item.IsPrivate)
+                            {
+                                <i class="fa-solid fa-lock"></i>
+                            }
+                            else
+                            {
+                               <i class="fa-solid fa-lock-open"></i> 
+                            } 
+                        </td>
+                    }
                     @if (showOwnerName)
                     {
                       <td>

@@ -27,12 +27,14 @@ namespace PlanAndRide.Web.Controllers
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var routes = await _routeService.GetByUser(user.Id);
             ViewBag.ShowEditButtons = true;
+            ViewBag.ShowPrivacySettings = true;
             return View(routes);
         }
         public async Task<ActionResult> Public()
         {
             var routes = await _routeService.GetPublicRoutes();
             ViewBag.ShowEditButtons = false;
+            ViewBag.ShowPrivacySettings = false;
             return View(viewName: nameof(Index), model: routes);
         }
         public async Task<ActionResult> Rating(double? min)
