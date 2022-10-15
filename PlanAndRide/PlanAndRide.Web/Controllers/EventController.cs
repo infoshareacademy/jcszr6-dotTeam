@@ -67,7 +67,9 @@ namespace PlanAndRide.Web.Controllers.Events
         public async Task<ActionResult> Create()
         {
             var routes = await _routeService.GetAll();
-            var model = new EventDto() { AvailableRoutes = routes };
+            var dateTimeNow = DateTime.Now;
+            var dateTimeNowWithoutSeconds = dateTimeNow.AddTicks(-(dateTimeNow.Ticks % TimeSpan.TicksPerMinute));
+            var model = new EventDto() { AvailableRoutes = routes, Date = dateTimeNowWithoutSeconds };
             return View(model);
         }
         
