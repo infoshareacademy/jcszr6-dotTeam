@@ -4,6 +4,8 @@
     ViewData["Title"] = "Details";
     var privacyDisplay = "[Private]";
     var apiKey = ViewData["ApiKey"];
+    var showEditButtons = ViewBag.ShowEditButtons ?? false;
+    var returnUrl = ViewBag.ReturnUrl;
     if (!Model.IsPrivate)
     {
         privacyDisplay = "[Public]";
@@ -102,8 +104,11 @@
         }
 
         <div style="clear:both">
-            <a class="btn btn-outline-primary red-button" asp-action="Edit" asp-route-id=@Model.Id>Edit</a>
-            <a class="btn btn-outline-secondary grey-button" asp-action="Index">Back to events</a>
+            @if (showEditButtons)
+            {
+                <a class="btn btn-outline-primary red-button" asp-action="Edit" asp-route-id=@Model.Id>Edit</a>
+            }
+            <a class="btn btn-outline-secondary grey-button" href=@returnUrl>Back</a>
         </div>
     </div>
     @section Scripts {

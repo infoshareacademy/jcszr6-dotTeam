@@ -27,7 +27,7 @@ namespace PlanAndRide.BusinessLogic
             await _repository.Delete(id);
         }
 
-        public async Task<EventDto> Get(int id, string userId)
+        public async Task<EventDto> Get(int id, string memberId)
         {
             {
                 try
@@ -36,7 +36,7 @@ namespace PlanAndRide.BusinessLogic
                     var ride = await _repository.Get(id);
                     var model = _mapper.Map<EventDto>(ride);
                     model.StatusRide = GetRideStatus(model);
-                    model.IsViewerJoined = ride.RideMembers.Any(u => u.Id == userId);
+                    model.IsViewerJoined = ride.RideMembers.Any(u => u.Id == memberId);
                     return model;
                 }
                 catch
@@ -126,23 +126,23 @@ namespace PlanAndRide.BusinessLogic
             }
 
         }
-        public async Task AddRideMember(int rideId, string userId)
+        public async Task AddRideMember(int rideId, string memberId)
         {
             var ride = await _repository.Get(rideId);
-            if (ride == null || ride.RideMembers.Any(u => u.Id == userId))
+            if (ride == null || ride.RideMembers.Any(u => u.Id == memberId))
             {
                 return;
             }
-            await _repository.AddRideMember(ride, userId);
+            await _repository.AddRideMember(ride, memberId);
         }
-        public async Task RemoveRideMember(int rideId, string userId)
+        public async Task RemoveRideMember(int rideId, string memberId)
         {
             var ride = await _repository.Get(rideId);
-            if (ride == null || !ride.RideMembers.Any(u => u.Id == userId))
+            if (ride == null || !ride.RideMembers.Any(u => u.Id == memberId))
             {
                 return;
             }
-            await _repository.RemoveRideMember(ride, userId);
+            await _repository.RemoveRideMember(ride, memberId);
         }
     }
 }

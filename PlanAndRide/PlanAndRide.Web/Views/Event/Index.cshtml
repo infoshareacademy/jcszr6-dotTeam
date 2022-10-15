@@ -1,66 +1,72 @@
 ﻿@model IEnumerable<EventDto>
 
 @{
-    ViewData["Title"]= "Index";
+    ViewData["Title"] = "Index";
+    var showEditButtons = ViewBag.ShowEditButtons ?? false;
 }
-<div class="container"> 
-<h1>Events</h1>
-<p>
-     <div class="button" id="button-animation">
+<div class="container">
+    <h1>Events</h1>
+    <p>
+        <div class="button" id="button-animation">
             <div id="translate"></div>
             <a class="submit-button" asp-area="" asp-controller="Event" asp-action="Create">New Event</a>
         </div>
-</p>
-<table class="table" id="myTable">
-    <thead>
-        <tr>
-            <th>
-                <label asp-for="@Model.First().Name"></label>
-            </th>
-            <th>
-                <label>Start event</label>
-            </th>
-            <th>
-                <label>Route</label>
-            </th>
-            <th>
-                <label>Status Event</label>
-            </th>
-            <th>
-                
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach(var item in Model)
-        {
+    </p>
+    <table class="table" id="myTable">
+        <thead>
             <tr>
-                <td>
-                    @item.Name
-                </td>
-                <td>
-                    @item.Date
-                </td>
-                <td>
-                    @item.RouteName
-                </td>
-                <td>
-                     @item.StatusRide
-                </td>
-                <td>
-                    <a class="btn btn-outline-info grey-button" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                    <a class="btn btn-outline-primary grey-button" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                    <a class="btn btn-outline-danger grey-button" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
+                <th>
+                    <label asp-for="@Model.First().Name"></label>
+                </th>
+                <th>
+                    <label>Start event</label>
+                </th>
+                <th>
+                    <label>Route</label>
+                </th>
+                <th>
+                    <label>Status Event</label>
+                </th>
+                <th>
+
+                </th>
             </tr>
-        }
-    </tbody>
-</table>
-@section scripts {
-    <script> 
-       $(document).ready( function () {
-    $('#myTable').DataTable();
-} );
-   </script>
-}
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.Name
+                    </td>
+                    <td>
+                        @item.Date
+                    </td>
+                    <td>
+                        @item.RouteName
+                    </td>
+                    <td>
+                        @item.StatusRide
+                    </td>
+                    <td>
+                        <a class="btn btn-outline-info grey-button" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                        @if (showEditButtons)
+                        {
+                            <a class="btn btn-outline-primary grey-button" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                            <a class="btn btn-outline-danger grey-button" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        }
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @section scripts {
+    <script>
+
+               $(document).ready( function () {
+            $('#myTable').DataTable();
+        } );
+    </script>
+    }
 </div>

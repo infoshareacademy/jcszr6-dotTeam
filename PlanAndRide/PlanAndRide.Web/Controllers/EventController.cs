@@ -54,6 +54,10 @@ namespace PlanAndRide.Web.Controllers.Events
             {
                 return RedirectToAction(nameof(Index));
             }
+            var isOwner = await IsOwner(id, user.Id);
+            if (isOwner)
+                ViewBag.ShowEditButtons = true;
+            ViewBag.ReturnUrl = Request.Headers["Referer"].ToString();
             ViewData["ApiKey"] = _config["Maps:ApiKey"];
             return View(ride);
         }
@@ -94,13 +98,14 @@ namespace PlanAndRide.Web.Controllers.Events
         public async Task<ActionResult> Edit(int id)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            var ride = await _rideService.Get(id,user.Id);
-            if (ride != null)
+            var ride = await _rideService.Get(id, user.Id);
+            var isOwner = await IsOwner(id, user.Id);
+            if (ride == null || !isOwner)
             {
-                ride.AvailableRoutes = await _routeService.GetAll();
-                return View(ride);
+                return RedirectToAction(nameof(Index));
             }
-            return RedirectToAction(nameof(Index));
+            ride.AvailableRoutes = await _routeService.GetAll();
+            return View(ride);
         }
 
         // POST: EventsController/Edit/5
@@ -109,6 +114,12 @@ namespace PlanAndRide.Web.Controllers.Events
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int id, EventDto eventDto)
         {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var isOwner = await IsOwner(id, user.Id);
+            if (!isOwner)
+            {
+                return RedirectToAction(nameof(Index));
+            }
             if (!ModelState.IsValid)
             {
                 //eventDto.Routes = await _routeService.GetAll();
@@ -132,13 +143,12 @@ namespace PlanAndRide.Web.Controllers.Events
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var ride = await _rideService.Get(id, user.Id);
-            if (ride != null)
+            var isOwner = await IsOwner(id, user.Id);
+            if (ride == null || !isOwner)
             {
-                return View(ride);
+                return RedirectToAction(nameof(Index));
             }
-
-
-            return RedirectToAction(nameof(Index));
+            return View(ride);
         }
 
         // POST: EventsController/Delete/5
@@ -147,6 +157,12 @@ namespace PlanAndRide.Web.Controllers.Events
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Delete(int id, EventDto eventDto)
         {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var isOwner = await IsOwner(id, user.Id);
+            if (!isOwner)
+            {
+                return RedirectToAction(nameof(Index));
+            }
             await _rideService.Delete(id);
             return RedirectToAction(nameof(Index));
         }
@@ -186,12 +202,14 @@ namespace PlanAndRide.Web.Controllers.Events
             await _rideService.RemoveRideMember(id, user.Id);
             return RedirectToAction(nameof(Details), new { Id = id });
         }
-
-        //public async Task<ActionResult> Unjoin(int id)
-        //{
-        //    var user = await _userManager.GetUserAsync(HttpContext.User);
-        //    await _rideService.RemoveRideMember(id, user.Id);
-        //    return RedirectToAction(nameof(Details), new { Id = id });
-        //}
+        private async Task<bool> IsOwner(int rideId, string userId)
+        {
+            var ride = await _rideService.Get(rideId, userId);
+            if (ride == null || ride.ApplicationUser == null || userId != ride.ApplicationUser.Id)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }
