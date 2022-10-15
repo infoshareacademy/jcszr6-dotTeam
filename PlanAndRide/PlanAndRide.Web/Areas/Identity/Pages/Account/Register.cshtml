@@ -58,12 +58,11 @@
                             <div>
                                 <p>
                                     @foreach (var provider in Model.ExternalLogins)
-                                    {    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-
+                                    {
                                         if (provider.Name == "Google")
                                         {
                                             <div class="col-md-6">
-                                                <button type="submit" class="btn btn-block btn-social btn-google" value="@provider.Name"
+                                                <button type="submit" class="btn btn-block btn-social btn-google" name="provider" value="@provider.Name"
                                             title="Register in using your @provider.DisplayName account">
                                                     <i class="fab fa-google-plus fa-align-left social-icon" style=""></i>Google
                                                 </button>
@@ -72,27 +71,9 @@
                                         else if (provider.Name == "Facebook")
                                         {
                                             <div class="col-md-6">
-                                                <button type="submit" class="btn btn-block btn-social btn-facebook" value="@provider.Name"
+                                                <button type="submit" class="btn btn-block btn-social btn-facebook" name="provider" value="@provider.Name"
                                             title="Register in using your @provider.DisplayName account">
                                                     <i class="fab fa-facebook fa-align-left social-icon" style=""></i>Facebook
-                                                </button>
-                                            </div>
-                                        }
-                                        else if (provider.Name == "LinkedIn")
-                                        {
-                                            <div class="col-md-6">
-                                                <button type="submit" class="btn btn-block btn-social btn-linkedin" value="@provider.Name"
-                                            title="Register in using your @provider.DisplayName account">
-                                                    <i class="fab fa-linkedin fa-align-left social-icon" style=""></i>Linkedin
-                                                </button>
-                                            </div>
-                                        }
-                                        else if (provider.Name == "Twitter")
-                                        {
-                                            <div class="col-md-6">
-                                                <button type="submit" class="btn btn-block btn-social btn-twitter" value="@provider.Name"
-                                            title="Register in using your @provider.DisplayName account">
-                                                    <i class="fab fa-twitter fa-align-left social-icon" style=""></i>Twitter
                                                 </button>
                                             </div>
                                         }
