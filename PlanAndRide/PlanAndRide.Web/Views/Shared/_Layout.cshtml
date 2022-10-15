@@ -42,7 +42,7 @@
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item ddi" asp-area=""  asp-controller="Event" asp-action="Index">My Events</a>
                                 <a class="dropdown-item" asp-area=""  asp-controller="Event" asp-action="Create">Add Event</a>
-                                <a class="dropdown-item" href="#">Find Event</a>
+                                <a class="dropdown-item" asp-controller="Event" asp-action="Public">Find Event</a>
                                 <a class="dropdown-item" href="#">Nearest Events</a>
                             </div>
                         </li>
@@ -54,7 +54,7 @@
                                 <a class="dropdown-item" asp-area="" asp-controller="Route" asp-action="Index">My Routes</a>
                                 <a class="dropdown-item" asp-area="" asp-controller="Route" asp-action="Create">Add Route</a>
                                 <a class="dropdown-item" asp-area="" asp-controller="Route" asp-action="Public">Find Route</a>
-                                <a class="dropdown-item" href="#">Popular Routes</a>
+                                @*<a class="dropdown-item" href="#">Popular Routes</a>*@
                             </div>
                         </li>
                         <li class="nav-item dropdown">

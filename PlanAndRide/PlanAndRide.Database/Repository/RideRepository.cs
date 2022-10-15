@@ -34,6 +34,20 @@ namespace PlanAndRide.Database.Repository
                 .Include(r => r.Route)
                 .ToListAsync();
         }
+        public async Task<IEnumerable<Ride>> GetByUser(string id)
+        {
+            return await _context.Rides
+                .Where(r => r.ApplicationUser.Id == id)
+                .Include(r => r.Route)
+                .ToListAsync();
+        }
+        public async Task<IEnumerable<Ride>> GetPublic()
+        {
+            return await _context.Rides
+                .Where(r => r.IsPrivate == false)
+                .Include(r => r.Route)
+                .ToListAsync();
+        }
         public async Task Add(Ride ride)
         {
             if(ride.Route != null)

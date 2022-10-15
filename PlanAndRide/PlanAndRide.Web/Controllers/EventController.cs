@@ -30,8 +30,18 @@ namespace PlanAndRide.Web.Controllers.Events
         [Authorize]
         public async Task<ActionResult> Index()
         {
-            var rides = await _rideService.GetAll();
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var rides = await _rideService.GetByUser(user.Id);
+            ViewBag.ShowEditButtons = true;
             return View(rides);
+        }
+        // GET: EventsController
+        [Authorize]
+        public async Task<ActionResult> Public()
+        {
+            var rides = await _rideService.GetPublic();
+            ViewBag.ShowEditButtons = false;
+            return View(viewName:nameof(Index),model:rides);
         }
 
         // GET: EventsController/Details/5

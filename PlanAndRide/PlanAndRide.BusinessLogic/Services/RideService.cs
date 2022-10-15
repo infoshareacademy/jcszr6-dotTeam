@@ -56,6 +56,26 @@ namespace PlanAndRide.BusinessLogic
             }
             return model;
         }
+        public async Task<IEnumerable<EventDto>> GetByUser(string id)
+        {
+            var rides = await _repository.GetByUser(id);
+            var model = _mapper.Map<IEnumerable<EventDto>>(rides);
+            foreach (var ride in model)
+            {
+                ride.StatusRide = GetRideStatus(ride);
+            }
+            return model;
+        }
+        public async Task<IEnumerable<EventDto>> GetPublic()
+        {
+            var rides = await _repository.GetPublic();
+            var model = _mapper.Map<IEnumerable<EventDto>>(rides);
+            foreach (var ride in model)
+            {
+                ride.StatusRide = GetRideStatus(ride);
+            }
+            return model;
+        }
 
         public async Task Update(int id, EventDto dto)
         {
