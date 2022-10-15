@@ -70,7 +70,7 @@ builder.Services.Configure<FormOptions>(o => {
 
 builder.Services.Configure<IdentityOptions>(opts =>
 {
-    opts.SignIn.RequireConfirmedEmail = true;
+    opts.SignIn.RequireConfirmedEmail = false;
 });
 
 
