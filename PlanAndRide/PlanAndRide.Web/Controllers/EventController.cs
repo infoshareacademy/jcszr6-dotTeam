@@ -33,6 +33,7 @@ namespace PlanAndRide.Web.Controllers.Events
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var rides = await _rideService.GetByUser(user.Id);
             ViewBag.ShowEditButtons = true;
+            ViewBag.ShowOwnerName = false;
             return View(rides);
         }
         // GET: EventsController
@@ -41,6 +42,7 @@ namespace PlanAndRide.Web.Controllers.Events
         {
             var rides = await _rideService.GetPublic();
             ViewBag.ShowEditButtons = false;
+            ViewBag.ShowOwnerName = true;
             return View(viewName:nameof(Index),model:rides);
         }
 

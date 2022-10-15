@@ -46,6 +46,7 @@ namespace PlanAndRide.Database.Repository
             return await _context.Rides
                 .Where(r => r.IsPrivate == false)
                 .Include(r => r.Route)
+                .Include(r => r.ApplicationUser)
                 .ToListAsync();
         }
         public async Task Add(Ride ride)
