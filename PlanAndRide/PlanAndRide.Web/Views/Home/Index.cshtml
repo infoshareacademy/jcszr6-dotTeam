@@ -6,25 +6,25 @@
 
 <a id="top-button"></a>
 <div class="fluid-container parent">
-            <div class="header-images">
-                <img class="headerBikeImage header-images" src="/lib/img/headerBikeImage.jpg" />
-                <img class="black-mesh1 header-images" src="/lib/img/black-mesh1.png" />
-                <div class="child d-flex justify-content-center">
-                    <h1>
-                        <a href="" class="typewrite" data-period="2000"
-                           data-type='[ "Create.", "Plan.", "Share & Ride.", "With Friends", "OR", "Get new ones." ]'>
-                            <span class="wrap"></span>
-                        </a>
-                    </h1>
-                </div>
-                <div class="container scroll-animation">
-                    <div class="chevron"></div>
-                    <div class="chevron"></div>
-                    <div class="chevron"></div>
-                    <span class="text">Scroll down</span>
-                </div>
-            </div>
+    <div class="header-images">
+        <img class="headerBikeImage header-images" src="/lib/img/headerBikeImage.jpg" />
+        <img class="black-mesh1 header-images" src="/lib/img/black-mesh1.png" />
+        <div class="child d-flex justify-content-center">
+            <h1>
+                <a href="" class="typewrite" data-period="2000"
+                   data-type='[ "Create.", "Plan.", "Share & Ride.", "With Friends", "OR", "Get new ones." ]'>
+                    <span class="wrap"></span>
+                </a>
+            </h1>
         </div>
+        <div class="container scroll-animation">
+            <div class="chevron"></div>
+            <div class="chevron"></div>
+            <div class="chevron"></div>
+            <span class="text">Scroll down</span>
+        </div>
+    </div>
+</div>
 <div class="container">
     <div class="row">
         <div class="col-12 home-title-text">
@@ -37,45 +37,45 @@
 </div>
 
 <div class="container-fluid">
-        <div class="row">
-            <div class="parallax col-12 p-0">
-                <div class="container-fluid make-friends-div">
-                </div>
-                <div class="container parallax-text">Create an account and join your friends rides or make new friends on the rides.</div>
+    <div class="row">
+        <div class="parallax col-12 p-0">
+            <div class="container-fluid make-friends-div">
             </div>
+            <div class="container parallax-text">Create an account and join your friends rides or make new friends on the rides.</div>
         </div>
     </div>
+</div>
 
-<div class="container">
+<div class="container karuzela">
     <div class="row">
-            <div class="col-12 home-title-text">
-                <p class="home-title-text nearby-rides">Nearby rides</p>
-            </div>
-            <div class="col-12 last-three-tracks">
+        <div class="col-12 home-title-text">
+            <p class="home-title-text nearby-rides">Nearby rides</p>
+        </div>
+        <div class="col-12 last-three-tracks">
             <partial name="_Partials/_LastRoutesList" model=@Model></partial>
-            @*<div class="col-12">
-                        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                            <div class="carousel-inner">
-                              <div class="carousel-item active">
-                                <img src="pobrany plik.jpg" class="d-block w-100" alt="...">
-                              </div>
-                              <div class="carousel-item">
-                                <img src="sdsd.jpg" class="d-block w-100" alt="...">
-                              </div>
-                              <div class="carousel-item">
-                                <img src="260391_dwa_slodkie_kotki.jpg" class="d-block w-100" alt="...">
-                              </div>
-                            </div>
-                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                              <span class="visually-hidden">Previous</span>
-                            </button>
-                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                              <span class="visually-hidden">Next</span>
-                            </button>
-                          </div>
-                    </div>*@
+            <div class="col-12">
+                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <partial name="_Partials/_LastRoutesList" model=@Model></partial>
+                        </div>
+                        <div class="carousel-item">
+                            <partial name="_Partials/_LastRoutesList" model=@Model></partial>
+                        </div>
+                        <div class="carousel-item">
+                            <partial name="_Partials/_LastRoutesList" model=@Model></partial>
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
