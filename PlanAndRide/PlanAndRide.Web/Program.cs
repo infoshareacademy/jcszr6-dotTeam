@@ -1,12 +1,22 @@
+using EmailService;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using PlanAndRide.BusinessLogic;
 using PlanAndRide.Database;
 using PlanAndRide.Database.Repository;
+using IEmailSender = EmailService.IEmailSender;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add services to the container.       
+IConfiguration config = new ConfigurationBuilder()
+    .AddJsonFile("appsettings.json")
+    .Build();
+
+
+
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IRouteRepository, RouteRepository>();
@@ -23,7 +33,7 @@ builder.Services.AddScoped<IClubService, ClubService>();
 //    .AddEntityFrameworkStores<PlanAndRideContext>();
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-    .AddEntityFrameworkStores<PlanAndRideContext>() 
+    .AddEntityFrameworkStores<PlanAndRideContext>()
     .AddDefaultUI()
     .AddDefaultTokenProviders();
 builder.Services.AddRazorPages();
@@ -52,6 +62,18 @@ builder.Services.AddAuthentication()
             linkedInOptions.ClientSecret = "HV93P3HOIKaCZc66";
         });
 
+builder.Services.Configure<FormOptions>(o => {
+    o.ValueLengthLimit = int.MaxValue;
+    o.MultipartBodyLengthLimit = int.MaxValue;
+    o.MemoryBufferThreshold = int.MaxValue;
+});
+
+builder.Services.Configure<IdentityOptions>(opts =>
+{
+    opts.SignIn.RequireConfirmedEmail = true;
+});
+
+
 var connectionString = builder.Configuration.GetConnectionString("Database");
 builder.Services.AddDbContext<PlanAndRideContext>(
     options =>
@@ -61,8 +83,10 @@ builder.Services.AddDbContext<PlanAndRideContext>(
     });
 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
-
-
+var emailConfig = config.GetSection("EmailConfiguration")
+  .Get<EmailConfiguration>();
+builder.Services.AddSingleton(emailConfig);
+builder.Services.AddScoped<IEmailSender, EmailSender>();
 var app = builder.Build();
 
 
@@ -72,6 +96,24 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
+}
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var loggerFactory = services.GetRequiredService<ILoggerFactory>();
+    try
+    {
+        var context = services.GetRequiredService<PlanAndRideContext>();
+        var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+        var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+        await ContextSeed.SeedRolesAsync(userManager, roleManager);
+        await ContextSeed.SeedSuperAdminAsync(userManager, roleManager);
+    }
+    catch (Exception ex)
+    {
+        var logger = loggerFactory.CreateLogger<Program>();
+        logger.LogError(ex, "An error occurred seeding the DB.");
+    }
 }
 
 app.UseHttpsRedirection();

@@ -52,25 +52,37 @@ namespace PlanAndRide.Web.Areas.Identity.Pages.Account.Manage
         /// </summary>
         public class InputModel
         {
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+
+            [Display(Name = "Login")]
+            public string Login { get; set; }
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+            [Display(Name = "Profile Picture")]
+            public byte[] ProfilePicture { get; set; }
+            [Display(Name = "Your Motorbike")]
+            public string BikeName { get; set; }
         }
 
         private async Task LoadAsync(ApplicationUser user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            var firstName = user.FirstName;
+            var bikeName = user.BikeName;
+            var profilePicture = user.ProfilePicture;
 
             Login = userName;
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                Login = userName,
+                FirstName = firstName,
+                BikeName = bikeName,
+                ProfilePicture = profilePicture
             };
         }
 
@@ -110,6 +122,29 @@ namespace PlanAndRide.Web.Areas.Identity.Pages.Account.Manage
                     return RedirectToPage();
                 }
             }
+            var firstName = user.FirstName;
+            var bikeName = user.BikeName;
+            if (Input.FirstName != firstName)
+            {
+                user.FirstName = Input.FirstName;
+                await _userManager.UpdateAsync(user);
+            }
+            if (Input.BikeName != bikeName)
+            {
+                user.BikeName = Input.BikeName;
+                await _userManager.UpdateAsync(user);
+            }
+
+            //if (Request.Form.Files.Count > 0)
+            //{
+            //    IFormFile file = Request.Form.Files.FirstOrDefault();
+            //    using (var dataStream = new MemoryStream())
+            //    {
+            //        await file.CopyToAsync(dataStream);
+            //        user.ProfilePicture = dataStream.ToArray();
+            //    }
+            //    await _userManager.UpdateAsync(user);
+            //}
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
