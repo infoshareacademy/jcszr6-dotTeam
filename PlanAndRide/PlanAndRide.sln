@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlanAndRide.Web", "PlanAndR
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlanAndRide.Database", "PlanAndRide.Database\PlanAndRide.Database.csproj", "{A0992AD9-1A0C-4E53-993D-86D73EBD8A80}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailService", "EmailService\EmailService.csproj", "{027CB8F9-563D-439C-8847-84A4FC9D9CC2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{A0992AD9-1A0C-4E53-993D-86D73EBD8A80}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0992AD9-1A0C-4E53-993D-86D73EBD8A80}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0992AD9-1A0C-4E53-993D-86D73EBD8A80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{027CB8F9-563D-439C-8847-84A4FC9D9CC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{027CB8F9-563D-439C-8847-84A4FC9D9CC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{027CB8F9-563D-439C-8847-84A4FC9D9CC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{027CB8F9-563D-439C-8847-84A4FC9D9CC2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,35 @@
+﻿@model IEnumerable<PlanAndRide.Web.Models.UserRolesViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+<h1>User Roles</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Login</th>
+            <th>First Name</th>
+            <th>Email</th>
+            <th>Roles</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+            @foreach (var user in Model)
+            {
+            <tr>
+                <td>@user.Login</td>
+                <td>@user.FirstName</td>
+                <td>@user.Email</td>
+                <td>@string.Join(" , ", user.Roles.ToList())</td>
+                <td>
+                    <a class="nav-link btn btn-link text-grey" asp-controller="UserRoles" asp-action="Manage" asp-route-userId="@user.UserId">Manage Roles</a>
+                </td>
+            </tr>
+            }
+    </tbody>
+</table>
+</div>

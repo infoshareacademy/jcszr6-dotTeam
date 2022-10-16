@@ -323,3 +323,38 @@ dropdown-item.dropdown-item:focus {
 td > .fa-lock, td > .fa-lock-open {
     font-size: 1rem;
 }
+.headerTitle {
+    z-index: 3;
+    margin-top: 150px;
+    color: #BFC0C0;
+    text-align: center;
+    font-weight: bold;
+    font-size: 60px;
+    position: absolute;
+    text-shadow: 1px 0px 1px darkred;
+    width: 50%;
+    margin-left: 25%;
+}
+
+.headerText {
+    z-index: 3;
+    margin-top: 300px;
+    color: #BFC0C0;
+    text-align: center;
+    font-size: 30px;
+    position: absolute;
+    text-shadow: 1px 0px 1px darkred;
+    width: 50%;
+    margin-left: 25%;
+}
+
+#scroll-anim {
+    position: absolute;
+    margin-left: 48%;
+    margin-top: 480px;
+}
+
+.footerWithContact {
+    margin-bottom: -60px;
+    padding-top: 50px;
+}

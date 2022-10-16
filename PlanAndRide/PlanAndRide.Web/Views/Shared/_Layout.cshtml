@@ -43,7 +43,7 @@
                                 <a class="dropdown-item ddi" asp-area=""  asp-controller="Event" asp-action="Index">My Events</a>
                                 <a class="dropdown-item" asp-area=""  asp-controller="Event" asp-action="Create">Add Event</a>
                                 <a class="dropdown-item" asp-controller="Event" asp-action="Public">Find Event</a>
-                                <a class="dropdown-item" href="#">Nearest Events</a>
+                                @*<a class="dropdown-item" href="#">Nearest Events</a>*@
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -57,7 +57,7 @@
                                 @*<a class="dropdown-item" href="#">Popular Routes</a>*@
                             </div>
                         </li>
-                        <li class="nav-item dropdown">
+                        @*<li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Clubs
                             </a>
@@ -66,7 +66,7 @@
                                 <a class="dropdown-item" asp-area="" asp-controller="Clubs" asp-action="Create">Add Club</a>
                                 <a class="dropdown-item" asp-area="" asp-controller="Clubs" asp-action="Index">Popular Clubs</a>
                             </div>
-                        </li>
+                        </li>*@
                     </ul>
                     <partial name="_LoginPartial" />
                     @*<ul class="navbar-nav navbar-right-side quest navbar-nav mr-autov nav nav-pills">
@@ -83,27 +83,6 @@
                 </div>
             </div>
         </nav>
-        @*<a id="top-button"></a>*@
-        @*<div class="fluid-container parent">
-            <div class="header-images">
-                <img class="headerBikeImage header-images" src="/lib/img/headerBikeImage.jpg" />
-                <img class="black-mesh1 header-images" src="/lib/img/black-mesh1.png" />
-                <div class="child d-flex justify-content-center">
-                    <h1>
-                        <a href="" class="typewrite" data-period="2000"
-                           data-type='[ "Create.", "Plan.", "Share & Ride.", "With Friends", "OR", "Get new ones." ]'>
-                            <span class="wrap"></span>
-                        </a>
-                    </h1>
-                </div>
-                <div class="container scroll-animation">
-                    <div class="chevron"></div>
-                    <div class="chevron"></div>
-                    <div class="chevron"></div>
-                    <span class="text">Scroll down</span>
-                </div>
-            </div>
-        </div>*@
     </header>
 
     <div class="fluid-container">

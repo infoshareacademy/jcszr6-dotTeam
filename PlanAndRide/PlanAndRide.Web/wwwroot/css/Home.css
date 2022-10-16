@@ -51,10 +51,6 @@
     width: 300px;
 }
 
-.row {
-    height: 400px;
-}
-
 .parallax {
     background-image: url("/lib/img/parallax1.jpg");
     height: 400px;
@@ -69,7 +65,8 @@
 }
 
 .newsletter-and-contact {
-    margin-bottom: 100px;
+    margin-bottom: 20px;
+    padding-top: 50px;
 }
 
 .space {
@@ -247,3 +244,7 @@
         opacity: 75%;
         visibility: visible;
     }
+
+.karuzela {
+    padding-top: 50px;
+}
