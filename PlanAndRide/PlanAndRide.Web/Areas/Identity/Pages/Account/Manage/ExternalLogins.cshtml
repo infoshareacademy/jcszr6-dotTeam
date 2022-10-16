@@ -22,7 +22,7 @@
                                 <div>
                                     <input asp-for="@login.LoginProvider" name="LoginProvider" type="hidden" />
                                     <input asp-for="@login.ProviderKey" name="ProviderKey" type="hidden" />
-                                    <button type="submit" class="btn btn-primary" title="Remove this @login.ProviderDisplayName login from your account">Remove</button>
+                                    <button type="submit" class="btn btn-outline-info red-button" title="Remove this @login.ProviderDisplayName login from your account">Remove</button>
                                 </div>
                             </form>
                         }
@@ -45,7 +45,24 @@
             <p>
                 @foreach (var provider in Model.OtherLogins)
                 {
-                    <button id="@($"link-login-button-{provider.Name}")" type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                    if (provider.Name == "Google")
+                    {
+                        <div class="col-md-6">
+                            <button type="submit" class="btn btn-block btn-social btn-google" name="provider" value="@provider.Name"
+                        title="Register in using your @provider.DisplayName account">
+                                <i class="fab fa-google-plus fa-align-left social-icon" style=""></i>Google
+                            </button>
+                        </div>
+                    }
+                    else if (provider.Name == "Facebook")
+                    {
+                        <div class="col-md-6">
+                            <button type="submit" class="btn btn-block btn-social btn-facebook" name="provider" value="@provider.Name"
+                        title="Register in using your @provider.DisplayName account">
+                                <i class="fab fa-facebook fa-align-left social-icon" style=""></i>Facebook
+                            </button>
+                        </div>
+                    }
                 }
             </p>
         </div>

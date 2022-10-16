@@ -4,12 +4,12 @@
     ViewData["Title"] = "Create route review";
     var routeName = TempData.Peek("RouteName") ?? "";
 }
-<div class="container">
+<div class="container" id="scrollTo">
 <div class="container col-md-6 align-items-center" >
     <br /><br/>
     <h4>Create review for route @routeName</h4>
     <hr />
-    <div class="row" id="scrollTo">
+    <div class="row" >
         <div>
             <form asp-action="Create">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>

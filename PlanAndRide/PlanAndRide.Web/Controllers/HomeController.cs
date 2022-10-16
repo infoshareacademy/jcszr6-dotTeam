@@ -16,7 +16,7 @@ namespace PlanAndRide.Web.Controllers
         private readonly IMapper _mapper;
         private readonly IRideService _rideService;
 
-        public HomeController(ILogger<HomeController> logger,IRouteService routeService, IConfiguration config,IMapper mapper,IRideService rideService)
+        public HomeController(ILogger<HomeController> logger, IRouteService routeService, IConfiguration config, IMapper mapper, IRideService rideService)
         {
             _logger = logger;
             _routeService = routeService;
@@ -45,7 +45,7 @@ namespace PlanAndRide.Web.Controllers
 
         //        ViewData["ApiKey"] = _config["Maps:ApiKey"];
         //        return View(new RouteViewModel(route, _routeService));
- 
+
         //}
         [AllowAnonymous]
         public IActionResult Privacy()

@@ -1,11 +1,11 @@
-﻿@model IEnumerable<EventDto>
+@model RoutesCollectionViewModel
 
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                <label asp-for="@Model.First().Name"></label>
+                <label asp-for="@Model.Rides.First().Name"></label>
             </th>
             <th>
                 <label>Date</label>
@@ -18,7 +18,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach(var item in Model)
+        @foreach(var item in Model.Rides)
         {
             <tr>
                 <td>
@@ -37,4 +37,3 @@
         }
     </tbody>
 </table>
-

@@ -4,11 +4,11 @@
     ViewData["Title"] = "Edit route review";
     var routeName = TempData.Peek("RouteName") ?? "";
 }
-<div class="container col-md-6 align-items-center"
+<div class="container col-md-6 align-items-center" id="scrollTo">
     <br /><br/>
     <h4>Edit review for route @routeName</h4>
     <hr />
-    <div class="row" id="scrollTo">
+    <div class="row" >
         <div>
             <form asp-action="Edit">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>

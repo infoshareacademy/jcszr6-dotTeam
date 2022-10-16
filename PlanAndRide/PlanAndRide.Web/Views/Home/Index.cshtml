@@ -59,11 +59,11 @@
 <div class="container karuzela">
     <div class="row">
         <div class="col-12 home-title-text">
-            <p class="home-title-text nearby-rides">Nearby rides</p>
+            <p class="home-title-text nearby-rides">Recently added rides</p>
         </div>
         <div class="col-12 last-three-tracks">
-            <partial name="_Partials/_LastRoutesList" model=@Model></partial>
-            <div class="col-12">
+            <partial name="_Partials/_NearestRides" model=@Model></partial>
+            @*<div class="col-12">
                 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
@@ -85,7 +85,7 @@
                         <span class="visually-hidden">Next</span>
                     </button>
                 </div>
-            </div>
+            </div>*@
         </div>
     </div>
 </div>*@

@@ -358,3 +358,19 @@ td > .fa-lock, td > .fa-lock-open {
     margin-bottom: -60px;
     padding-top: 50px;
 }
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    background-color: darkred!important;
+}
+
+.text-info{
+    color: #BFC0C0;
+}
+
+.personalDataButtons {
+    display: flex;
+}
+
+#download-data {
+    padding-right: 20px;
+}

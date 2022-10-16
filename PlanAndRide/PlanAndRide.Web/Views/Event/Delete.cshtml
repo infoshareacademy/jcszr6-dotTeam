@@ -4,13 +4,13 @@
     ViewData["Title"] = "Delete";
 }
 <partial name="_Partials/_Header" model="@Model" />
-<div class="container">
+<div class="container"id="scrollTo">
     <h1>Delete</h1>
 
     <h3>Are you sure you want to delete this event?</h3>
     <div>
         <hr />
-        <dl class="row" id="scrollTo">
+        <dl class="row" >
             <dt class="col-sm-2">
                 @if (Model.IsPrivate)
                 {

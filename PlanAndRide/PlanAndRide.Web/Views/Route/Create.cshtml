@@ -6,12 +6,12 @@
 }
 
 <partial name="_Partials/_Header" model="@Model" />
-<div class="container">
+<div class="container" id="scrollTo">
     <h1>Create</h1>
 
     <h4>Route</h4>
     <hr />
-    <div class="row" id="scrollTo">
+    <div class="row" >
         <div class="col-lg-6">
             <form asp-action="Create">
                 <partial name="_Partials/_CreateEditForm" model="@Model" />

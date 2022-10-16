@@ -4,11 +4,11 @@
 }
 
 <partial name="_Partials/_Header" model="@Model" />
-<div class="container">
+<div class="container"  id="scrollTo">
     @*<h1>Route Reviews</h1>*@
 
     <h3>@Model.Name</h3>
-    <div class="route-rating" id="scrollTo">
+    <div class="route-rating">
         <input type="hidden" asp-for="@Model.AverageScore" id="rating-value" />
     </div>
     <hr />
