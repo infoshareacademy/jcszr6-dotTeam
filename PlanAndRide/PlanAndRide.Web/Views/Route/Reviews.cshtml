@@ -45,7 +45,7 @@
             <a class="submit-button" asp-controller="Review" asp-action="Create" asp-route-routeId=@Model.Id>Add review</a>
         </div>
     }
-    <div class="container">
+    <div class="container" id="scrollTo">
         <div class="page-size-dropdown">
             <form asp-action="Reviews" method="get">
                 <div class="form-row">
@@ -141,4 +141,11 @@
         + '&pageSize=' + dropDownValue;
     }
 </script>
+<script>
+    $(document).ready(function () {
+        $('html, body').animate({
+            scrollTop: $("#scrollTo").offset().top
+        }, 1);
+    });
+    </script>
 }

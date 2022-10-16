@@ -9,7 +9,7 @@
 <div>
     <h4>Review</h4>
     <hr />
-    <dl class="row">
+    <dl class="row" id="scrollTo">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.ApplicationUser)
         </dt>
@@ -46,3 +46,13 @@
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+
+@section scripts{
+    <script>
+    $(document).ready(function () {
+        $('html, body').animate({
+            scrollTop: $("#scrollTo").offset().top
+        }, 1);
+    });
+    </script>
+}

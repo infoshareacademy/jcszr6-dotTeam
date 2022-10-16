@@ -8,7 +8,7 @@
     @*<h1>Route Reviews</h1>*@
 
     <h3>@Model.Name</h3>
-    <div class="route-rating">
+    <div class="route-rating" id="scrollTo">
         <input type="hidden" asp-for="@Model.AverageScore" id="rating-value" />
     </div>
     <hr />
@@ -59,4 +59,11 @@
 <script>
     $('document').ready(showStarRatingForSingleRoute());
 </script>
+<script>
+    $(document).ready(function () {
+        $('html, body').animate({
+            scrollTop: $("#scrollTo").offset().top
+        }, 1);
+    });
+    </script>
 }

@@ -4,8 +4,9 @@
     ViewData["Title"] = "Index";
 }
 
+
 <partial name="_Partials/_Header" model="@Model" />
-<div class="container">
+<div class="container" id="scrollTo">
     <h1>Routes</h1>
     <p>
         <div class="button" id="button-animation">
@@ -17,23 +18,30 @@
 
 </div>
 @section scripts{
-<script>
+    <script type="text/javascript">
+        function scrollToImportantStuff() {
+            document.getElementById('button-animation').scrollIntoView()
+        }
+        window.onload = button-animation;
+    </script>
 
-    $(document).ready(function() {
-        let table = $('#indexTable').DataTable({
-                    "columns": [
-                        null,
-                        null,
-                        null,
-                        null,
-                        {"searchable":false},
-                        {"searchable":false}
-                    ]
-                    //"dom":"<'row'<'col-sm-3'l><'#rating-filter.col-sm-3'><'col'f>>tp"
-                });
-    });
-</script>
-<script>
-    $('document').ready(showStarRatingForRoutesList());
-</script>
+    <script>
+
+        $(document).ready(function() {
+            let table = $('#indexTable').DataTable({
+                "columns": [
+                    null,
+                    null,
+                    null,
+                    null,
+                    { "searchable": false },
+                    { "searchable": false }
+                ]
+                //"dom":"<'row'<'col-sm-3'l><'#rating-filter.col-sm-3'><'col'f>>tp"
+            });
+        });
+    </script>
+    <script>
+        $('document').ready(showStarRatingForRoutesList());
+    </script>
 }

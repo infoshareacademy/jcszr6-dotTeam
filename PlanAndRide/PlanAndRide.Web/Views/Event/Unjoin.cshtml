@@ -9,7 +9,7 @@
     <div>
         <h4>Are you sure you want to unjoin this ride?</h4>
         <hr />
-        <dl class="row">
+        <dl class="row" id="scrollTo">
 
             <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Name)
@@ -27,9 +27,17 @@
     </div>
     <div>
         <form asp-action="Unjoin" asp-route-id="@Model.Id">
-            <input type="submit" value="Yes" class="btn btn-danger red-button" /> 
+            <input type="submit" value="Yes" class="btn btn-danger red-button" />
             <a class="btn btn-secondary grey-button" asp-action="Details" asp-route-id="@Model.Id">Cancel</a>
         </form>
     </div>
 </div>
-
+@section scripts{
+    <script>
+        $(document).ready(function() {
+            $('html, body').animate({
+                scrollTop: $("#scrollTo").offset().top
+            }, 1);
+        });
+    </script>
+}

@@ -5,11 +5,11 @@
     var routeName = TempData.Peek("RouteName") ?? "";
 }
 <div class="container">
-<div class="container col-md-6 align-items-center"
+<div class="container col-md-6 align-items-center" >
     <br /><br/>
     <h4>Create review for route @routeName</h4>
     <hr />
-    <div class="row">
+    <div class="row" id="scrollTo">
         <div>
             <form asp-action="Create">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -35,6 +35,13 @@
             $("#review-description").keyup(countDescriptionCharacters);
             createEditStarRating(0);
         });
+    </script>
+    <script>
+    $(document).ready(function () {
+        $('html, body').animate({
+            scrollTop: $("#scrollTo").offset().top
+        }, 1);
+    });
     </script>
 }
 
