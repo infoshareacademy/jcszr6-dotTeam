@@ -40,10 +40,11 @@ namespace PlanAndRide.Web.Controllers
         public async Task<ActionResult> Public(double? min)
         {
             var minRating = min ?? 0;
+            ViewBag.MinRating = minRating;
             var routes = await _routeService.GetPublicRoutes(minRating);
             ViewBag.ShowEditButtons = false;
             ViewBag.ShowPrivacySettings = false;
-            return View(viewName: nameof(Index), model: routes);
+            return View(routes);
         }
         public async Task<ActionResult> Rating(double? min)
         {

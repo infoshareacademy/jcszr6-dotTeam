@@ -19,24 +19,18 @@
 @section scripts{
 <script>
 
-    function createRouteRatingFilter() {
-        let tableRatingFilterEl = document.getElementById('rating-filter');
-        let ratingSelectList = document.getElementById('min-rating-select');
-        tableRatingFilterEl.appendChild(ratingSelectList);
-    }
-
     $(document).ready(function() {
         let table = $('#indexTable').DataTable({
                     "columns": [
                         null,
                         null,
                         null,
+                        null,
                         {"searchable":false},
                         {"searchable":false}
-                    ],
-                    "dom":"<'row'<'col-sm-3'l><'#rating-filter.col-sm-3'><'col'f>>tp"
+                    ]
+                    //"dom":"<'row'<'col-sm-3'l><'#rating-filter.col-sm-3'><'col'f>>tp"
                 });
-        createRouteRatingFilter();
     });
 </script>
 <script>

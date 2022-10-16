@@ -1,37 +1,13 @@
 ﻿@model IEnumerable<RouteDto>
 @{
-    var minRating = ViewBag.MinRating ?? 0;
-    var maxRatingValue = 5;
-    var minRatingSelectList = new List<SelectListItem>();
+
     var showEditButtons = ViewBag.ShowEditButtons ?? false;
     var showPrivacySettings = ViewBag.ShowPrivacySettings ?? false;
 
-    for (int i = 0; i <= maxRatingValue; i++)
-    {
-        var listItem = new SelectListItem(text: "", value: i.ToString());
-        switch (i)
-        {
-            case 5: listItem.Text = "five stars"; break;
-            case 4: listItem.Text = "four stars"; break;
-            case 3: listItem.Text = "three stars"; break;
-            case 2: listItem.Text = "two stars"; break;
-            case 1: listItem.Text = "one star"; break;
-            default: listItem.Text = "Any"; break;
-        }
-        if (i == minRating)
-            listItem.Selected = true;
-        minRatingSelectList.Add(listItem);
-    }
+
 }
 
-<div id="min-rating-select">
-    <form asp-action="Public" method="get">
-        <div class="form-group">
-            <label class="form-label">Rating from:</label>
-            @Html.DropDownList("min", minRatingSelectList, new {@class="",@onchange="this.form.submit()"})
-        </div>
-    </form>
-</div>
+
 
 <table id="indexTable" class="table">
     <thead>
