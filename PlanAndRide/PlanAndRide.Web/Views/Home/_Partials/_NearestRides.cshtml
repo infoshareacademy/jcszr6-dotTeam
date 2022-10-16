@@ -1,14 +1,14 @@
-﻿@model IEnumerable<EventViewModel>
+﻿@model IEnumerable<EventDto>
 
 
-<table class="table" id="myTable">
+<table class="table">
     <thead>
         <tr>
             <th>
                 <label asp-for="@Model.First().Name"></label>
             </th>
             <th>
-                <label>Start event</label>
+                <label>Date</label>
             </th>
             <th>
                 <label>Route</label>
@@ -25,7 +25,7 @@
                     @item.Name
                 </td>
                 <td>
-                    @item.Date
+                    @item.Date.ToString("dd MMM yyyy")
                 </td>
                 <td>
                     @item.RouteName
@@ -37,10 +37,4 @@
         }
     </tbody>
 </table>
-@section scripts {
-    <script> 
-       $(document).ready( function () {
-    $('#myTable').DataTable();
-} );
-   </script>
-}
+

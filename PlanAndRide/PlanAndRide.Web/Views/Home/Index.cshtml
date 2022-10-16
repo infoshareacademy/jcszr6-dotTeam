@@ -31,7 +31,7 @@
             <p class="home-title-text">Recently added routes</p>
         </div>
         <div class="col-12 last-three-tracks">
-            <partial name="_Partials/_LastRoutesList" model=@Model></partial>
+            <partial name="_Partials/_LastRoutesList" model=@Model>
         </div>
     </div>
 </div>
@@ -45,7 +45,17 @@
         </div>
     </div>
 </div>
-
+<div class="container">
+    <div class="row">
+        <div class="col-12 home-title-text">
+            <p class="home-title-text">Recently added rides</p>
+        </div>
+        <div class="col-12 last-three-tracks">
+            <partial name="_Partials/_NearestRides" model="@Model.Rides">
+        </div>
+    </div>
+</div>
+@*
 <div class="container karuzela">
     <div class="row">
         <div class="col-12 home-title-text">
@@ -78,7 +88,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
 
 <div class="container">
     <div class="row newsletter-and-contact">

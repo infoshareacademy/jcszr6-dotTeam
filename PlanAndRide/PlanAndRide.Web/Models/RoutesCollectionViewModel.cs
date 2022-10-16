@@ -6,5 +6,6 @@ namespace PlanAndRide.Web.Models
     {
         public string? RouteName { get; set; }
         public IEnumerable<RouteDto>? Routes { get; set; }
+        public IEnumerable<EventDto>? Rides { get; set; }
     }
 }
