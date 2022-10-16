@@ -14,5 +14,6 @@
         Task<string> GetRouteName(int id);
         Task<IEnumerable<RouteDto>> GetByRating(double minRating);
         Task<IEnumerable<RouteDto>> GetPublicRoutes();
+        Task<IEnumerable<RouteDto>> GetPublicRoutes(double minRating);
     }
 }

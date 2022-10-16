@@ -30,9 +30,17 @@ namespace PlanAndRide.Web.Controllers
             ViewBag.ShowPrivacySettings = true;
             return View(routes);
         }
-        public async Task<ActionResult> Public()
+        //public async Task<ActionResult> Public()
+        //{
+        //    var routes = await _routeService.GetPublicRoutes();
+        //    ViewBag.ShowEditButtons = false;
+        //    ViewBag.ShowPrivacySettings = false;
+        //    return View(viewName: nameof(Index), model: routes);
+        //}
+        public async Task<ActionResult> Public(double? min)
         {
-            var routes = await _routeService.GetPublicRoutes();
+            var minRating = min ?? 0;
+            var routes = await _routeService.GetPublicRoutes(minRating);
             ViewBag.ShowEditButtons = false;
             ViewBag.ShowPrivacySettings = false;
             return View(viewName: nameof(Index), model: routes);

@@ -54,11 +54,15 @@ namespace PlanAndRide.BusinessLogic
             }
             return dtos;
         }
-
+        public async Task<IEnumerable<RouteDto>> GetPublicRoutes(double minRating)
+        {
+            var routes = await GetPublicRoutes();
+            return routes.Where(r => r.AverageScore >= minRating).ToList();
+        }
         public async Task<IEnumerable<RouteDto>> GetByRating(double minRating)
         {
             var routes = await GetAll();
-            return routes.Where(r=>r.AverageScore>=minRating).ToList();
+            return routes.Where(r => r.AverageScore >= minRating).ToList();
         }
         public async Task<RouteDto?> Get(int id)
         {

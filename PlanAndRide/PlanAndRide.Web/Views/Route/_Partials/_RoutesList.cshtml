@@ -25,7 +25,7 @@
 }
 
 <div id="min-rating-select">
-    <form asp-action="Rating" method="get">
+    <form asp-action="Public" method="get">
         <div class="form-group">
             <label class="form-label">Rating from:</label>
             @Html.DropDownList("min", minRatingSelectList, new {@class="",@onchange="this.form.submit()"})
