@@ -4,12 +4,12 @@
     ViewData["Title"] = "Unjoin";
 }
 <partial name="_Partials/_Header" model="@Model" />
-<div class="container">
+<div class="container" id="scrollTo">
     <br />
     <div>
         <h4>Are you sure you want to unjoin this ride?</h4>
         <hr />
-        <dl class="row" id="scrollTo">
+        <dl class="row" >
 
             <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Name)
