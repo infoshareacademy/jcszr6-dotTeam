@@ -86,10 +86,21 @@
                         @item.RouteName
                     </td>
                     <td>
-                        @item.Route.StartingCity
+                        @if(item.Route == null || item.Route.StartingCity == null)
+                        { <span></span> }
+                        else
+                        {
+                         @item.Route.StartingCity
+                        }
+                        
                     </td>
                     <td>
-                        @item.Route.DestinationCity
+                        @if(item.Route == null || item.Route.DestinationCity == null)
+                        { <span></span> }
+                        else
+                        {
+                         @item.Route.DestinationCity
+                        }
                     </td>
                     <td>
                         @item.StatusRide
