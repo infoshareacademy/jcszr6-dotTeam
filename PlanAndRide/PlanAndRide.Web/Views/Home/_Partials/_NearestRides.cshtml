@@ -1,14 +1,14 @@
-﻿@model IEnumerable<EventViewModel>
+﻿@model RoutesCollectionViewModel
 
 
-<table class="table" id="myTable">
+<table class="table">
     <thead>
         <tr>
             <th>
-                <label asp-for="@Model.First().Name"></label>
+                <label asp-for="@Model.Rides.First().Name"></label>
             </th>
             <th>
-                <label>Start event</label>
+                <label>Date</label>
             </th>
             <th>
                 <label>Route</label>
@@ -18,14 +18,14 @@
         </tr>
     </thead>
     <tbody>
-        @foreach(var item in Model)
+        @foreach(var item in Model.Rides)
         {
             <tr>
                 <td>
                     @item.Name
                 </td>
                 <td>
-                    @item.Date
+                    @item.Date.ToString("dd MMM yyyy")
                 </td>
                 <td>
                     @item.RouteName
@@ -37,10 +37,3 @@
         }
     </tbody>
 </table>
-@section scripts {
-    <script> 
-       $(document).ready( function () {
-    $('#myTable').DataTable();
-} );
-   </script>
-}
