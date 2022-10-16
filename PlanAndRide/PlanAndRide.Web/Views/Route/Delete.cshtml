@@ -13,7 +13,7 @@
     <h4>@Model.Name</h4>
     <partial name="_Partials/_Rating" model="@Model" />
     <hr />    
-    <div class="row">
+    <div class="row" id="scrollTo">
         <div class="col-xl-5 gx-5 order-2 order-xl-1 route-details-section" style="float:left">
             <partial name="_Partials/_RouteDetails" model="@Model" />
         </div>
@@ -31,4 +31,11 @@
 <script>
     $('document').ready(showStarRatingForSingleRoute());
 </script>
+<script>
+    $(document).ready(function () {
+        $('html, body').animate({
+            scrollTop: $("#scrollTo").offset().top
+        }, 1);
+    });
+    </script>
 }

@@ -9,7 +9,7 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table class="table" id="scrollTo">
     <thead>
         <tr>
             <th>
@@ -57,3 +57,12 @@
 }
     </tbody>
 </table>
+@section scripts{
+    <script>
+    $(document).ready(function () {
+        $('html, body').animate({
+            scrollTop: $("#scrollTo").offset().top
+        }, 1);
+    });
+    </script>
+}

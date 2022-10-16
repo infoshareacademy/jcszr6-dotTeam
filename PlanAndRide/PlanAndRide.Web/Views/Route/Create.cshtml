@@ -11,7 +11,7 @@
 
     <h4>Route</h4>
     <hr />
-    <div class="row">
+    <div class="row" id="scrollTo">
         <div class="col-lg-6">
             <form asp-action="Create">
                 <partial name="_Partials/_CreateEditForm" model="@Model" />
@@ -27,7 +27,14 @@
 
 @section Scripts {
     @{
-    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    <script async type="text/javascript" src='https://maps.googleapis.com/maps/api/js?key=@apiKey&libraries=places,geometry&callback=createRoute'></script>  
+    <script async type="text/javascript" src='https://maps.googleapis.com/maps/api/js?key=@apiKey&libraries=places,geometry&callback=createRoute'></script>
+    <script>
+        $(document).ready(function() {
+            $('html, body').animate({
+                scrollTop: $("#scrollTo").offset().top
+            }, 1);
+        });
+    </script>
 }

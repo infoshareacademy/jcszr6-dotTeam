@@ -7,7 +7,7 @@
     <h3>Review route @Model.RouteName</h3>
     <h4>Are you sure you want to delete this?</h4>
     <hr />
-    <dl class="row">
+    <dl class="row" id="scrollTo">
         <dt class="col-sm-2">
             User
         </dt>
@@ -46,5 +46,11 @@
     <script>
         $('document').ready(showStarRatingForSingleRoute());
     </script>
-    
+    <script>
+    $(document).ready(function () {
+        $('html, body').animate({
+            scrollTop: $("#scrollTo").offset().top
+        }, 1);
+    });
+    </script>
 }

@@ -3,13 +3,14 @@
 @{
     ViewData["Title"] = "Edit";
 }
+
 <partial name="_Partials/_Header" model="@Model" />
-<div class="container"> 
+<div class="container" > 
 <h1>Edit</h1>
 
 <h4>Event</h4>
 <hr />
-<div class="row">
+<div class="row" id="scrollTo">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -52,5 +53,13 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('html, body').animate({
+            scrollTop: $("#scrollTo").offset().top
+        }, 1);
+    });
+    </script>
 }
 </div>

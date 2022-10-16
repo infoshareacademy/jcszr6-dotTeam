@@ -34,7 +34,7 @@
     </p>
     <div id="min-rating-select">
         <form asp-action="Public" method="get">
-            <div class="form-group">
+            <div class="form-group" id="scrollTo">
                 <label class="form-label">Rating from:</label>
                 @Html.DropDownList("min", minRatingSelectList, new {@class="",@onchange="this.form.submit()"})
             </div>
@@ -69,4 +69,11 @@
 <script>
     $('document').ready(showStarRatingForRoutesList());
 </script>
+<script>
+    $(document).ready(function () {
+        $('html, body').animate({
+            scrollTop: $("#scrollTo").offset().top
+        }, 1);
+    });
+    </script>
 }

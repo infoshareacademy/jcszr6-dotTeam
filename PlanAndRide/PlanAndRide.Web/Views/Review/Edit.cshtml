@@ -8,7 +8,7 @@
     <br /><br/>
     <h4>Edit review for route @routeName</h4>
     <hr />
-    <div class="row">
+    <div class="row" id="scrollTo">
         <div>
             <form asp-action="Edit">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -30,5 +30,12 @@
             $("#review-description").keyup(countDescriptionCharacters);
             createEditStarRating($("#rating-value").val());
         });
+    </script>
+    <script>
+    $(document).ready(function () {
+        $('html, body').animate({
+            scrollTop: $("#scrollTo").offset().top
+        }, 1);
+    });
     </script>
 }
